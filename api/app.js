@@ -14,7 +14,7 @@ mongoose.connect(db.uri, { useNewUrlParser: true })
 
 app.set('view engine', 'ejs')
 
-if (!db.nodeEnvironment === 'development') app.use(morgan('dev'))
+if (!process.env.NODE_ENV === 'development') app.use(morgan('dev'))
 app.use(cors())
 app.disable('x-powered-by')
 app.use('/static', express.static(`${__dirname}/..` + `/api/utils/file`))
