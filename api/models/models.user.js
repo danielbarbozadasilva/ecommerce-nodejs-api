@@ -11,8 +11,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       lowerCase: true,
       unique: true,
-      index: true,
-      match: [/\S+@\S+\.\S+/]
     },
     store: {
       type: Schema.Types.ObjectId,
