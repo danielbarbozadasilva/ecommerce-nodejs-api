@@ -3,12 +3,12 @@
   "license": "GPLv3 License",
   "name": "api-ecommerce",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "./api/server.js",
   "private": true,
   "scripts": {
     "test": "mocha --timeout 2000 --exit",
-    "dev": "NODE_ENV=development nodemon server.js",
-    "build": "NODE_ENV=production pm2 start server.js --name=\"api-ecommerce\""
+    "dev": "cross-env NODE_ENV=development nodemon server.js",
+    "build": "cross-env NODE_ENV=production pm2 start server.js --name=\"api-ecommerce\""
   },
   "repository": {
     "type": "git",
@@ -20,20 +20,23 @@
   "homepage": "https://github.com/danielbarbozadasilva/ecommerce-nodejs-api#readme",
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
-    "body-parser": "^1.18.3",
     "compression": "^1.7.3",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "crypto": "^1.0.1",
+    "dotenv": "^16.0.2",
     "ejs": "^2.6.1",
-    "express": "^4.16.4",
+    "express": "^4.18.1",
+    "express-async-errors": "^3.1.1",
     "express-jwt": "^5.3.1",
     "faker": "^4.1.0",
     "http-status": "^1.5.2",
+    "joi": "^17.6.0",
     "jsonwebtoken": "^8.4.0",
     "moment": "^2.23.0",
-    "mongoose": "^5.4.0",
+    "mongoose": "^6.5.4",
     "mongoose-paginate": "^5.0.3",
-    "mongoose-unique-validator": "^2.0.2",
+    "mongoose-unique-validator": "^3.1.0",
     "morgan": "^1.9.1",
     "multer": "^1.4.1",
     "nodemailer": "^4.7.0",
@@ -41,7 +44,6 @@
     "request": "^2.88.0",
     "xml2js": "^0.4.19"
   },
-
   "devDependencies": {
     "eslint": "^8.19.0",
     "eslint-config-airbnb-base": "^15.0.0",
