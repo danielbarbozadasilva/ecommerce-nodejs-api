@@ -17,6 +17,21 @@ const listAllStoresService = async () => {
   }
 }
 
+const listByIdStoreService = async (id) => {
+  try {
+    const resultDB = await store.findById(id)
+
+    return {
+      success: true,
+      message: 'Operation performed successfully',
+      data: storeMapper.toDTO(resultDB)
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
-  listAllStoresService
+  listAllStoresService,
+  listByIdStoreService
 }

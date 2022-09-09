@@ -1,5 +1,5 @@
 const toDTO = (model) => ({
-  _id: model._id,
+  id: model._id,
   name: model.name,
   cnpj: model.cnpj,
   email: model.email,
