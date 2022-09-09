@@ -69,9 +69,30 @@ const deleteStoreService = async (id) => {
   }
 }
 
+const createStoreService = async (body) => {
+  try {
+    const result = await store.create({
+      cnpj: body.cnpj,
+      name: body.name,
+      email: body.email,
+      phone: body.phone,
+      address: body.address
+    })
+
+    return {
+      success: true,
+      message: 'Operation performed successfully',
+      data: storeMapper.toDTO(result)
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listAllStoresService,
   listByIdStoreService,
   updateStoreService,
-  deleteStoreService
+  deleteStoreService,
+  createStoreService
 }

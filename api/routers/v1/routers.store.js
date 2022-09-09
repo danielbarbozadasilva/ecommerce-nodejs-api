@@ -13,6 +13,37 @@ module.exports = (router) => {
       authorizationMiddleware('STORE_LIST'),
       storeController.listAllStoresController
     )
+    .post(
+      validateDTOMiddleware('body', {
+        cnpj: joi
+          .string()
+          .regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/)
+          .required()
+          .messages({
+            'any.required': '"cnpj" is a required field',
+            'string.empty': '"cnpj" can not be empty'
+          }),
+        name: joi.string().required().messages({
+          'any.required': '"name" is a required field',
+          'string.empty': '"name" can not be empty'
+        }),
+        email: joi.string().required().messages({
+          'any.required': '"email" is a required field',
+          'string.empty': '"email" can not be empty'
+        }),
+        phone: joi.string().required().messages({
+          'any.required': '"phone" is a required field',
+          'string.empty': '"phone" can not be empty'
+        }),
+        address: joi.string().required().messages({
+          'any.required': '"address" is a required field',
+          'string.empty': '"address" can not be empty'
+        })
+      }),
+      verifyIdDbMiddleware.verifyEmailAlreadyExists,
+      verifyIdDbMiddleware.verifyCnpjExists,
+      storeController.createStoreController
+    )
 
   router
     .route('/store/:storeid')
@@ -74,6 +105,8 @@ module.exports = (router) => {
         })
       }),
       verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
+      verifyIdDbMiddleware.verifyEmailBodyExists,
+      verifyIdDbMiddleware.verifyCnpjBodyExists,
       storeController.updateStoreController
     )
     .delete(
