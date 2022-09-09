@@ -33,23 +33,29 @@ const listByIdStoreService = async (id) => {
 
 const updateStoreService = async (id, body) => {
   try {
-    const resultDB = await store.findOneAndUpdate(
+    await store.findOneAndUpdate(
       { _id: id },
       {
         $set: {
           cnpj: body.cnpj,
           name: body.name,
           email: body.email,
-          phone: body.phone,
-          address: body.address
+          phones: body.phones,
+          address: {
+            location: body.address.location,
+            number: body.address.number,
+            complement: body.address.complement,
+            district: body.address.district,
+            city: body.address.city,
+            zipCode: body.address.zipCode
+          }
         }
       }
     )
 
     return {
       success: true,
-      message: 'Data updated successfully',
-      data: storeMapper.toDTO(resultDB)
+      message: 'Data updated successfully'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -75,8 +81,15 @@ const createStoreService = async (body) => {
       cnpj: body.cnpj,
       name: body.name,
       email: body.email,
-      phone: body.phone,
-      address: body.address
+      phones: body.phones,
+      address: {
+        location: body.address.location,
+        number: body.address.number,
+        complement: body.address.complement,
+        district: body.address.district,
+        city: body.address.city,
+        zipCode: body.address.zipCode
+      }
     })
 
     return {

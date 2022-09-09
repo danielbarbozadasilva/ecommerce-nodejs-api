@@ -31,17 +31,39 @@ module.exports = (router) => {
           'any.required': '"email" is a required field',
           'string.empty': '"email" can not be empty'
         }),
-        phone: joi.string().required().messages({
-          'any.required': '"phone" is a required field',
-          'string.empty': '"phone" can not be empty'
+        phones: joi.array().required().messages({
+          'any.required': '"phones" is a required field',
+          'array.empty': '"phones" can not be empty'
         }),
-        address: joi.string().required().messages({
-          'any.required': '"address" is a required field',
-          'string.empty': '"address" can not be empty'
+        address: joi.object({
+          location: joi.string().required().messages({
+            'any.required': '"location" is a required field',
+            'string.empty': '"location" can not be empty'
+          }),
+          number: joi.string().required().messages({
+            'any.required': '"number" is a required field',
+            'string.empty': '"number" can not be empty'
+          }),
+          complement: joi.string().required().messages({
+            'any.required': '"complement" is a required field',
+            'string.empty': '"complement" can not be empty'
+          }),
+          district: joi.string().required().messages({
+            'any.required': '"district" is a required field',
+            'string.empty': '"district" can not be empty'
+          }),
+          city: joi.string().required().messages({
+            'any.required': '"city" is a required field',
+            'string.empty': '"city" can not be empty'
+          }),
+          zipCode: joi.string().required().messages({
+            'any.required': '"zipCode" is a required field',
+            'string.empty': '"zipCode" can not be empty'
+          })
         })
       }),
-      verifyIdDbMiddleware.verifyEmailAlreadyExists,
-      verifyIdDbMiddleware.verifyCnpjExists,
+      verifyIdDbMiddleware.verifyEmailStoreExists,
+      verifyIdDbMiddleware.verifyCnpjStoreExists,
       storeController.createStoreController
     )
 
@@ -95,18 +117,40 @@ module.exports = (router) => {
           'any.required': '"email" is a required field',
           'string.empty': '"email" can not be empty'
         }),
-        phone: joi.string().required().messages({
-          'any.required': '"phone" is a required field',
-          'string.empty': '"phone" can not be empty'
+        phones: joi.string().required().messages({
+          'any.required': '"phones" is a required field',
+          'string.empty': '"phones" can not be empty'
         }),
-        address: joi.string().required().messages({
-          'any.required': '"address" is a required field',
-          'string.empty': '"address" can not be empty'
+        address: joi.object({
+          location: joi.string().required().messages({
+            'any.required': '"location" is a required field',
+            'string.empty': '"location" can not be empty'
+          }),
+          number: joi.string().required().messages({
+            'any.required': '"number" is a required field',
+            'string.empty': '"number" can not be empty'
+          }),
+          complement: joi.string().required().messages({
+            'any.required': '"complement" is a required field',
+            'string.empty': '"complement" can not be empty'
+          }),
+          district: joi.string().required().messages({
+            'any.required': '"district" is a required field',
+            'string.empty': '"district" can not be empty'
+          }),
+          city: joi.string().required().messages({
+            'any.required': '"city" is a required field',
+            'string.empty': '"city" can not be empty'
+          }),
+          zipCode: joi.string().required().messages({
+            'any.required': '"zipCode" is a required field',
+            'string.empty': '"zipCode" can not be empty'
+          })
         })
       }),
       verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
-      verifyIdDbMiddleware.verifyEmailBodyExists,
-      verifyIdDbMiddleware.verifyCnpjBodyExists,
+      verifyIdDbMiddleware.verifyEmailBodyStoreExists,
+      verifyIdDbMiddleware.verifyCnpjBodyStoreExists,
       storeController.updateStoreController
     )
     .delete(
