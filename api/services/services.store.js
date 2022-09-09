@@ -31,7 +31,33 @@ const listByIdStoreService = async (id) => {
   }
 }
 
+const updateStoreService = async (id, body) => {
+  try {
+
+    const resultDB = await store.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          cnpj: body.cnpj,
+          name: body.name,
+          email: body.email,
+          phone: body.phone,
+          address: body.address
+        }
+      }
+    )
+
+    return {
+      success: true,
+      message: 'Data updated successfully',
+      data: storeMapper.toDTO(resultDB)
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
 module.exports = {
   listAllStoresService,
-  listByIdStoreService
+  listByIdStoreService,
+  updateStoreService
 }

@@ -22,7 +22,20 @@ const listByIdStoreController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const updateStoreController = async (req, res) => {
+  const { body } = req
+  const { storeid } = req.params
+  const resultService = await storeService.updateStoreService(storeid, body)
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
   listAllStoresController,
-  listByIdStoreController
+  listByIdStoreController,
+  updateStoreController
 }
