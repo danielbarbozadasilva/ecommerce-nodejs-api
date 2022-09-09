@@ -115,5 +115,22 @@ module.exports = (router) => {
       verifyIdDbMiddleware.verifyEmailExists,
       verifyIdDbMiddleware.verifyIdUserDbMiddleware,
       userController.updateUserController
+    ) 
+    .delete(
+      authenticationMiddleware(),
+      authorizationMiddleware('USER_DELETE'),
+      validateDTOMiddleware('params', {
+        userid: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"user id" is a required field',
+            'string.empty': '"user id" can not be empty',
+            'string.pattern.base': '"user id" out of the expected format'
+          })
+      }),
+      verifyIdDbMiddleware.verifyIdUserDbMiddleware,
+      userController.deleteUserController
     )
 }

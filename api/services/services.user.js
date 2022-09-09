@@ -137,6 +137,19 @@ const updateUserService = async (id, body) => {
   }
 }
 
+const deleteUserService = async (id) => {
+  try {
+    await user.deleteOne({ _id: id })
+
+    return {
+      success: true,
+      message: 'Client deleted successfully'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   userIsValidService,
   verifyEmailAlreadyExists,
@@ -145,5 +158,6 @@ module.exports = {
   registerService,
   listAllUsersService,
   listByIdUserService,
-  updateUserService
+  updateUserService,
+  deleteUserService
 }
