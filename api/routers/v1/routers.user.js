@@ -44,7 +44,7 @@ module.exports = (router) => {
           'string.pattern.base': '"store id" out of the expected format'
         })
     }),
-    verifyIdDbMiddleware.verifyEmailExists,
+    verifyIdDbMiddleware.verifyEmailAlreadyExists,
     userController.registerController
   )
 
@@ -112,7 +112,7 @@ module.exports = (router) => {
             'string.pattern.base': '"store id" out of the expected format'
           })
       }),
-      verifyIdDbMiddleware.verifyEmailExists,
+      verifyIdDbMiddleware.verifyEmailAlreadyExists,
       verifyIdDbMiddleware.verifyIdUserDbMiddleware,
       userController.updateUserController
     )
