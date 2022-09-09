@@ -33,7 +33,6 @@ const listByIdStoreService = async (id) => {
 
 const updateStoreService = async (id, body) => {
   try {
-
     const resultDB = await store.findOneAndUpdate(
       { _id: id },
       {
@@ -56,8 +55,23 @@ const updateStoreService = async (id, body) => {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
   }
 }
+
+const deleteStoreService = async (id) => {
+  try {
+    await store.deleteOne({ _id: id })
+
+    return {
+      success: true,
+      message: 'Store deleted successfully'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listAllStoresService,
   listByIdStoreService,
-  updateStoreService
+  updateStoreService,
+  deleteStoreService
 }

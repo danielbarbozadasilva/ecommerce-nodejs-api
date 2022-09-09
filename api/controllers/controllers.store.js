@@ -34,8 +34,20 @@ const updateStoreController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const deleteStoreController = async (req, res) => {
+  const { storeid } = req.params
+  const resultService = await storeService.deleteStoreService(storeid)
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
   listAllStoresController,
   listByIdStoreController,
-  updateStoreController
+  updateStoreController,
+  deleteStoreController
 }

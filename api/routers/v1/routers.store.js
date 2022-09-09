@@ -76,4 +76,21 @@ module.exports = (router) => {
       verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
       storeController.updateStoreController
     )
+    .delete(
+      authenticationMiddleware(),
+      authorizationMiddleware('STORE_DELETE'),
+      validateDTOMiddleware('params', {
+        storeid: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"storeid id" is a required field',
+            'string.empty': '"storeid id" can not be empty',
+            'string.pattern.base': '"storeid id" out of the expected format'
+          })
+      }),
+      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
+      storeController.deleteStoreController
+    )
 }
