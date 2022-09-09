@@ -150,6 +150,76 @@ const deleteUserService = async (id) => {
   }
 }
 
+const sendTokenRecoveryPasswordService = async (body) => {
+  try {
+    const resultToken = tokenRecoveryPassword()
+
+    await user.updateOne(
+      { email: `${body.email}` },
+      {
+        $set: {
+          recovery: {
+            token: resultToken.token,
+            date: resultToken.date
+          }
+        }
+      }
+    )
+    emailUtils.utilSendEmail({
+      to: body.email,
+      from: process.env.SENDGRID_SENDER,
+      subject: `Recuperar senha`,
+      html: Email(resultToken.token)
+    })
+
+    return {
+      success: true,
+      message: 'Operation performed successfully'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
+const checkTokenRecoveryPasswordService = async (body) => {
+  const result = await user.findOne({
+    email: `${body.email}`,
+    'recovery.token': `${body.token}`
+  })
+
+  if (!result) {
+    throw new ErrorBusinessRule('Token inválido!')
+  }
+
+  return {
+    success: true,
+    message: 'Operation performed successfully'
+  }
+}
+
+const resetPasswordUserService = async (body) => {
+  try {
+    const salt = cryptography.createSalt()
+
+    await user.updateOne(
+      { email: `${body.email}` },
+      {
+        $set: {
+          salt,
+          hash: cryptography.createHash(body.newPassword, salt)
+        }
+      }
+    )
+
+    return {
+      success: true,
+      message: 'Password updated successfully'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   userIsValidService,
   verifyEmailAlreadyExists,
@@ -159,5 +229,8 @@ module.exports = {
   listAllUsersService,
   listByIdUserService,
   updateUserService,
-  deleteUserService
+  deleteUserService,
+  sendTokenRecoveryPasswordService,
+  checkTokenRecoveryPasswordService,
+  resetPasswordUserService
 }

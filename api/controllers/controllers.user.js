@@ -66,11 +66,49 @@ const deleteUserController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const sendTokenRecoveryPasswordController = async (req, res) => {
+  const { body } = req
+  const resultService = await userService.sendTokenRecoveryPasswordService(body)
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
+const checkTokenRecoveryPasswordController = async (req, res) => {
+  const { body } = req
+  const resultService = await userService.checkTokenRecoveryPasswordService(
+    body
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
+const resetPasswordController = async (req, res) => {
+  const { body } = req
+  const resultService = await userService.resetPasswordUserService(body)
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
   authController,
   registerController,
   listAllUsersController,
   listByIdUserController,
   updateUserController,
-  deleteUserController
+  deleteUserController,
+  sendTokenRecoveryPasswordController,
+  checkTokenRecoveryPasswordController,
+  resetPasswordController
 }

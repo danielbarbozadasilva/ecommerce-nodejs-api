@@ -115,7 +115,8 @@ module.exports = (router) => {
       verifyIdDbMiddleware.verifyEmailExists,
       verifyIdDbMiddleware.verifyIdUserDbMiddleware,
       userController.updateUserController
-    ) 
+    )
+
     .delete(
       authenticationMiddleware(),
       authorizationMiddleware('USER_DELETE'),
@@ -133,4 +134,45 @@ module.exports = (router) => {
       verifyIdDbMiddleware.verifyIdUserDbMiddleware,
       userController.deleteUserController
     )
+
+  router.route('/user/recovery/password-recovery').put(
+    authorizationMiddleware('*'),
+    validateDTOMiddleware('body', {
+      email: joi.string().required().messages({
+        'any.required': '"email" is a required field',
+        'string.empty': '"email" can not be empty'
+      })
+    }),
+    userController.sendTokenRecoveryPasswordController
+  )
+
+  router.route('/user/recovery/check-token-recovery').get(
+    authorizationMiddleware('*'),
+    validateDTOMiddleware('body', {
+      email: joi.string().required().messages({
+        'any.required': '"email" is a required field',
+        'string.empty': '"email" can not be empty'
+      }),
+      token: joi.string().required().messages({
+        'any.required': '"token" is a required field',
+        'string.empty': '"token" can not be empty'
+      })
+    }),
+    userController.checkTokenRecoveryPasswordController
+  )
+
+  router.route('/user/recovery/reset-password').put(
+    authorizationMiddleware('*'),
+    validateDTOMiddleware('body', {
+      email: joi.string().required().messages({
+        'any.required': '"email" is a required field',
+        'string.empty': '"email" can not be empty'
+      }),
+      newPassword: joi.string().required().messages({
+        'any.required': `"password" is a required field`,
+        'string.empty': `"password" can not be empty`
+      })
+    }),
+    userController.resetPasswordController
+  )
 }
