@@ -32,8 +32,20 @@ const listAllUsersController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const listByIdUserController = async (req, res) => {
+  const { userid } = req.params
+  const resultService = await userService.listByIdUserService(userid)
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
   authController,
   registerController,
-  listAllUsersController
+  listAllUsersController,
+  listByIdUserController
 }

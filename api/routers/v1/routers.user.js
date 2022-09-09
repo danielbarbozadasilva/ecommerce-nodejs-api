@@ -47,12 +47,31 @@ module.exports = (router) => {
     verifyIdDbMiddleware.verifyEmailExists,
     userController.registerController
   )
-
+  
   router
-    .route('/user')
-    .get(
-      authenticationMiddleware(),
-      authorizationMiddleware('USER_LIST_ALL'),
-      userController.listAllUsersController
-    )
-}
+  .route('/user')
+  .get(
+    authenticationMiddleware(),
+    authorizationMiddleware('USER_LIST_ALL'),
+    userController.listAllUsersController
+  )
+
+router
+  .route('/user/:userid')
+  .get(
+    authenticationMiddleware(),
+    authorizationMiddleware('USER_LIST_ID'),
+    validateDTOMiddleware('params', {
+      userid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"user id" is a required field',
+          'string.empty': '"user id" can not be empty',
+          'string.pattern.base': '"user id" out of the expected format'
+        })
+    }),
+    verifyIdDbMiddleware.verifyIdUserDbMiddleware,
+    userController.listByIdUserController
+  )

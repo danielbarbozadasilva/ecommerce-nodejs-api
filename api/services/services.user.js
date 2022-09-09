@@ -100,11 +100,22 @@ const listAllUsersService = async () => {
   }
 }
 
+const listByIdUserService = async (id) => {
+  const resultDB = await user.findById({ _id: id }).populate({ path: 'store' })
+
+  return {
+    success: true,
+    message: 'Operation performed successfully',
+    data: userMapper.toDTO(resultDB)
+  }
+}
+
 module.exports = {
   userIsValidService,
   verifyEmailAlreadyExists,
   checkPermissionService,
   authService,
   registerService,
-  listAllUsersService
+  listAllUsersService.
+  listByIdUserService
 }
