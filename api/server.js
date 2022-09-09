@@ -1,11 +1,10 @@
 const { version, name } = require('../package.json')
 const app = require('./app')
 
-app.listen(process.env.PORT, (err) => {
-  if (err) {
-    throw err
-  }
+const port = process.env.PORT || 3001
+
+app.listen(port, () =>
   console.log(
-    `<<< ${name} v${version} was started in '${process.env.NODE_ENV}' environment on port ${process.env.PORT} >>>`
+    `<<< ${name} v${version} was started in 'DEV' environment on port ${port}>>>`
   )
-})
+)
