@@ -2,7 +2,6 @@ const { user } = require('../models/models.index')
 const cryptography = require('../utils/utils.cryptography')
 const emailUtils = require('../utils/utils.email')
 const { Email } = require('../utils/utils.email.message')
-const { tokenRecoveryPassword } = require('../utils/utils.cryptography')
 const userMapper = require('../mappers/mappers.user')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const ErrorNotAuthenticatedUser = require('../utils/errors/errors.user-not-authenticated')
@@ -13,7 +12,16 @@ const profile = [
   {
     type: 1,
     description: 'administrator',
-    permission: ['USER_LIST_ALL', 'USER_LIST_ID', 'USER_UPDATE', 'USER_DELETE']
+    permission: [
+      'USER_LIST_ALL',
+      'USER_LIST_ID',
+      'USER_UPDATE',
+      'USER_DELETE',
+      'STORE_LIST',
+      'STORE_LIST_ID',
+      'STORE_UPDATE',
+      'STORE_DELETE'
+    ]
   },
   {
     type: 2,
@@ -24,25 +32,19 @@ const profile = [
 
 const userIsValidService = async (email, password) => {
   const resultDB = await user.findOne({ email })
-  const resultCrypto = cryptography.validatePassword(
-    password,
-    resultDB.salt,
-    resultDB.hash
-  )
-
-  if (resultDB && resultCrypto) {
-    return resultDB
-  }
-  throw new ErrorNotAuthenticatedUser('Credenciais de acesso inválidas!')
-}
-
-const verifyEmailAlreadyExists = async (email) => {
-  const resultDB = await user.findOne({ email })
 
   if (resultDB) {
-    throw new ErrorBusinessRule('Este e-mail já está em uso!')
+    const resultCrypto = cryptography.validatePassword(
+      password,
+      resultDB.salt,
+      resultDB.hash
+    )
+
+    if (resultCrypto) {
+      return resultDB
+    }
   }
-  return !!resultDB
+  throw new ErrorNotAuthenticatedUser('Credenciais de acesso inválidas!')
 }
 
 const checkPermissionService = (type, permission) => {
@@ -55,17 +57,42 @@ const checkPermissionService = (type, permission) => {
   return !!check
 }
 
+const createCredentialService = async (email) => {
+  const userDB = await user.findOne({ email })
+  const userDTO = userMapper.toUserDTO(userDB)
+  const userToken = cryptography.generateToken(userDTO)
+  if (userDTO && userToken) {
+    return {
+      token: userToken,
+      userDTO
+    }
+  }
+  return false
+}
+
 const authService = async (email, password) => {
-  const resultDB = await userIsValidService(email, password)
-  return {
-    success: true,
-    message: 'Operation performed successfully',
-    data: userMapper.toUserDTO(resultDB)
+  await userIsValidService(email, password)
+
+  try {
+    const resultCredentials = await createCredentialService(email)
+    if (!resultCredentials) {
+      return {
+        success: false,
+        details: ['Não foi possivel criar a credencial!']
+      }
+    }
+
+    return {
+      success: true,
+      message: 'Usuário autenticado com sucesso!',
+      data: resultCredentials
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
   }
 }
 
 const registerService = async (body) => {
-  await verifyEmailAlreadyExists(body.email)
   try {
     const salt = cryptography.createSalt()
     const result = await user.create({
@@ -129,7 +156,7 @@ const updateUserService = async (id, body) => {
 
     return {
       success: true,
-      message: 'Data updated successfully',
+      message: 'User updated successfully',
       data: userMapper.toDTO(resultDB)
     }
   } catch (err) {
@@ -143,7 +170,7 @@ const deleteUserService = async (id) => {
 
     return {
       success: true,
-      message: 'Client deleted successfully'
+      message: 'User deleted successfully'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -152,7 +179,7 @@ const deleteUserService = async (id) => {
 
 const sendTokenRecoveryPasswordService = async (body) => {
   try {
-    const resultToken = tokenRecoveryPassword()
+    const resultToken = cryptography.tokenRecoveryPassword()
 
     await user.updateOne(
       { email: `${body.email}` },
@@ -191,13 +218,12 @@ const checkTokenRecoveryPasswordService = async (body) => {
     throw new ErrorBusinessRule('Token inválido!')
   }
 
-  return {
-    success: true,
-    message: 'Operation performed successfully'
-  }
+  return !!result
 }
 
 const resetPasswordUserService = async (body) => {
+  await checkTokenRecoveryPasswordService(body)
+
   try {
     const salt = cryptography.createSalt()
 
@@ -222,7 +248,6 @@ const resetPasswordUserService = async (body) => {
 
 module.exports = {
   userIsValidService,
-  verifyEmailAlreadyExists,
   checkPermissionService,
   authService,
   registerService,

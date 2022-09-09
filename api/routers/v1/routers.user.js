@@ -44,7 +44,7 @@ module.exports = (router) => {
           'string.pattern.base': '"store id" out of the expected format'
         })
     }),
-    verifyIdDbMiddleware.verifyEmailExists,
+    verifyIdDbMiddleware.verifyEmailUserExists,
     userController.registerController
   )
 
@@ -112,7 +112,7 @@ module.exports = (router) => {
             'string.pattern.base': '"store id" out of the expected format'
           })
       }),
-      verifyIdDbMiddleware.verifyEmailExists,
+      verifyIdDbMiddleware.verifyEmailUserExists,
       verifyIdDbMiddleware.verifyIdUserDbMiddleware,
       userController.updateUserController
     )
@@ -146,7 +146,7 @@ module.exports = (router) => {
     userController.sendTokenRecoveryPasswordController
   )
 
-  router.route('/user/recovery/check-token-recovery').get(
+  router.route('/user/recovery/reset-password').put(
     authorizationMiddleware('*'),
     validateDTOMiddleware('body', {
       email: joi.string().required().messages({
@@ -156,17 +156,6 @@ module.exports = (router) => {
       token: joi.string().required().messages({
         'any.required': '"token" is a required field',
         'string.empty': '"token" can not be empty'
-      })
-    }),
-    userController.checkTokenRecoveryPasswordController
-  )
-
-  router.route('/user/recovery/reset-password').put(
-    authorizationMiddleware('*'),
-    validateDTOMiddleware('body', {
-      email: joi.string().required().messages({
-        'any.required': '"email" is a required field',
-        'string.empty': '"email" can not be empty'
       }),
       newPassword: joi.string().required().messages({
         'any.required': `"password" is a required field`,
