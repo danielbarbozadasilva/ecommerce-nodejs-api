@@ -110,6 +110,33 @@ const listByIdUserService = async (id) => {
   }
 }
 
+const updateUserService = async (id, body) => {
+  try {
+    const salt = cryptography.createSalt()
+
+    const resultDB = await user.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          name: body.name,
+          email: body.email,
+          salt,
+          hash: cryptography.createHash(body.password, salt),
+          store: body.store
+        }
+      }
+    )
+
+    return {
+      success: true,
+      message: 'Data updated successfully',
+      data: userMapper.toDTO(resultDB)
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   userIsValidService,
   verifyEmailAlreadyExists,
@@ -117,5 +144,6 @@ module.exports = {
   authService,
   registerService,
   listAllUsersService,
-  listByIdUserService
+  listByIdUserService,
+  updateUserService
 }
