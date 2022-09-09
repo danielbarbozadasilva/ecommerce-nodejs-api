@@ -19,7 +19,8 @@ const profile = [
       'USER_DELETE',
       'STORE_LIST',
       'STORE_LIST_ID',
-      'STORE_UPDATE'
+      'STORE_UPDATE',
+      'STORE_DELETE'
     ]
   },
   {
@@ -162,7 +163,7 @@ const updateUserService = async (id, body) => {
 
     return {
       success: true,
-      message: 'Data updated successfully',
+      message: 'User updated successfully',
       data: userMapper.toDTO(resultDB)
     }
   } catch (err) {
@@ -176,7 +177,7 @@ const deleteUserService = async (id) => {
 
     return {
       success: true,
-      message: 'Client deleted successfully'
+      message: 'User deleted successfully'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
