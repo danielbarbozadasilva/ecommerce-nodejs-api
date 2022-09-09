@@ -116,6 +116,6 @@ module.exports = {
   checkPermissionService,
   authService,
   registerService,
-  listAllUsersService.
+  listAllUsersService,
   listByIdUserService
 }
