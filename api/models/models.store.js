@@ -9,15 +9,12 @@ const storeSchema = mongoose.Schema(
       type: [{ type: String }]
     },
     address: {
-      type: {
-        location: { type: String, required: true },
-        number: { type: String, required: true },
-        complement: { type: String },
-        district: { type: String, required: true },
-        city: { type: String, required: true },
-        zipCode: { type: String, required: true }
-      },
-      required: true
+      location: { type: String, required: true },
+      number: { type: String, required: true },
+      complement: { type: String },
+      district: { type: String, required: true },
+      city: { type: String, required: true },
+      zipCode: { type: String, required: true }
     }
   },
   { timestamps: true }

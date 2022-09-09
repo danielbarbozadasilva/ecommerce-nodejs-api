@@ -12,7 +12,7 @@ const listAllStoresController = async (req, res) => {
 }
 
 const listByIdStoreController = async (req, res) => {
-  const { storeid } = req.body
+  const { storeid } = req.params
   const resultService = await storeService.listByIdStoreService(storeid)
   const code = resultService.success ? 200 : 400
   const message = resultService.success

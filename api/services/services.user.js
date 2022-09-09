@@ -32,14 +32,17 @@ const profile = [
 
 const userIsValidService = async (email, password) => {
   const resultDB = await user.findOne({ email })
-  const resultCrypto = cryptography.validatePassword(
-    password,
-    resultDB.salt,
-    resultDB.hash
-  )
 
-  if (resultDB && resultCrypto) {
-    return resultDB
+  if (resultDB) {
+    const resultCrypto = cryptography.validatePassword(
+      password,
+      resultDB.salt,
+      resultDB.hash
+    )
+
+    if (resultCrypto) {
+      return resultDB
+    }
   }
   throw new ErrorNotAuthenticatedUser('Credenciais de acesso inválidas!')
 }
@@ -215,13 +218,12 @@ const checkTokenRecoveryPasswordService = async (body) => {
     throw new ErrorBusinessRule('Token inválido!')
   }
 
-  return {
-    success: true,
-    message: 'Operation performed successfully'
-  }
+  return !!result
 }
 
 const resetPasswordUserService = async (body) => {
+  await checkTokenRecoveryPasswordService(body)
+
   try {
     const salt = cryptography.createSalt()
 
