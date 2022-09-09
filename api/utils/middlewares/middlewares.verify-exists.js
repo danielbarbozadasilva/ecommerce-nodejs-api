@@ -18,7 +18,7 @@ const verifyIdStoreDbMiddleware = async (req, res, next) => {
   next()
 }
 
-const verifyEmailAlreadyExists = async (req, res, next) => {
+const verifyEmailUserExists = async (req, res, next) => {
   const resultEmail = await user.findOne({ email: req.body.email })
   if (resultEmail) {
     throw new ErrorBusinessRule('Este e-mail já está em uso!')
@@ -26,19 +26,11 @@ const verifyEmailAlreadyExists = async (req, res, next) => {
   next()
 }
 
-const verifyCnpjExists = async (req, res, next) => {
-  const resulCnpj = await store.findOne({ cnpj: req.body.cnpj })
-  if (resulCnpj) {
-    throw new ErrorBusinessRule('Este cnpj já está em uso!')
-  }
-  next()
-}
-
-const verifyEmailBodyExists = async (req, res, next) => {
+const verifyEmailBodyUserExists = async (req, res, next) => {
   const resultEmail = await user
     .findOne({ email: req.body.email })
     .where('_id')
-    .ne(req.params.storeid)
+    .ne(req.params.userid)
 
   if (resultEmail) {
     throw new ErrorBusinessRule('Este e-mail já está em uso!')
@@ -46,7 +38,15 @@ const verifyEmailBodyExists = async (req, res, next) => {
   next()
 }
 
-const verifyCnpjBodyExists = async (req, res, next) => {
+const verifyCnpjStoreExists = async (req, res, next) => {
+  const resulCnpj = await store.findOne({ cnpj: req.body.cnpj })
+  if (resulCnpj) {
+    throw new ErrorBusinessRule('Este cnpj já está em uso!')
+  }
+  next()
+}
+
+const verifyCnpjBodyStoreExists = async (req, res, next) => {
   const resulCnpj = await store
     .findOne({ cnpj: req.body.cnpj })
     .where('_id')
@@ -58,11 +58,33 @@ const verifyCnpjBodyExists = async (req, res, next) => {
   next()
 }
 
+const verifyEmailStoreExists = async (req, res, next) => {
+  const resultEmail = await store.findOne({ email: req.body.email })
+  if (resultEmail) {
+    throw new ErrorBusinessRule('Este e-mail já está em uso!')
+  }
+  next()
+}
+
+const verifyEmailBodyStoreExists = async (req, res, next) => {
+  const resultEmail = await store
+    .findOne({ email: req.body.email })
+    .where('_id')
+    .ne(req.params.storeid)
+
+  if (resultEmail) {
+    throw new ErrorBusinessRule('Este e-mail já está em uso!')
+  }
+  next()
+}
+
 module.exports = {
   verifyIdUserDbMiddleware,
   verifyIdStoreDbMiddleware,
-  verifyEmailAlreadyExists,
-  verifyCnpjExists,
-  verifyEmailBodyExists,
-  verifyCnpjBodyExists
+  verifyEmailUserExists,
+  verifyCnpjStoreExists,
+  verifyEmailBodyUserExists,
+  verifyCnpjBodyStoreExists,
+  verifyEmailStoreExists,
+  verifyEmailBodyStoreExists
 }
