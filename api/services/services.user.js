@@ -44,15 +44,6 @@ const userIsValidService = async (email, password) => {
   throw new ErrorNotAuthenticatedUser('Credenciais de acesso inválidas!')
 }
 
-const verifyEmailAlreadyExists = async (email) => {
-  const resultDB = await user.findOne({ email })
-
-  if (resultDB) {
-    throw new ErrorBusinessRule('Este e-mail já está em uso!')
-  }
-  return !!resultDB
-}
-
 const checkPermissionService = (type, permission) => {
   const result = profile.find((item) => item.type == type)
   const check = result?.permission?.includes(permission)
@@ -99,7 +90,6 @@ const authService = async (email, password) => {
 }
 
 const registerService = async (body) => {
-  await verifyEmailAlreadyExists(body.email)
   try {
     const salt = cryptography.createSalt()
     const result = await user.create({
@@ -256,7 +246,6 @@ const resetPasswordUserService = async (body) => {
 
 module.exports = {
   userIsValidService,
-  verifyEmailAlreadyExists,
   checkPermissionService,
   authService,
   registerService,
