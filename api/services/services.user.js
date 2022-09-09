@@ -18,7 +18,8 @@ const profile = [
       'USER_UPDATE',
       'USER_DELETE',
       'STORE_LIST',
-      'STORE_LIST_ID'
+      'STORE_LIST_ID',
+      'STORE_UPDATE'
     ]
   },
   {
