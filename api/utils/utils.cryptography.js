@@ -38,20 +38,9 @@ const createHash = (password, salt) => {
 
 const generateToken = (model) => {
   try {
-    const today = new Date()
-    const exp = new Date(today)
-    exp.setDate(today.getDate() + Number(jwtTimeLimit))
-
-    return jwt.sign(
-      {
-        id: model._id,
-        email: model.email,
-        type: model.permission[0] === 'administrator' ? 1 : 2,
-        name: model.name,
-        exp: parseFloat(exp.getTime() / 1000, 10)
-      },
-      jwtHashSecret
-    )
+    return jwt.sign({ ...model }, jwtHashSecret, {
+      expiresIn: `${jwtTimeLimit}`
+    })
   } catch (error) {
     throw new ErrorGeneric(`Error generating token! ${error}`)
   }

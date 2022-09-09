@@ -1,7 +1,5 @@
-const { generateToken } = require('../utils/utils.cryptography')
-
 const toDTO = (model) => ({
-  _id: model._id,
+  id: model._id,
   name: model.name,
   email: model.email,
   store: model.store,
@@ -9,12 +7,12 @@ const toDTO = (model) => ({
 })
 
 const toUserDTO = (model) => ({
-  _id: model._id,
-  name: model.nome,
+  id: model._id,
+  name: model.name,
   email: model.email,
   store: model.store,
-  permission: model.permission,
-  token: generateToken(model)
+  permission: model.permission[0],
+  type: model.permission[0] === 'administrator' ? 1 : 2
 })
 
 module.exports = {
