@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+
 const { Schema } = mongoose
 
 const userSchema = new mongoose.Schema(
@@ -10,7 +11,7 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       lowerCase: true,
-      unique: true,
+      unique: true
     },
     store: {
       type: Schema.Types.ObjectId,
@@ -24,11 +25,8 @@ const userSchema = new mongoose.Schema(
     hash: String,
     salt: String,
     recovery: {
-      type: {
-        token: String,
-        date: Date
-      },
-      default: {}
+      token: String,
+      date: Date
     }
   },
   {

@@ -1,62 +1,79 @@
 const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
-
+const ErrorGeneric = require('./errors/erros.generic-error')
 const ErrorNotAuthenticatedUser = require('./errors/errors.user-not-authenticated')
 
 const jwtHashSecret = process.env.JWT_SECRET
 const jwtTimeLimit = process.env.JWT_VALID_TIME
 
 const tokenRecoveryPassword = () => {
-  this.recovery = {}
-  this.recovery.token = crypto.randomBytes(16).toString('hex')
-  this.recovery.date = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
-  return this.recovery
+  try {
+    const recovery = {}
+    recovery.token = crypto.randomBytes(16).toString('hex')
+    recovery.date = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
+    return recovery
+  } catch (error) {
+    throw new ErrorGeneric(`Error generating token! ${error}`)
+  }
 }
 
-const finishTokenRecoveryPassword = () => {
-  this.recovery = { token: null, date: null }
-  return this.recovery
+const createSalt = () => {
+  try {
+    return crypto.randomBytes(16).toString('hex')
+  } catch (error) {
+    throw new ErrorGeneric(`Error creating salt! ${error}`)
+  }
 }
 
-const createSalt = () => crypto.randomBytes(16).toString('hex')
-
-const createHash = (password) => {
-  const hash = crypto
-    .pbkdf2Sync(password, createSalt(), 10000, 512, 'sha512')
-    .toString('hex')
-  return hash
+const createHash = (password, salt) => {
+  try {
+    return crypto
+      .pbkdf2Sync(password, salt, 10000, 512, 'sha512')
+      .toString('hex')
+  } catch (error) {
+    throw new ErrorGeneric(`Error creating hash! ${error}`)
+  }
 }
 
 const generateToken = (model) => {
-  const hoje = new Date()
-  const exp = new Date(hoje)
-  exp.setDate(hoje.getDate() + 15)
+  try {
+    const today = new Date()
+    const exp = new Date(today)
+    exp.setDate(today.getDate() + Number(jwtTimeLimit))
 
-  return jwt.sign(
-    {
-      id: model._id,
-      email: model.email,
-      name: model.name,
-      exp: parseFloat(exp.getTime() / 1000, 10)
-    },
-    jwtHashSecret
-  )
+    return jwt.sign(
+      {
+        id: model._id,
+        email: model.email,
+        type: model.permission[0] === 'administrator' ? 1 : 2,
+        name: model.name,
+        exp: parseFloat(exp.getTime() / 1000, 10)
+      },
+      jwtHashSecret
+    )
+  } catch (error) {
+    throw new ErrorGeneric(`Error generating token! ${error}`)
+  }
 }
 
-const validatePassword = (password) => {
-  const hash = crypto
-    .pbkdf2Sync(password, this.salt, 10000, 512, 'sha512')
-    .toString('hex')
-  return hash
+const validatePassword = (password, salt, hash) => {
+  try {
+    const result = crypto
+      .pbkdf2Sync(password, salt, 10000, 512, 'sha512')
+      .toString('hex')
+    return result === hash
+  } catch (error) {
+    throw new ErrorGeneric(`Error validate password! ${error}`)
+  }
 }
 
 const decodeToken = (token) => {
-  const verifyDecode = jwt.decode(token)
-  if (verifyDecode) {
-    return verifyDecode
+  try {
+    return jwt.decode(token)
+  } catch (error) {
+    throw new ErrorGeneric(`Error decoding token! ${error}`)
   }
-  return false
 }
 
 const tokenIsValid = (token) => {
@@ -74,6 +91,5 @@ module.exports = {
   tokenIsValid,
   decodeToken,
   validatePassword,
-  tokenRecoveryPassword,
-  finishTokenRecoveryPassword
+  tokenRecoveryPassword
 }
