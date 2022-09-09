@@ -10,7 +10,25 @@ module.exports = (router) => {
     .route('/store')
     .get(
       authenticationMiddleware(),
-      authorizationMiddleware('*'),
+      authorizationMiddleware('STORE_LIST'),
       storeController.listAllStoresController
     )
+
+  router.route('/store/:storeid').get(
+    authenticationMiddleware(),
+    authorizationMiddleware('STORE_LIST_ID'),
+    validateDTOMiddleware('params', {
+      storeid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"store id" is a required field',
+          'string.empty': '"store id" can not be empty',
+          'string.pattern.base': '"store id" out of the expected format'
+        })
+    }),
+    verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
+    storeController.listByIdStoreController
+  )
 }
