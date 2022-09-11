@@ -11,7 +11,11 @@ const listAllClientsService = async (offset, limit, store) => {
   try {
     const resultDB = await client.paginate(
       { store },
-      { offset, limit, populate: 'user' }
+      {
+        offset: Number(offset || 0),
+        limit: Number(limit || 30),
+        populate: 'user'
+      }
     )
 
     return {
@@ -35,7 +39,11 @@ const listClientSolicitationService = async (offset, limit, store, search) => {
 
     const ordered = await solicitation.paginate(
       { store, client: { $in: resultClient.map((item) => item._id) } },
-      { offset, limit, populate: ['client', 'payment', 'delivery'] }
+      {
+        offset: Number(offset || 0),
+        limit: Number(limit || 30),
+        populate: ['client', 'payment', 'delivery']
+      }
     )
 
     ordered.docs = await Promise.all(
@@ -71,7 +79,11 @@ const listClientSearchService = async (offset, limit, store, search) => {
           { phones: { $regex: search } }
         ]
       },
-      { offset, limit, populate: { path: 'user', select: '-salt -hash' } }
+      {
+        offset: Number(offset || 0),
+        limit: Number(limit || 30),
+        populate: { path: 'user', select: '-salt -hash' }
+      }
     )
 
     return {
@@ -99,9 +111,43 @@ const listAdminService = async (id, store) => {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
   }
 }
+
+const listSolicitationService = async (offset, limit, store, id) => {
+  try {
+    const resp = await solicitation.paginate(
+      { store, cliente: id },
+      {
+        offset: Number(offset || 0),
+        limit: Number(limit || 30),
+        populate: ['client', 'pagamento', 'entrega']
+      }
+    )
+    resp.docs = await Promise.all(
+      resp.docs.map(async (solic) => {
+        solic.cart = await Promise.all(
+          solic.cart.map(async (item) => {
+            item.product = await product.findById(item.product)
+            item.variation = await variation.findById(item.variation)
+            return item
+          })
+        )
+        return solic
+      })
+    )
+    return {
+      success: true,
+      message: 'Operation performed successfully',
+      data: resp
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listAllClientsService,
   listClientSolicitationService,
   listClientSearchService,
-  listAdminService
+  listAdminService,
+  listSolicitationService
 }
