@@ -156,4 +156,22 @@ module.exports = (router) => {
     verifyIdDbMiddleware.verifyIdClientDbMiddleware,
     clientController.listSolicitationController
   )
+
+  router.route('/client/:clientid').get(
+    authenticationMiddleware(),
+    authorization.authorizationMiddleware('CLIENT_ID'),
+    validateDTOMiddleware('params', {
+      clientid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"client id" is a required field',
+          'string.empty': '"client id" can not be empty',
+          'string.pattern.base': '"client id" out of the expected format'
+        })
+    }),
+    verifyIdDbMiddleware.verifyIdClientDbMiddleware,
+    clientController.listByIdClientController
+  )
 }
