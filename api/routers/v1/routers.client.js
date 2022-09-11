@@ -7,7 +7,7 @@ module.exports = (router) => {
     .route('/client')
     .get(
       authenticationMiddleware(),
-      authorization.verifyUserBelongsStore(),
+      authorization.authorizationMiddleware(),
       clientController.listAllClientsController
     )
 
@@ -15,7 +15,15 @@ module.exports = (router) => {
     .route('/client/search/:search/solicitations')
     .get(
       authenticationMiddleware(),
-      authorization.verifyUserBelongsStore(),
+      authorization.authorizationMiddleware(),
       clientController.listClientSolicitationController
+    )
+
+  router
+    .route('/client/search/:search')
+    .get(
+      authenticationMiddleware(),
+      authorization.authorizationMiddleware(),
+      clientController.listClientSearchController
     )
 }

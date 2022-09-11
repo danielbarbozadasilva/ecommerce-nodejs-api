@@ -7,14 +7,17 @@ const {
 const clientMapper = require('../mappers/mappers.client')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 
-const listAllClientsService = async () => {
+const listAllClientsService = async (offset, limit, store) => {
   try {
-    const resultDB = await client.find({}).sort({ name: 1 })
+    const resultDB = await client.paginate(
+      { store },
+      { offset, limit, populate: 'user' }
+    )
 
     return {
       success: true,
       message: 'Operation performed successfully',
-      data: resultDB.map((item) => clientMapper.toDTO(item))
+      data: resultDB
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -58,7 +61,31 @@ const listClientSolicitationService = async (offset, limit, store, search) => {
   }
 }
 
+const listClientSearchService = async (offset, limit, store, search) => {
+  try {
+    const resultDB = await client.paginate(
+      {
+        store,
+        $or: [
+          { $text: { $search: search, $diacriticSensitive: false } },
+          { phones: { $regex: search } }
+        ]
+      },
+      { offset, limit, populate: { path: 'user', select: '-salt -hash' } }
+    )
+
+    return {
+      success: true,
+      message: 'Operation performed successfully',
+      data: resultDB
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listAllClientsService,
-  listClientSolicitationService
+  listClientSolicitationService,
+  listClientSearchService
 }
