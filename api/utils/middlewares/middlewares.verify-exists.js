@@ -62,6 +62,18 @@ const verifyCpfUserExists = async (req, res, next) => {
   next()
 }
 
+const verifyCpfBodyUserExists = async (req, res, next) => {
+  const resulCpf = await user
+    .findOne({ cpf: req.body.cpf })
+    .where('_id')
+    .ne(req.params.clientid)
+
+  if (resulCpf) {
+    throw new ErrorBusinessRule('Este cpf já está em uso!')
+  }
+  next()
+}
+
 const verifyCnpjBodyStoreExists = async (req, res, next) => {
   const resulCnpj = await store
     .findOne({ cnpj: req.body.cnpj })
@@ -100,6 +112,7 @@ module.exports = {
   verifyIdStoreDbMiddleware,
   verifyEmailUserExists,
   verifyCpfUserExists,
+  verifyCpfBodyUserExists,
   verifyCnpjStoreExists,
   verifyEmailBodyUserExists,
   verifyCnpjBodyStoreExists,
