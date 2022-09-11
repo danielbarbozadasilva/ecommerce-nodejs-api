@@ -11,7 +11,26 @@ const ErrorBusinessRule = require('../utils/errors/errors.business-rule')
 const profile = [
   {
     permission: 'administrator',
-    role: [
+    rule: [
+      'USER_LIST_ALL',
+      'USER_LIST_ID',
+      'USER_UPDATE',
+      'USER_DELETE',
+      'STORE_CREATE',
+      'STORE_UPDATE',
+      'STORE_DELETE',
+      'LIST_CLIENT',
+      'SEARCH_SOLICITATION',
+      'SEARCH_CLIENT',
+      'LIST_CLIENT_ID',
+      'CLIENT_UPDATE',
+      'CLIENT_DELETE',
+      'LIST_CLIENT_SOLICITATION'
+    ]
+  },
+  {
+    permission: 'client',
+    rule: [
       'USER_LIST_ALL',
       'USER_LIST_ID',
       'USER_UPDATE',
@@ -20,10 +39,6 @@ const profile = [
       'STORE_UPDATE',
       'STORE_DELETE'
     ]
-  },
-  {
-    permission: 'client',
-    role: []
   }
 ]
 
@@ -44,9 +59,9 @@ const userIsValidService = async (email, password) => {
   throw new ErrorNotAuthenticatedUser('Credenciais de acesso inválidas!')
 }
 
-const checkPermissionService = (permissions, role) => {
+const checkPermissionService = (permissions, rule) => {
   const result = profile.filter((item, i) => item.permission === permissions[i])
-  const check = result[0]?.role?.includes(role)
+  const check = result[0]?.rule?.includes(rule)
 
   if (!check) {
     throw new ErrorNotAuthorizedUser('Usuário não autorizado!')

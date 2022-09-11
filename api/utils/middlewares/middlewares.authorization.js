@@ -4,12 +4,12 @@ const {
   checkUserBelongsStoreService
 } = require('../../services/services.user')
 
-const authorizationMiddleware = (role) => async (req, res, next) => {
-  if (role !== '*') {
+const authorizationMiddleware = (rule) => async (req, res, next) => {
+  if (rule !== '*') {
     const { token } = req.headers
     const { permissions } = decodeToken(token)
 
-    checkPermissionService(permissions, role)
+    checkPermissionService(permissions, rule)
   }
   next()
 }
