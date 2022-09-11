@@ -1,8 +1,7 @@
 const storeService = require('../services/services.store')
 
 const listAllStoresController = async (req, res) => {
-  const { email, password } = req.body
-  const resultService = await storeService.listAllStoresService(email, password)
+  const resultService = await storeService.listAllStoresService()
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
