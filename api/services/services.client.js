@@ -84,8 +84,24 @@ const listClientSearchService = async (offset, limit, store, search) => {
   }
 }
 
+const listAdminService = async (id, store) => {
+  try {
+    const resultDB = await client
+      .findOne({ id }, { store })
+      .populate({ path: 'user', select: '-salt -hash' })
+
+    return {
+      success: true,
+      message: 'Operation performed successfully',
+      data: resultDB
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
 module.exports = {
   listAllClientsService,
   listClientSolicitationService,
-  listClientSearchService
+  listClientSearchService,
+  listAdminService
 }

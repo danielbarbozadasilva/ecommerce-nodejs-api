@@ -58,8 +58,21 @@ const listClientSearchController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const listAdminController = async (req, res) => {
+  const { id } = req.params
+  const { store } = req.query
+
+  const resultService = await clientService.listAdminService(id, store)
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
 module.exports = {
   listAllClientsController,
   listClientSolicitationController,
-  listClientSearchController
+  listClientSearchController,
+  listAdminController
 }
