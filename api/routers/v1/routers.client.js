@@ -10,4 +10,12 @@ module.exports = (router) => {
       authorization.verifyUserBelongsStore(),
       clientController.listAllClientsController
     )
+
+  router
+    .route('/client/search/:search/solicitations')
+    .get(
+      authenticationMiddleware(),
+      authorization.verifyUserBelongsStore(),
+      clientController.listClientSolicitationController
+    )
 }

@@ -10,6 +10,24 @@ const listAllClientsController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const listClientSolicitationController = async (req, res) => {
+  const { offset, limit, store } = req.query
+  const { search } = req.params
+  const resultService = await clientService.listClientSolicitationService(
+    offset,
+    limit,
+    store,
+    search
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
-  listAllClientsController
+  listAllClientsController,
+  listClientSolicitationController
 }
