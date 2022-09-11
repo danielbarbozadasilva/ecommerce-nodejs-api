@@ -126,6 +126,19 @@ const updaterAdminService = async (id, body) => {
   }
 }
 
+const deleteAdminService = async (id) => {
+  try {
+    await client.deleteOne({ _id: id })
+
+    return {
+      success: true,
+      message: 'Admin deleted successfully'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 const listAdminService = async (id, store) => {
   try {
     const resultDB = await client
@@ -180,5 +193,6 @@ module.exports = {
   listClientSearchService,
   listAdminService,
   updaterAdminService,
+  deleteAdminService,
   listSolicitationService
 }

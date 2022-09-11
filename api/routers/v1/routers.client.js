@@ -30,11 +30,12 @@ module.exports = (router) => {
       authorization.authorizationMiddleware('SEARCH_CLIENT'),
       clientController.listClientSearchController
     )
+
   router
     .route('/client/admin/:id')
     .get(
       authenticationMiddleware(),
-      authorization.authorizationMiddleware('LIST_ADMIN'),
+      authorization.authorizationMiddleware('LIST_CLIENT'),
       validateDTOMiddleware('params', {
         id: joi
           .string()
@@ -46,11 +47,12 @@ module.exports = (router) => {
             'string.pattern.base': '"id" out of the expected format'
           })
       }),
+      verifyIdDbMiddleware.verifyIdClientDbMiddleware,
       clientController.listAdminController
     )
     .put(
       authenticationMiddleware(),
-      authorization.authorizationMiddleware('ADMIN_UPDATE'),
+      authorization.authorizationMiddleware('CLIENT_UPDATE'),
       validateDTOMiddleware('params', {
         id: joi
           .string()
@@ -114,17 +116,44 @@ module.exports = (router) => {
           })
         })
       }),
-      verifyIdDbMiddleware.verifyIdUserDbMiddleware,
+      verifyIdDbMiddleware.verifyIdClientDbMiddleware,
       verifyIdDbMiddleware.verifyEmailUserExists,
       verifyIdDbMiddleware.verifyCpfUserExists,
       clientController.updaterAdminController
     )
-
-  router
-    .route('/client/admin/:id/solicitations')
-    .get(
+    .delete(
       authenticationMiddleware(),
-      authorization.authorizationMiddleware('LIST_CLIENT_SOLICITATION'),
-      clientController.listSolicitationController
+      authorization.authorizationMiddleware('CLIENT_DELETE'),
+      validateDTOMiddleware('params', {
+        id: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"id" is a required field',
+            'string.empty': '"id" can not be empty',
+            'string.pattern.base': '"id" out of the expected format'
+          })
+      }),
+      verifyIdDbMiddleware.verifyIdClientDbMiddleware,
+      clientController.deleteAdminController
     )
+
+  router.route('/client/admin/:id/solicitations').get(
+    authenticationMiddleware(),
+    authorization.authorizationMiddleware('LIST_CLIENT_SOLICITATION'),
+    validateDTOMiddleware('params', {
+      id: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"id" is a required field',
+          'string.empty': '"id" can not be empty',
+          'string.pattern.base': '"id" out of the expected format'
+        })
+    }),
+    verifyIdDbMiddleware.verifyIdClientDbMiddleware,
+    clientController.listSolicitationController
+  )
 }
