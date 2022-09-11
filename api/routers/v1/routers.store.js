@@ -2,18 +2,16 @@ const joi = require('joi')
 const storeController = require('../../controllers/controllers.store')
 const validateDTOMiddleware = require('../../utils/middlewares/middlewares.validate-dto')
 const authenticationMiddleware = require('../../utils/middlewares/middlewares.authentication')
-const authorizationMiddleware = require('../../utils/middlewares/middlewares.authorization')
+const authorization = require('../../utils/middlewares/middlewares.authorization')
 const verifyIdDbMiddleware = require('../../utils/middlewares/middlewares.verify-exists')
 
 module.exports = (router) => {
   router
     .route('/store')
-    .get(
-      authenticationMiddleware(),
-      authorizationMiddleware('STORE_LIST'),
-      storeController.listAllStoresController
-    )
+    .get(storeController.listAllStoresController)
     .post(
+      authenticationMiddleware(),
+      authorization.authorizationMiddleware('STORE_CREATE'),
       validateDTOMiddleware('body', {
         cnpj: joi
           .string()
@@ -70,8 +68,6 @@ module.exports = (router) => {
   router
     .route('/store/:storeid')
     .get(
-      authenticationMiddleware(),
-      authorizationMiddleware('STORE_LIST_ID'),
       validateDTOMiddleware('params', {
         storeid: joi
           .string()
@@ -88,7 +84,8 @@ module.exports = (router) => {
     )
     .put(
       authenticationMiddleware(),
-      authorizationMiddleware('STORE_UPDATE'),
+      authorization.authorizationMiddleware('STORE_UPDATE'),
+      authorization.verifyUserBelongsStore(),
       validateDTOMiddleware('params', {
         storeid: joi
           .string()
@@ -155,7 +152,8 @@ module.exports = (router) => {
     )
     .delete(
       authenticationMiddleware(),
-      authorizationMiddleware('STORE_DELETE'),
+      authorization.authorizationMiddleware('STORE_DELETE'),
+      authorization.verifyUserBelongsStore(),
       validateDTOMiddleware('params', {
         storeid: joi
           .string()
