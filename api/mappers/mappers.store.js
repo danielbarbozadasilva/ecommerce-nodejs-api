@@ -1,10 +1,17 @@
 const toDTO = (model) => ({
   id: model._id,
-  name: model.name,
   cnpj: model.cnpj,
+  name: model.name,
   email: model.email,
-  phone: model.phone,
-  address: model.address
+  phones: model.phones,
+  address: {
+    location: model.address.location,
+    number: model.address.number,
+    complement: model.address.complement,
+    district: model.address.district,
+    city: model.address.city,
+    zipCode: model.address.zipCode
+  }
 })
 
 module.exports = {
