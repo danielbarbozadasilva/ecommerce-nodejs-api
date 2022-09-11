@@ -11,7 +11,7 @@ module.exports = (router) => {
     .route('/client')
     .get(
       authenticationMiddleware(),
-      authorization.authorizationMiddleware('SEARCH_CLIENT'),
+      authorization.authorizationMiddleware('LIST_CLIENT'),
       clientController.listAllClientsController
     )
 
@@ -35,7 +35,7 @@ module.exports = (router) => {
     .route('/client/admin/:clientid')
     .get(
       authenticationMiddleware(),
-      authorization.authorizationMiddleware('LIST_CLIENT'),
+      authorization.authorizationMiddleware('LIST_CLIENT_ID'),
       validateDTOMiddleware('params', {
         clientid: joi
           .string()
