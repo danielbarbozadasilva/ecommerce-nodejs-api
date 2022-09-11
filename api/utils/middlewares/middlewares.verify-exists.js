@@ -1,4 +1,4 @@
-const { user, store } = require('../../models/models.index')
+const { user, store, client } = require('../../models/models.index')
 const ErrorUnprocessableEntity = require('../errors/errors.unprocessable-entity')
 const ErrorBusinessRule = require('../errors/errors.business-rule')
 
@@ -6,6 +6,14 @@ const verifyIdUserDbMiddleware = async (req, res, next) => {
   const userDB = await user.findOne({ _id: req.params.userid })
   if (!userDB) {
     throw new ErrorUnprocessableEntity(`Não existe um usuário com esse id!`)
+  }
+  next()
+}
+
+const verifyIdClientDbMiddleware = async (req, res, next) => {
+  const clientDB = await client.findOne({ _id: req.params.id })
+  if (!clientDB) {
+    throw new ErrorUnprocessableEntity(`Não existe um cliente com esse id!`)
   }
   next()
 }
@@ -88,6 +96,7 @@ const verifyEmailBodyStoreExists = async (req, res, next) => {
 
 module.exports = {
   verifyIdUserDbMiddleware,
+  verifyIdClientDbMiddleware,
   verifyIdStoreDbMiddleware,
   verifyEmailUserExists,
   verifyCpfUserExists,
