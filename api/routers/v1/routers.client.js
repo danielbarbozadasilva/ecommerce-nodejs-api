@@ -32,36 +32,36 @@ module.exports = (router) => {
     )
 
   router
-    .route('/client/admin/:id')
+    .route('/client/admin/:clientid')
     .get(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('LIST_CLIENT'),
       validateDTOMiddleware('params', {
-        id: joi
+        clientid: joi
           .string()
           .regex(/^[0-9a-fA-F]{24}$/)
           .required()
           .messages({
-            'any.required': '"id" is a required field',
-            'string.empty': '"id" can not be empty',
-            'string.pattern.base': '"id" out of the expected format'
+            'any.required': '"client id" is a required field',
+            'string.empty': '"client id" can not be empty',
+            'string.pattern.base': '"client id" out of the expected format'
           })
       }),
       verifyIdDbMiddleware.verifyIdClientDbMiddleware,
-      clientController.listAdminController
+      clientController.listByIdClientAdminController
     )
     .put(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('CLIENT_UPDATE'),
       validateDTOMiddleware('params', {
-        id: joi
+        clientid: joi
           .string()
           .regex(/^[0-9a-fA-F]{24}$/)
           .required()
           .messages({
-            'any.required': '"id" is a required field',
-            'string.empty': '"id" can not be empty',
-            'string.pattern.base': '"id" out of the expected format'
+            'any.required': '"client id" is a required field',
+            'string.empty': '"client id" can not be empty',
+            'string.pattern.base': '"client id" out of the expected format'
           })
       }),
       validateDTOMiddleware('body', {
@@ -119,38 +119,38 @@ module.exports = (router) => {
       verifyIdDbMiddleware.verifyIdClientDbMiddleware,
       verifyIdDbMiddleware.verifyEmailUserExists,
       verifyIdDbMiddleware.verifyCpfUserExists,
-      clientController.updaterAdminController
+      clientController.updaterClientAdminController
     )
     .delete(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('CLIENT_DELETE'),
       validateDTOMiddleware('params', {
-        id: joi
+        clientid: joi
           .string()
           .regex(/^[0-9a-fA-F]{24}$/)
           .required()
           .messages({
-            'any.required': '"id" is a required field',
-            'string.empty': '"id" can not be empty',
-            'string.pattern.base': '"id" out of the expected format'
+            'any.required': '"client id" is a required field',
+            'string.empty': '"client id" can not be empty',
+            'string.pattern.base': '"client id" out of the expected format'
           })
       }),
       verifyIdDbMiddleware.verifyIdClientDbMiddleware,
-      clientController.deleteAdminController
+      clientController.deleteClientAdminController
     )
 
-  router.route('/client/admin/:id/solicitations').get(
+  router.route('/client/admin/:clientid/solicitations').get(
     authenticationMiddleware(),
     authorization.authorizationMiddleware('LIST_CLIENT_SOLICITATION'),
     validateDTOMiddleware('params', {
-      id: joi
+      clientid: joi
         .string()
         .regex(/^[0-9a-fA-F]{24}$/)
         .required()
         .messages({
-          'any.required': '"id" is a required field',
-          'string.empty': '"id" can not be empty',
-          'string.pattern.base': '"id" out of the expected format'
+          'any.required': '"client id" is a required field',
+          'string.empty': '"client id" can not be empty',
+          'string.pattern.base': '"client id" out of the expected format'
         })
     }),
     verifyIdDbMiddleware.verifyIdClientDbMiddleware,

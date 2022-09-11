@@ -95,10 +95,10 @@ const listClientSearchService = async (offset, limit, store, search) => {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
   }
 }
-const updaterAdminService = async (id, body) => {
+const updateClientAdminService = async (clientid, body) => {
   try {
     await client.findOneAndUpdate(
-      { _id: id },
+      { _id: clientid },
       {
         $set: {
           cpf: body.cpf,
@@ -126,9 +126,9 @@ const updaterAdminService = async (id, body) => {
   }
 }
 
-const deleteAdminService = async (id) => {
+const deleteClientAdminService = async (clientid) => {
   try {
-    await client.deleteOne({ _id: id })
+    await client.deleteOne({ _id: clientid })
 
     return {
       success: true,
@@ -139,10 +139,10 @@ const deleteAdminService = async (id) => {
   }
 }
 
-const listAdminService = async (id, store) => {
+const listByIdClientAdminService = async (clientid, store) => {
   try {
     const resultDB = await client
-      .findOne({ id }, { store })
+      .findOne({ _id: clientid }, { store })
       .populate({ path: 'user', select: '-salt -hash' })
 
     return {
@@ -155,10 +155,10 @@ const listAdminService = async (id, store) => {
   }
 }
 
-const listSolicitationService = async (offset, limit, store, id) => {
+const listSolicitationService = async (offset, limit, store, clientid) => {
   try {
     const resp = await solicitation.paginate(
-      { store, cliente: id },
+      { store, client: clientid },
       {
         offset: Number(offset || 0),
         limit: Number(limit || 30),
@@ -191,8 +191,8 @@ module.exports = {
   listAllClientsService,
   listClientSolicitationService,
   listClientSearchService,
-  listAdminService,
-  updaterAdminService,
-  deleteAdminService,
+  listByIdClientAdminService,
+  updateClientAdminService,
+  deleteClientAdminService,
   listSolicitationService
 }

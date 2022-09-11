@@ -53,11 +53,14 @@ const listClientSearchController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
-const listAdminController = async (req, res) => {
-  const { id } = req.params
+const listByIdClientAdminController = async (req, res) => {
+  const { clientid } = req.params
   const { store } = req.query
 
-  const resultService = await clientService.listAdminService(id, store)
+  const resultService = await clientService.listByIdClientAdminService(
+    clientid,
+    store
+  )
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
@@ -66,11 +69,14 @@ const listAdminController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
-const updaterAdminController = async (req, res) => {
-  const { id } = req.params
+const updaterClientAdminController = async (req, res) => {
+  const { clientid } = req.params
   const { body } = req
 
-  const resultService = await clientService.updaterAdminService(id, body)
+  const resultService = await clientService.updateClientAdminService(
+    clientid,
+    body
+  )
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
@@ -79,10 +85,10 @@ const updaterAdminController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
-const deleteAdminController = async (req, res) => {
-  const { id } = req.params
+const deleteClientAdminController = async (req, res) => {
+  const { clientid } = req.params
 
-  const resultService = await clientService.deleteAdminService(id)
+  const resultService = await clientService.deleteClientAdminService(clientid)
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
@@ -92,14 +98,14 @@ const deleteAdminController = async (req, res) => {
 }
 
 const listSolicitationController = async (req, res) => {
-  const { id } = req.params
+  const { clientid } = req.params
   const { offset, limit, store } = req.query
 
   const resultService = await clientService.listSolicitationService(
     offset,
     limit,
     store,
-    id
+    clientid
   )
   const code = resultService.success ? 200 : 400
   const message = resultService.success
@@ -113,8 +119,8 @@ module.exports = {
   listAllClientsController,
   searchClientSolicitationController,
   listClientSearchController,
-  listAdminController,
-  updaterAdminController,
-  deleteAdminController,
+  listByIdClientAdminController,
+  updaterClientAdminController,
+  deleteClientAdminController,
   listSolicitationController
 }
