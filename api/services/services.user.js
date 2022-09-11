@@ -1,4 +1,4 @@
-const { user } = require('../models/models.index')
+const { user, store } = require('../models/models.index')
 const cryptography = require('../utils/utils.cryptography')
 const emailUtils = require('../utils/utils.email')
 const { Email } = require('../utils/utils.email.message')
@@ -10,23 +10,20 @@ const ErrorBusinessRule = require('../utils/errors/errors.business-rule')
 
 const profile = [
   {
-    type: 1,
-    description: 'administrator',
-    permission: [
+    permission: 'administrator',
+    role: [
       'USER_LIST_ALL',
       'USER_LIST_ID',
       'USER_UPDATE',
       'USER_DELETE',
-      'STORE_LIST',
-      'STORE_LIST_ID',
+      'STORE_CREATE',
       'STORE_UPDATE',
       'STORE_DELETE'
     ]
   },
   {
-    type: 2,
-    description: 'client',
-    permission: ['USER_LIST_ID', 'USER_UPDATE']
+    permission: 'client',
+    role: []
   }
 ]
 
@@ -47,9 +44,9 @@ const userIsValidService = async (email, password) => {
   throw new ErrorNotAuthenticatedUser('Credenciais de acesso inválidas!')
 }
 
-const checkPermissionService = (type, permission) => {
-  const result = profile.find((item) => item.type == type)
-  const check = result?.permission?.includes(permission)
+const checkPermissionService = (permissions, role) => {
+  const result = profile.filter((item, i) => item.permission === permissions[i])
+  const check = result[0]?.role?.includes(role)
 
   if (!check) {
     throw new ErrorNotAuthorizedUser('Usuário não autorizado!')
@@ -57,9 +54,17 @@ const checkPermissionService = (type, permission) => {
   return !!check
 }
 
+const checkUserBelongsStoreService = async (id) => {
+  const resultBelong = await store.findOne({ id })
+  if (!resultBelong) {
+    throw new ErrorNotAuthorizedUser('Usuário não autorizado!')
+  }
+  return !!resultBelong
+}
+
 const createCredentialService = async (email) => {
   const userDB = await user.findOne({ email })
-  const userDTO = userMapper.toUserDTO(userDB)
+  const userDTO = userMapper.toDTO(userDB)
   const userToken = cryptography.generateToken(userDTO)
   if (userDTO && userToken) {
     return {
@@ -106,7 +111,7 @@ const registerService = async (body) => {
     return {
       success: true,
       message: 'Operation performed successfully',
-      data: userMapper.toUserDTO(result)
+      data: userMapper.toDTO(result)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -249,6 +254,7 @@ const resetPasswordUserService = async (body) => {
 module.exports = {
   userIsValidService,
   checkPermissionService,
+  checkUserBelongsStoreService,
   authService,
   registerService,
   listAllUsersService,
