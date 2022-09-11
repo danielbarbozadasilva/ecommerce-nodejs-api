@@ -95,6 +95,36 @@ const listClientSearchService = async (offset, limit, store, search) => {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
   }
 }
+const updaterAdminService = async (id, body) => {
+  try {
+    await client.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          cpf: body.cpf,
+          name: body.name,
+          email: body.email,
+          phones: body.phones,
+          birthDate: body.birthDate,
+          address: {
+            location: body.address.location,
+            number: body.address.number,
+            complement: body.address.complement,
+            district: body.address.district,
+            city: body.address.city,
+            zipCode: body.address.zipCode
+          }
+        }
+      }
+    )
+    return {
+      success: true,
+      message: 'Operation performed successfully'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
 
 const listAdminService = async (id, store) => {
   try {
@@ -119,7 +149,7 @@ const listSolicitationService = async (offset, limit, store, id) => {
       {
         offset: Number(offset || 0),
         limit: Number(limit || 30),
-        populate: ['client', 'pagamento', 'entrega']
+        populate: ['client', 'payment', 'delivery']
       }
     )
     resp.docs = await Promise.all(
@@ -149,5 +179,6 @@ module.exports = {
   listClientSolicitationService,
   listClientSearchService,
   listAdminService,
+  updaterAdminService,
   listSolicitationService
 }
