@@ -131,6 +131,18 @@ const listByIdClientController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const createClientController = async (req, res) => {
+  const { body } = req
+
+  const resultService = await clientService.createClientService(body)
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
   listAllClientsController,
   searchClientSolicitationController,
@@ -139,5 +151,6 @@ module.exports = {
   updaterClientAdminController,
   deleteClientAdminController,
   listSolicitationController,
-  listByIdClientController
+  listByIdClientController,
+  createClientController
 }

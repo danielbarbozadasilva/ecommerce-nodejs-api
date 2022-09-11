@@ -203,6 +203,34 @@ const listByIdClientService = async (clientid, store) => {
   }
 }
 
+const createClientService = async (body) => {
+  try {
+    const resultDB = await client.create({
+      cpf: body.cpf,
+      name: body.name,
+      email: body.email,
+      phones: body.phones,
+      birthDate: body.birthDate,
+      address: {
+        location: body.address.location,
+        number: body.address.number,
+        complement: body.address.complement,
+        district: body.address.district,
+        city: body.address.city,
+        zipCode: body.address.zipCode
+      }
+    })
+
+    return {
+      success: true,
+      message: 'Operation performed successfully',
+      data: resultDB
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listAllClientsService,
   listClientSolicitationService,
@@ -211,5 +239,6 @@ module.exports = {
   updateClientAdminService,
   deleteClientAdminService,
   listSolicitationService,
-  listByIdClientService
+  listByIdClientService,
+  createClientService
 }
