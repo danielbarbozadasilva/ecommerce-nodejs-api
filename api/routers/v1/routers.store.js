@@ -1,9 +1,9 @@
 const joi = require('joi')
 const storeController = require('../../controllers/controllers.store')
 const validateDTOMiddleware = require('../../utils/middlewares/middlewares.validate-dto')
+const verifyIdDbMiddleware = require('../../utils/middlewares/middlewares.verify-exists')
 const authenticationMiddleware = require('../../utils/middlewares/middlewares.authentication')
 const authorization = require('../../utils/middlewares/middlewares.authorization')
-const verifyIdDbMiddleware = require('../../utils/middlewares/middlewares.verify-exists')
 
 module.exports = (router) => {
   router
@@ -114,7 +114,7 @@ module.exports = (router) => {
           'any.required': '"email" is a required field',
           'string.empty': '"email" can not be empty'
         }),
-        phones: joi.string().required().messages({
+        phones: joi.array().required().messages({
           'any.required': '"phones" is a required field',
           'string.empty': '"phones" can not be empty'
         }),
