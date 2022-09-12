@@ -16,7 +16,8 @@ const listAllClientsService = async (offset, limit, store) => {
       {
         offset: Number(offset || 0),
         limit: Number(limit || 30),
-        populate: 'user'
+        populate: 'user',
+        select: '-salt -hash'
       }
     )
 
@@ -32,11 +33,9 @@ const listAllClientsService = async (offset, limit, store) => {
 
 const listClientSolicitationService = async (offset, limit, store, search) => {
   try {
-    const searchExp = new RegExp(search, 'i')
-
     const resultClient = await client.find({
       store,
-      $text: { $search: searchExp, $diacriticSensitive: false }
+      $text: { $search: new RegExp(search, 'i'), $diacriticSensitive: false }
     })
 
     const ordered = await solicitation.paginate(
@@ -78,7 +77,7 @@ const listClientSearchService = async (offset, limit, store, search) => {
         store,
         $or: [
           { $text: { $search: search, $diacriticSensitive: false } },
-          { phones: { $regex: search } }
+          { phones: { $regex: new RegExp(search, 'i') } }
         ]
       },
       {
@@ -131,7 +130,7 @@ const deleteClientAdminService = async (clientid) => {
 
     return {
       success: true,
-      message: 'Admin deleted successfully'
+      message: 'Deleted successfully'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -279,6 +278,22 @@ const updateClientService = async (id, body) => {
   }
 }
 
+const deleteClientService = async (clientid) => {
+  try {
+    const clientDB = await client.findOne({ user: clientid }).populate('user')
+    await clientDB.user.remove()
+    clientDB.deleted = true
+    await clientDB.save()
+
+    return {
+      success: true,
+      message: 'Deleted successfully'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listAllClientsService,
   listClientSolicitationService,
@@ -289,5 +304,6 @@ module.exports = {
   listSolicitationService,
   listByIdClientService,
   createClientService,
-  updateClientService
+  updateClientService,
+  deleteClientService
 }

@@ -1,8 +1,7 @@
 const clientService = require('../services/services.client')
 
 const listAllClientsController = async (req, res) => {
-  const { store } = req.query
-  const { offset, limit } = req.query
+  const { store, offset, limit } = req.query
 
   const resultService = await clientService.listAllClientsService(
     offset,
@@ -18,8 +17,8 @@ const listAllClientsController = async (req, res) => {
 }
 
 const searchClientSolicitationController = async (req, res) => {
-  const { search } = req.params
   const { offset, limit, store } = req.query
+  const { search } = req.params
 
   const resultService = await clientService.listClientSolicitationService(
     offset,
@@ -36,8 +35,8 @@ const searchClientSolicitationController = async (req, res) => {
 }
 
 const listClientSearchController = async (req, res) => {
-  const { search } = req.params
   const { offset, limit, store } = req.query
+  const { search } = req.params
 
   const resultService = await clientService.listClientSearchService(
     offset,
@@ -116,7 +115,7 @@ const listSolicitationController = async (req, res) => {
 }
 
 const listByIdClientController = async (req, res) => {
-  const { clientid } = req.params
+  const { clientid } = req.payload
   const { store } = req.query
 
   const resultService = await clientService.listByIdClientService(
@@ -156,6 +155,18 @@ const updaterClientController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const deleteClientController = async (req, res) => {
+  const { clientid } = req.payload
+
+  const resultService = await clientService.deleteClientService(clientid)
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
   listAllClientsController,
   searchClientSolicitationController,
@@ -166,5 +177,6 @@ module.exports = {
   listSolicitationController,
   listByIdClientController,
   createClientController,
-  updaterClientController
+  updaterClientController,
+  deleteClientController
 }
