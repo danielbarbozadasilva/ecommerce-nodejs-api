@@ -1,4 +1,5 @@
 const {
+  user,
   client,
   solicitation,
   product,
@@ -6,6 +7,7 @@ const {
 } = require('../models/models.index')
 const clientMapper = require('../mappers/mappers.client')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
+const cryptography = require('../utils/utils.cryptography')
 
 const listAllClientsService = async (offset, limit, store) => {
   try {
@@ -95,31 +97,28 @@ const listClientSearchService = async (offset, limit, store, search) => {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
   }
 }
+
 const updateClientAdminService = async (clientid, body) => {
   try {
-    await client.findOneAndUpdate(
-      { _id: clientid },
-      {
-        $set: {
-          cpf: body.cpf,
-          name: body.name,
-          email: body.email,
-          phones: body.phones,
-          birthDate: body.birthDate,
-          address: {
-            location: body.address.location,
-            number: body.address.number,
-            complement: body.address.complement,
-            district: body.address.district,
-            city: body.address.city,
-            zipCode: body.address.zipCode
-          }
-        }
-      }
-    )
+    const clientDB = await client
+      .findById(clientid)
+      .populate({ path: 'user', select: '-salt -hash' })
+
+    clientDB.user.name = body.name
+    clientDB.name = body.name
+    clientDB.user.email = body.email
+    clientDB.cpf = body.cpf
+    clientDB.phones = body.phones
+    clientDB.address = body.address
+    clientDB.birthDate = body.birthDate
+
+    await clientDB.user.save()
+    await clientDB.save()
+
     return {
       success: true,
-      message: 'Operation performed successfully'
+      message: 'Operation performed successfully',
+      data: clientDB
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -205,12 +204,20 @@ const listByIdClientService = async (clientid, store) => {
 
 const createClientService = async (body) => {
   try {
-    const resultDB = await client.create({
-      cpf: body.cpf,
+    const salt = cryptography.createSalt()
+
+    const userDB = await user.create({
       name: body.name,
       email: body.email,
+      store: body.store,
+      salt,
+      hash: cryptography.createHash(body.password, salt)
+    })
+
+    const clientDB = await client.create({
+      name: body.name,
+      cpf: body.cpf,
       phones: body.phones,
-      birthDate: body.birthDate,
       address: {
         location: body.address.location,
         number: body.address.number,
@@ -218,13 +225,54 @@ const createClientService = async (body) => {
         district: body.address.district,
         city: body.address.city,
         zipCode: body.address.zipCode
-      }
+      },
+      store: body.store,
+      birthDate: body.birthDate,
+      user: userDB._id
     })
 
     return {
       success: true,
       message: 'Operation performed successfully',
-      data: resultDB
+      data: {
+        clientDB: { ...clientDB._doc, email: user.email }
+      }
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
+const updateClientService = async (id, body) => {
+  try {
+    const clientDB = await client.findOne({ user: id }).populate('user')
+
+    const salt = cryptography.createSalt()
+
+    clientDB.user.name = body.name
+    clientDB.name = body.name
+    clientDB.user.email = body.email
+    clientDB.salt = salt
+    clientDB.hash = cryptography.createHash(body.password, salt)
+    clientDB.cpf = body.cpf
+    clientDB.phones = body.phones
+    clientDB.address = body.address
+    clientDB.birthDate = body.birthDate
+
+    await clientDB.user.save()
+    await clientDB.save()
+
+    // criar mapper assim:
+    clientDB.user = {
+      email: clientDB.user.email,
+      _id: clientDB.user._id,
+      permissions: clientDB.user.permissions
+    }
+
+    return {
+      success: true,
+      message: 'Operation performed successfully',
+      data: clientDB
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -240,5 +288,6 @@ module.exports = {
   deleteClientAdminService,
   listSolicitationService,
   listByIdClientService,
-  createClientService
+  createClientService,
+  updateClientService
 }
