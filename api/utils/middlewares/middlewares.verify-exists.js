@@ -11,7 +11,8 @@ const verifyIdUserDbMiddleware = async (req, res, next) => {
 }
 
 const verifyIdClientDbMiddleware = async (req, res, next) => {
-  const clientDB = await client.findOne({ _id: req.params.id })
+  const clientDB = await client.findOne({ _id: req.params.clientid })
+
   if (!clientDB) {
     throw new ErrorUnprocessableEntity(`Não existe um cliente com esse id!`)
   }
@@ -27,14 +28,6 @@ const verifyIdStoreDbMiddleware = async (req, res, next) => {
 }
 
 const verifyEmailUserExists = async (req, res, next) => {
-  const resultEmail = await user.findOne({ email: req.body.email })
-  if (resultEmail) {
-    throw new ErrorBusinessRule('Este e-mail já está em uso!')
-  }
-  next()
-}
-
-const verifyEmailBodyUserExists = async (req, res, next) => {
   const resultEmail = await user
     .findOne({ email: req.body.email })
     .where('_id')
@@ -46,24 +39,8 @@ const verifyEmailBodyUserExists = async (req, res, next) => {
   next()
 }
 
-const verifyCnpjStoreExists = async (req, res, next) => {
-  const resulCnpj = await store.findOne({ cnpj: req.body.cnpj })
-  if (resulCnpj) {
-    throw new ErrorBusinessRule('Este cnpj já está em uso!')
-  }
-  next()
-}
-
 const verifyCpfUserExists = async (req, res, next) => {
-  const resulCpf = await user.findOne({ cpf: req.body.cpf })
-  if (resulCpf) {
-    throw new ErrorBusinessRule('Este cpf já está em uso!')
-  }
-  next()
-}
-
-const verifyCpfBodyUserExists = async (req, res, next) => {
-  const resulCpf = await user
+  const resulCpf = await client
     .findOne({ cpf: req.body.cpf })
     .where('_id')
     .ne(req.params.clientid)
@@ -74,7 +51,7 @@ const verifyCpfBodyUserExists = async (req, res, next) => {
   next()
 }
 
-const verifyCnpjBodyStoreExists = async (req, res, next) => {
+const verifyCnpjStoreExists = async (req, res, next) => {
   const resulCnpj = await store
     .findOne({ cnpj: req.body.cnpj })
     .where('_id')
@@ -87,19 +64,10 @@ const verifyCnpjBodyStoreExists = async (req, res, next) => {
 }
 
 const verifyEmailStoreExists = async (req, res, next) => {
-  const resultEmail = await store.findOne({ email: req.body.email })
-  if (resultEmail) {
-    throw new ErrorBusinessRule('Este e-mail já está em uso!')
-  }
-  next()
-}
-
-const verifyEmailBodyStoreExists = async (req, res, next) => {
   const resultEmail = await store
     .findOne({ email: req.body.email })
     .where('_id')
     .ne(req.params.storeid)
-
   if (resultEmail) {
     throw new ErrorBusinessRule('Este e-mail já está em uso!')
   }
@@ -112,10 +80,6 @@ module.exports = {
   verifyIdStoreDbMiddleware,
   verifyEmailUserExists,
   verifyCpfUserExists,
-  verifyCpfBodyUserExists,
   verifyCnpjStoreExists,
-  verifyEmailBodyUserExists,
-  verifyCnpjBodyStoreExists,
-  verifyEmailStoreExists,
-  verifyEmailBodyStoreExists
+  verifyEmailStoreExists
 }

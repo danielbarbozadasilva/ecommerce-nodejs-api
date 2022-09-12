@@ -12,7 +12,6 @@ const profile = [
   {
     permission: 'administrator',
     rule: [
-      'USER_LIST_ALL',
       'USER_LIST_ID',
       'USER_UPDATE',
       'USER_DELETE',
@@ -20,24 +19,32 @@ const profile = [
       'STORE_UPDATE',
       'STORE_DELETE',
       'LIST_CLIENT',
+      'CLIENT_CREATE',
       'SEARCH_SOLICITATION',
       'SEARCH_CLIENT',
-      'LIST_CLIENT_ID',
+      'LIST_CLIENT_SOLICITATION',
+      'CLIENT_ID',
       'CLIENT_UPDATE',
-      'CLIENT_DELETE',
-      'LIST_CLIENT_SOLICITATION'
+      'CLIENT_DELETE'
     ]
   },
   {
     permission: 'client',
     rule: [
-      'USER_LIST_ALL',
       'USER_LIST_ID',
       'USER_UPDATE',
       'USER_DELETE',
       'STORE_CREATE',
       'STORE_UPDATE',
-      'STORE_DELETE'
+      'STORE_DELETE',
+      'LIST_CLIENT',
+      'CLIENT_CREATE',
+      'SEARCH_SOLICITATION',
+      'SEARCH_CLIENT',
+      'LIST_CLIENT_SOLICITATION',
+      'CLIENT_ID',
+      'CLIENT_UPDATE',
+      'CLIENT_DELETE'
     ]
   }
 ]
@@ -127,20 +134,6 @@ const registerService = async (body) => {
       success: true,
       message: 'Operation performed successfully',
       data: userMapper.toDTO(result)
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
-const listAllUsersService = async () => {
-  try {
-    const resultDB = await user.find({}).sort({ name: 1 })
-
-    return {
-      success: true,
-      message: 'Operation performed successfully',
-      data: resultDB.map((item) => userMapper.toDTO(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -272,7 +265,6 @@ module.exports = {
   checkUserBelongsStoreService,
   authService,
   registerService,
-  listAllUsersService,
   listByIdUserService,
   updateUserService,
   deleteUserService,

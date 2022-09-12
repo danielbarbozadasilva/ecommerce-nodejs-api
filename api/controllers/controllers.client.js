@@ -52,11 +52,11 @@ const listClientSearchController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
-const listByIdClientAdminController = async (req, res) => {
+const listByIdClientController = async (req, res) => {
   const { clientid } = req.params
   const { store } = req.query
 
-  const resultService = await clientService.listByIdClientAdminService(
+  const resultService = await clientService.listByIdClientService(
     clientid,
     store
   )
@@ -68,14 +68,11 @@ const listByIdClientAdminController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
-const updaterClientAdminController = async (req, res) => {
+const updaterClientController = async (req, res) => {
   const { clientid } = req.params
   const { body } = req
 
-  const resultService = await clientService.updateClientAdminService(
-    clientid,
-    body
-  )
+  const resultService = await clientService.updateClientService(clientid, body)
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
@@ -84,10 +81,10 @@ const updaterClientAdminController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
-const deleteClientAdminController = async (req, res) => {
+const deleteClientController = async (req, res) => {
   const { clientid } = req.params
 
-  const resultService = await clientService.deleteClientAdminService(clientid)
+  const resultService = await clientService.deleteClientService(clientid)
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
@@ -114,22 +111,6 @@ const listSolicitationController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
-const listByIdClientController = async (req, res) => {
-  const { clientid } = req.payload
-  const { store } = req.query
-
-  const resultService = await clientService.listByIdClientService(
-    clientid,
-    store
-  )
-  const code = resultService.success ? 200 : 400
-  const message = resultService.success
-    ? { message: resultService.message }
-    : { details: resultService.details }
-  const data = resultService.data ? resultService.data : ''
-  return res.status(code).send({ message, data })
-}
-
 const createClientController = async (req, res) => {
   const { body } = req
 
@@ -142,41 +123,13 @@ const createClientController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
-const updaterClientController = async (req, res) => {
-  const { clientid } = req.payload
-  const { body } = req
-
-  const resultService = await clientService.updateClientService(clientid, body)
-  const code = resultService.success ? 200 : 400
-  const message = resultService.success
-    ? { message: resultService.message }
-    : { details: resultService.details }
-  const data = resultService.data ? resultService.data : ''
-  return res.status(code).send({ message, data })
-}
-
-const deleteClientController = async (req, res) => {
-  const { clientid } = req.payload
-
-  const resultService = await clientService.deleteClientService(clientid)
-  const code = resultService.success ? 200 : 400
-  const message = resultService.success
-    ? { message: resultService.message }
-    : { details: resultService.details }
-  const data = resultService.data ? resultService.data : ''
-  return res.status(code).send({ message, data })
-}
-
 module.exports = {
   listAllClientsController,
   searchClientSolicitationController,
   listClientSearchController,
-  listByIdClientAdminController,
-  updaterClientAdminController,
-  deleteClientAdminController,
-  listSolicitationController,
   listByIdClientController,
-  createClientController,
   updaterClientController,
-  deleteClientController
+  deleteClientController,
+  listSolicitationController,
+  createClientController
 }

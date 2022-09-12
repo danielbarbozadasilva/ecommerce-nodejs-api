@@ -97,22 +97,43 @@ const listClientSearchService = async (offset, limit, store, search) => {
   }
 }
 
-const updateClientAdminService = async (clientid, body) => {
+const updateClientService = async (id, body) => {
   try {
-    const clientDB = await client
-      .findById(clientid)
-      .populate({ path: 'user', select: '-salt -hash' })
+    const salt = cryptography.createSalt()
 
-    clientDB.user.name = body.name
-    clientDB.name = body.name
-    clientDB.user.email = body.email
-    clientDB.cpf = body.cpf
-    clientDB.phones = body.phones
-    clientDB.address = body.address
-    clientDB.birthDate = body.birthDate
+    const clientDB = await client.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          name: body.name,
+          cpf: body.cpf,
+          phones: body.phones,
+          address: {
+            location: body.address.location,
+            number: body.address.number,
+            complement: body.address.complement,
+            district: body.address.district,
+            city: body.address.city,
+            zipCode: body.address.zipCode
+          },
+          store: body.store,
+          birthDate: body.birthDate
+        }
+      }
+    )
 
-    await clientDB.user.save()
-    await clientDB.save()
+    await user.findOneAndUpdate(
+      { _id: clientDB.user },
+      {
+        $set: {
+          name: body.name,
+          email: body.email,
+          store: body.store,
+          salt,
+          hash: cryptography.createHash(body.password, salt)
+        }
+      }
+    )
 
     return {
       success: true,
@@ -124,9 +145,18 @@ const updateClientAdminService = async (clientid, body) => {
   }
 }
 
-const deleteClientAdminService = async (clientid) => {
+const deleteClientService = async (id) => {
   try {
-    await client.deleteOne({ _id: clientid })
+    const resultClient = await client.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          deleted: true
+        }
+      }
+    )
+
+    await user.deleteOne({ _id: resultClient.user })
 
     return {
       success: true,
@@ -137,7 +167,7 @@ const deleteClientAdminService = async (clientid) => {
   }
 }
 
-const listByIdClientAdminService = async (clientid, store) => {
+const listByIdClientService = async (clientid, store) => {
   try {
     const resultDB = await client
       .findOne({ _id: clientid }, { store })
@@ -185,22 +215,6 @@ const listSolicitationService = async (offset, limit, store, clientid) => {
   }
 }
 
-const listByIdClientService = async (clientid, store) => {
-  try {
-    const resultDB = await client
-      .findOne({ user: clientid }, { store })
-      .populate({ path: 'user', select: '-salt -hash' })
-
-    return {
-      success: true,
-      message: 'Operation performed successfully',
-      data: resultDB
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
 const createClientService = async (body) => {
   try {
     const salt = cryptography.createSalt()
@@ -223,50 +237,13 @@ const createClientService = async (body) => {
         complement: body.address.complement,
         district: body.address.district,
         city: body.address.city,
+        state: body.address.state,
         zipCode: body.address.zipCode
       },
       store: body.store,
       birthDate: body.birthDate,
       user: userDB._id
     })
-
-    return {
-      success: true,
-      message: 'Operation performed successfully',
-      data: {
-        clientDB: { ...clientDB._doc, email: user.email }
-      }
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
-const updateClientService = async (id, body) => {
-  try {
-    const clientDB = await client.findOne({ user: id }).populate('user')
-
-    const salt = cryptography.createSalt()
-
-    clientDB.user.name = body.name
-    clientDB.name = body.name
-    clientDB.user.email = body.email
-    clientDB.salt = salt
-    clientDB.hash = cryptography.createHash(body.password, salt)
-    clientDB.cpf = body.cpf
-    clientDB.phones = body.phones
-    clientDB.address = body.address
-    clientDB.birthDate = body.birthDate
-
-    await clientDB.user.save()
-    await clientDB.save()
-
-    // criar mapper assim:
-    clientDB.user = {
-      email: clientDB.user.email,
-      _id: clientDB.user._id,
-      permissions: clientDB.user.permissions
-    }
 
     return {
       success: true,
@@ -278,32 +255,13 @@ const updateClientService = async (id, body) => {
   }
 }
 
-const deleteClientService = async (clientid) => {
-  try {
-    const clientDB = await client.findOne({ user: clientid }).populate('user')
-    await clientDB.user.remove()
-    clientDB.deleted = true
-    await clientDB.save()
-
-    return {
-      success: true,
-      message: 'Deleted successfully'
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
 module.exports = {
   listAllClientsService,
   listClientSolicitationService,
   listClientSearchService,
-  listByIdClientAdminService,
-  updateClientAdminService,
-  deleteClientAdminService,
-  listSolicitationService,
-  listByIdClientService,
-  createClientService,
   updateClientService,
-  deleteClientService
+  deleteClientService,
+  listByIdClientService,
+  listSolicitationService,
+  createClientService
 }

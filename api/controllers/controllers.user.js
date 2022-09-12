@@ -22,16 +22,6 @@ const registerController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
-const listAllUsersController = async (req, res) => {
-  const resultService = await userService.listAllUsersService()
-  const code = resultService.success ? 200 : 400
-  const message = resultService.success
-    ? { message: resultService.message }
-    : { details: resultService.details }
-  const data = resultService.data ? resultService.data : ''
-  return res.status(code).send({ message, data })
-}
-
 const listByIdUserController = async (req, res) => {
   const { userid } = req.params
   const resultService = await userService.listByIdUserService(userid)
@@ -91,7 +81,6 @@ const resetPasswordController = async (req, res) => {
 module.exports = {
   authController,
   registerController,
-  listAllUsersController,
   listByIdUserController,
   updateUserController,
   deleteUserController,

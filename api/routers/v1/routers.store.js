@@ -146,8 +146,8 @@ module.exports = (router) => {
         })
       }),
       verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
-      verifyIdDbMiddleware.verifyEmailBodyStoreExists,
-      verifyIdDbMiddleware.verifyCnpjBodyStoreExists,
+      verifyIdDbMiddleware.verifyEmailStoreExists,
+      verifyIdDbMiddleware.verifyCnpjStoreExists,
       storeController.updateStoreController
     )
     .delete(
