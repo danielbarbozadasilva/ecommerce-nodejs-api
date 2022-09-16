@@ -50,8 +50,27 @@ const listCategoryByIdService = async (storeid, categoryid) => {
   }
 }
 
+const createCategoryByStoreService = async (storeid, body) => {
+  try {
+    const resultDB = await category.create({
+      name: body.name,
+      code: body.code,
+      store: storeid
+    })
+
+    return {
+      success: true,
+      message: 'Operation performed successfully',
+      data: categoryMapper.toDTO(resultDB)
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listCategoryByStoreService,
   listCategoryAvailabilityByStoreService,
-  listCategoryByIdService
+  listCategoryByIdService,
+  createCategoryByStoreService
 }

@@ -40,8 +40,25 @@ const listCategoryByIdController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const createCategoryByStoreController = async (req, res) => {
+  const { storeid } = req.query
+  const { body } = req
+
+  const resultService = await categoryService.createCategoryByStoreService(
+    storeid,
+    body
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
   listCategoryByStoreController,
   listCategoryAvailabilityByStoreController,
-  listCategoryByIdController
+  listCategoryByIdController,
+  createCategoryByStoreController
 }
