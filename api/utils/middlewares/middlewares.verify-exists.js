@@ -28,7 +28,7 @@ const verifyIdStoreDbMiddleware = async (req, res, next) => {
 }
 
 const verifyIdCategoryDbMiddleware = async (req, res, next) => {
-  const categoryDB = await category.findOne({ _id: req.query.categoryid })
+  const categoryDB = await category.findOne({ _id: req.params.categoryid })
   if (!categoryDB) {
     throw new ErrorUnprocessableEntity(`Não existe uma categoria com esse id!`)
   }
