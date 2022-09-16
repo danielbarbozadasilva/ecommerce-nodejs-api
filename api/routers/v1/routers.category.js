@@ -141,6 +141,59 @@ module.exports = (router) => {
       }),
       verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
       verifyIdDbMiddleware.verifyIdProductDbMiddleware,
-      categoryController.updateCategoryByStoreController
+      categoryController.updateCategoryController
     )
+    .delete(
+      authenticationMiddleware(),
+      authorization.authorizationMiddleware('DELETE_CATEGORY'),
+      validateDTOMiddleware('params', {
+        categoryid: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"category id" is a required field',
+            'string.empty': '"category id" can not be empty',
+            'string.pattern.base': '"category id" out of the expected format'
+          })
+      }),
+      verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
+      categoryController.deleteCategoryController
+    )
+
+  router.route('/category/:categoryid/products').get(
+    authenticationMiddleware(),
+    authorization.authorizationMiddleware('LIST_CATEGORY_PRODUCT'),
+    validateDTOMiddleware('params', {
+      categoryid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"category id" is a required field',
+          'string.empty': '"category id" can not be empty',
+          'string.pattern.base': '"category id" out of the expected format'
+        })
+    }),
+    verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
+    categoryController.listCategoryWithProductsController
+  )
+
+  router.route('/category/:categoryid/products').get(
+    authenticationMiddleware(),
+    authorization.authorizationMiddleware('LIST_CATEGORY_PRODUCT'),
+    validateDTOMiddleware('params', {
+      categoryid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"category id" is a required field',
+          'string.empty': '"category id" can not be empty',
+          'string.pattern.base': '"category id" out of the expected format'
+        })
+    }),
+    verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
+    categoryController.listCategoryWithProductsController
+  )
 }

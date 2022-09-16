@@ -56,13 +56,39 @@ const createCategoryByStoreController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
-const updateCategoryByStoreController = async (req, res) => {
+const updateCategoryController = async (req, res) => {
   const { categoryid } = req.params
   const { body } = req
 
-  const resultService = await categoryService.updateCategoryByStoreService(
+  const resultService = await categoryService.updateCategoryService(
     categoryid,
     body
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
+const deleteCategoryController = async (req, res) => {
+  const { categoryid } = req.params
+
+  const resultService = await categoryService.deleteCategoryService(categoryid)
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
+const listCategoryWithProductsController = async (req, res) => {
+  const { categoryid } = req.params
+  
+  const resultService = await categoryService.listCategoryWithProductsService(
+    categoryid
   )
   const code = resultService.success ? 200 : 400
   const message = resultService.success
@@ -77,5 +103,7 @@ module.exports = {
   listCategoryAvailabilityByStoreController,
   listCategoryByIdController,
   createCategoryByStoreController,
-  updateCategoryByStoreController
+  updateCategoryController,
+  deleteCategoryController,
+  listCategoryWithProductsController
 }

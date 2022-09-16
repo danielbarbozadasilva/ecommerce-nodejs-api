@@ -68,7 +68,7 @@ const createCategoryByStoreService = async (storeid, body) => {
   }
 }
 
-const updateCategoryByStoreService = async (categoryid, body) => {
+const updateCategoryService = async (categoryid, body) => {
   try {
     await category.findOneAndUpdate(
       { _id: categoryid },
@@ -91,10 +91,38 @@ const updateCategoryByStoreService = async (categoryid, body) => {
   }
 }
 
+const deleteCategoryService = async (categoryid) => {
+  try {
+    await category.deleteOne({ _id: categoryid })
+
+    return {
+      success: true,
+      message: 'Data deleted successfully'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
+const listCategoryWithProductsService = async (categoryid) => {
+  try {
+    const resultDB = await category.findById(categoryid).populate(['products'])
+
+    return {
+      success: true,
+      message: 'Operation performed successfully',
+      data: resultDB.map((item) => categoryMapper.toDTOWithProducts(item))
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
 module.exports = {
   listCategoryByStoreService,
   listCategoryAvailabilityByStoreService,
   listCategoryByIdService,
   createCategoryByStoreService,
-  updateCategoryByStoreService
+  updateCategoryService,
+  deleteCategoryService,
+  listCategoryWithProductsService
 }
