@@ -56,9 +56,26 @@ const createCategoryByStoreController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const updateCategoryByStoreController = async (req, res) => {
+  const { categoryid } = req.params
+  const { body } = req
+
+  const resultService = await categoryService.updateCategoryByStoreService(
+    categoryid,
+    body
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
   listCategoryByStoreController,
   listCategoryAvailabilityByStoreController,
   listCategoryByIdController,
-  createCategoryByStoreController
+  createCategoryByStoreController,
+  updateCategoryByStoreController
 }

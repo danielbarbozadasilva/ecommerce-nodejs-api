@@ -68,9 +68,33 @@ const createCategoryByStoreService = async (storeid, body) => {
   }
 }
 
+const updateCategoryByStoreService = async (categoryid, body) => {
+  try {
+    await category.findOneAndUpdate(
+      { _id: categoryid },
+      {
+        $set: {
+          name: body.name,
+          code: body.code,
+          availability: body.availability,
+          product: body.product
+        }
+      }
+    )
+
+    return {
+      success: true,
+      message: 'Data updated successfully'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listCategoryByStoreService,
   listCategoryAvailabilityByStoreService,
   listCategoryByIdService,
-  createCategoryByStoreService
+  createCategoryByStoreService,
+  updateCategoryByStoreService
 }
