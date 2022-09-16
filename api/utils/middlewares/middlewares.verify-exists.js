@@ -20,7 +20,7 @@ const verifyIdClientDbMiddleware = async (req, res, next) => {
 }
 
 const verifyIdStoreDbMiddleware = async (req, res, next) => {
-  const storeDB = await store.findOne({ _id: req.params.storeid })
+  const storeDB = await store.findOne({ _id: req.query.storeid })
   if (!storeDB) {
     throw new ErrorUnprocessableEntity(`Não existe uma loja com esse id!`)
   }

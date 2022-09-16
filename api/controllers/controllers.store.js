@@ -23,7 +23,7 @@ const listByIdStoreController = async (req, res) => {
 
 const updateStoreController = async (req, res) => {
   const { body } = req
-  const { storeid } = req.params
+  const { storeid } = req.query
   const resultService = await storeService.updateStoreService(storeid, body)
   const code = resultService.success ? 200 : 400
   const message = resultService.success
@@ -34,7 +34,7 @@ const updateStoreController = async (req, res) => {
 }
 
 const deleteStoreController = async (req, res) => {
-  const { storeid } = req.params
+  const { storeid } = req.query
   const resultService = await storeService.deleteStoreService(storeid)
   const code = resultService.success ? 200 : 400
   const message = resultService.success

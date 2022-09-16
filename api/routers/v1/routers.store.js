@@ -85,16 +85,15 @@ module.exports = (router) => {
     .put(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('STORE_UPDATE'),
-      authorization.verifyUserBelongsStore(),
-      validateDTOMiddleware('params', {
+      validateDTOMiddleware('query', {
         storeid: joi
           .string()
           .regex(/^[0-9a-fA-F]{24}$/)
           .required()
           .messages({
-            'any.required': '"storeid id" is a required field',
-            'string.empty': '"storeid id" can not be empty',
-            'string.pattern.base': '"storeid id" out of the expected format'
+            'any.required': '"store id" is a required field',
+            'string.empty': '"store id" can not be empty',
+            'string.pattern.base': '"store id" out of the expected format'
           })
       }),
       validateDTOMiddleware('body', {
@@ -153,16 +152,15 @@ module.exports = (router) => {
     .delete(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('STORE_DELETE'),
-      authorization.verifyUserBelongsStore(),
-      validateDTOMiddleware('params', {
+      validateDTOMiddleware('query', {
         storeid: joi
           .string()
           .regex(/^[0-9a-fA-F]{24}$/)
           .required()
           .messages({
-            'any.required': '"storeid id" is a required field',
-            'string.empty': '"storeid id" can not be empty',
-            'string.pattern.base': '"storeid id" out of the expected format'
+            'any.required': '"store id" is a required field',
+            'string.empty': '"store id" can not be empty',
+            'string.pattern.base': '"store id" out of the expected format'
           })
       }),
       verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
