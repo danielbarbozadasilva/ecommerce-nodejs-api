@@ -1,27 +1,19 @@
 const { decodeToken } = require('../utils.cryptography')
-const {
-  checkPermissionService,
-  checkUserBelongsStoreService
-} = require('../../services/services.user')
+const services = require('../../services/services.user')
 
 const authorizationMiddleware = (rule) => async (req, res, next) => {
-  if (rule !== '*') {
-    const { token } = req.headers
-    const { permissions } = decodeToken(token)
-
-    checkPermissionService(permissions, rule)
-  }
-  next()
-}
-
-const verifyUserBelongsStore = () => async (req, res, next) => {
   const { token } = req.headers
-  const { id } = decodeToken(token)
-  await checkUserBelongsStoreService(id)
+  const { id, permissions } = decodeToken(token)
+  const userid = req.params.clientid
+
+  if (rule !== '*') {
+    services.checkPermissionService(permissions, rule)
+  }
+  await services.checkIdAuthorizationService(id, userid, permissions)
+
   next()
 }
 
 module.exports = {
-  authorizationMiddleware,
-  verifyUserBelongsStore
+  authorizationMiddleware
 }
