@@ -5,6 +5,7 @@ const {
   product,
   variation
 } = require('../models/models.index')
+
 const clientMapper = require('../mappers/mappers.client')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const cryptography = require('../utils/utils.cryptography')
@@ -72,20 +73,13 @@ const listClientSolicitationService = async (offset, limit, store, search) => {
 
 const listClientSearchService = async (offset, limit, store, search) => {
   try {
-    const resultDB = await client.paginate(
-      {
-        store,
-        $or: [
-          { $text: { $search: search, $diacriticSensitive: false } },
-          { phones: { $regex: new RegExp(search, 'i') } }
-        ]
-      },
-      {
-        offset: Number(offset || 0),
-        limit: Number(limit || 30),
-        populate: { path: 'user', select: '-salt -hash' }
-      }
-    )
+    const resultDB = await client.paginate({
+      store,
+      $or: [{ $text: { $search: `${search}`, $diacriticSensitive: false } }],
+      // $or: [{ phones: { $in: search } }],
+      offset: Number(offset || 0),
+      limit: Number(limit || 30)
+    })
 
     return {
       success: true,
@@ -97,7 +91,7 @@ const listClientSearchService = async (offset, limit, store, search) => {
   }
 }
 
-const updateClientService = async (id, body) => {
+const updateClientService = async (id, store, body) => {
   try {
     const salt = cryptography.createSalt()
 
@@ -114,9 +108,10 @@ const updateClientService = async (id, body) => {
             complement: body.address.complement,
             district: body.address.district,
             city: body.address.city,
-            zipCode: body.address.zipCode
+            zipCode: body.address.zipCode,
+            state: body.address.state
           },
-          store: body.store,
+          store,
           birthDate: body.birthDate
         }
       }
@@ -128,7 +123,7 @@ const updateClientService = async (id, body) => {
         $set: {
           name: body.name,
           email: body.email,
-          store: body.store,
+          store,
           salt,
           hash: cryptography.createHash(body.password, salt)
         }
@@ -137,8 +132,7 @@ const updateClientService = async (id, body) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
-      data: clientDB
+      message: 'Operation performed successfully'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -167,16 +161,16 @@ const deleteClientService = async (id) => {
   }
 }
 
-const listByIdClientService = async (clientid, store) => {
+const listByIdClientService = async (clientid, storeid) => {
   try {
     const resultDB = await client
-      .findOne({ _id: clientid }, { store })
-      .populate({ path: 'user', select: '-salt -hash' })
+      .findOne({ _id: clientid, store: storeid })
+      .populate('user', '-salt -hash')
 
     return {
       success: true,
       message: 'Operation performed successfully',
-      data: resultDB
+      data: clientMapper.toClientDTO(resultDB)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -215,14 +209,14 @@ const listSolicitationService = async (offset, limit, store, clientid) => {
   }
 }
 
-const createClientService = async (body) => {
+const createClientService = async (store, body) => {
   try {
     const salt = cryptography.createSalt()
 
     const userDB = await user.create({
       name: body.name,
       email: body.email,
-      store: body.store,
+      store,
       salt,
       hash: cryptography.createHash(body.password, salt)
     })
@@ -237,18 +231,18 @@ const createClientService = async (body) => {
         complement: body.address.complement,
         district: body.address.district,
         city: body.address.city,
-        state: body.address.state,
-        zipCode: body.address.zipCode
+        zipCode: body.address.zipCode,
+        state: body.address.state
       },
-      store: body.store,
-      birthDate: body.birthDate,
-      user: userDB._id
+      store,
+      user: userDB._id,
+      birthDate: body.birthDate
     })
 
     return {
       success: true,
       message: 'Operation performed successfully',
-      data: clientDB
+      data: clientMapper.toDTO(userDB, clientDB)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
