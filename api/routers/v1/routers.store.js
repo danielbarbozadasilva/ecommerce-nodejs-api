@@ -1,19 +1,17 @@
 const joi = require('joi')
 const storeController = require('../../controllers/controllers.store')
 const validateDTOMiddleware = require('../../utils/middlewares/middlewares.validate-dto')
-const authenticationMiddleware = require('../../utils/middlewares/middlewares.authentication')
-const authorizationMiddleware = require('../../utils/middlewares/middlewares.authorization')
 const verifyIdDbMiddleware = require('../../utils/middlewares/middlewares.verify-exists')
+const authenticationMiddleware = require('../../utils/middlewares/middlewares.authentication')
+const authorization = require('../../utils/middlewares/middlewares.authorization')
 
 module.exports = (router) => {
   router
     .route('/store')
-    .get(
-      authenticationMiddleware(),
-      authorizationMiddleware('STORE_LIST'),
-      storeController.listAllStoresController
-    )
+    .get(storeController.listAllStoresController)
     .post(
+      authenticationMiddleware(),
+      authorization.authorizationMiddleware('STORE_CREATE'),
       validateDTOMiddleware('body', {
         cnpj: joi
           .string()
@@ -70,8 +68,6 @@ module.exports = (router) => {
   router
     .route('/store/:storeid')
     .get(
-      authenticationMiddleware(),
-      authorizationMiddleware('STORE_LIST_ID'),
       validateDTOMiddleware('params', {
         storeid: joi
           .string()
@@ -88,16 +84,16 @@ module.exports = (router) => {
     )
     .put(
       authenticationMiddleware(),
-      authorizationMiddleware('STORE_UPDATE'),
-      validateDTOMiddleware('params', {
+      authorization.authorizationMiddleware('STORE_UPDATE'),
+      validateDTOMiddleware('query', {
         storeid: joi
           .string()
           .regex(/^[0-9a-fA-F]{24}$/)
           .required()
           .messages({
-            'any.required': '"storeid id" is a required field',
-            'string.empty': '"storeid id" can not be empty',
-            'string.pattern.base': '"storeid id" out of the expected format'
+            'any.required': '"store id" is a required field',
+            'string.empty': '"store id" can not be empty',
+            'string.pattern.base': '"store id" out of the expected format'
           })
       }),
       validateDTOMiddleware('body', {
@@ -117,7 +113,7 @@ module.exports = (router) => {
           'any.required': '"email" is a required field',
           'string.empty': '"email" can not be empty'
         }),
-        phones: joi.string().required().messages({
+        phones: joi.array().required().messages({
           'any.required': '"phones" is a required field',
           'string.empty': '"phones" can not be empty'
         }),
@@ -149,22 +145,22 @@ module.exports = (router) => {
         })
       }),
       verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
-      verifyIdDbMiddleware.verifyEmailBodyStoreExists,
-      verifyIdDbMiddleware.verifyCnpjBodyStoreExists,
+      verifyIdDbMiddleware.verifyEmailStoreExists,
+      verifyIdDbMiddleware.verifyCnpjStoreExists,
       storeController.updateStoreController
     )
     .delete(
       authenticationMiddleware(),
-      authorizationMiddleware('STORE_DELETE'),
-      validateDTOMiddleware('params', {
+      authorization.authorizationMiddleware('STORE_DELETE'),
+      validateDTOMiddleware('query', {
         storeid: joi
           .string()
           .regex(/^[0-9a-fA-F]{24}$/)
           .required()
           .messages({
-            'any.required': '"storeid id" is a required field',
-            'string.empty': '"storeid id" can not be empty',
-            'string.pattern.base': '"storeid id" out of the expected format'
+            'any.required': '"store id" is a required field',
+            'string.empty': '"store id" can not be empty',
+            'string.pattern.base': '"store id" out of the expected format'
           })
       }),
       verifyIdDbMiddleware.verifyIdStoreDbMiddleware,

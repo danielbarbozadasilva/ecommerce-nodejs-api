@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema(
       ref: 'store',
       required: true
     },
-    permission: {
+    permissions: {
       type: Array,
       default: ['client']
     },

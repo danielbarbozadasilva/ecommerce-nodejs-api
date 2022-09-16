@@ -1,4 +1,4 @@
-const { user } = require('../models/models.index')
+const { user, client } = require('../models/models.index')
 const cryptography = require('../utils/utils.cryptography')
 const emailUtils = require('../utils/utils.email')
 const { Email } = require('../utils/utils.email.message')
@@ -10,23 +10,42 @@ const ErrorBusinessRule = require('../utils/errors/errors.business-rule')
 
 const profile = [
   {
-    type: 1,
-    description: 'administrator',
-    permission: [
-      'USER_LIST_ALL',
+    permission: 'administrator',
+    rule: [
       'USER_LIST_ID',
       'USER_UPDATE',
       'USER_DELETE',
-      'STORE_LIST',
-      'STORE_LIST_ID',
+      'STORE_CREATE',
       'STORE_UPDATE',
-      'STORE_DELETE'
+      'STORE_DELETE',
+      'LIST_CLIENT',
+      'CLIENT_CREATE',
+      'SEARCH_SOLICITATION',
+      'SEARCH_CLIENT',
+      'LIST_CLIENT_SOLICITATION',
+      'CLIENT_ID',
+      'CLIENT_UPDATE',
+      'CLIENT_DELETE'
     ]
   },
   {
-    type: 2,
-    description: 'client',
-    permission: ['USER_LIST_ID', 'USER_UPDATE']
+    permission: 'client',
+    rule: [
+      'USER_LIST_ID',
+      'USER_UPDATE',
+      'USER_DELETE',
+      'STORE_CREATE',
+      'STORE_UPDATE',
+      'STORE_DELETE',
+      'LIST_CLIENT',
+      'CLIENT_CREATE',
+      'SEARCH_SOLICITATION',
+      'SEARCH_CLIENT',
+      'LIST_CLIENT_SOLICITATION',
+      'CLIENT_ID',
+      'CLIENT_UPDATE',
+      'CLIENT_DELETE'
+    ]
   }
 ]
 
@@ -47,9 +66,11 @@ const userIsValidService = async (email, password) => {
   throw new ErrorNotAuthenticatedUser('Credenciais de acesso inválidas!')
 }
 
-const checkPermissionService = (type, permission) => {
-  const result = profile.find((item) => item.type == type)
-  const check = result?.permission?.includes(permission)
+const checkPermissionService = (permissions, rule) => {
+  const result = profile.filter(
+    (item) => item.permission === String(permissions)
+  )
+  const check = result[0]?.rule?.includes(rule)
 
   if (!check) {
     throw new ErrorNotAuthorizedUser('Usuário não autorizado!')
@@ -59,7 +80,7 @@ const checkPermissionService = (type, permission) => {
 
 const createCredentialService = async (email) => {
   const userDB = await user.findOne({ email })
-  const userDTO = userMapper.toUserDTO(userDB)
+  const userDTO = userMapper.toDTO(userDB)
   const userToken = cryptography.generateToken(userDTO)
   if (userDTO && userToken) {
     return {
@@ -106,21 +127,7 @@ const registerService = async (body) => {
     return {
       success: true,
       message: 'Operation performed successfully',
-      data: userMapper.toUserDTO(result)
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
-const listAllUsersService = async () => {
-  try {
-    const resultDB = await user.find({}).sort({ name: 1 })
-
-    return {
-      success: true,
-      message: 'Operation performed successfully',
-      data: resultDB.map((item) => userMapper.toDTO(item))
+      data: userMapper.toDTO(result)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -246,16 +253,31 @@ const resetPasswordUserService = async (body) => {
   }
 }
 
+const checkIdAuthorizationService = async (idToken, idUser, permissions) => {
+  const result = permissions.map((item) => item === 'administrator')
+
+  if (idUser && !result[0]) {
+    const userDB = await client.findOne({ _id: idUser, user: idToken })
+
+    if (!userDB) {
+      throw new ErrorNotAuthorizedUser(
+        'Usuário não autorizado!\nVocê só pode realizar a operação usando o seu próprio "Id"'
+      )
+    }
+  }
+  return !!result
+}
+
 module.exports = {
   userIsValidService,
   checkPermissionService,
   authService,
   registerService,
-  listAllUsersService,
   listByIdUserService,
   updateUserService,
   deleteUserService,
   sendTokenRecoveryPasswordService,
   checkTokenRecoveryPasswordService,
-  resetPasswordUserService
+  resetPasswordUserService,
+  checkIdAuthorizationService
 }
