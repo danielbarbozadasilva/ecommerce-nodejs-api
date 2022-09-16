@@ -1,4 +1,4 @@
-const joi = require('joi')
+const joi = require('joi').extend(require('@joi/date'))
 
 const validateDTOMiddleware = require('../../utils/middlewares/middlewares.validate-dto')
 const verifyIdDbMiddleware = require('../../utils/middlewares/middlewares.verify-exists')
@@ -12,11 +12,36 @@ module.exports = (router) => {
     .get(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('LIST_CLIENT'),
+      validateDTOMiddleware('query', {
+        offset: joi.number(),
+        limit: joi.number(),
+        storeid: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"store id" is a required field',
+            'string.empty': '"store id" can not be empty',
+            'string.pattern.base': '"store id" out of the expected format'
+          })
+      }),
+      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
       clientController.listAllClientsController
     )
     .post(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('CLIENT_CREATE'),
+      validateDTOMiddleware('query', {
+        storeid: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"store id" is a required field',
+            'string.empty': '"store id" can not be empty',
+            'string.pattern.base': '"store id" out of the expected format'
+          })
+      }),
       validateDTOMiddleware('body', {
         cpf: joi
           .string()
@@ -34,20 +59,11 @@ module.exports = (router) => {
           'any.required': '"email" is a required field',
           'string.empty': '"email" can not be empty'
         }),
-        store: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"storeid id" is a required field',
-            'string.empty': '"storeid id" can not be empty',
-            'string.pattern.base': '"storeid id" out of the expected format'
-          }),
         phones: joi.array().required().messages({
           'any.required': '"phones" is a required field',
           'string.empty': '"phones" can not be empty'
         }),
-        birthDate: joi.string().required().messages({
+        birthDate: joi.date().format('YYYY-MM-DD').raw().required().messages({
           'any.required': '"birth date" is a required field',
           'string.empty': '"birth date" can not be empty'
         }),
@@ -91,25 +107,64 @@ module.exports = (router) => {
       clientController.createClientController
     )
 
-  router
-    .route('/client/search/:search/solicitations')
-    .get(
-      authenticationMiddleware(),
-      authorization.authorizationMiddleware('SEARCH_SOLICITATION'),
-      clientController.searchClientSolicitationController
-    )
+  router.route('/client/search/:search/solicitations').get(
+    authenticationMiddleware(),
+    authorization.authorizationMiddleware('SEARCH_SOLICITATION'),
+    validateDTOMiddleware('query', {
+      offset: joi.number(),
+      limit: joi.number(),
+      storeid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"store id" is a required field',
+          'string.empty': '"store id" can not be empty',
+          'string.pattern.base': '"store id" out of the expected format'
+        })
+    }),
+    validateDTOMiddleware('params', {
+      search: joi.string().required()
+    }),
+    clientController.searchClientSolicitationController
+  )
 
-  router
-    .route('/client/search/:search')
-    .get(
-      authenticationMiddleware(),
-      authorization.authorizationMiddleware('SEARCH_CLIENT'),
-      clientController.listClientSearchController
-    )
+  router.route('/client/search/:search').get(
+    authenticationMiddleware(),
+    authorization.authorizationMiddleware('SEARCH_CLIENT'),
+    validateDTOMiddleware('params', {
+      search: joi.string().required()
+    }),
+    validateDTOMiddleware('query', {
+      offset: joi.number(),
+      limit: joi.number(),
+      storeid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"store id" is a required field',
+          'string.empty': '"store id" can not be empty',
+          'string.pattern.base': '"store id" out of the expected format'
+        })
+    }),
+    clientController.listClientSearchController
+  )
 
   router.route('/client/:clientid/solicitations').get(
-    authenticationMiddleware(),
-    authorization.authorizationMiddleware('LIST_CLIENT_SOLICITATION'),
+    validateDTOMiddleware('query', {
+      offset: joi.number(),
+      limit: joi.number(),
+      storeid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"store id" is a required field',
+          'string.empty': '"store id" can not be empty',
+          'string.pattern.base': '"store id" out of the expected format'
+        })
+    }),
     validateDTOMiddleware('params', {
       clientid: joi
         .string()
@@ -121,6 +176,8 @@ module.exports = (router) => {
           'string.pattern.base': '"client id" out of the expected format'
         })
     }),
+    authenticationMiddleware(),
+    authorization.authorizationMiddleware('LIST_CLIENT_SOLICITATION'),
     verifyIdDbMiddleware.verifyIdClientDbMiddleware,
     clientController.listSolicitationController
   )
@@ -128,8 +185,17 @@ module.exports = (router) => {
   router
     .route('/client/:clientid')
     .get(
-      authenticationMiddleware(),
-      authorization.authorizationMiddleware('CLIENT_ID'),
+      validateDTOMiddleware('query', {
+        storeid: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"store id" is a required field',
+            'string.empty': '"store id" can not be empty',
+            'string.pattern.base': '"store id" out of the expected format'
+          })
+      }),
       validateDTOMiddleware('params', {
         clientid: joi
           .string()
@@ -141,7 +207,10 @@ module.exports = (router) => {
             'string.pattern.base': '"client id" out of the expected format'
           })
       }),
+      authenticationMiddleware(),
+      authorization.authorizationMiddleware('CLIENT_ID'),
       verifyIdDbMiddleware.verifyIdClientDbMiddleware,
+      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
       clientController.listByIdClientController
     )
     .put(
@@ -156,6 +225,17 @@ module.exports = (router) => {
             'any.required': '"client id" is a required field',
             'string.empty': '"client id" can not be empty',
             'string.pattern.base': '"client id" out of the expected format'
+          })
+      }),
+      validateDTOMiddleware('query', {
+        storeid: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"store id" is a required field',
+            'string.empty': '"store id" can not be empty',
+            'string.pattern.base': '"store id" out of the expected format'
           })
       }),
       validateDTOMiddleware('body', {
@@ -175,20 +255,11 @@ module.exports = (router) => {
           'any.required': '"email" is a required field',
           'string.empty': '"email" can not be empty'
         }),
-        store: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"storeid id" is a required field',
-            'string.empty': '"storeid id" can not be empty',
-            'string.pattern.base': '"storeid id" out of the expected format'
-          }),
         phones: joi.array().required().messages({
           'any.required': '"phones" is a required field',
           'string.empty': '"phones" can not be empty'
         }),
-        birthDate: joi.string().required().messages({
+        birthDate: joi.date().format('YYYY-MM-DD').raw().required().messages({
           'any.required': '"birth date" is a required field',
           'string.empty': '"birth date" can not be empty'
         }),
@@ -228,13 +299,12 @@ module.exports = (router) => {
         })
       }),
       verifyIdDbMiddleware.verifyIdClientDbMiddleware,
+      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
       verifyIdDbMiddleware.verifyEmailUserExists,
       verifyIdDbMiddleware.verifyCpfUserExists,
       clientController.updaterClientController
     )
     .delete(
-      authenticationMiddleware(),
-      authorization.authorizationMiddleware('CLIENT_DELETE'),
       validateDTOMiddleware('params', {
         clientid: joi
           .string()
@@ -246,6 +316,8 @@ module.exports = (router) => {
             'string.pattern.base': '"client id" out of the expected format'
           })
       }),
+      authenticationMiddleware(),
+      authorization.authorizationMiddleware('CLIENT_DELETE'),
       verifyIdDbMiddleware.verifyIdClientDbMiddleware,
       clientController.deleteClientController
     )

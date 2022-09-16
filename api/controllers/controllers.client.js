@@ -1,12 +1,12 @@
 const clientService = require('../services/services.client')
 
 const listAllClientsController = async (req, res) => {
-  const { store, offset, limit } = req.query
+  const { offset, limit, storeid } = req.query
 
   const resultService = await clientService.listAllClientsService(
     offset,
     limit,
-    store
+    storeid
   )
   const code = resultService.success ? 200 : 400
   const message = resultService.success
@@ -17,13 +17,13 @@ const listAllClientsController = async (req, res) => {
 }
 
 const searchClientSolicitationController = async (req, res) => {
-  const { offset, limit, store } = req.query
+  const { offset, limit, storeid } = req.query
   const { search } = req.params
 
   const resultService = await clientService.listClientSolicitationService(
     offset,
     limit,
-    store,
+    storeid,
     search
   )
   const code = resultService.success ? 200 : 400
@@ -35,13 +35,13 @@ const searchClientSolicitationController = async (req, res) => {
 }
 
 const listClientSearchController = async (req, res) => {
-  const { offset, limit, store } = req.query
+  const { offset, limit, storeid } = req.query
   const { search } = req.params
 
   const resultService = await clientService.listClientSearchService(
     offset,
     limit,
-    store,
+    storeid,
     search
   )
   const code = resultService.success ? 200 : 400
@@ -54,11 +54,11 @@ const listClientSearchController = async (req, res) => {
 
 const listByIdClientController = async (req, res) => {
   const { clientid } = req.params
-  const { store } = req.query
+  const { storeid } = req.query
 
   const resultService = await clientService.listByIdClientService(
     clientid,
-    store
+    storeid
   )
   const code = resultService.success ? 200 : 400
   const message = resultService.success
@@ -70,9 +70,14 @@ const listByIdClientController = async (req, res) => {
 
 const updaterClientController = async (req, res) => {
   const { clientid } = req.params
+  const { storeid } = req.query
   const { body } = req
 
-  const resultService = await clientService.updateClientService(clientid, body)
+  const resultService = await clientService.updateClientService(
+    clientid,
+    storeid,
+    body
+  )
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
@@ -95,12 +100,12 @@ const deleteClientController = async (req, res) => {
 
 const listSolicitationController = async (req, res) => {
   const { clientid } = req.params
-  const { offset, limit, store } = req.query
+  const { offset, limit, storeid } = req.query
 
   const resultService = await clientService.listSolicitationService(
     offset,
     limit,
-    store,
+    storeid,
     clientid
   )
   const code = resultService.success ? 200 : 400
@@ -112,9 +117,10 @@ const listSolicitationController = async (req, res) => {
 }
 
 const createClientController = async (req, res) => {
+  const { storeid } = req.query
   const { body } = req
 
-  const resultService = await clientService.createClientService(body)
+  const resultService = await clientService.createClientService(storeid, body)
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
