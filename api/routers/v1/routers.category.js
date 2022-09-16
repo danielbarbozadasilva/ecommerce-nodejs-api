@@ -179,21 +179,52 @@ module.exports = (router) => {
     categoryController.listCategoryWithProductsController
   )
 
-  router.route('/category/:categoryid/products').get(
-    authenticationMiddleware(),
-    authorization.authorizationMiddleware('LIST_CATEGORY_PRODUCT'),
-    validateDTOMiddleware('params', {
-      categoryid: joi
-        .string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-          'any.required': '"category id" is a required field',
-          'string.empty': '"category id" can not be empty',
-          'string.pattern.base': '"category id" out of the expected format'
-        })
-    }),
-    verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
-    categoryController.listCategoryWithProductsController
-  )
+  router
+    .route('/category/:categoryid/products')
+    .get(
+      authenticationMiddleware(),
+      authorization.authorizationMiddleware('LIST_CATEGORY_PRODUCT'),
+      validateDTOMiddleware('params', {
+        categoryid: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"category id" is a required field',
+            'string.empty': '"category id" can not be empty',
+            'string.pattern.base': '"category id" out of the expected format'
+          })
+      }),
+
+      verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
+      categoryController.listCategoryWithProductsController
+    )
+    .update(
+      authenticationMiddleware(),
+      authorization.authorizationMiddleware('UPDATE_CATEGORY_PRODUCT'),
+      validateDTOMiddleware('params', {
+        categoryid: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"category id" is a required field',
+            'string.empty': '"category id" can not be empty',
+            'string.pattern.base': '"category id" out of the expected format'
+          })
+      }),
+      validateDTOMiddleware('body', {
+        product: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"product id" is a required field',
+            'string.empty': '"product id" can not be empty',
+            'string.pattern.base': '"product id" out of the expected format'
+          })
+      }),
+      verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
+      categoryController.listCategoryWithProductsController
+    )
 }

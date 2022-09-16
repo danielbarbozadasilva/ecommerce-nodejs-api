@@ -1,4 +1,4 @@
-const { category } = require('../models/models.index')
+const { category, product } = require('../models/models.index')
 
 const categoryMapper = require('../mappers/mappers.category')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
@@ -70,7 +70,7 @@ const createCategoryByStoreService = async (storeid, body) => {
 
 const updateCategoryService = async (categoryid, body) => {
   try {
-    await category.findOneAndUpdate(
+    const result = await category.findOneAndUpdate(
       { _id: categoryid },
       {
         $set: {
@@ -78,13 +78,15 @@ const updateCategoryService = async (categoryid, body) => {
           code: body.code,
           availability: body.availability,
           product: body.product
-        }
+      },          
+      new: true
       }
     )
 
     return {
       success: true,
-      message: 'Data updated successfully'
+      message: 'Data updated successfully',
+      data: categoryMapper.toDTOWithProducts(result)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -104,9 +106,14 @@ const deleteCategoryService = async (categoryid) => {
   }
 }
 
-const listCategoryWithProductsService = async (categoryid) => {
+const listCategoryWithProductsService = async (categoryid, offset, limit) => {
   try {
-    const resultDB = await category.findById(categoryid).populate(['products'])
+    const resultDB = await category
+      .findById(categoryid, {
+        offset: Number(offset) || 0,
+        limit: Number(limit) || 30
+      })
+      .populate(['products'])
 
     return {
       success: true,
@@ -117,6 +124,34 @@ const listCategoryWithProductsService = async (categoryid) => {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
   }
 }
+
+const updateProductsByIdCategoryService = async (categoryid, body) => {
+  try {
+    const resultDB = await category.findOneAndUpdate(
+      { _id: categoryid },
+      {
+        $set: {
+          product: body.product
+        }
+      }
+    )
+
+    await product.updateMany(
+      { _id: { $in: [resultDB.product] } },
+      { $set: { category: categoryid},
+      { multi: true }
+    )
+
+    return {
+      success: true,
+      message: 'Data updated successfully',
+      data: 
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listCategoryByStoreService,
   listCategoryAvailabilityByStoreService,
@@ -124,5 +159,6 @@ module.exports = {
   createCategoryByStoreService,
   updateCategoryService,
   deleteCategoryService,
-  listCategoryWithProductsService
+  listCategoryWithProductsService,
+  updateProductsByIdCategoryService
 }
