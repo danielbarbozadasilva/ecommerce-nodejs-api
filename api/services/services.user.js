@@ -1,4 +1,4 @@
-const { user, store } = require('../models/models.index')
+const { user, client } = require('../models/models.index')
 const cryptography = require('../utils/utils.cryptography')
 const emailUtils = require('../utils/utils.email')
 const { Email } = require('../utils/utils.email.message')
@@ -67,21 +67,15 @@ const userIsValidService = async (email, password) => {
 }
 
 const checkPermissionService = (permissions, rule) => {
-  const result = profile.filter((item, i) => item.permission === permissions[i])
+  const result = profile.filter(
+    (item) => item.permission === String(permissions)
+  )
   const check = result[0]?.rule?.includes(rule)
 
   if (!check) {
     throw new ErrorNotAuthorizedUser('Usuário não autorizado!')
   }
   return !!check
-}
-
-const checkUserBelongsStoreService = async (id) => {
-  const resultBelong = await store.findOne({ id })
-  if (!resultBelong) {
-    throw new ErrorNotAuthorizedUser('Usuário não autorizado!')
-  }
-  return !!resultBelong
 }
 
 const createCredentialService = async (email) => {
@@ -259,10 +253,24 @@ const resetPasswordUserService = async (body) => {
   }
 }
 
+const checkIdAuthorizationService = async (idToken, idUser, permissions) => {
+  const result = permissions.map((item) => item === 'administrator')
+
+  if (idUser && !result[0]) {
+    const userDB = await client.findOne({ _id: idUser, user: idToken })
+
+    if (!userDB) {
+      throw new ErrorNotAuthorizedUser(
+        'Usuário não autorizado!\nVocê só pode realizar a operação usando o seu próprio "Id"'
+      )
+    }
+  }
+  return !!result
+}
+
 module.exports = {
   userIsValidService,
   checkPermissionService,
-  checkUserBelongsStoreService,
   authService,
   registerService,
   listByIdUserService,
@@ -270,5 +278,6 @@ module.exports = {
   deleteUserService,
   sendTokenRecoveryPasswordService,
   checkTokenRecoveryPasswordService,
-  resetPasswordUserService
+  resetPasswordUserService,
+  checkIdAuthorizationService
 }
