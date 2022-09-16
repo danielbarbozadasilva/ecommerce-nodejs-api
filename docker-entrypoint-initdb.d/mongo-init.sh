@@ -83,7 +83,7 @@ db.createCollection("category")
 db.category.insert([
 {
     _id: ObjectId("6320f577156b47ff1082586e"),
-    name: "Teclado Dell",
+    name: "Placa de vídeo",
     code: "43242342342343224",
     store: ObjectId("631e00f5190d800a90c6fa4d"),
     availability: true
