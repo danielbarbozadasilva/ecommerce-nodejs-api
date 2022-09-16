@@ -32,7 +32,8 @@ const profile = [
       'CREATE_CATEGORY',
       'UPDATE_CATEGORY',
       'DELETE_CATEGORY',
-      'LIST_CATEGORY_PRODUCT'
+      'LIST_CATEGORY_PRODUCT',
+      'UPDATE_CATEGORY_PRODUCT'
     ]
   },
   {
@@ -58,7 +59,8 @@ const profile = [
       'CREATE_CATEGORY',
       'UPDATE_CATEGORY',
       'DELETE_CATEGORY',
-      'LIST_CATEGORY_PRODUCT'
+      'LIST_CATEGORY_PRODUCT',
+      'UPDATE_CATEGORY_PRODUCT'
     ]
   }
 ]
