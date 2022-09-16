@@ -41,4 +41,33 @@ module.exports = (router) => {
     verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
     categoryController.listCategoryAvailabilityByStoreController
   )
+  router.route('/category/:categoryid').get(
+    authenticationMiddleware(),
+    authorization.authorizationMiddleware('LIST_CATEGORY_ID'),
+    validateDTOMiddleware('query', {
+      storeid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"store id" is a required field',
+          'string.empty': '"store id" can not be empty',
+          'string.pattern.base': '"store id" out of the expected format'
+        })
+    }),
+    validateDTOMiddleware('params', {
+      categoryid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"category id" is a required field',
+          'string.empty': '"category id" can not be empty',
+          'string.pattern.base': '"category id" out of the expected format'
+        })
+    }),
+    verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
+    verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
+    categoryController.listCategoryAvailabilityByStoreController
+  )
 }

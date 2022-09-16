@@ -31,7 +31,27 @@ const listCategoryAvailabilityByStoreService = async (storeid) => {
   }
 }
 
+const listCategoryByIdService = async (storeid, categoryid) => {
+  try {
+    const resultDB = await category
+      .find({
+        store: storeid,
+        _id: categoryid
+      })
+      .populate(['products'])
+
+    return {
+      success: true,
+      message: 'Operation performed successfully',
+      data: resultDB.map((item) => categoryMapper.toDTOWithProducts(item))
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listCategoryByStoreService,
-  listCategoryAvailabilityByStoreService
+  listCategoryAvailabilityByStoreService,
+  listCategoryByIdService
 }
