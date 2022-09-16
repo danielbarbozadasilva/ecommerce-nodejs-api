@@ -1,4 +1,10 @@
-const { user, store, client, category } = require('../../models/models.index')
+const {
+  user,
+  store,
+  client,
+  category,
+  product
+} = require('../../models/models.index')
 const ErrorUnprocessableEntity = require('../errors/errors.unprocessable-entity')
 const ErrorBusinessRule = require('../errors/errors.business-rule')
 
@@ -31,6 +37,14 @@ const verifyIdCategoryDbMiddleware = async (req, res, next) => {
   const categoryDB = await category.findOne({ _id: req.params.categoryid })
   if (!categoryDB) {
     throw new ErrorUnprocessableEntity(`Não existe uma categoria com esse id!`)
+  }
+  next()
+}
+
+const verifyIdProductDbMiddleware = async (req, res, next) => {
+  const productDB = await product.findOne({ _id: req.body.product })
+  if (!productDB) {
+    throw new ErrorUnprocessableEntity(`Não existe um produto com esse id!`)
   }
   next()
 }
@@ -87,6 +101,7 @@ module.exports = {
   verifyIdClientDbMiddleware,
   verifyIdStoreDbMiddleware,
   verifyIdCategoryDbMiddleware,
+  verifyIdProductDbMiddleware,
   verifyEmailUserExists,
   verifyCpfUserExists,
   verifyCnpjStoreExists,
