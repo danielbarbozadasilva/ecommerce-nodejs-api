@@ -33,12 +33,11 @@ const listCategoryAvailabilityByStoreService = async (storeid) => {
 
 const listCategoryByIdService = async (storeid, categoryid) => {
   try {
-    const resultDB = await category
-      .find({
-        store: storeid,
-        _id: categoryid
-      })
-      .populate(['products'])
+    const resultDB = await category.find({
+      _id: categoryid,
+      store: storeid
+    })
+    // .populate('product')
 
     return {
       success: true,
@@ -55,6 +54,7 @@ const createCategoryByStoreService = async (storeid, body) => {
     const resultDB = await category.create({
       name: body.name,
       code: body.code,
+      availability: true,
       store: storeid
     })
 
@@ -77,10 +77,10 @@ const updateCategoryService = async (categoryid, body) => {
           name: body.name,
           code: body.code,
           availability: body.availability,
-          product: body.product
-      },          
-      new: true
-      }
+          products: body.products
+        }
+      },
+      { new: true }
     )
 
     return {
@@ -111,7 +111,7 @@ const listCategoryWithProductsService = async (categoryid, offset, limit) => {
     const resultDB = await product.paginate(
       { category: categoryid },
       { offset: Number(offset) || 0, limit: Number(limit) || 30 }
-  )
+    )
 
     return {
       success: true,
@@ -125,25 +125,25 @@ const listCategoryWithProductsService = async (categoryid, offset, limit) => {
 
 const updateProductsByIdCategoryService = async (categoryid, body) => {
   try {
-    const resultDB = await category.findOneAndUpdate(
+    await category.findOneAndUpdate(
       { _id: categoryid },
       {
         $set: {
-          product: body.product
+          products: body.products
         }
-      }
+      },
+      { new: true }
     )
 
-    await product.updateMany(
+    const resultDB = await product.updateMany(
       { _id: { $in: [resultDB.product] } },
-      { $set: { category: categoryid},
-      { multi: true }
+      { $set: { category: categoryid }, multi: true }
     )
 
     return {
       success: true,
       message: 'Data updated successfully',
-      data: 
+      data: resultDB.map((item) => categoryMapper.toDTOWithProducts(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)

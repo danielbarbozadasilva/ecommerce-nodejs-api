@@ -3,7 +3,9 @@ const toDTO = (model) => ({
   name: model.name,
   code: model.code,
   availability: model.availability,
-  product: model.product,
+  products: model?.products?.map((item) => ({
+    id: item
+  })),
   store: model.store
 })
 
@@ -14,18 +16,18 @@ const toDTOWithProducts = (model) => ({
   availability: model.availability,
   product: model.product,
   store: model.store,
-  products: model.map((item) => ({
-    title: item.product.title,
-    availability: item.product.availability,
-    description: item.product.description,
-    photos: item.product.photos,
-    price: item.product.price,
-    promotion: item.product.promotion,
-    sku: item.product.sku,
-    category: item.product.category,
-    store: item.product.store,
-    rating: item.product.rating,
-    variations: item.product.variations
+  products: model?.products?.map((item) => ({
+    title: item.title,
+    availability: item.availability,
+    description: item.description,
+    photos: item.photos,
+    price: item.price,
+    promotion: item.promotion,
+    sku: item.sku,
+    category: item.category,
+    store: item.store,
+    rating: item.rating,
+    variations: item.variations
   }))
 })
 
