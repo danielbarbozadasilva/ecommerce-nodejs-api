@@ -673,42 +673,6 @@
 			"name": "client",
 			"item": [
 				{
-					"name": "client.listAll",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3011/v1/client",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"client"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "client.listById",
 					"request": {
 						"auth": {
@@ -730,7 +694,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/client/631ea039277522bb16526050",
+							"raw": "http://localhost:3011/v1/client/632113ad1bb190e2a8628d71?storeid=631e00f5190d800a90c6fa4d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -739,7 +703,108 @@
 							"path": [
 								"v1",
 								"client",
-								"631ea039277522bb16526050"
+								"632113ad1bb190e2a8628d71"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "client.searchSolicitation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/client/search/Daniel?storeid=631e00f5190d800a90c6fa4d&limit=20&offset=20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"client",
+								"search",
+								"Daniel"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "offset",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "client.clientStoreSolicitations",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/client/6320e06fb671b1c0809c849b?storeid=631e00f5190d800a90c6fa4d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"client",
+								"6320e06fb671b1c0809c849b"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								}
 							]
 						}
 					},
@@ -778,7 +843,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Daniel\",\r\n    \"email\": \"daniel80qdadbarbdoza@gmail.com\",\r\n    \"store\": \"631e00f5190d800a90c6fa4d\",\r\n    \"cpf\": \"113.302.654-81\",\r\n    \"phones\": [\r\n        \"(21)2423-2198\",\r\n        \"(21)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000/09/09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"location\": \"Rio de janeiro\",\r\n        \"number\": \"12211\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23456-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"name\": \"Daniel\",\r\n    \"email\": \"daniel@gmail.com\",\r\n    \"cpf\": \"211.231.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"location\": \"Rio de janeiro\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -786,7 +851,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/client",
+							"raw": "http://localhost:3011/v1/client/?storeid=631e00f5190d800a90c6fa4d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -794,14 +859,21 @@
 							"port": "3011",
 							"path": [
 								"v1",
-								"client"
+								"client",
+								""
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "client.searchSolicitation",
+					"name": "client.listById",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -822,7 +894,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/client/search/631ea039277522bb16526050/solicitations",
+							"raw": "http://localhost:3011/v1/client/631ea039277522bb16526050",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -831,9 +903,7 @@
 							"path": [
 								"v1",
 								"client",
-								"search",
-								"631ea039277522bb16526050",
-								"solicitations"
+								"631ea039277522bb16526050"
 							]
 						}
 					},
@@ -878,44 +948,6 @@
 					"response": []
 				},
 				{
-					"name": "client.clientIdSolicitations",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3011/v1/client/631ea039277522bb16526050/solicitations",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"client",
-								"631ea039277522bb16526050",
-								"solicitations"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "client.update",
 					"event": [
 						{
@@ -948,7 +980,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Daniel\",\r\n    \"email\": \"daniel80qdadbbdoza@gmail.com\",\r\n    \"store\": \"631e00f5190d800a90c6fa4d\",\r\n    \"cpf\": \"112.302.654-81\",\r\n    \"phones\": [\r\n        \"(21)2423-2198\",\r\n        \"(21)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000/09/09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"location\": \"ssssRio de janeiro\",\r\n        \"number\": \"12211\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23456-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"name\": \"Daniel\",\r\n    \"email\": \"daniel91barboza@gmail.com\",\r\n    \"cpf\": \"111.231.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"location\": \"Rio de janeiro\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -956,7 +988,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/client/631ea193c435b36ce24a3b42",
+							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e?storeid=631e00f5190d800a90c6fa4d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -965,7 +997,13 @@
 							"path": [
 								"v1",
 								"client",
-								"631ea193c435b36ce24a3b42"
+								"6320f577156b47ff1082586e"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								}
 							]
 						}
 					},
@@ -1017,6 +1055,675 @@
 								"v1",
 								"client",
 								"631ea039277522bb16526050"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "category",
+			"item": [
+				{
+					"name": "category.listByStore",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/category?storeid=631e00f5190d800a90c6fa4d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"category"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category.listByStoreAvailability",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/category/availability?storeid=631e00f5190d800a90c6fa4d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"category",
+								"availability"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category.listByIdCategory",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/category/63249e3d8f52eb218f278913?storeid=631e00f5190d800a90c6fa4d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"category",
+								"63249e3d8f52eb218f278913"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category.listByIdCategoryWithProducts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/category/63249e3d8f52eb218f278913/products?offset=0&limit=30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"category",
+								"63249e3d8f52eb218f278913",
+								"products"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "30"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category.create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Teclado Dell",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "43242342342343224",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/category/?storeid=631e00f5190d800a90c6fa4d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"category",
+								""
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category.delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Teclado Dell",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "43242342342343224",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/category/63249e3d8f52eb218f278913",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"category",
+								"63249e3d8f52eb218f278913"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category.update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Placa de vídeo\",\r\n    \"code\": \"23242342342343224\",\r\n    \"availability\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/category/63249e3d8f52eb218f278913",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"category",
+								"63249e3d8f52eb218f278913"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category.updateProducts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Placa de vídeo\",\r\n    \"code\": \"43242342342343224\",\r\n    \"availability\": false,\r\n    \"products\": \"63249e3d8f52eb218f278112\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/category/63249e3d8f52eb218f278913/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"category",
+								"63249e3d8f52eb218f278913",
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "product.listAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product.listById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/product/63249e3d8f52eb218f278913",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"product",
+								"63249e3d8f52eb218f278913"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product.create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_id\": \"6320f577156b47ff1082586e\",\r\n    \"title\": \"Nvidia GTX1080\",\r\n    \"availability\": true,\r\n    \"description\": \"Placa de vídeo\",\r\n    \"photos\": \"43242342342343224\",\r\n    \"price\": \"43242342342343224\",\r\n    \"promotion\": \"43242342342343224\",\r\n    \"sku\": \"43242342342343224\",\r\n    \"category\": \"631e00f5190d800a90c6fa43\",\r\n    \"store\": \"631e00f5190d800a90c6fa43\",\r\n    \"rating\": \"631e00f5190d800a90c6fa43\",\r\n    \"variations\": \"631e00f5190d800a90c6fa43\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product.update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_id\": \"6320f577156b47ff1082586e\",\r\n    \"title\": \"Nvidia GTX1080\",\r\n    \"availability\": true,\r\n    \"description\": \"Placa de vídeo\",\r\n    \"photos\": \"43242342342343224\",\r\n    \"price\": \"43242342342343224\",\r\n    \"promotion\": \"43242342342343224\",\r\n    \"sku\": \"43242342342343224\",\r\n    \"category\": \"631e00f5190d800a90c6fa43\",\r\n    \"store\": \"631e00f5190d800a90c6fa43\",\r\n    \"rating\": \"631e00f5190d800a90c6fa43\",\r\n    \"variations\": \"631e00f5190d800a90c6fa43\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/product/63249e3d8f52eb218f278913",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"product",
+								"63249e3d8f52eb218f278913"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product.remove",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_id\": \"6320f577156b47ff1082586e\",\r\n    \"title\": \"Nvidia GTX1080\",\r\n    \"availability\": true,\r\n    \"description\": \"Placa de vídeo\",\r\n    \"photos\": \"43242342342343224\",\r\n    \"price\": \"43242342342343224\",\r\n    \"promotion\": \"43242342342343224\",\r\n    \"sku\": \"43242342342343224\",\r\n    \"category\": \"631e00f5190d800a90c6fa43\",\r\n    \"store\": \"631e00f5190d800a90c6fa43\",\r\n    \"rating\": \"631e00f5190d800a90c6fa43\",\r\n    \"variations\": \"631e00f5190d800a90c6fa43\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/product/63249e3d8f52eb218f278913",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"product",
+								"63249e3d8f52eb218f278913"
 							]
 						}
 					},
