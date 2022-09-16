@@ -24,4 +24,21 @@ module.exports = (router) => {
     verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
     categoryController.listCategoryByStoreController
   )
+  router.route('/category/availability').get(
+    authenticationMiddleware(),
+    authorization.authorizationMiddleware('LIST_CATEGORY_AVAILABILITY'),
+    validateDTOMiddleware('query', {
+      storeid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"store id" is a required field',
+          'string.empty': '"store id" can not be empty',
+          'string.pattern.base': '"store id" out of the expected format'
+        })
+    }),
+    verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
+    categoryController.listCategoryAvailabilityByStoreController
+  )
 }
