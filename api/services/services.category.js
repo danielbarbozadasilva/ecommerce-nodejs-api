@@ -108,12 +108,10 @@ const deleteCategoryService = async (categoryid) => {
 
 const listCategoryWithProductsService = async (categoryid, offset, limit) => {
   try {
-    const resultDB = await category
-      .findById(categoryid, {
-        offset: Number(offset) || 0,
-        limit: Number(limit) || 30
-      })
-      .populate(['products'])
+    const resultDB = await product.paginate(
+      { category: categoryid },
+      { offset: Number(offset) || 0, limit: Number(limit) || 30 }
+  )
 
     return {
       success: true,
