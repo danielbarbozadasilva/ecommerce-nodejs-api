@@ -86,9 +86,12 @@ const deleteCategoryController = async (req, res) => {
 
 const listCategoryWithProductsController = async (req, res) => {
   const { categoryid } = req.params
+  const { offset, limit } = req.query
 
   const resultService = await categoryService.listCategoryWithProductsService(
-    categoryid
+    categoryid,
+    offset,
+    limit
   )
   const code = resultService.success ? 200 : 400
   const message = resultService.success

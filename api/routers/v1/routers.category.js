@@ -176,7 +176,7 @@ module.exports = (router) => {
         })
     }),
     verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
-    categoryController.listCategoryWithProductsController
+    categoryController.listCategoryByIdController
   )
 
   router
@@ -213,6 +213,10 @@ module.exports = (router) => {
             'string.pattern.base': '"category id" out of the expected format'
           })
       }),
+      validateDTOMiddleware('query', {
+        offset: joi.number(),
+        limit: joi.number()
+      }),
       validateDTOMiddleware('body', {
         product: joi
           .string()
@@ -225,6 +229,6 @@ module.exports = (router) => {
           })
       }),
       verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
-      categoryController.listCategoryWithProductsController
+      categoryController.updateProductsByIdCategoryController
     )
 }
