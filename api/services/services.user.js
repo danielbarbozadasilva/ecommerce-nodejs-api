@@ -30,7 +30,9 @@ const profile = [
       'LIST_CATEGORY_AVAILABILITY',
       'LIST_CATEGORY_ID',
       'CREATE_CATEGORY',
-      'UPDATE_CATEGORY'
+      'UPDATE_CATEGORY',
+      'DELETE_CATEGORY',
+      'LIST_CATEGORY_PRODUCT'
     ]
   },
   {
@@ -54,7 +56,9 @@ const profile = [
       'LIST_CATEGORY_AVAILABILITY',
       'LIST_CATEGORY_ID',
       'CREATE_CATEGORY',
-      'UPDATE_CATEGORY'
+      'UPDATE_CATEGORY',
+      'DELETE_CATEGORY',
+      'LIST_CATEGORY_PRODUCT'
     ]
   }
 ]
