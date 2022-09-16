@@ -26,7 +26,10 @@ const profile = [
       'CLIENT_ID',
       'CLIENT_UPDATE',
       'CLIENT_DELETE',
-      'LIST_CATEGORY'
+      'LIST_CATEGORY',
+      'LIST_CATEGORY_AVAILABILITY',
+      'LIST_CATEGORY_ID',
+      'CREATE_CATEGORY'
     ]
   },
   {
@@ -46,7 +49,10 @@ const profile = [
       'CLIENT_ID',
       'CLIENT_UPDATE',
       'CLIENT_DELETE',
-      'LIST_CATEGORY'
+      'LIST_CATEGORY',
+      'LIST_CATEGORY_AVAILABILITY',
+      'LIST_CATEGORY_ID',
+      'CREATE_CATEGORY'
     ]
   }
 ]
