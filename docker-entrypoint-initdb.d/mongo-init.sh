@@ -78,22 +78,25 @@ db.clients.insert([
         state: "Rio de janeiro"
     }
 }
+])
 
-db.createCollection("category")
-db.category.insert([
+db.createCollection("categories")
+db.categories.insert([
 {
     _id: ObjectId("6320f577156b47ff1082586e"),
     name: "Placa de vídeo",
     code: "43242342342343224",
     store: ObjectId("631e00f5190d800a90c6fa4d"),
-    availability: true
+    availability: true,
+    products: []
 },
 {
     _id: ObjectId("6320f577156b47ff1082586e"),
     name: "Processadores",
     code: "21341342342343551",
     store: ObjectId("631e00f5190d800a90c6fa4d"),
-    availability: false
+    availability: false,
+    products: []
 }
 ])
 
