@@ -1,4 +1,24 @@
-const toDTO = (userDB, clientDB) => ({
+const toDTO = (model) => ({
+  id: model._id,
+  name: model.name,
+  email: model.email,
+  cpf: model.cpf,
+  phones: model.phones,
+  birthDate: model.birthDate,
+  user: model.user,
+  address: {
+    location: model.address.location,
+    number: model.address.number,
+    complement: model.address.complement,
+    district: model.address.district,
+    city: model.address.city,
+    zipCode: model.address.zipCode,
+    state: model.address.state
+  }
+})
+
+const toDTOList = (userDB, clientDB) => ({
+  id: clientDB._id,
   name: userDB.name,
   email: userDB.email,
   cpf: clientDB.cpf,
@@ -46,5 +66,6 @@ const toClientDTO = (model) => ({
 
 module.exports = {
   toDTO,
-  toClientDTO
+  toClientDTO,
+  toDTOList
 }

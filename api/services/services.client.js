@@ -12,20 +12,18 @@ const cryptography = require('../utils/utils.cryptography')
 
 const listAllClientsService = async (offset, limit, store) => {
   try {
-    const resultDB = await client.paginate(
-      { store },
-      {
-        offset: Number(offset || 0),
-        limit: Number(limit || 30),
-        populate: 'user',
-        select: '-salt -hash'
-      }
-    )
+    const resultDB = await client.paginate({
+      store,
+      offset: Number(offset || 0),
+      limit: Number(limit || 30),
+      populate: 'user',
+      select: '-salt -hash'
+    })
 
     return {
       success: true,
       message: 'Operation performed successfully',
-      data: resultDB
+      data: resultDB.docs.map((item) => clientMapper.toDTO(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -84,7 +82,7 @@ const listClientSearchService = async (offset, limit, store, search) => {
     return {
       success: true,
       message: 'Operation performed successfully',
-      data: resultDB
+      data: resultDB.docs.map((item) => clientMapper.toDTO(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -114,10 +112,11 @@ const updateClientService = async (id, store, body) => {
           store,
           birthDate: body.birthDate
         }
-      }
+      },
+      { new: true }
     )
 
-    await user.findOneAndUpdate(
+    const userDB = await user.findOneAndUpdate(
       { _id: clientDB.user },
       {
         $set: {
@@ -127,12 +126,14 @@ const updateClientService = async (id, store, body) => {
           salt,
           hash: cryptography.createHash(body.password, salt)
         }
-      }
+      },
+      { new: true }
     )
 
     return {
       success: true,
-      message: 'Operation performed successfully'
+      message: 'Operation performed successfully',
+      data: clientMapper.toDTOList(userDB, clientDB)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -242,7 +243,7 @@ const createClientService = async (store, body) => {
     return {
       success: true,
       message: 'Operation performed successfully',
-      data: clientMapper.toDTO(userDB, clientDB)
+      data: clientMapper.toDTOList(userDB, clientDB)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
