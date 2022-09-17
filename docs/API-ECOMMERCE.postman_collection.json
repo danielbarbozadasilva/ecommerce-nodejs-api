@@ -673,6 +673,49 @@
 			"name": "client",
 			"item": [
 				{
+					"name": "client.listAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/client/?storeid=631e00f5190d800a90c6fa4d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"client",
+								""
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "client.listById",
 					"request": {
 						"auth": {
@@ -694,7 +737,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/client/632113ad1bb190e2a8628d71?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e?storeid=631e00f5190d800a90c6fa4d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -703,7 +746,7 @@
 							"path": [
 								"v1",
 								"client",
-								"632113ad1bb190e2a8628d71"
+								"6320f577156b47ff1082586e"
 							],
 							"query": [
 								{
@@ -717,6 +760,59 @@
 				},
 				{
 					"name": "client.searchSolicitation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/client/search/Daniel/solicitations?storeid=631e00f5190d800a90c6fa4d&limit=20&offset=20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"client",
+								"search",
+								"Daniel",
+								"solicitations"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "offset",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "client.search",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -789,7 +885,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/client/6320e06fb671b1c0809c849b?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e/solicitations?storeid=631e00f5190d800a90c6fa4d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -798,7 +894,8 @@
 							"path": [
 								"v1",
 								"client",
-								"6320e06fb671b1c0809c849b"
+								"6320f577156b47ff1082586e",
+								"solicitations"
 							],
 							"query": [
 								{
@@ -843,7 +940,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Daniel\",\r\n    \"email\": \"daniel@gmail.com\",\r\n    \"cpf\": \"211.231.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"location\": \"Rio de janeiro\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"name\": \"Daniel\",\r\n    \"email\": \"dadaddada@gmail.com\",\r\n    \"cpf\": \"112.222.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"location\": \"Rio de janeiro\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -867,81 +964,6 @@
 									"key": "storeid",
 									"value": "631e00f5190d800a90c6fa4d"
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "client.listById",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3011/v1/client/631ea039277522bb16526050",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"client",
-								"631ea039277522bb16526050"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "client.search",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3011/v1/client/search/631ea039277522bb16526050",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"client",
-								"search",
-								"631ea039277522bb16526050"
 							]
 						}
 					},
@@ -980,7 +1002,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Daniel\",\r\n    \"email\": \"daniel91barboza@gmail.com\",\r\n    \"cpf\": \"111.231.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"location\": \"Rio de janeiro\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"name\": \"111Daniel\",\r\n    \"email\": \"333barboza@gmail.com\",\r\n    \"cpf\": \"333.333.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"location\": \"Rio de janeiro\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -988,7 +1010,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/client/6325c454541c58cc4a3b7092?storeid=631e00f5190d800a90c6fa4d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -997,7 +1019,7 @@
 							"path": [
 								"v1",
 								"client",
-								"6320f577156b47ff1082586e"
+								"6325c454541c58cc4a3b7092"
 							],
 							"query": [
 								{
@@ -1045,7 +1067,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/client/631ea039277522bb16526050",
+							"raw": "http://localhost:3011/v1/client/6325c454541c58cc4a3b7092",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1054,7 +1076,7 @@
 							"path": [
 								"v1",
 								"client",
-								"631ea039277522bb16526050"
+								"6325c454541c58cc4a3b7092"
 							]
 						}
 					},
@@ -1172,7 +1194,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/category/63249e3d8f52eb218f278913?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/category/6325e424f29782c4ba9aa133?storeid=631e00f5190d800a90c6fa4d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1181,7 +1203,7 @@
 							"path": [
 								"v1",
 								"category",
-								"63249e3d8f52eb218f278913"
+								"6325e424f29782c4ba9aa133"
 							],
 							"query": [
 								{
@@ -1215,7 +1237,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/category/63249e3d8f52eb218f278913/products?offset=0&limit=30",
+							"raw": "http://localhost:3011/v1/category/6325e424f29782c4ba9aa133/products?offset=0&limit=30",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1224,7 +1246,7 @@
 							"path": [
 								"v1",
 								"category",
-								"63249e3d8f52eb218f278913",
+								"6325e424f29782c4ba9aa133",
 								"products"
 							],
 							"query": [
@@ -1356,7 +1378,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/category/63249e3d8f52eb218f278913",
+							"raw": "http://localhost:3011/v1/category/6325e424f29782c4ba9aa133",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1365,7 +1387,7 @@
 							"path": [
 								"v1",
 								"category",
-								"63249e3d8f52eb218f278913"
+								"6325e424f29782c4ba9aa133"
 							]
 						}
 					},
@@ -1412,7 +1434,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/category/63249e3d8f52eb218f278913",
+							"raw": "http://localhost:3011/v1/category/6325e424f29782c4ba9aa133",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1421,7 +1443,7 @@
 							"path": [
 								"v1",
 								"category",
-								"63249e3d8f52eb218f278913"
+								"6325e424f29782c4ba9aa133"
 							]
 						}
 					},
