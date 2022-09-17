@@ -30,7 +30,7 @@ module.exports = (router) => {
     )
     .post(
       authenticationMiddleware(),
-      authorization.authorizationMiddleware('CLIENT_CREATE'),
+      authorization.authorizationMiddleware('*'),
       validateDTOMiddleware('query', {
         storeid: joi
           .string()
