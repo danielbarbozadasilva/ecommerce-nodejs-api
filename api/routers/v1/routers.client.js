@@ -30,7 +30,7 @@ module.exports = (router) => {
     )
     .post(
       authenticationMiddleware(),
-      authorization.authorizationMiddleware('CLIENT_CREATE'),
+      authorization.authorizationMiddleware('*'),
       validateDTOMiddleware('query', {
         storeid: joi
           .string()
@@ -186,6 +186,8 @@ module.exports = (router) => {
     .route('/client/:clientid')
     .get(
       validateDTOMiddleware('query', {
+        offset: joi.number(),
+        limit: joi.number(),
         storeid: joi
           .string()
           .regex(/^[0-9a-fA-F]{24}$/)

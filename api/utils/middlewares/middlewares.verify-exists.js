@@ -1,4 +1,10 @@
-const { user, store, client } = require('../../models/models.index')
+const {
+  user,
+  store,
+  client,
+  category,
+  product
+} = require('../../models/models.index')
 const ErrorUnprocessableEntity = require('../errors/errors.unprocessable-entity')
 const ErrorBusinessRule = require('../errors/errors.business-rule')
 
@@ -27,13 +33,30 @@ const verifyIdStoreDbMiddleware = async (req, res, next) => {
   next()
 }
 
-const verifyEmailUserExists = async (req, res, next) => {
-  const resultEmail = await user
-    .findOne({ email: req.body.email })
-    .where('_id')
-    .ne(req.params.userid)
+const verifyIdCategoryDbMiddleware = async (req, res, next) => {
+  const categoryDB = await category.findOne({ _id: req.params.categoryid })
+  if (!categoryDB) {
+    throw new ErrorUnprocessableEntity(`Não existe uma categoria com esse id!`)
+  }
+  next()
+}
 
-  if (resultEmail) {
+const verifyIdProductDbMiddleware = async (req, res, next) => {
+  const productDB = await product.findOne({ _id: req.body.product })
+  if (!productDB) {
+    throw new ErrorUnprocessableEntity(`Não existe um produto com esse id!`)
+  }
+  next()
+}
+
+const verifyEmailUserExists = async (req, res, next) => {
+  const result = await user.find({ email: req.body.email })
+  const resultEmail = await client
+    .find({ user: result[0]?._id })
+    .where('_id')
+    .ne(req.params.clientid)
+
+  if (resultEmail.length !== 0 || result.length > 1) {
     throw new ErrorBusinessRule('Este e-mail já está em uso!')
   }
   next()
@@ -78,6 +101,8 @@ module.exports = {
   verifyIdUserDbMiddleware,
   verifyIdClientDbMiddleware,
   verifyIdStoreDbMiddleware,
+  verifyIdCategoryDbMiddleware,
+  verifyIdProductDbMiddleware,
   verifyEmailUserExists,
   verifyCpfUserExists,
   verifyCnpjStoreExists,

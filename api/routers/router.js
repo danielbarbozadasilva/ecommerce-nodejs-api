@@ -5,6 +5,7 @@ const { formatError } = require('../utils/errors/errors.handler')
 const routersV1User = require('./v1/routers.user')
 const routersV1Store = require('./v1/routers.store')
 const routersV1Client = require('./v1/routers.client')
+const routersV1Category = require('./v1/routers.category')
 
 module.exports = (app) => {
   app.get('/', (req, res, next) => {
@@ -15,6 +16,7 @@ module.exports = (app) => {
   routersV1User(routesV1)
   routersV1Store(routesV1)
   routersV1Client(routesV1)
+  routersV1Category(routesV1)
 
   app.use('/v1', routesV1)
 

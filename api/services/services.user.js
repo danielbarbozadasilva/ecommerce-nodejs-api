@@ -19,13 +19,20 @@ const profile = [
       'STORE_UPDATE',
       'STORE_DELETE',
       'LIST_CLIENT',
-      'CLIENT_CREATE',
       'SEARCH_SOLICITATION',
       'SEARCH_CLIENT',
       'LIST_CLIENT_SOLICITATION',
       'CLIENT_ID',
       'CLIENT_UPDATE',
-      'CLIENT_DELETE'
+      'CLIENT_DELETE',
+      'LIST_CATEGORY',
+      'LIST_CATEGORY_AVAILABILITY',
+      'LIST_CATEGORY_ID',
+      'LIST_CATEGORY_PRODUCT',
+      'CREATE_CATEGORY',
+      'UPDATE_CATEGORY',
+      'DELETE_CATEGORY',
+      'UPDATE_CATEGORY_PRODUCT'
     ]
   },
   {
@@ -38,13 +45,12 @@ const profile = [
       'STORE_UPDATE',
       'STORE_DELETE',
       'LIST_CLIENT',
-      'CLIENT_CREATE',
-      'SEARCH_SOLICITATION',
-      'SEARCH_CLIENT',
-      'LIST_CLIENT_SOLICITATION',
       'CLIENT_ID',
       'CLIENT_UPDATE',
-      'CLIENT_DELETE'
+      'CLIENT_DELETE',
+      'LIST_CATEGORY',
+      'LIST_CATEGORY_AVAILABILITY',
+      'LIST_CATEGORY_ID'
     ]
   }
 ]
