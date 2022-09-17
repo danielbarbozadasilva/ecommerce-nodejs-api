@@ -50,12 +50,13 @@ const verifyIdProductDbMiddleware = async (req, res, next) => {
 }
 
 const verifyEmailUserExists = async (req, res, next) => {
-  const resultEmail = await user
-    .findOne({ email: req.body.email })
+  const result = await user.find({ email: req.body.email })
+  const resultEmail = await client
+    .find({ user: result[0]?._id })
     .where('_id')
-    .ne(req.params.userid)
+    .ne(req.params.clientid)
 
-  if (resultEmail) {
+  if (resultEmail.length !== 0 || result.length > 1) {
     throw new ErrorBusinessRule('Este e-mail já está em uso!')
   }
   next()
