@@ -141,12 +141,12 @@ const registerService = async (body) => {
 }
 
 const listByIdUserService = async (id) => {
-  const resultDB = await user.findById({ _id: id }).populate({ path: 'store' })
+  const resultDB = await user.findById({ _id: id }).populate('store')
 
   return {
     success: true,
     message: 'Operation performed successfully',
-    data: userMapper.toDTO(resultDB)
+    data: resultDB
   }
 }
 
@@ -164,7 +164,8 @@ const updateUserService = async (id, body) => {
           hash: cryptography.createHash(body.password, salt),
           store: body.store
         }
-      }
+      },
+      { new: true }
     )
 
     return {

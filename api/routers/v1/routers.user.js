@@ -84,16 +84,7 @@ module.exports = (router) => {
         password: joi.string().required().messages({
           'any.required': '"password" is a required field',
           'string.empty': '"password" can not be empty'
-        }),
-        store: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"store id" is a required field',
-            'string.empty': '"store id" can not be empty',
-            'string.pattern.base': '"store id" out of the expected format'
-          })
+        })
       }),
       verifyIdDbMiddleware.verifyEmailUserExists,
       verifyIdDbMiddleware.verifyIdUserDbMiddleware,
