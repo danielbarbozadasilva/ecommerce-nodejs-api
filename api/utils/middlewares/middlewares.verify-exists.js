@@ -26,7 +26,8 @@ const verifyIdClientDbMiddleware = async (req, res, next) => {
 }
 
 const verifyIdStoreDbMiddleware = async (req, res, next) => {
-  const storeDB = await store.findOne({ _id: req.query.storeid })
+  const id = req.query.storeid || req.params.storeid
+  const storeDB = await store.findOne({ _id: id })
   if (!storeDB) {
     throw new ErrorUnprocessableEntity(`Não existe uma loja com esse id!`)
   }
@@ -75,10 +76,12 @@ const verifyCpfUserExists = async (req, res, next) => {
 }
 
 const verifyCnpjStoreExists = async (req, res, next) => {
+  const id = req.query.storeid || req.params.storeid
+
   const resulCnpj = await store
     .findOne({ cnpj: req.body.cnpj })
     .where('_id')
-    .ne(req.params.storeid)
+    .ne(id)
 
   if (resulCnpj) {
     throw new ErrorBusinessRule('Este cnpj já está em uso!')
@@ -87,10 +90,12 @@ const verifyCnpjStoreExists = async (req, res, next) => {
 }
 
 const verifyEmailStoreExists = async (req, res, next) => {
+  const id = req.query.storeid || req.params.storeid
+
   const resultEmail = await store
     .findOne({ email: req.body.email })
     .where('_id')
-    .ne(req.params.storeid)
+    .ne(id)
   if (resultEmail) {
     throw new ErrorBusinessRule('Este e-mail já está em uso!')
   }
