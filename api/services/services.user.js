@@ -15,7 +15,6 @@ const profile = [
       'USER_LIST_ID',
       'USER_UPDATE',
       'USER_DELETE',
-      'STORE_CREATE',
       'STORE_UPDATE',
       'STORE_DELETE',
       'LIST_CLIENT',
@@ -42,8 +41,6 @@ const profile = [
       'USER_UPDATE',
       'USER_DELETE',
       'STORE_CREATE',
-      'STORE_UPDATE',
-      'STORE_DELETE',
       'LIST_CLIENT',
       'CLIENT_ID',
       'CLIENT_UPDATE',
@@ -146,7 +143,7 @@ const listByIdUserService = async (id) => {
   return {
     success: true,
     message: 'Operation performed successfully',
-    data: resultDB
+    data: userMapper.toDTO(resultDB)
   }
 }
 
@@ -260,15 +257,15 @@ const resetPasswordUserService = async (body) => {
   }
 }
 
-const checkIdAuthorizationService = async (idToken, idUser, permissions) => {
+const checkIdAuthorizationService = async (idToken, userid, permissions) => {
   const result = permissions.map((item) => item === 'administrator')
 
-  if (idUser && !result[0]) {
-    const userDB = await client.findOne({ _id: idUser, user: idToken })
+  if (userid && !result[0]) {
+    const userDB = await client.findOne({ _id: userid, user: idToken })
 
-    if (!userDB) {
+    if (!userDB && idToken != userid) {
       throw new ErrorNotAuthorizedUser(
-        'Usuário não autorizado!\nVocê só pode realizar a operação usando o seu próprio "Id"'
+        "Usuário não autorizado! Você só pode realizar a operação usando o seu próprio 'Id'"
       )
     }
   }
