@@ -18,7 +18,6 @@ const verifyIdUserDbMiddleware = async (req, res, next) => {
 
 const verifyIdClientDbMiddleware = async (req, res, next) => {
   const clientDB = await client.findOne({ _id: req.params.clientid })
-
   if (!clientDB) {
     throw new ErrorUnprocessableEntity(`Não existe um cliente com esse id!`)
   }
@@ -51,13 +50,12 @@ const verifyIdProductDbMiddleware = async (req, res, next) => {
 }
 
 const verifyEmailUserExists = async (req, res, next) => {
-  const result = await user.find({ email: req.body.email })
-  const resultEmail = await client
-    .find({ user: result[0]?._id })
+  const resultDB = await user
+    .findOne({ email: req.body.email })
     .where('_id')
-    .ne(req.params.clientid)
+    .ne(req.params.userid)
 
-  if (resultEmail.length !== 0 || result.length > 1) {
+  if (resultDB) {
     throw new ErrorBusinessRule('Este e-mail já está em uso!')
   }
   next()
