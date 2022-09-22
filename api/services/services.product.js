@@ -1,6 +1,5 @@
 const { product, category } = require('../models/models.index')
 const productMapper = require('../mappers/mappers.product')
-const fileUtils = require('../utils/utils.file')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 
 const getSort = (sortType) => {
@@ -42,11 +41,9 @@ const listAllProductService = async (storeid, sortType, offset, limit) => {
 
 const createProductService = async (storeid, body) => {
   try {
-    // fileUtils.utilMove(body.image.oldPath, body.image.newPath)
-
     const resultProduct = await product.create({
       title: body.title,
-      availability: body.availability,
+      availability: true,
       description: body.description,
       // photos: body.photos,
       price: body.price,
@@ -73,7 +70,63 @@ const createProductService = async (storeid, body) => {
   }
 }
 
+const updateProductService = async (body, productid, storeid) => {
+  try {
+    const resultProduct = await product.findOneAndUpdate(
+      { _id: productid },
+      {
+        $set: {
+          title: body.title,
+          description: body.description,
+          availability: body.availability,
+          photos: body.photos,
+          price: body.price,
+          promotion: body.promotion,
+          sku: body.sku,
+          category: body.category,
+          store: storeid
+        }
+      },
+      { new: true }
+    )
+
+    await category.findByIdAndUpdate(
+      { _id: body.category },
+      {
+        $push: { products: productid }
+      }
+    )
+
+    return {
+      success: true,
+      message: 'Operation performed successfully',
+      data: productMapper.toDTO(resultProduct)
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
+const updateImageProductService = async (id, files, storeid) => {
+  try {
+    const result = await product.findOne({ _id: id, store: storeid })
+
+    const newImage = files.map((item) => item.filename)
+    result.fotos = result.fotos.filter((item) => item).concat(newImage)
+
+    await result.save()
+
+    return {
+      success: true,
+      message: 'Operation performed successfully'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
 module.exports = {
   listAllProductService,
-  createProductService
+  createProductService,
+  updateProductService,
+  updateImageProductService
 }
