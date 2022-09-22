@@ -124,9 +124,24 @@ const updateImageProductService = async (id, files, storeid) => {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
   }
 }
+
+const deleteProductService = async (productid, storeid) => {
+  try {
+    await product.deleteOne({ _id: productid, store: storeid })
+
+    return {
+      success: true,
+      message: 'Operation performed successfully'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listAllProductService,
   createProductService,
   updateProductService,
-  updateImageProductService
+  updateImageProductService,
+  deleteProductService
 }
