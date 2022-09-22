@@ -79,6 +79,23 @@ module.exports = (router) => {
 
   router
     .route('/product/:productid')
+    .get(
+      authenticationMiddleware(),
+      authorization.authorizationMiddleware('LIST_PRODUCT_ID'),
+      validateDTOMiddleware('params', {
+        productid: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"product id" is a required field',
+            'string.empty': '"product id" can not be empty',
+            'string.pattern.base': '"product id" out of the expected format'
+          })
+      }),
+      verifyIdDbMiddleware.verifyIdProductDbMiddleware,
+      productController.listByIdProductController
+    )
     .put(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('UPDATE_PRODUCT'),

@@ -16,6 +16,17 @@ const listAllProductController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const listByIdProductController = async (req, res) => {
+  const { productid } = req.params
+  const resultService = await productService.listByIdProductService(productid)
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 const createProductController = async (req, res) => {
   const { body } = req
   const { storeid } = req.query
@@ -81,6 +92,7 @@ const deleteProductController = async (req, res) => {
 }
 module.exports = {
   listAllProductController,
+  listByIdProductController,
   createProductController,
   updateProductController,
   updateImageProductController,

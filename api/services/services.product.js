@@ -39,6 +39,25 @@ const listAllProductService = async (storeid, sortType, offset, limit) => {
   }
 }
 
+const listByIdProductService = async (productid) => {
+  try {
+    const resultDB = await product.paginate(
+      { _id: productid },
+      {
+        populate: ['store', 'category']
+      }
+    )
+
+    return {
+      success: true,
+      message: 'Operation performed successfully',
+      data: productMapper.toDTOList(resultDB.docs)
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 const createProductService = async (storeid, body) => {
   try {
     const resultProduct = await product.create({
@@ -140,6 +159,7 @@ const deleteProductService = async (productid, storeid) => {
 
 module.exports = {
   listAllProductService,
+  listByIdProductService,
   createProductService,
   updateProductService,
   updateImageProductService,
