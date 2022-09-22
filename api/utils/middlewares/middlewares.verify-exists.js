@@ -42,7 +42,8 @@ const verifyIdCategoryDbMiddleware = async (req, res, next) => {
 }
 
 const verifyIdProductDbMiddleware = async (req, res, next) => {
-  const productDB = await product.findOne({ _id: req.body.product })
+  const id = req.params.productid || req.body.product
+  const productDB = await product.findOne({ _id: id })
   if (!productDB) {
     throw new ErrorUnprocessableEntity(`Não existe um produto com esse id!`)
   }
