@@ -31,7 +31,11 @@ const profile = [
       'CREATE_CATEGORY',
       'UPDATE_CATEGORY',
       'DELETE_CATEGORY',
-      'UPDATE_CATEGORY_PRODUCT'
+      'UPDATE_CATEGORY_PRODUCT',
+      'CREATE_PRODUCT',
+      'UPDATE_PRODUCT',
+      'UPLOAD_IMAGE_PRODUCT',
+      'DELETE_PRODUCT'
     ]
   },
   {
