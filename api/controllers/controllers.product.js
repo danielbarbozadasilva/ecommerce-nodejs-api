@@ -16,6 +16,19 @@ const listAllProductController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const createProductController = async (req, res) => {
+  const { body } = req
+  const { storeid } = req.query
+  const resultService = await productService.createProductService(storeid, body)
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
-  listAllProductController
+  listAllProductController,
+  createProductController
 }

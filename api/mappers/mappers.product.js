@@ -1,12 +1,21 @@
 const toDTO = (model) => ({
   id: model._id,
-  name: model.name,
-  code: model.code,
+  title: model.title,
   availability: model.availability,
-  products: model?.products?.map((item) => ({
-    id: item
-  })),
-  store: model.store
+  description: model.description,
+  photos: model.photos,
+  price: model.price,
+  promotion: model.promotion,
+  sku: model.sku,
+  store: model.storeid,
+  category: {
+    _id: model.category._id,
+    name: model.category.name,
+    code: model.category.code,
+    store: model.category.store,
+    availability: model.category.availability,
+    products: model.category.products
+  }
 })
 
 module.exports = {
