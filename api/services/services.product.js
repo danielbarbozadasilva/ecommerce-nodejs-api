@@ -69,7 +69,6 @@ const createProductService = async (storeid, body) => {
       title: body.title,
       availability: true,
       description: body.description,
-      // photos: body.photos,
       price: body.price,
       promotion: body.promotion,
       sku: body.sku,
@@ -110,11 +109,14 @@ const updateProductService = async (body, productid, storeid) => {
           category: body.category,
           store: storeid
         }
-      },
-      { new: true }
+      }
     )
 
-    await category.findByIdAndUpdate(
+    await category.updateMany({
+      $pull: { products: resultProduct._id }
+    })
+
+    await category.findOneAndUpdate(
       { _id: body.category },
       {
         $push: { products: productid }
@@ -123,20 +125,19 @@ const updateProductService = async (body, productid, storeid) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
-      data: productMapper.toDTO(resultProduct)
+      message: 'Operation performed successfully'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
   }
 }
 
-const updateImageProductService = async (id, files, storeid) => {
+const updateImageProductService = async (productid, files, storeid) => {
   try {
-    const result = await product.findOne({ _id: id, store: storeid })
+    const result = await product.findOne({ _id: productid, store: storeid })
 
     const newImage = files.map((item) => item.filename)
-    result.fotos = result.fotos.filter((item) => item).concat(newImage)
+    result.photos = result.photos.filter((item) => item).concat(newImage)
 
     await result.save()
 
@@ -151,7 +152,14 @@ const updateImageProductService = async (id, files, storeid) => {
 
 const deleteProductService = async (productid, storeid) => {
   try {
-    await product.deleteOne({ _id: productid, store: storeid })
+    await product.findOneAndDelete({
+      _id: productid,
+      store: storeid
+    })
+
+    await category.updateMany({
+      $pull: { products: productid }
+    })
 
     return {
       success: true,
