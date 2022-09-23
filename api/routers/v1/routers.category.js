@@ -224,18 +224,19 @@ module.exports = (router) => {
         limit: joi.number()
       }),
       validateDTOMiddleware('body', {
-        product: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"product id" is a required field',
-            'string.empty': '"product id" can not be empty',
-            'string.pattern.base': '"product id" out of the expected format'
-          })
+        products: joi.array().items(
+          joi
+            .string()
+            .regex(/^[0-9a-fA-F]{24}$/)
+            .required()
+            .messages({
+              'any.required': '"product id" is a required field',
+              'string.empty': '"product id" can not be empty',
+              'string.pattern.base': '"product id" out of the expected format'
+            })
+        )
       }),
       verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
-      // verifyIdDbMiddleware.verifyIdProductDbMiddleware,
       categoryController.updateProductsByIdCategoryController
     )
 }
