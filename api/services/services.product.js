@@ -56,7 +56,7 @@ const listByIdProductService = async (productid) => {
     return {
       success: true,
       message: 'Operation performed successfully',
-      data: productMapper.toDTOList(resultDB.docs)
+      data: productMapper.toDTOList(...resultDB.docs)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
