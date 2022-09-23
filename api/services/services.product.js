@@ -1,4 +1,4 @@
-const { product, category } = require('../models/models.index')
+const { product, category, variation } = require('../models/models.index')
 const productMapper = require('../mappers/mappers.product')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 
@@ -204,6 +204,20 @@ const searchProductService = async (storeid, sort, offset, limit, search) => {
   }
 }
 
+const listVariationsProductService = async (productid) => {
+  try {
+    const resultDB = await variation.find({ product: productid })
+
+    return {
+      success: true,
+      message: 'Operation performed successfully',
+      data: resultDB
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listAllProductService,
   listByIdProductService,
@@ -212,5 +226,6 @@ module.exports = {
   updateImageProductService,
   deleteProductService,
   listAvailableProductService,
-  searchProductService
+  searchProductService,
+  listVariationsProductService
 }
