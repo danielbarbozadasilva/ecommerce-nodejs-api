@@ -179,6 +179,31 @@ const listAvailableProductService = async (storeid, sort, offset, limit) => {
   }
 }
 
+const searchProductService = async (storeid, sort, offset, limit, search) => {
+  try {
+    const resultDB = await product.paginate(
+      {
+        store: storeid,
+        $text: { $search: search, $diacriticSensitive: false }
+      },
+      {
+        offset: Number(offset || 0),
+        limit: Number(limit || 30),
+        sort: getSort(sort),
+        populate: ['category']
+      }
+    )
+
+    return {
+      success: true,
+      message: 'Operation performed successfully',
+      data: resultDB.docs.map((item) => productMapper.toDTO(item))
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listAllProductService,
   listByIdProductService,
@@ -186,5 +211,6 @@ module.exports = {
   updateProductService,
   updateImageProductService,
   deleteProductService,
-  listAvailableProductService
+  listAvailableProductService,
+  searchProductService
 }

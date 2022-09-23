@@ -35,8 +35,7 @@ const profile = [
       'CREATE_PRODUCT',
       'UPDATE_PRODUCT',
       'UPLOAD_IMAGE_PRODUCT',
-      'DELETE_PRODUCT',
-      'LIST_AVAILABLE_PRODUCT'
+      'DELETE_PRODUCT'
     ]
   },
   {

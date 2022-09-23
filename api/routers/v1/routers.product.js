@@ -219,8 +219,6 @@ module.exports = (router) => {
   )
 
   router.route('/product/available').get(
-    authenticationMiddleware(),
-    authorization.authorizationMiddleware('LIST_AVAILABLE_PRODUCT'),
     validateDTOMiddleware('query', {
       storeid: joi
         .string()
@@ -237,5 +235,35 @@ module.exports = (router) => {
     }),
     verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
     productController.listAvailableProductController
+  )
+
+  router.route('/product/search/:search').get(
+    validateDTOMiddleware('params', {
+      search: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"search" is a required field',
+          'string.empty': '"search" can not be empty',
+          'string.pattern.base': '"search" out of the expected format'
+        })
+    }),
+    validateDTOMiddleware('query', {
+      storeid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"store id" is a required field',
+          'string.empty': '"store id" can not be empty',
+          'string.pattern.base': '"store id" out of the expected format'
+        }),
+      sortType: joi.string(),
+      offset: joi.number(),
+      limit: joi.number()
+    }),
+    verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
+    productController.searchProductController
   )
 }
