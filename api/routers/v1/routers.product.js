@@ -184,6 +184,7 @@ module.exports = (router) => {
             'string.pattern.base': '"product id" out of the expected format'
           })
       }),
+      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
       verifyIdDbMiddleware.verifyIdProductDbMiddleware,
       productController.deleteProductController
     )
@@ -279,8 +280,23 @@ module.exports = (router) => {
           'string.pattern.base': '"product id" out of the expected format'
         })
     }),
-    verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
+    verifyIdDbMiddleware.verifyIdProductDbMiddleware,
     productController.listVariationsProductController
   )
 
+  router.route('/product/:productid/rating').get(
+    validateDTOMiddleware('params', {
+      productid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"product id" is a required field',
+          'string.empty': '"product id" can not be empty',
+          'string.pattern.base': '"product id" out of the expected format'
+        })
+    }),
+    verifyIdDbMiddleware.verifyIdProductDbMiddleware,
+    productController.listRatingProductController
+  )
 }

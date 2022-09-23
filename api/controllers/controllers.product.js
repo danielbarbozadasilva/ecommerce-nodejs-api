@@ -141,6 +141,18 @@ const listVariationsProductController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const listRatingProductController = async (req, res) => {
+  const { productid } = req.params
+
+  const resultService = await productService.listRatingProductService(productid)
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
   listAllProductController,
   listByIdProductController,
@@ -150,5 +162,6 @@ module.exports = {
   deleteProductController,
   listAvailableProductController,
   searchProductController,
-  listVariationsProductController
+  listVariationsProductController,
+  listRatingProductController
 }
