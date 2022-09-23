@@ -80,8 +80,6 @@ module.exports = (router) => {
   router
     .route('/product/:productid')
     .get(
-      authenticationMiddleware(),
-      authorization.authorizationMiddleware('LIST_PRODUCT_ID'),
       validateDTOMiddleware('params', {
         productid: joi
           .string()
@@ -190,7 +188,7 @@ module.exports = (router) => {
       productController.deleteProductController
     )
 
-  router.route('/images/:id').put(
+  router.route('/product/images/:id').put(
     authenticationMiddleware(),
     authorization.authorizationMiddleware('UPLOAD_IMAGE_PRODUCT'),
     validateDTOMiddleware('params', {
@@ -218,5 +216,26 @@ module.exports = (router) => {
     fileUpload.array('files', 4),
     verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
     productController.updateImageProductController
+  )
+
+  router.route('/product/available').get(
+    authenticationMiddleware(),
+    authorization.authorizationMiddleware('LIST_AVAILABLE_PRODUCT'),
+    validateDTOMiddleware('query', {
+      storeid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"store id" is a required field',
+          'string.empty': '"store id" can not be empty',
+          'string.pattern.base': '"store id" out of the expected format'
+        }),
+      sortType: joi.string(),
+      offset: joi.number(),
+      limit: joi.number()
+    }),
+    verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
+    productController.listAvailableProductController
   )
 }
