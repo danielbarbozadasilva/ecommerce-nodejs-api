@@ -103,9 +103,11 @@ const listCategoryWithProductsController = async (req, res) => {
 
 const updateProductsByIdCategoryController = async (req, res) => {
   const { categoryid } = req.params
+  const { body } = req
 
   const resultService = await categoryService.updateProductsByIdCategoryService(
-    categoryid
+    categoryid,
+    body
   )
   const code = resultService.success ? 200 : 400
   const message = resultService.success

@@ -58,12 +58,12 @@ const updateProductController = async (req, res) => {
 }
 
 const updateImageProductController = async (req, res) => {
-  const { id } = req.params
+  const { productid } = req.params
   const { files } = req
   const { storeid } = req.query
 
   const resultService = await productService.updateImageProductService(
-    id,
+    productid,
     files,
     storeid
   )
