@@ -77,6 +77,25 @@ module.exports = (router) => {
       productController.createProductController
     )
 
+  router.route('/product/available').get(
+    validateDTOMiddleware('query', {
+      storeid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"store id" is a required field',
+          'string.empty': '"store id" can not be empty',
+          'string.pattern.base': '"store id" out of the expected format'
+        }),
+      sortType: joi.string(),
+      offset: joi.number(),
+      limit: joi.number()
+    }),
+    verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
+    productController.listAvailableProductController
+  )
+
   router
     .route('/product/:productid')
     .get(
@@ -189,11 +208,11 @@ module.exports = (router) => {
       productController.deleteProductController
     )
 
-  router.route('/product/images/:id').put(
+  router.route('/product/images/:productid').put(
     authenticationMiddleware(),
     authorization.authorizationMiddleware('UPLOAD_IMAGE_PRODUCT'),
     validateDTOMiddleware('params', {
-      id: joi
+      productid: joi
         .string()
         .regex(/^[0-9a-fA-F]{24}$/)
         .required()
@@ -216,39 +235,16 @@ module.exports = (router) => {
     }),
     fileUpload.array('files', 4),
     verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
+    verifyIdDbMiddleware.verifyIdProductDbMiddleware,
     productController.updateImageProductController
-  )
-
-  router.route('/product/available').get(
-    validateDTOMiddleware('query', {
-      storeid: joi
-        .string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-          'any.required': '"store id" is a required field',
-          'string.empty': '"store id" can not be empty',
-          'string.pattern.base': '"store id" out of the expected format'
-        }),
-      sortType: joi.string(),
-      offset: joi.number(),
-      limit: joi.number()
-    }),
-    verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
-    productController.listAvailableProductController
   )
 
   router.route('/product/search/:search').get(
     validateDTOMiddleware('params', {
-      search: joi
-        .string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-          'any.required': '"search" is a required field',
-          'string.empty': '"search" can not be empty',
-          'string.pattern.base': '"search" out of the expected format'
-        })
+      search: joi.string().required().messages({
+        'any.required': '"search" is a required field',
+        'string.empty': '"search" can not be empty'
+      })
     }),
     validateDTOMiddleware('query', {
       storeid: joi
