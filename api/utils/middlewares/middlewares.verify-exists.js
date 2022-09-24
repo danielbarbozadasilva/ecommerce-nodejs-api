@@ -52,8 +52,8 @@ const verifyIdProductDbMiddleware = async (req, res, next) => {
 }
 
 const verifyIdRatingDbMiddleware = async (req, res, next) => {
-  const productDB = await rating.findOne({ _id: req.params.ratingid })
-  if (!productDB) {
+  const ratingDB = await rating.findOne({ _id: req.params.ratingid })
+  if (!ratingDB) {
     throw new ErrorUnprocessableEntity(
       `Não existe nenhuma curtida com esse id!`
     )
