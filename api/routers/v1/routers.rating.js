@@ -66,15 +66,10 @@ module.exports = (router) => {
           'any.required': '"text" is a required field',
           'string.empty': '"text" can not be empty'
         }),
-        score: joi
-          .string()
-          .regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/)
-          .required()
-          .messages({
-            'any.required': '"score" is a required field',
-            'string.empty': '"score" can not be empty',
-            'string.pattern.base': '"score" out of the expected format'
-          })
+        score: joi.number().min(1).max(5).required().messages({
+          'any.required': '"score" is a required field',
+          'string.empty': '"score" can not be empty'
+        })
       }),
       verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
       verifyIdDbMiddleware.verifyIdProductDbMiddleware,
