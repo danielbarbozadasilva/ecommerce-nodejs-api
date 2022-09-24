@@ -15,6 +15,23 @@ const listRatingProductController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const createRatingProductController = async (req, res) => {
+  const { storeid, productid } = req.query
+  const { body } = req
+
+  const resultService = await ratingService.createRatingProductService(
+    storeid,
+    productid,
+    body
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 const listByIdRatingProductController = async (req, res) => {
   const { ratingid } = req.params
   const { storeid, productid } = req.query
@@ -47,5 +64,6 @@ const deleteRatingProductController = async (req, res) => {
 module.exports = {
   listRatingProductController,
   listByIdRatingProductController,
-  deleteRatingProductController
+  deleteRatingProductController,
+  createRatingProductController
 }
