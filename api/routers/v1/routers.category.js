@@ -142,7 +142,6 @@ module.exports = (router) => {
         )
       }),
       verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
-      // verifyIdDbMiddleware.verifyIdProductDbMiddleware,
       categoryController.updateCategoryController
     )
     .delete(
