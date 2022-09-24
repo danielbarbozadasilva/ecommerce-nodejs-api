@@ -3,7 +3,8 @@ const {
   store,
   client,
   category,
-  product
+  product,
+  rating
 } = require('../../models/models.index')
 const ErrorUnprocessableEntity = require('../errors/errors.unprocessable-entity')
 const ErrorBusinessRule = require('../errors/errors.business-rule')
@@ -46,6 +47,16 @@ const verifyIdProductDbMiddleware = async (req, res, next) => {
   const productDB = await product.findOne({ _id: id })
   if (!productDB) {
     throw new ErrorUnprocessableEntity(`Não existe um produto com esse id!`)
+  }
+  next()
+}
+
+const verifyIdRatingDbMiddleware = async (req, res, next) => {
+  const productDB = await rating.findOne({ _id: req.params.ratingid })
+  if (!productDB) {
+    throw new ErrorUnprocessableEntity(
+      `Não existe nenhuma curtida com esse id!`
+    )
   }
   next()
 }
@@ -107,6 +118,7 @@ module.exports = {
   verifyIdStoreDbMiddleware,
   verifyIdCategoryDbMiddleware,
   verifyIdProductDbMiddleware,
+  verifyIdRatingDbMiddleware,
   verifyEmailUserExists,
   verifyCpfUserExists,
   verifyCnpjStoreExists,
