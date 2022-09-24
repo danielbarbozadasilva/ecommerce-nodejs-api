@@ -233,12 +233,14 @@ const listVariationsProductService = async (productid) => {
 
 const listRatingProductService = async (productid) => {
   try {
-    const resultDB = await rating.find({ product: productid })
+    const resultDB = await rating
+      .find({ product: productid })
+      .populate('product')
 
     return {
       success: true,
       message: 'Operation performed successfully',
-      data: resultDB
+      data: resultDB.map((item) => productMapper.toDTORating(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
