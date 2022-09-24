@@ -35,7 +35,8 @@ const profile = [
       'CREATE_PRODUCT',
       'UPDATE_PRODUCT',
       'UPLOAD_IMAGE_PRODUCT',
-      'DELETE_PRODUCT'
+      'DELETE_PRODUCT',
+      'DELETE_RATING'
     ]
   },
   {
@@ -51,7 +52,8 @@ const profile = [
       'CLIENT_DELETE',
       'LIST_CATEGORY',
       'LIST_CATEGORY_AVAILABILITY',
-      'LIST_CATEGORY_ID'
+      'LIST_CATEGORY_ID',
+      'CREATE_RATING'
     ]
   }
 ]
