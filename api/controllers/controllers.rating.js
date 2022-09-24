@@ -32,7 +32,20 @@ const listByIdRatingProductController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const deleteRatingProductController = async (req, res) => {
+  const { ratingid } = req.params
+
+  const resultService = await ratingService.deleteRatingProductService(ratingid)
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
   listRatingProductController,
-  listByIdRatingProductController
+  listByIdRatingProductController,
+  deleteRatingProductController
 }

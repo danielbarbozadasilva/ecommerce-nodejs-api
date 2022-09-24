@@ -34,7 +34,21 @@ const listByIdRatingProductService = async (ratingid, storeid, productid) => {
   }
 }
 
+const deleteRatingProductService = async (ratingid) => {
+  try {
+    await rating.deleteOne({ _id: ratingid })
+
+    return {
+      success: true,
+      message: 'Operation performed successfully'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listRatingProductService,
-  listByIdRatingProductService
+  listByIdRatingProductService,
+  deleteRatingProductService
 }
