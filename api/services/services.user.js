@@ -15,7 +15,6 @@ const profile = [
       'USER_LIST_ID',
       'USER_UPDATE',
       'USER_DELETE',
-      'STORE_CREATE',
       'STORE_UPDATE',
       'STORE_DELETE',
       'LIST_CLIENT',
@@ -32,7 +31,12 @@ const profile = [
       'CREATE_CATEGORY',
       'UPDATE_CATEGORY',
       'DELETE_CATEGORY',
-      'UPDATE_CATEGORY_PRODUCT'
+      'UPDATE_CATEGORY_PRODUCT',
+      'CREATE_PRODUCT',
+      'UPDATE_PRODUCT',
+      'UPLOAD_IMAGE_PRODUCT',
+      'DELETE_PRODUCT',
+      'DELETE_RATING'
     ]
   },
   {
@@ -42,15 +46,14 @@ const profile = [
       'USER_UPDATE',
       'USER_DELETE',
       'STORE_CREATE',
-      'STORE_UPDATE',
-      'STORE_DELETE',
       'LIST_CLIENT',
       'CLIENT_ID',
       'CLIENT_UPDATE',
       'CLIENT_DELETE',
       'LIST_CATEGORY',
       'LIST_CATEGORY_AVAILABILITY',
-      'LIST_CATEGORY_ID'
+      'LIST_CATEGORY_ID',
+      'CREATE_RATING'
     ]
   }
 ]
@@ -141,7 +144,7 @@ const registerService = async (body) => {
 }
 
 const listByIdUserService = async (id) => {
-  const resultDB = await user.findById({ _id: id }).populate({ path: 'store' })
+  const resultDB = await user.findById({ _id: id }).populate('store')
 
   return {
     success: true,
@@ -164,7 +167,8 @@ const updateUserService = async (id, body) => {
           hash: cryptography.createHash(body.password, salt),
           store: body.store
         }
-      }
+      },
+      { new: true }
     )
 
     return {
@@ -259,15 +263,15 @@ const resetPasswordUserService = async (body) => {
   }
 }
 
-const checkIdAuthorizationService = async (idToken, idUser, permissions) => {
+const checkIdAuthorizationService = async (idToken, userid, permissions) => {
   const result = permissions.map((item) => item === 'administrator')
 
-  if (idUser && !result[0]) {
-    const userDB = await client.findOne({ _id: idUser, user: idToken })
+  if (userid && !result[0]) {
+    const userDB = await client.findOne({ _id: userid, user: idToken })
 
-    if (!userDB) {
+    if (!userDB && idToken != userid) {
       throw new ErrorNotAuthorizedUser(
-        'Usuário não autorizado!\nVocê só pode realizar a operação usando o seu próprio "Id"'
+        "Usuário não autorizado! Você só pode realizar a operação usando o seu próprio 'Id'"
       )
     }
   }

@@ -72,6 +72,17 @@ module.exports = (router) => {
     .put(
       authenticationMiddleware(),
       authorizationMiddleware('USER_UPDATE'),
+      validateDTOMiddleware('params', {
+        userid: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"user id" is a required field',
+            'string.empty': '"user id" can not be empty',
+            'string.pattern.base': '"user id" out of the expected format'
+          })
+      }),
       validateDTOMiddleware('body', {
         name: joi.string().required().messages({
           'any.required': '"name" is a required field',
@@ -84,16 +95,7 @@ module.exports = (router) => {
         password: joi.string().required().messages({
           'any.required': '"password" is a required field',
           'string.empty': '"password" can not be empty'
-        }),
-        store: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"store id" is a required field',
-            'string.empty': '"store id" can not be empty',
-            'string.pattern.base': '"store id" out of the expected format'
-          })
+        })
       }),
       verifyIdDbMiddleware.verifyEmailUserExists,
       verifyIdDbMiddleware.verifyIdUserDbMiddleware,
@@ -102,6 +104,17 @@ module.exports = (router) => {
     .delete(
       authenticationMiddleware(),
       authorizationMiddleware('USER_DELETE'),
+      validateDTOMiddleware('params', {
+        userid: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"user id" is a required field',
+            'string.empty': '"user id" can not be empty',
+            'string.pattern.base': '"user id" out of the expected format'
+          })
+      }),
       verifyIdDbMiddleware.verifyIdUserDbMiddleware,
       userController.deleteUserController
     )

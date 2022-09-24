@@ -33,11 +33,12 @@ const listCategoryAvailabilityByStoreService = async (storeid) => {
 
 const listCategoryByIdService = async (storeid, categoryid) => {
   try {
-    const resultDB = await category.find({
-      _id: categoryid,
-      store: storeid
-    })
-    // .populate('product')
+    const resultDB = await category
+      .find({
+        _id: categoryid,
+        store: storeid
+      })
+      .populate('products')
 
     return {
       success: true,
@@ -125,25 +126,13 @@ const listCategoryWithProductsService = async (categoryid, offset, limit) => {
 
 const updateProductsByIdCategoryService = async (categoryid, body) => {
   try {
-    await category.findOneAndUpdate(
-      { _id: categoryid },
-      {
-        $set: {
-          products: body.products
-        }
-      },
-      { new: true }
-    )
-
-    const resultDB = await product.updateMany(
-      { _id: { $in: [resultDB.product] } },
-      { $set: { category: categoryid }, multi: true }
-    )
+    const resultCategory = await category.findById(categoryid)
+    resultCategory.products = body.products
+    await resultCategory.save()
 
     return {
       success: true,
-      message: 'Data updated successfully',
-      data: resultDB.map((item) => categoryMapper.toDTOWithProducts(item))
+      message: 'Data updated successfully'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)

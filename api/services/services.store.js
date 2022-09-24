@@ -33,7 +33,7 @@ const listByIdStoreService = async (id) => {
 
 const updateStoreService = async (id, body) => {
   try {
-    await store.findOneAndUpdate(
+    const resultDB = await store.findOneAndUpdate(
       { _id: id },
       {
         $set: {
@@ -50,12 +50,14 @@ const updateStoreService = async (id, body) => {
             zipCode: body.address.zipCode
           }
         }
-      }
+      },
+      { new: true }
     )
 
     return {
       success: true,
-      message: 'Data updated successfully'
+      message: 'Data updated successfully',
+      data: storeMapper.toDTO(resultDB)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)

@@ -12,18 +12,19 @@ const cryptography = require('../utils/utils.cryptography')
 
 const listAllClientsService = async (offset, limit, store) => {
   try {
-    const resultDB = await client.paginate({
-      store,
-      offset: Number(offset || 0),
-      limit: Number(limit || 30),
-      populate: 'user',
-      select: '-salt -hash'
-    })
+    const resultDB = await client.paginate(
+      { store },
+      {
+        populate: 'user',
+        offset: Number(offset || 0),
+        limit: Number(limit || 30)
+      }
+    )
 
     return {
       success: true,
       message: 'Operation performed successfully',
-      data: resultDB.docs.map((item) => clientMapper.toDTO(item))
+      data: resultDB.docs.map((item) => clientMapper.toClientDTO(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -74,11 +75,10 @@ const listClientSearchService = async (offset, limit, store, search) => {
     const resultDB = await client.paginate({
       store,
       $or: [{ $text: { $search: `${search}`, $diacriticSensitive: false } }],
-      // $or: [{ phones: { $in: search } }],
+      $or: [{ phones: { $in: search } }],
       offset: Number(offset || 0),
       limit: Number(limit || 30)
     })
-
     return {
       success: true,
       message: 'Operation performed successfully',

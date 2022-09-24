@@ -38,14 +38,14 @@ const toDTOList = (userDB, clientDB) => ({
 
 const toClientDTO = (model) => ({
   user: {
-    _id: model.user._id,
-    name: model.user.name,
-    email: model.user.email,
-    store: model.user.store,
-    permissions: model.user.permissions
+    id: model.user?._id,
+    name: model.user?.name,
+    email: model.user?.email,
+    store: model.user?.store,
+    permissions: model.user?.permissions
   },
   client: {
-    _id: model._id,
+    id: model._id,
     name: model.name,
     birthDate: model.birthDate,
     cpf: model.cpf,
