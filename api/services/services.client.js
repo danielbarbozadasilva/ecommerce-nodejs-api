@@ -23,7 +23,7 @@ const listAllClientsService = async (offset, limit, store) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Successfully Listed Clients',
       data: resultDB.docs.map((item) => clientMapper.toClientDTO(item))
     }
   } catch (err) {
@@ -81,7 +81,7 @@ const listClientSearchService = async (offset, limit, store, search) => {
     })
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Successfully Listed Clients',
       data: resultDB.docs.map((item) => clientMapper.toDTO(item))
     }
   } catch (err) {
@@ -132,7 +132,7 @@ const updateClientService = async (id, store, body) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Client successfully updated',
       data: clientMapper.toDTOList(userDB, clientDB)
     }
   } catch (err) {
@@ -155,7 +155,7 @@ const deleteClientService = async (id) => {
 
     return {
       success: true,
-      message: 'Deleted successfully'
+      message: 'Client successfully deleted'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -170,7 +170,7 @@ const listByIdClientService = async (clientid, storeid) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Client listed successfully',
       data: clientMapper.toClientDTO(resultDB)
     }
   } catch (err) {
@@ -242,7 +242,7 @@ const createClientService = async (store, body) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Client created successfully',
       data: clientMapper.toDTOList(userDB, clientDB)
     }
   } catch (err) {

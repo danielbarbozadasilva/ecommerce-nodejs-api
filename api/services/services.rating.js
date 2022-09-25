@@ -8,7 +8,7 @@ const listRatingProductService = async (storeid, productid) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Product ratings successfully listed',
       data: resultDB.map((item) => ratingMapper.toDTO(item))
     }
   } catch (err) {
@@ -35,7 +35,7 @@ const createRatingProductService = async (storeid, productid, body) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Product ratings created successfully',
       data: ratingMapper.toDTO(resultDB)
     }
   } catch (err) {
@@ -53,7 +53,7 @@ const listByIdRatingProductService = async (ratingid, storeid, productid) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Product ratings listed successfully',
       data: ratingMapper.toDTO(resultDB)
     }
   } catch (err) {
@@ -74,7 +74,7 @@ const deleteRatingProductService = async (ratingid) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully'
+      message: 'Rating successfully deleted'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)

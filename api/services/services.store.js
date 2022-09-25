@@ -9,7 +9,7 @@ const listAllStoresService = async () => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Stores listed successfully',
       data: resultDB.map((item) => storeMapper.toDTO(item))
     }
   } catch (err) {
@@ -23,7 +23,7 @@ const listByIdStoreService = async (id) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Store listed successfully',
       data: storeMapper.toDTO(resultDB)
     }
   } catch (err) {
@@ -56,7 +56,7 @@ const updateStoreService = async (id, body) => {
 
     return {
       success: true,
-      message: 'Data updated successfully',
+      message: 'Store successfully updated',
       data: storeMapper.toDTO(resultDB)
     }
   } catch (err) {
@@ -70,7 +70,7 @@ const deleteStoreService = async (id) => {
 
     return {
       success: true,
-      message: 'Store deleted successfully'
+      message: 'Store successfully deleted'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -96,7 +96,7 @@ const createStoreService = async (body) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Store created successfully',
       data: storeMapper.toDTO(result)
     }
   } catch (err) {

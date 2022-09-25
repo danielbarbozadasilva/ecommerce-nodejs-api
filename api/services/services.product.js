@@ -36,7 +36,7 @@ const listAllProductService = async (storeid, sortType, offset, limit) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Products listed successfully',
       data: resultDB.docs.map((item) => productMapper.toDTO(item))
     }
   } catch (err) {
@@ -55,7 +55,7 @@ const listByIdProductService = async (productid) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Product listed successfully',
       data: productMapper.toDTOList(...resultDB.docs)
     }
   } catch (err) {
@@ -85,7 +85,7 @@ const createProductService = async (storeid, body) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Product created successfully',
       data: productMapper.toDTO(resultProduct)
     }
   } catch (err) {
@@ -125,7 +125,7 @@ const updateProductService = async (body, productid, storeid) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully'
+      message: 'Product successfully updated'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -163,7 +163,7 @@ const deleteProductService = async (productid, storeid) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully'
+      message: 'Product successfully deleted'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -184,7 +184,7 @@ const listAvailableProductService = async (storeid, sort, offset, limit) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Products listed successfully',
       data: resultDB.docs.map((item) => productMapper.toDTO(item))
     }
   } catch (err) {
@@ -209,7 +209,7 @@ const searchProductService = async (storeid, sort, offset, limit, search) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Products listed successfully',
       data: resultDB.docs.map((item) => productMapper.toDTO(item))
     }
   } catch (err) {
@@ -219,12 +219,14 @@ const searchProductService = async (storeid, sort, offset, limit, search) => {
 
 const listVariationsProductService = async (productid) => {
   try {
-    const resultDB = await variation.find({ product: productid })
+    const resultDB = await variation
+      .find({ product: productid })
+      .populate('product')
 
     return {
       success: true,
-      message: 'Operation performed successfully',
-      data: resultDB
+      message: 'Product variations successfully listed',
+      data: resultDB.map((item) => productMapper.toDTOVariations(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -239,7 +241,7 @@ const listRatingProductService = async (productid) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Product reviews listed successfully',
       data: resultDB.map((item) => productMapper.toDTORating(item))
     }
   } catch (err) {

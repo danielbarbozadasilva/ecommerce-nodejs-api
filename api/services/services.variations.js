@@ -1,0 +1,153 @@
+const { variation, product } = require('../models/models.index')
+const variationsMapper = require('../mappers/mappers.variations')
+const ErrorGeneric = require('../utils/errors/erros.generic-error')
+
+const listVariationsService = async (storeid, productid) => {
+  try {
+    const resultDB = await variation.find({
+      store: storeid,
+      product: productid
+    })
+
+    return {
+      success: true,
+      message: 'Successfully Listed Variations',
+      data: resultDB.map((item) => variationsMapper.toDTO(item))
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
+const createVariationsService = async (storeid, productid, body) => {
+  try {
+    const resultDB = await variation.create({
+      code: body.code,
+      name: body.name,
+      price: body.price,
+      promotion: body.promotion,
+      delivery: body.delivery,
+      quantity: body.quantity,
+      store: storeid,
+      product: productid
+    })
+
+    await product.findOneAndUpdate(
+      { _id: productid },
+      {
+        $push: { variations: resultDB._id }
+      }
+    )
+
+    return {
+      success: true,
+      message: 'Variation created successfully',
+      data: variationsMapper.toDTO(resultDB)
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
+const listByIdVariationsService = async (storeid, productid, variationid) => {
+  try {
+    const resultDB = await variation.findOne({
+      _id: variationid,
+      store: storeid,
+      product: productid
+    })
+
+    return {
+      success: true,
+      message: 'Variation successfully listed',
+      data: variationsMapper.toDTO(resultDB)
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
+const updateVariationsService = async (id, storeid, productid, body) => {
+  try {
+    const resultDB = await variation.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          code: body.code,
+          name: body.name,
+          price: body.price,
+          promotion: body.promotion,
+          delivery: body.delivery,
+          quantity: body.quantity,
+          store: storeid,
+          product: productid,
+          photos: body.photos
+        }
+      },
+      { new: true }
+    )
+
+    return {
+      success: true,
+      message: 'Variation updated successfully',
+      data: variationsMapper.toDTO(resultDB)
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
+const updateImageVariationService = async (id, storeid, productid, files) => {
+  try {
+    const result = await variation.findOne({
+      _id: id,
+      store: storeid,
+      product: productid
+    })
+
+    const newImage = files.map((item) => item.filename)
+    result.photos = result.photos.filter((item) => item).concat(newImage)
+
+    await result.save()
+
+    return {
+      success: true,
+      message: 'Operation performed successfully'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
+const deleteVariationsService = async (storeid, productid, variationid) => {
+  try {
+    await variation.deleteOne({
+      _id: variationid,
+      store: storeid,
+      product: productid
+    })
+
+    await product.findOneAndUpdate(
+      { variations: variationid },
+      {
+        $pull: { variations: variationid }
+      }
+    )
+
+    return {
+      success: true,
+      message: 'Variation successfully deleted'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
+module.exports = {
+  listVariationsService,
+  createVariationsService,
+  listByIdVariationsService,
+  updateVariationsService,
+  updateImageVariationService,
+  deleteVariationsService
+}

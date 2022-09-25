@@ -46,7 +46,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"danielbarboza56@hotmail.com\",\n    \"password\": \"daniel\"\n}",
+							"raw": "{\n    \"email\": \"daniel95barboza@gmail.com\",\n    \"password\": \"daniel\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1110,7 +1110,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/category/632a080cb840b174a9f4a941?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/category/632ddebec72cf112ddccfd04?storeid=631e00f5190d800a90c6fa4d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1119,7 +1119,7 @@
 							"path": [
 								"v1",
 								"category",
-								"632a080cb840b174a9f4a941"
+								"632ddebec72cf112ddccfd04"
 							],
 							"query": [
 								{
@@ -1215,7 +1215,7 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "Teclado Dell34434",
+									"value": "Periféricos",
 									"type": "text"
 								},
 								{
@@ -1398,7 +1398,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Placa de vídeo\",\r\n    \"code\": \"43242342342343224\",\r\n    \"availability\": false,\r\n    \"products\": \"63249e3d8f52eb218f278112\"\r\n}",
+							"raw": "{\r\n    \"products\": [\r\n        \"632c8fd67408d4d6213b1e33\"\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1406,7 +1406,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/category/632b7bec8f410ea452cd5ea8/products",
+							"raw": "http://localhost:3011/v1/category/6320f577156b47ff1082586e/products",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1415,7 +1415,7 @@
 							"path": [
 								"v1",
 								"category",
-								"632b7bec8f410ea452cd5ea8",
+								"6320f577156b47ff1082586e",
 								"products"
 							]
 						}
@@ -1449,7 +1449,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/product",
+							"raw": "http://localhost:3011/v1/product?storeid=631e00f5190d800a90c6fa4d&offset=0&limit=30&sortType=alfabetica_a-z",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1458,6 +1458,117 @@
 							"path": [
 								"v1",
 								"product"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "30"
+								},
+								{
+									"key": "sortType",
+									"value": "alfabetica_a-z"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product.listAllAvailable",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/product/available?storeid=631e00f5190d800a90c6fa4d&offset=0&limit=30&sortType=alfabetica_a-z",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"product",
+								"available"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "30"
+								},
+								{
+									"key": "sortType",
+									"value": "alfabetica_a-z"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product.search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3011/v1/product/search/Dell?storeid=631e00f5190d800a90c6fa4d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"product",
+								"search",
+								"Dell"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								}
 							]
 						}
 					},
@@ -1485,7 +1596,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/product/63249e3d8f52eb218f278913",
+							"raw": "http://localhost:3011/v1/product/632c8edcca30799b1446cc63",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1494,7 +1605,83 @@
 							"path": [
 								"v1",
 								"product",
-								"63249e3d8f52eb218f278913"
+								"632c8edcca30799b1446cc63"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product.listByIdProductRating",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/product/632c8edcca30799b1446cc63/rating",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"product",
+								"632c8edcca30799b1446cc63",
+								"rating"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product.listByIdProductVariations",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/product/632c8edcca30799b1446cc63/variations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"product",
+								"632c8edcca30799b1446cc63",
+								"variations"
 							]
 						}
 					},
@@ -1532,16 +1719,42 @@
 							}
 						],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"_id\": \"6320f577156b47ff1082586e\",\r\n    \"title\": \"Nvidia GTX1080\",\r\n    \"availability\": true,\r\n    \"description\": \"Placa de vídeo\",\r\n    \"photos\": \"43242342342343224\",\r\n    \"price\": \"43242342342343224\",\r\n    \"promotion\": \"43242342342343224\",\r\n    \"sku\": \"43242342342343224\",\r\n    \"category\": \"631e00f5190d800a90c6fa43\",\r\n    \"store\": \"631e00f5190d800a90c6fa43\",\r\n    \"rating\": \"631e00f5190d800a90c6fa43\",\r\n    \"variations\": \"631e00f5190d800a90c6fa43\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "Teclado Dell Gh5yf",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Com fio, Usb",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "29.90",
+									"type": "text"
+								},
+								{
+									"key": "sku",
+									"value": "a1b1c1",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "632ddebec72cf112ddccfd04",
+									"type": "text"
+								},
+								{
+									"key": "promotion",
+									"value": "12321",
+									"type": "text"
 								}
-							}
+							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/product",
+							"raw": "http://localhost:3011/v1/product?storeid=631e00f5190d800a90c6fa4d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1550,6 +1763,12 @@
 							"path": [
 								"v1",
 								"product"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								}
 							]
 						}
 					},
@@ -1587,16 +1806,53 @@
 							}
 						],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"_id\": \"6320f577156b47ff1082586e\",\r\n    \"title\": \"Nvidia GTX1080\",\r\n    \"availability\": true,\r\n    \"description\": \"Placa de vídeo\",\r\n    \"photos\": \"43242342342343224\",\r\n    \"price\": \"43242342342343224\",\r\n    \"promotion\": \"43242342342343224\",\r\n    \"sku\": \"43242342342343224\",\r\n    \"category\": \"631e00f5190d800a90c6fa43\",\r\n    \"store\": \"631e00f5190d800a90c6fa43\",\r\n    \"rating\": \"631e00f5190d800a90c6fa43\",\r\n    \"variations\": \"631e00f5190d800a90c6fa43\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "Multilaser WebCam 124dag",
+									"type": "text"
+								},
+								{
+									"key": "availability",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Com fio",
+									"type": "text"
+								},
+								{
+									"key": "photos",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "price",
+									"value": "133.90",
+									"type": "text"
+								},
+								{
+									"key": "promotion",
+									"value": "23",
+									"type": "text"
+								},
+								{
+									"key": "sku",
+									"value": "4144231",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "632ddebec72cf112ddccfd04",
+									"type": "text"
 								}
-							}
+							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/product/63249e3d8f52eb218f278913",
+							"raw": "http://localhost:3011/v1/product/632c8fd67408d4d6213b1e33?storeid=631e00f5190d800a90c6fa4d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1605,7 +1861,77 @@
 							"path": [
 								"v1",
 								"product",
-								"63249e3d8f52eb218f278913"
+								"632c8fd67408d4d6213b1e33"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product.updateImage",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/C:/Users/pc01/Pictures/Yoda2.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/product/images/632c8fd67408d4d6213b1e33?storeid=631e00f5190d800a90c6fa4d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"product",
+								"images",
+								"632c8fd67408d4d6213b1e33"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								}
 							]
 						}
 					},
@@ -1652,7 +1978,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/product/63249e3d8f52eb218f278913",
+							"raw": "http://localhost:3011/v1/product/632c8ef9bc19533e5e986c45?storeid=631e00f5190d800a90c6fa4d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1661,7 +1987,207 @@
 							"path": [
 								"v1",
 								"product",
-								"63249e3d8f52eb218f278913"
+								"632c8ef9bc19533e5e986c45"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "rating",
+			"item": [
+				{
+					"name": "rating.listAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/rating?storeid=631e00f5190d800a90c6fa4d&productid=632c8edcca30799b1446cc63",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"rating"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								},
+								{
+									"key": "productid",
+									"value": "632c8edcca30799b1446cc63"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rating.listById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/rating/632f8dfbbee2dc3077bcb361?storeid=631e00f5190d800a90c6fa4d&productid=632c8edcca30799b1446cc63",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"rating",
+								"632f8dfbbee2dc3077bcb361"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								},
+								{
+									"key": "productid",
+									"value": "632c8edcca30799b1446cc63"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rating.create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Daniel\",\r\n    \"text\": \"Gostei bastante\",\r\n    \"score\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/rating?storeid=631e00f5190d800a90c6fa4d&productid=632c8edcca30799b1446cc63",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"rating"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "631e00f5190d800a90c6fa4d"
+								},
+								{
+									"key": "productid",
+									"value": "632c8edcca30799b1446cc63"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rating.remove",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/rating/632f8dfbbee2dc3077bcb361",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"rating",
+								"632f8dfbbee2dc3077bcb361"
 							]
 						}
 					},
