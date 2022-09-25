@@ -99,7 +99,7 @@ const updateVariationsService = async (id, storeid, productid, body) => {
 
 const updateImageVariationService = async (id, storeid, productid, files) => {
   try {
-    const result = await product.findOne({
+    const result = await variation.findOne({
       _id: id,
       store: storeid,
       product: productid
