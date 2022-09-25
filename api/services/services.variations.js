@@ -89,7 +89,7 @@ const updateVariationsService = async (id, storeid, productid, body) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Data updated successfully',
       data: variationsMapper.toDTO(resultDB)
     }
   } catch (err) {
@@ -119,10 +119,12 @@ const updateImageVariationService = async (id, storeid, productid, files) => {
   }
 }
 
-const deleteVariationsService = async (variationid) => {
+const deleteVariationsService = async (storeid, productid, variationid) => {
   try {
     await variation.deleteOne({
-      _id: variationid
+      _id: variationid,
+      store: storeid,
+      product: productid
     })
 
     await product.findOneAndUpdate(
@@ -134,7 +136,7 @@ const deleteVariationsService = async (variationid) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully'
+      message: 'Deletion performed successfully'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)

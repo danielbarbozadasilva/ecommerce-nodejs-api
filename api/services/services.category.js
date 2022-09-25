@@ -9,7 +9,7 @@ const listCategoryByStoreService = async (storeid) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Categories successfully listed',
       data: resultDB.map((item) => categoryMapper.toDTO(item))
     }
   } catch (err) {
@@ -23,7 +23,7 @@ const listCategoryAvailabilityByStoreService = async (storeid) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Categories successfully listed',
       data: resultDB.map((item) => categoryMapper.toDTO(item))
     }
   } catch (err) {
@@ -42,7 +42,7 @@ const listCategoryByIdService = async (storeid, categoryid) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Category listed successfully',
       data: resultDB.map((item) => categoryMapper.toDTOWithProducts(item))
     }
   } catch (err) {
@@ -61,7 +61,7 @@ const createCategoryByStoreService = async (storeid, body) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Category created successfully',
       data: categoryMapper.toDTO(resultDB)
     }
   } catch (err) {
@@ -86,7 +86,7 @@ const updateCategoryService = async (categoryid, body) => {
 
     return {
       success: true,
-      message: 'Data updated successfully',
+      message: 'Category updated successfully',
       data: categoryMapper.toDTOWithProducts(result)
     }
   } catch (err) {
@@ -100,7 +100,7 @@ const deleteCategoryService = async (categoryid) => {
 
     return {
       success: true,
-      message: 'Data deleted successfully'
+      message: 'Category deleted successfully'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -116,7 +116,7 @@ const listCategoryWithProductsService = async (categoryid, offset, limit) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Categories successfully listed',
       data: resultDB.map((item) => categoryMapper.toDTOWithProducts(item))
     }
   } catch (err) {

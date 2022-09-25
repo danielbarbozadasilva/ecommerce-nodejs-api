@@ -108,13 +108,13 @@ const authService = async (email, password) => {
     if (!resultCredentials) {
       return {
         success: false,
-        details: ['Não foi possivel criar a credencial!']
+        details: ['Unable to create credential!']
       }
     }
 
     return {
       success: true,
-      message: 'Usuário autenticado com sucesso!',
+      message: 'User authenticated successfully!',
       data: resultCredentials
     }
   } catch (err) {
@@ -135,7 +135,7 @@ const registerService = async (body) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'User registered successfully',
       data: userMapper.toDTO(result)
     }
   } catch (err) {
@@ -148,7 +148,7 @@ const listByIdUserService = async (id) => {
 
   return {
     success: true,
-    message: 'Operation performed successfully',
+    message: 'User listed successfully',
     data: userMapper.toDTO(resultDB)
   }
 }
@@ -218,7 +218,7 @@ const sendTokenRecoveryPasswordService = async (body) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully'
+      message: 'Email successfully sent'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
