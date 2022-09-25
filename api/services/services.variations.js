@@ -11,7 +11,7 @@ const listVariationsService = async (storeid, productid) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Successfully Listed Variations',
       data: resultDB.map((item) => variationsMapper.toDTO(item))
     }
   } catch (err) {
@@ -41,7 +41,7 @@ const createVariationsService = async (storeid, productid, body) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Variation created successfully',
       data: variationsMapper.toDTO(resultDB)
     }
   } catch (err) {
@@ -59,7 +59,7 @@ const listByIdVariationsService = async (storeid, productid, variationid) => {
 
     return {
       success: true,
-      message: 'Operation performed successfully',
+      message: 'Variation successfully listed',
       data: variationsMapper.toDTO(resultDB)
     }
   } catch (err) {
@@ -89,7 +89,7 @@ const updateVariationsService = async (id, storeid, productid, body) => {
 
     return {
       success: true,
-      message: 'Data updated successfully',
+      message: 'Variation updated successfully',
       data: variationsMapper.toDTO(resultDB)
     }
   } catch (err) {
@@ -136,7 +136,7 @@ const deleteVariationsService = async (storeid, productid, variationid) => {
 
     return {
       success: true,
-      message: 'Deletion performed successfully'
+      message: 'Variation successfully deleted'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
