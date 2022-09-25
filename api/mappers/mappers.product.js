@@ -70,8 +70,39 @@ const toDTORating = (model) => ({
   }
 })
 
+const toDTOVariations = (model) => ({
+  _id: model.id,
+  code: model.code,
+  name: model.name,
+  price: model.price,
+  promotion: model.promotion,
+  delivery: {
+    dimensions: {
+      height: model.delivery.dimensions.height,
+      width: model.delivery.dimensions.width,
+      depth: model.delivery.dimensions.depth
+    },
+    weight: model.delivery.weight,
+    freeShipping: model.delivery.freeShipping
+  },
+  quantity: model.quantity,
+  store: model.store,
+  photos: model.photos,
+  product: {
+    id: model.product._id,
+    title: model.product.title,
+    availability: model.product.availability,
+    description: model.product.description,
+    photos: model.product.photos,
+    price: model.product.price,
+    promotion: model.product.promotion,
+    sku: model.product.sku
+  }
+})
+
 module.exports = {
   toDTO,
   toDTOList,
-  toDTORating
+  toDTORating,
+  toDTOVariations
 }

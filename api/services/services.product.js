@@ -219,12 +219,14 @@ const searchProductService = async (storeid, sort, offset, limit, search) => {
 
 const listVariationsProductService = async (productid) => {
   try {
-    const resultDB = await variation.find({ product: productid })
+    const resultDB = await variation
+      .find({ product: productid })
+      .populate('product')
 
     return {
       success: true,
       message: 'Product variations successfully listed',
-      data: resultDB
+      data: resultDB.map((item) => productMapper.toDTOVariations(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
