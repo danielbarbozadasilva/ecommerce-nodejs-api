@@ -32,6 +32,13 @@ const createVariationsService = async (storeid, productid, body) => {
       product: productid
     })
 
+    await product.findOneAndUpdate(
+      { _id: productid },
+      {
+        $push: { variations: resultDB._id }
+      }
+    )
+
     return {
       success: true,
       message: 'Operation performed successfully',
@@ -112,10 +119,33 @@ const updateImageVariationService = async (id, storeid, productid, files) => {
   }
 }
 
+const deleteVariationsService = async (variationid) => {
+  try {
+    await variation.deleteOne({
+      _id: variationid
+    })
+
+    await product.findOneAndUpdate(
+      { variations: variationid },
+      {
+        $pull: { variations: variationid }
+      }
+    )
+
+    return {
+      success: true,
+      message: 'Operation performed successfully'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listVariationsService,
   createVariationsService,
   listByIdVariationsService,
   updateVariationsService,
-  updateImageVariationService
+  updateImageVariationService,
+  deleteVariationsService
 }

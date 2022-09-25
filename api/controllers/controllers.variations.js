@@ -81,10 +81,24 @@ const updateImageVariationController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const deleteVariationsController = async (req, res) => {
+  const { variationid } = req.params
+  const resultService = await variationsService.deleteVariationsService(
+    variationid
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
   listVariationsController,
   createVariationsController,
   listByIdVariationsController,
   updateVariationsController,
-  updateImageVariationController
+  updateImageVariationController,
+  deleteVariationsController
 }

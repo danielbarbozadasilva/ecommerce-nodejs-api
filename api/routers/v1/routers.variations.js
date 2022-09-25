@@ -195,6 +195,23 @@ module.exports = (router) => {
       verifyIdDbMiddleware.verifyIdVariationDbMiddleware,
       variationsController.updateVariationsController
     )
+    .delete(
+      authenticationMiddleware(),
+      authorization.authorizationMiddleware('DELETE_VARIATION'),
+      validateDTOMiddleware('params', {
+        variationid: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"variation id" is a required field',
+            'string.empty': '"variation id" can not be empty',
+            'string.pattern.base': '"variation id" out of the expected format'
+          })
+      }),
+      verifyIdDbMiddleware.verifyIdVariationDbMiddleware,
+      variationsController.deleteVariationsController
+    )
 
   router.route('/variations/images/:variationid').put(
     authenticationMiddleware(),
