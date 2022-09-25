@@ -1,7 +1,12 @@
 const variationsService = require('../services/services.variations')
 
 const listVariationsController = async (req, res) => {
-  const resultService = await variationsService.listVariationsService()
+  const { storeid, productid } = req.query
+
+  const resultService = await variationsService.listVariationsService(
+    storeid,
+    productid
+  )
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
@@ -82,8 +87,11 @@ const updateImageVariationController = async (req, res) => {
 }
 
 const deleteVariationsController = async (req, res) => {
+  const { storeid, productid } = req.query
   const { variationid } = req.params
   const resultService = await variationsService.deleteVariationsService(
+    storeid,
+    productid,
     variationid
   )
   const code = resultService.success ? 200 : 400
