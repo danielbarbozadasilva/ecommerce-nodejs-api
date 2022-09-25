@@ -43,8 +43,48 @@ const listByIdVariationsController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const updateVariationsController = async (req, res) => {
+  const { storeid, productid } = req.query
+  const { variationid } = req.params
+  const { body } = req
+
+  const resultService = await variationsService.updateVariationsService(
+    variationid,
+    storeid,
+    productid,
+    body
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
+const updateImageVariationController = async (req, res) => {
+  const { storeid, productid } = req.query
+  const { variationid } = req.params
+  const { files } = req
+
+  const resultService = await variationsService.updateImageVariationService(
+    variationid,
+    storeid,
+    productid,
+    files
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
   listVariationsController,
   createVariationsController,
-  listByIdVariationsController
+  listByIdVariationsController,
+  updateVariationsController,
+  updateImageVariationController
 }

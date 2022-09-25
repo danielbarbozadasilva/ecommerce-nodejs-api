@@ -6,7 +6,8 @@ const toDTO = (model) => ({
   delivery: model.delivery,
   quantity: model.quantity,
   store: model.store,
-  product: model.product
+  product: model.product,
+  photos: model.photos
 })
 
 module.exports = {
