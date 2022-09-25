@@ -36,7 +36,11 @@ const profile = [
       'UPDATE_PRODUCT',
       'UPLOAD_IMAGE_PRODUCT',
       'DELETE_PRODUCT',
-      'DELETE_RATING'
+      'DELETE_RATING',
+      'CREATE_VARIATION',
+      'UPDATE_VARIATION',
+      'DELETE_VARIATION',
+      'UPLOAD_IMAGE_VARIATION'
     ]
   },
   {
