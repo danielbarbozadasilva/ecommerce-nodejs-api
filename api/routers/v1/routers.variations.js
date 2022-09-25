@@ -88,4 +88,40 @@ module.exports = (router) => {
       verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
       variationsController.createVariationsController
     )
+  router.route('/variations/:variationid').get(
+    validateDTOMiddleware('params', {
+      variationid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"variation id" is a required field',
+          'string.empty': '"variation id" can not be empty',
+          'string.pattern.base': '"variation id" out of the expected format'
+        })
+    }),
+    validateDTOMiddleware('query', {
+      storeid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"store id" is a required field',
+          'string.empty': '"store id" can not be empty',
+          'string.pattern.base': '"store id" out of the expected format'
+        }),
+      productid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"product id" is a required field',
+          'string.empty': '"product id" can not be empty',
+          'string.pattern.base': '"product id" out of the expected format'
+        })
+    }),
+    verifyIdDbMiddleware.verifyIdProductDbMiddleware,
+    verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
+    variationsController.listByIdVariationsController
+  )
 }

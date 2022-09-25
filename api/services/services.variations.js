@@ -42,7 +42,26 @@ const createVariationsService = async (storeid, productid, body) => {
   }
 }
 
+const listByIdVariationsService = async (storeid, productid, variationid) => {
+  try {
+    const resultDB = await variations.findOne({
+      _id: variationid,
+      store: storeid,
+      product: productid
+    })
+
+    return {
+      success: true,
+      message: 'Operation performed successfully',
+      data: variationsMapper.toDTO(resultDB)
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listVariationsService,
-  createVariationsService
+  createVariationsService,
+  listByIdVariationsService
 }
