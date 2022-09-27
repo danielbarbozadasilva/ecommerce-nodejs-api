@@ -5,7 +5,8 @@ const {
   category,
   product,
   rating,
-  variation
+  variation,
+  solicitation
 } = require('../../models/models.index')
 const ErrorUnprocessableEntity = require('../errors/errors.unprocessable-entity')
 const ErrorBusinessRule = require('../errors/errors.business-rule')
@@ -72,6 +73,18 @@ const verifyIdVariationDbMiddleware = async (req, res, next) => {
   next()
 }
 
+const verifyIdSolicitationDbMiddleware = async (req, res, next) => {
+  const solicitationDB = await solicitation.findOne({
+    _id: req.params.solicitationid
+  })
+  if (!solicitationDB) {
+    throw new ErrorUnprocessableEntity(
+      `Não existe nenhuma solicitação com esse id!`
+    )
+  }
+  next()
+}
+
 const verifyEmailUserExists = async (req, res, next) => {
   const resultDB = await user
     .findOne({ email: req.body.email })
@@ -131,6 +144,7 @@ module.exports = {
   verifyIdProductDbMiddleware,
   verifyIdRatingDbMiddleware,
   verifyIdVariationDbMiddleware,
+  verifyIdSolicitationDbMiddleware,
   verifyEmailUserExists,
   verifyCpfUserExists,
   verifyCnpjStoreExists,
