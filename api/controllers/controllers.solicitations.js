@@ -16,6 +16,25 @@ const listAllSolicitationController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const listByIdSolicitationController = async (req, res) => {
+  const { offset, limit, storeid } = req.query
+  const { solicitationid } = req.params
+
+  const resultService = await solicitationService.listByIdSolicitationService(
+    offset,
+    limit,
+    storeid,
+    solicitationid
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
-  listAllSolicitationController
+  listAllSolicitationController,
+  listByIdSolicitationController
 }

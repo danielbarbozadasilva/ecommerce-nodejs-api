@@ -24,4 +24,33 @@ module.exports = (router) => {
     verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
     solicitationController.listAllSolicitationController
   )
+
+  router.route('/solicitation/:solicitationid').get(
+    validateDTOMiddleware('params', {
+      solicitationid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"solicitation id" is a required field',
+          'string.empty': '"solicitation id" can not be empty',
+          'string.pattern.base': '"solicitation id" out of the expected format'
+        })
+    }),
+    validateDTOMiddleware('query', {
+      storeid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"store id" is a required field',
+          'string.empty': '"store id" can not be empty',
+          'string.pattern.base': '"store id" out of the expected format'
+        }),
+      offset: joi.number(),
+      limit: joi.number()
+    }),
+    verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
+    solicitationController.listByIdSolicitationController
+  )
 }
