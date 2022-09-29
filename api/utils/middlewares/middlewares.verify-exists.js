@@ -78,9 +78,7 @@ const verifyIdSolicitationDbMiddleware = async (req, res, next) => {
     _id: req.params.solicitationid
   })
   if (!solicitationDB) {
-    throw new ErrorUnprocessableEntity(
-      `Não existe nenhuma solicitação com esse id!`
-    )
+    throw new ErrorUnprocessableEntity(`Pedido não encontrado!`)
   }
   next()
 }
