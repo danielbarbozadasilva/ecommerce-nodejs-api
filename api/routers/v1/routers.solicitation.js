@@ -25,7 +25,68 @@ module.exports = (router) => {
     solicitationController.listAllSolicitationController
   )
 
-  router.route('/solicitation/:solicitationid').get(
+  router
+    .route('/solicitation/:solicitationid')
+    .get(
+      validateDTOMiddleware('params', {
+        solicitationid: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"solicitation id" is a required field',
+            'string.empty': '"solicitation id" can not be empty',
+            'string.pattern.base':
+              '"solicitation id" out of the expected format'
+          })
+      }),
+      validateDTOMiddleware('query', {
+        storeid: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"store id" is a required field',
+            'string.empty': '"store id" can not be empty',
+            'string.pattern.base': '"store id" out of the expected format'
+          }),
+        offset: joi.number(),
+        limit: joi.number()
+      }),
+      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
+      verifyIdDbMiddleware.verifyIdSolicitationDbMiddleware,
+      solicitationController.listByIdSolicitationController
+    )
+    .delete(
+      validateDTOMiddleware('params', {
+        solicitationid: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"solicitation id" is a required field',
+            'string.empty': '"solicitation id" can not be empty',
+            'string.pattern.base':
+              '"solicitation id" out of the expected format'
+          })
+      }),
+      validateDTOMiddleware('query', {
+        storeid: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"store id" is a required field',
+            'string.empty': '"store id" can not be empty',
+            'string.pattern.base': '"store id" out of the expected format'
+          })
+      }),
+      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
+      verifyIdDbMiddleware.verifyIdSolicitationDbMiddleware,
+      solicitationController.deleteSolicitationController
+    )
+
+  router.route('/solicitation/:solicitationid/cart').get(
     validateDTOMiddleware('params', {
       solicitationid: joi
         .string()
@@ -51,6 +112,7 @@ module.exports = (router) => {
       limit: joi.number()
     }),
     verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
-    solicitationController.listByIdSolicitationController
+    verifyIdDbMiddleware.verifyIdSolicitationDbMiddleware,
+    solicitationController.showCartSolicitationController
   )
 }
