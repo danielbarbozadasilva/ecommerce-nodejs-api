@@ -11,7 +11,6 @@ const clientSchema = Schema(
     cpf: { type: String, required: true },
     phones: { type: [{ type: String }] },
     deleted: { type: Boolean, default: false },
-    store: { type: Schema.Types.ObjectId, ref: 'store', required: true },
     address: {
       location: { type: String, required: true },
       number: { type: String, required: true },

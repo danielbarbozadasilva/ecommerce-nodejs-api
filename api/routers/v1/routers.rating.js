@@ -11,15 +11,6 @@ module.exports = (router) => {
     .route('/rating')
     .get(
       validateDTOMiddleware('query', {
-        storeid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"store id" is a required field',
-            'string.empty': '"store id" can not be empty',
-            'string.pattern.base': '"store id" out of the expected format'
-          }),
         productid: joi
           .string()
           .regex(/^[0-9a-fA-F]{24}$/)
@@ -30,7 +21,6 @@ module.exports = (router) => {
             'string.pattern.base': '"product id" out of the expected format'
           })
       }),
-      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
       verifyIdDbMiddleware.verifyIdProductDbMiddleware,
       ratingController.listRatingProductController
     )
@@ -38,15 +28,6 @@ module.exports = (router) => {
       authenticationMiddleware(),
       authorization.authorizationMiddleware('CREATE_RATING'),
       validateDTOMiddleware('query', {
-        storeid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"store id" is a required field',
-            'string.empty': '"store id" can not be empty',
-            'string.pattern.base': '"store id" out of the expected format'
-          }),
         productid: joi
           .string()
           .regex(/^[0-9a-fA-F]{24}$/)
@@ -71,7 +52,6 @@ module.exports = (router) => {
           'string.empty': '"score" can not be empty'
         })
       }),
-      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
       verifyIdDbMiddleware.verifyIdProductDbMiddleware,
       ratingController.createRatingProductController
     )
@@ -91,15 +71,6 @@ module.exports = (router) => {
           })
       }),
       validateDTOMiddleware('query', {
-        storeid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"store id" is a required field',
-            'string.empty': '"store id" can not be empty',
-            'string.pattern.base': '"store id" out of the expected format'
-          }),
         productid: joi
           .string()
           .regex(/^[0-9a-fA-F]{24}$/)
@@ -110,7 +81,6 @@ module.exports = (router) => {
             'string.pattern.base': '"product id" out of the expected format'
           })
       }),
-      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
       verifyIdDbMiddleware.verifyIdProductDbMiddleware,
       verifyIdDbMiddleware.verifyIdRatingDbMiddleware,
       ratingController.listByIdRatingProductController

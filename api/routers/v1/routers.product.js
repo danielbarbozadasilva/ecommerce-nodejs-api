@@ -12,36 +12,15 @@ module.exports = (router) => {
     .route('/product')
     .get(
       validateDTOMiddleware('query', {
-        storeid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"store id" is a required field',
-            'string.empty': '"store id" can not be empty',
-            'string.pattern.base': '"store id" out of the expected format'
-          }),
         sortType: joi.string(),
         offset: joi.number(),
         limit: joi.number()
       }),
-      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
       productController.listAllProductController
     )
     .post(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('CREATE_PRODUCT'),
-      validateDTOMiddleware('query', {
-        storeid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"store id" is a required field',
-            'string.empty': '"store id" can not be empty',
-            'string.pattern.base': '"store id" out of the expected format'
-          })
-      }),
       validateDTOMiddleware('body', {
         title: joi.string().required().messages({
           'any.required': '"title" is a required field',
@@ -64,35 +43,50 @@ module.exports = (router) => {
           'any.required': '"price" is a required field',
           'number.empty': '"price" can not be empty'
         }),
-        promotion: joi.string().required().messages({
+        promotion: joi.number().required().messages({
           'any.required': '"promotion" is a required field',
-          'string.empty': '"promotion" can not be empty'
+          'number.empty': '"promotion" can not be empty'
         }),
         sku: joi.string().required().messages({
           'any.required': '"sku" is a required field',
           'string.empty': '"sku" can not be empty'
+        }),
+        quantity: joi.number().required().messages({
+          'any.required': '"quantity" is a required field',
+          'number.empty': '"quantity" can not be empty'
+        }),
+        dimensions: joi.object({
+          height: joi.number().required().messages({
+            'any.required': '"height" is a required field',
+            'number.empty': '"height" can not be empty'
+          }),
+          width: joi.number().required().messages({
+            'any.required': '"width" is a required field',
+            'number.empty': '"width" can not be empty'
+          }),
+          depth: joi.number().required().messages({
+            'any.required': '"depth" is a required field',
+            'number.empty': '"depth" can not be empty'
+          })
+        }),
+        weight: joi.number().required().messages({
+          'any.required': '"weight" is a required field',
+          'number.empty': '"weight" can not be empty'
+        }),
+        freeShipping: joi.boolean().required().messages({
+          'any.required': '"freeShipping" is a required field',
+          'boolean.empty': '"freeShipping" can not be empty'
         })
       }),
-      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
       productController.createProductController
     )
 
   router.route('/product/available').get(
     validateDTOMiddleware('query', {
-      storeid: joi
-        .string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-          'any.required': '"store id" is a required field',
-          'string.empty': '"store id" can not be empty',
-          'string.pattern.base': '"store id" out of the expected format'
-        }),
       sortType: joi.string(),
       offset: joi.number(),
       limit: joi.number()
     }),
-    verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
     productController.listAvailableProductController
   )
 
@@ -116,17 +110,6 @@ module.exports = (router) => {
     .put(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('UPDATE_PRODUCT'),
-      validateDTOMiddleware('query', {
-        storeid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"store id" is a required field',
-            'string.empty': '"store id" can not be empty',
-            'string.pattern.base': '"store id" out of the expected format'
-          })
-      }),
       validateDTOMiddleware('params', {
         productid: joi
           .string()
@@ -161,9 +144,9 @@ module.exports = (router) => {
           'any.required': '"price" is a required field',
           'number.empty': '"price" can not be empty'
         }),
-        promotion: joi.string().required().messages({
+        promotion: joi.number().required().messages({
           'any.required': '"promotion" is a required field',
-          'string.empty': '"promotion" can not be empty'
+          'number.empty': '"promotion" can not be empty'
         }),
         sku: joi.string().required().messages({
           'any.required': '"sku" is a required field',
@@ -172,26 +155,40 @@ module.exports = (router) => {
         availability: joi.boolean().required().messages({
           'any.required': '"availability" is a required field',
           'boolean.empty': '"availability" can not be empty'
+        }),
+        quantity: joi.number().required().messages({
+          'any.required': '"quantity" is a required field',
+          'number.empty': '"quantity" can not be empty'
+        }),
+        dimensions: joi.object({
+          height: joi.number().required().messages({
+            'any.required': '"height" is a required field',
+            'number.empty': '"height" can not be empty'
+          }),
+          width: joi.number().required().messages({
+            'any.required': '"width" is a required field',
+            'number.empty': '"width" can not be empty'
+          }),
+          depth: joi.number().required().messages({
+            'any.required': '"depth" is a required field',
+            'number.empty': '"depth" can not be empty'
+          })
+        }),
+        weight: joi.number().required().messages({
+          'any.required': '"weight" is a required field',
+          'number.empty': '"weight" can not be empty'
+        }),
+        freeShipping: joi.boolean().required().messages({
+          'any.required': '"freeShipping" is a required field',
+          'boolean.empty': '"freeShipping" can not be empty'
         })
       }),
-      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
       verifyIdDbMiddleware.verifyIdProductDbMiddleware,
       productController.updateProductController
     )
     .delete(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('DELETE_PRODUCT'),
-      validateDTOMiddleware('query', {
-        storeid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"store id" is a required field',
-            'string.empty': '"store id" can not be empty',
-            'string.pattern.base': '"store id" out of the expected format'
-          })
-      }),
       validateDTOMiddleware('params', {
         productid: joi
           .string()
@@ -203,7 +200,6 @@ module.exports = (router) => {
             'string.pattern.base': '"product id" out of the expected format'
           })
       }),
-      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
       verifyIdDbMiddleware.verifyIdProductDbMiddleware,
       productController.deleteProductController
     )
@@ -222,20 +218,8 @@ module.exports = (router) => {
           'string.pattern.base': '"id" out of the expected format'
         })
     }),
-    validateDTOMiddleware('query', {
-      storeid: joi
-        .string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-          'any.required': '"store id" is a required field',
-          'string.empty': '"store id" can not be empty',
-          'string.pattern.base': '"store id" out of the expected format'
-        })
-    }),
-    fileUpload.array('files', 4),
-    verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
     verifyIdDbMiddleware.verifyIdProductDbMiddleware,
+    fileUpload.array('files', 4),
     productController.updateImageProductController
   )
 
@@ -247,37 +231,11 @@ module.exports = (router) => {
       })
     }),
     validateDTOMiddleware('query', {
-      storeid: joi
-        .string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-          'any.required': '"store id" is a required field',
-          'string.empty': '"store id" can not be empty',
-          'string.pattern.base': '"store id" out of the expected format'
-        }),
       sortType: joi.string(),
       offset: joi.number(),
       limit: joi.number()
     }),
-    verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
     productController.searchProductController
-  )
-
-  router.route('/product/:productid/variations').get(
-    validateDTOMiddleware('params', {
-      productid: joi
-        .string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-          'any.required': '"product id" is a required field',
-          'string.empty': '"product id" can not be empty',
-          'string.pattern.base': '"product id" out of the expected format'
-        })
-    }),
-    verifyIdDbMiddleware.verifyIdProductDbMiddleware,
-    productController.listVariationsProductController
   )
 
   router.route('/product/:productid/rating').get(

@@ -1,9 +1,4 @@
-const {
-  product,
-  category,
-  variation,
-  rating
-} = require('../models/models.index')
+const { product, rating } = require('../models/models.index')
 const productMapper = require('../mappers/mappers.product')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 
@@ -13,26 +8,23 @@ const getSort = (sortType) => {
       return { title: 1 }
     case 'alfabetica_z-a':
       return { title: -1 }
-    case 'preco-crescente':
+    case 'price-crescente':
       return { price: 1 }
-    case 'preco-decrescente':
+    case 'price-decrescente':
       return { price: -1 }
     default:
       return {}
   }
 }
 
-const listAllProductService = async (storeid, sortType, offset, limit) => {
+const listAllProductService = async (sortType, offset, limit) => {
   try {
-    const resultDB = await product.paginate(
-      { store: storeid },
-      {
-        offset: Number(offset || 0),
-        limit: Number(limit || 30),
-        sort: getSort(sortType),
-        populate: ['category']
-      }
-    )
+    const resultDB = await product.paginate({
+      offset: Number(offset || 0),
+      limit: Number(limit || 30),
+      sort: getSort(sortType),
+      populate: ['category']
+    })
 
     return {
       success: true,
@@ -49,21 +41,21 @@ const listByIdProductService = async (productid) => {
     const resultDB = await product.paginate(
       { _id: productid },
       {
-        populate: ['store', 'category']
+        populate: ['category']
       }
     )
 
     return {
       success: true,
       message: 'Product listed successfully',
-      data: productMapper.toDTOList(...resultDB.docs)
+      data: productMapper.toDTO(...resultDB.docs)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
   }
 }
 
-const createProductService = async (storeid, body) => {
+const createProductService = async (body) => {
   try {
     const resultProduct = await product.create({
       title: body.title,
@@ -72,16 +64,16 @@ const createProductService = async (storeid, body) => {
       price: body.price,
       promotion: body.promotion,
       sku: body.sku,
+      quantity: body.quantity,
       category: body.category,
-      store: storeid
+      dimensions: {
+        height: body.dimensions.height,
+        width: body.dimensions.width,
+        depth: body.dimensions.depth
+      },
+      weight: body.weight,
+      freeShipping: body.freeShipping
     })
-
-    await category.findOneAndUpdate(
-      { _id: body.category },
-      {
-        $push: { products: resultProduct._id }
-      }
-    )
 
     return {
       success: true,
@@ -93,33 +85,28 @@ const createProductService = async (storeid, body) => {
   }
 }
 
-const updateProductService = async (body, productid, storeid) => {
+const updateProductService = async (body, productid) => {
   try {
-    const resultProduct = await product.findOneAndUpdate(
+    await product.findOneAndUpdate(
       { _id: productid },
       {
         $set: {
           title: body.title,
-          description: body.description,
           availability: body.availability,
-          photos: body.photos,
+          description: body.description,
           price: body.price,
           promotion: body.promotion,
           sku: body.sku,
+          quantity: body.quantity,
           category: body.category,
-          store: storeid
+          dimensions: {
+            height: body.dimensions.height,
+            width: body.dimensions.width,
+            depth: body.dimensions.depth
+          },
+          weight: body.weight,
+          freeShipping: body.freeShipping
         }
-      }
-    )
-
-    await category.updateMany({
-      $pull: { products: resultProduct._id }
-    })
-
-    await category.findOneAndUpdate(
-      { _id: body.category },
-      {
-        $push: { products: productid }
       }
     )
 
@@ -157,10 +144,6 @@ const deleteProductService = async (productid, storeid) => {
       store: storeid
     })
 
-    await category.updateMany({
-      $pull: { products: productid }
-    })
-
     return {
       success: true,
       message: 'Product successfully deleted'
@@ -170,10 +153,10 @@ const deleteProductService = async (productid, storeid) => {
   }
 }
 
-const listAvailableProductService = async (storeid, sort, offset, limit) => {
+const listAvailableProductService = async (sort, offset, limit) => {
   try {
     const resultDB = await product.paginate(
-      { store: storeid, availability: true },
+      { availability: true },
       {
         offset: Number(offset || 0),
         limit: Number(limit || 30),
@@ -192,11 +175,10 @@ const listAvailableProductService = async (storeid, sort, offset, limit) => {
   }
 }
 
-const searchProductService = async (storeid, sort, offset, limit, search) => {
+const searchProductService = async (sort, offset, limit, search) => {
   try {
     const resultDB = await product.paginate(
       {
-        store: storeid,
         $text: { $search: search, $diacriticSensitive: false }
       },
       {
@@ -211,22 +193,6 @@ const searchProductService = async (storeid, sort, offset, limit, search) => {
       success: true,
       message: 'Products listed successfully',
       data: resultDB.docs.map((item) => productMapper.toDTO(item))
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
-const listVariationsProductService = async (productid) => {
-  try {
-    const resultDB = await variation
-      .find({ product: productid })
-      .populate('product')
-
-    return {
-      success: true,
-      message: 'Product variations successfully listed',
-      data: resultDB.map((item) => productMapper.toDTOVariations(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -258,6 +224,5 @@ module.exports = {
   deleteProductService,
   listAvailableProductService,
   searchProductService,
-  listVariationsProductService,
   listRatingProductService
 }

@@ -1,10 +1,7 @@
 const categoryService = require('../services/services.category')
 
-const listCategoryByStoreController = async (req, res) => {
-  const { storeid } = req.query
-  const resultService = await categoryService.listCategoryByStoreService(
-    storeid
-  )
+const listAllCategoryController = async (req, res) => {
+  const resultService = await categoryService.listAllCategoryService()
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
@@ -13,10 +10,8 @@ const listCategoryByStoreController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
-const listCategoryAvailabilityByStoreController = async (req, res) => {
-  const { storeid } = req.query
-  const resultService =
-    await categoryService.listCategoryAvailabilityByStoreService(storeid)
+const listCategoryAvailabilityController = async (req, res) => {
+  const resultService = await categoryService.listCategoryAvailabilityService()
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
@@ -26,10 +21,8 @@ const listCategoryAvailabilityByStoreController = async (req, res) => {
 }
 
 const listCategoryByIdController = async (req, res) => {
-  const { storeid } = req.query
   const { categoryid } = req.params
   const resultService = await categoryService.listCategoryByIdService(
-    storeid,
     categoryid
   )
   const code = resultService.success ? 200 : 400
@@ -41,13 +34,8 @@ const listCategoryByIdController = async (req, res) => {
 }
 
 const createCategoryByStoreController = async (req, res) => {
-  const { storeid } = req.query
   const { body } = req
-
-  const resultService = await categoryService.createCategoryByStoreService(
-    storeid,
-    body
-  )
+  const resultService = await categoryService.createCategoryByStoreService(body)
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
@@ -101,29 +89,12 @@ const listCategoryWithProductsController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
-const updateProductsByIdCategoryController = async (req, res) => {
-  const { categoryid } = req.params
-  const { body } = req
-
-  const resultService = await categoryService.updateProductsByIdCategoryService(
-    categoryid,
-    body
-  )
-  const code = resultService.success ? 200 : 400
-  const message = resultService.success
-    ? { message: resultService.message }
-    : { details: resultService.details }
-  const data = resultService.data ? resultService.data : ''
-  return res.status(code).send({ message, data })
-}
-
 module.exports = {
-  listCategoryByStoreController,
-  listCategoryAvailabilityByStoreController,
+  listAllCategoryController,
+  listCategoryAvailabilityController,
   listCategoryByIdController,
   createCategoryByStoreController,
   updateCategoryController,
   deleteCategoryController,
-  listCategoryWithProductsController,
-  updateProductsByIdCategoryController
+  listCategoryWithProductsController
 }

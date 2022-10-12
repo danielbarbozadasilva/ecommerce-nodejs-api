@@ -2,9 +2,9 @@ const { rating, product } = require('../models/models.index')
 const ratingMapper = require('../mappers/mappers.rating')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 
-const listRatingProductService = async (storeid, productid) => {
+const listRatingProductService = async (productid) => {
   try {
-    const resultDB = await rating.find({ store: storeid, product: productid })
+    const resultDB = await rating.find({ product: productid })
 
     return {
       success: true,
@@ -16,14 +16,13 @@ const listRatingProductService = async (storeid, productid) => {
   }
 }
 
-const createRatingProductService = async (storeid, productid, body) => {
+const createRatingProductService = async (productid, body) => {
   try {
     const resultDB = await rating.create({
       name: body.name,
       text: body.text,
       score: body.score,
-      product: productid,
-      store: storeid
+      product: productid
     })
 
     await product.findOneAndUpdate(
@@ -43,11 +42,10 @@ const createRatingProductService = async (storeid, productid, body) => {
   }
 }
 
-const listByIdRatingProductService = async (ratingid, storeid, productid) => {
+const listByIdRatingProductService = async (ratingid, productid) => {
   try {
     const resultDB = await rating.findOne({
       _id: ratingid,
-      store: storeid,
       product: productid
     })
 

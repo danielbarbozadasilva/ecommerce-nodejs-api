@@ -14,34 +14,13 @@ module.exports = (router) => {
       authorization.authorizationMiddleware('LIST_CLIENT'),
       validateDTOMiddleware('query', {
         offset: joi.number(),
-        limit: joi.number(),
-        storeid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"store id" is a required field',
-            'string.empty': '"store id" can not be empty',
-            'string.pattern.base': '"store id" out of the expected format'
-          })
+        limit: joi.number()
       }),
-      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
       clientController.listAllClientsController
     )
     .post(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('*'),
-      validateDTOMiddleware('query', {
-        storeid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"store id" is a required field',
-            'string.empty': '"store id" can not be empty',
-            'string.pattern.base': '"store id" out of the expected format'
-          })
-      }),
       validateDTOMiddleware('body', {
         cpf: joi
           .string()
@@ -112,16 +91,7 @@ module.exports = (router) => {
     authorization.authorizationMiddleware('SEARCH_SOLICITATION'),
     validateDTOMiddleware('query', {
       offset: joi.number(),
-      limit: joi.number(),
-      storeid: joi
-        .string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-          'any.required': '"store id" is a required field',
-          'string.empty': '"store id" can not be empty',
-          'string.pattern.base': '"store id" out of the expected format'
-        })
+      limit: joi.number()
     }),
     validateDTOMiddleware('params', {
       search: joi.string().required()
@@ -134,16 +104,7 @@ module.exports = (router) => {
     authorization.authorizationMiddleware('SEARCH_CLIENT'),
     validateDTOMiddleware('query', {
       offset: joi.number(),
-      limit: joi.number(),
-      storeid: joi
-        .string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-          'any.required': '"store id" is a required field',
-          'string.empty': '"store id" can not be empty',
-          'string.pattern.base': '"store id" out of the expected format'
-        })
+      limit: joi.number()
     }),
     validateDTOMiddleware('params', {
       search: joi.string().required()
@@ -154,16 +115,7 @@ module.exports = (router) => {
   router.route('/client/:clientid/solicitations').get(
     validateDTOMiddleware('query', {
       offset: joi.number(),
-      limit: joi.number(),
-      storeid: joi
-        .string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-          'any.required': '"store id" is a required field',
-          'string.empty': '"store id" can not be empty',
-          'string.pattern.base': '"store id" out of the expected format'
-        })
+      limit: joi.number()
     }),
     validateDTOMiddleware('params', {
       clientid: joi
@@ -187,16 +139,7 @@ module.exports = (router) => {
     .get(
       validateDTOMiddleware('query', {
         offset: joi.number(),
-        limit: joi.number(),
-        storeid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"store id" is a required field',
-            'string.empty': '"store id" can not be empty',
-            'string.pattern.base': '"store id" out of the expected format'
-          })
+        limit: joi.number()
       }),
       validateDTOMiddleware('params', {
         clientid: joi
@@ -212,7 +155,6 @@ module.exports = (router) => {
       authenticationMiddleware(),
       authorization.authorizationMiddleware('CLIENT_ID'),
       verifyIdDbMiddleware.verifyIdClientDbMiddleware,
-      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
       clientController.listByIdClientController
     )
     .delete(
@@ -253,17 +195,6 @@ module.exports = (router) => {
           'string.pattern.base': '"client id" out of the expected format'
         })
     }),
-    validateDTOMiddleware('query', {
-      storeid: joi
-        .string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-          'any.required': '"store id" is a required field',
-          'string.empty': '"store id" can not be empty',
-          'string.pattern.base': '"store id" out of the expected format'
-        })
-    }),
     validateDTOMiddleware('body', {
       cpf: joi
         .string()
@@ -287,7 +218,7 @@ module.exports = (router) => {
       }),
       birthDate: joi.date().format('YYYY-MM-DD').raw().required().messages({
         'any.required': '"birth date" is a required field',
-        'string.empty': '"birth date" can not be empty'
+        'date.empty': '"birth date" can not be empty'
       }),
       password: joi.string().required().messages({
         'any.required': '"password" is a required field',
@@ -327,7 +258,6 @@ module.exports = (router) => {
     authenticationMiddleware(),
     authorization.authorizationMiddleware('CLIENT_UPDATE'),
     verifyIdDbMiddleware.verifyIdClientDbMiddleware,
-    verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
     verifyIdDbMiddleware.verifyEmailUserExists,
     verifyIdDbMiddleware.verifyCpfUserExists,
     clientController.updaterClientController

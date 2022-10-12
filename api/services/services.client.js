@@ -2,24 +2,20 @@ const {
   user,
   client,
   solicitation,
-  product,
-  variation
+  product
 } = require('../models/models.index')
 
 const clientMapper = require('../mappers/mappers.client')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const cryptography = require('../utils/utils.cryptography')
 
-const listAllClientsService = async (offset, limit, store) => {
+const listAllClientsService = async (offset, limit) => {
   try {
-    const resultDB = await client.paginate(
-      { store },
-      {
-        populate: 'user',
-        offset: Number(offset || 0),
-        limit: Number(limit || 30)
-      }
-    )
+    const resultDB = await client.paginate({
+      populate: 'user',
+      offset: Number(offset || 0),
+      limit: Number(limit || 30)
+    })
 
     return {
       success: true,
@@ -31,19 +27,18 @@ const listAllClientsService = async (offset, limit, store) => {
   }
 }
 
-const listClientSolicitationService = async (offset, limit, store, search) => {
+const listClientSolicitationService = async (offset, limit, search) => {
   try {
     const resultClient = await client.find({
-      store,
       $text: { $search: new RegExp(search, 'i'), $diacriticSensitive: false }
     })
 
     const ordered = await solicitation.paginate(
-      { store, client: { $in: resultClient.map((item) => item._id) } },
+      { client: { $in: resultClient.map((item) => item._id) } },
       {
         offset: Number(offset || 0),
         limit: Number(limit || 30),
-        populate: ['client', 'payment', 'delivery']
+        populate: ['client', 'payment', 'deliveries']
       }
     )
 
@@ -52,7 +47,6 @@ const listClientSolicitationService = async (offset, limit, store, search) => {
         ord.cart = await Promise.all(
           ord.cart.map(async (item) => {
             item.product = await product.findById(item.product)
-            item.variation = await variation.findById(item.variation)
             return item
           })
         )
@@ -70,10 +64,9 @@ const listClientSolicitationService = async (offset, limit, store, search) => {
   }
 }
 
-const listClientSearchService = async (offset, limit, store, search) => {
+const listClientSearchService = async (offset, limit, search) => {
   try {
     const resultDB = await client.paginate({
-      store,
       $or: [{ $text: { $search: `${search}`, $diacriticSensitive: false } }],
       $or: [{ phones: { $in: search } }],
       offset: Number(offset || 0),
@@ -89,7 +82,7 @@ const listClientSearchService = async (offset, limit, store, search) => {
   }
 }
 
-const updateClientService = async (id, store, body) => {
+const updateClientService = async (id, body) => {
   try {
     const salt = cryptography.createSalt()
 
@@ -109,7 +102,6 @@ const updateClientService = async (id, store, body) => {
             zipCode: body.address.zipCode,
             state: body.address.state
           },
-          store,
           birthDate: body.birthDate
         }
       },
@@ -122,7 +114,6 @@ const updateClientService = async (id, store, body) => {
         $set: {
           name: body.name,
           email: body.email,
-          store,
           salt,
           hash: cryptography.createHash(body.password, salt)
         }
@@ -162,10 +153,10 @@ const deleteClientService = async (id) => {
   }
 }
 
-const listByIdClientService = async (clientid, storeid) => {
+const listByIdClientService = async (clientid) => {
   try {
     const resultDB = await client
-      .findOne({ _id: clientid, store: storeid })
+      .findOne({ _id: clientid })
       .populate('user', '-salt -hash')
 
     return {
@@ -178,14 +169,14 @@ const listByIdClientService = async (clientid, storeid) => {
   }
 }
 
-const listSolicitationService = async (offset, limit, store, clientid) => {
+const listSolicitationService = async (offset, limit, clientid) => {
   try {
     const resp = await solicitation.paginate(
-      { store, client: clientid },
+      { client: clientid },
       {
         offset: Number(offset || 0),
         limit: Number(limit || 30),
-        populate: ['client', 'payment', 'delivery']
+        populate: ['client', 'payment', 'deliveries']
       }
     )
     resp.docs = await Promise.all(
@@ -193,7 +184,6 @@ const listSolicitationService = async (offset, limit, store, clientid) => {
         solic.cart = await Promise.all(
           solic.cart.map(async (item) => {
             item.product = await product.findById(item.product)
-            item.variation = await variation.findById(item.variation)
             return item
           })
         )
@@ -210,14 +200,12 @@ const listSolicitationService = async (offset, limit, store, clientid) => {
   }
 }
 
-const createClientService = async (store, body) => {
+const createClientService = async (body) => {
   try {
     const salt = cryptography.createSalt()
-
     const userDB = await user.create({
       name: body.name,
       email: body.email,
-      store,
       salt,
       hash: cryptography.createHash(body.password, salt)
     })
@@ -235,7 +223,6 @@ const createClientService = async (store, body) => {
         zipCode: body.address.zipCode,
         state: body.address.state
       },
-      store,
       user: userDB._id,
       birthDate: body.birthDate
     })

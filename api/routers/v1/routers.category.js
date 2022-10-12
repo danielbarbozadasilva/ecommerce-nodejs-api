@@ -12,34 +12,11 @@ module.exports = (router) => {
     .get(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('LIST_CATEGORY'),
-      validateDTOMiddleware('query', {
-        storeid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"store id" is a required field',
-            'string.empty': '"store id" can not be empty',
-            'string.pattern.base': '"store id" out of the expected format'
-          })
-      }),
-      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
-      categoryController.listCategoryByStoreController
+      categoryController.listAllCategoryController
     )
     .post(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('CREATE_CATEGORY'),
-      validateDTOMiddleware('query', {
-        storeid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"store id" is a required field',
-            'string.empty': '"store id" can not be empty',
-            'string.pattern.base': '"store id" out of the expected format'
-          })
-      }),
       validateDTOMiddleware('body', {
         name: joi.string().required().messages({
           'any.required': '"name" is a required field',
@@ -50,27 +27,16 @@ module.exports = (router) => {
           'string.empty': '"code" can not be empty'
         })
       }),
-      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
       categoryController.createCategoryByStoreController
     )
 
-  router.route('/category/availability').get(
-    authenticationMiddleware(),
-    authorization.authorizationMiddleware('LIST_CATEGORY_AVAILABILITY'),
-    validateDTOMiddleware('query', {
-      storeid: joi
-        .string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-          'any.required': '"store id" is a required field',
-          'string.empty': '"store id" can not be empty',
-          'string.pattern.base': '"store id" out of the expected format'
-        })
-    }),
-    verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
-    categoryController.listCategoryAvailabilityByStoreController
-  )
+  router
+    .route('/category/availability')
+    .get(
+      authenticationMiddleware(),
+      authorization.authorizationMiddleware('LIST_CATEGORY_AVAILABILITY'),
+      categoryController.listCategoryAvailabilityController
+    )
   router
     .route('/category/:categoryid')
     .get(
@@ -87,19 +53,7 @@ module.exports = (router) => {
             'string.pattern.base': '"category id" out of the expected format'
           })
       }),
-      validateDTOMiddleware('query', {
-        storeid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"store id" is a required field',
-            'string.empty': '"store id" can not be empty',
-            'string.pattern.base': '"store id" out of the expected format'
-          })
-      }),
       verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
-      verifyIdDbMiddleware.verifyIdStoreDbMiddleware,
       categoryController.listCategoryByIdController
     )
     .put(
@@ -177,65 +131,29 @@ module.exports = (router) => {
         })
     }),
     verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
-    categoryController.listCategoryByIdController
+    categoryController.listCategoryWithProductsController
   )
 
-  router
-    .route('/category/:categoryid/products')
-    .get(
-      authenticationMiddleware(),
-      authorization.authorizationMiddleware('LIST_CATEGORY_PRODUCT'),
-      validateDTOMiddleware('params', {
-        categoryid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"category id" is a required field',
-            'string.empty': '"category id" can not be empty',
-            'string.pattern.base': '"category id" out of the expected format'
-          })
-      }),
-      validateDTOMiddleware('query', {
-        offset: joi.number(),
-        limit: joi.number()
-      }),
+  router.route('/category/:categoryid/products').get(
+    authenticationMiddleware(),
+    authorization.authorizationMiddleware('LIST_CATEGORY_PRODUCT'),
+    validateDTOMiddleware('params', {
+      categoryid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"category id" is a required field',
+          'string.empty': '"category id" can not be empty',
+          'string.pattern.base': '"category id" out of the expected format'
+        })
+    }),
+    validateDTOMiddleware('query', {
+      offset: joi.number(),
+      limit: joi.number()
+    }),
 
-      verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
-      categoryController.listCategoryWithProductsController
-    )
-    .put(
-      authenticationMiddleware(),
-      authorization.authorizationMiddleware('UPDATE_CATEGORY_PRODUCT'),
-      validateDTOMiddleware('params', {
-        categoryid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"category id" is a required field',
-            'string.empty': '"category id" can not be empty',
-            'string.pattern.base': '"category id" out of the expected format'
-          })
-      }),
-      validateDTOMiddleware('query', {
-        offset: joi.number(),
-        limit: joi.number()
-      }),
-      validateDTOMiddleware('body', {
-        products: joi.array().items(
-          joi
-            .string()
-            .regex(/^[0-9a-fA-F]{24}$/)
-            .required()
-            .messages({
-              'any.required': '"product id" is a required field',
-              'string.empty': '"product id" can not be empty',
-              'string.pattern.base': '"product id" out of the expected format'
-            })
-        )
-      }),
-      verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
-      categoryController.updateProductsByIdCategoryController
-    )
+    verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
+    categoryController.listCategoryWithProductsController
+  )
 }
