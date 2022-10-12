@@ -3,7 +3,8 @@ const toDTO = (model) => ({
   name: model.name,
   text: model.text,
   score: model.score,
-  product: model.product
+  product: model.product,
+  client: model.client
 })
 
 module.exports = {

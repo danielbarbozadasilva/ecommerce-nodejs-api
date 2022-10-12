@@ -12,10 +12,11 @@ const listRatingProductController = async (req, res) => {
 }
 
 const createRatingProductController = async (req, res) => {
-  const { productid } = req.query
+  const { clientid, productid } = req.query
   const { body } = req
 
   const resultService = await ratingService.createRatingProductService(
+    clientid,
     productid,
     body
   )
@@ -43,8 +44,11 @@ const listByIdRatingProductController = async (req, res) => {
 }
 
 const deleteRatingProductController = async (req, res) => {
-  const { ratingid } = req.params
-  const resultService = await ratingService.deleteRatingProductService(ratingid)
+  const { clientid, productid } = req.query
+  const resultService = await ratingService.deleteRatingProductService(
+    clientid,
+    productid
+  )
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }

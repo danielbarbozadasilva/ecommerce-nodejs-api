@@ -16,12 +16,13 @@ const listRatingProductService = async (productid) => {
   }
 }
 
-const createRatingProductService = async (productid, body) => {
+const createRatingProductService = async (clientid, productid, body) => {
   try {
     const resultDB = await rating.create({
       name: body.name,
       text: body.text,
       score: body.score,
+      client: clientid,
       product: productid
     })
 
@@ -59,14 +60,17 @@ const listByIdRatingProductService = async (ratingid, productid) => {
   }
 }
 
-const deleteRatingProductService = async (ratingid) => {
+const deleteRatingProductService = async (clientid, productid) => {
   try {
-    await rating.deleteOne({ _id: ratingid })
+    const resultDB = await rating.findOneAndDelete({
+      client: clientid,
+      product: productid
+    })
 
     await product.findOneAndUpdate(
-      { rating: ratingid },
+      { _id: productid },
       {
-        $pull: { rating: ratingid }
+        $pull: { rating: resultDB._id }
       }
     )
 

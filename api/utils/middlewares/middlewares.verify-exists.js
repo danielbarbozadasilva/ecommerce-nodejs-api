@@ -18,7 +18,8 @@ const verifyIdUserDbMiddleware = async (req, res, next) => {
 }
 
 const verifyIdClientDbMiddleware = async (req, res, next) => {
-  const clientDB = await client.findOne({ _id: req.params.clientid })
+  const id = req.params.clientid || req.query.clientid
+  const clientDB = await client.findOne({ _id: id })
   if (!clientDB) {
     throw new ErrorUnprocessableEntity(`Não existe um cliente com esse id!`)
   }
@@ -86,6 +87,30 @@ const verifyCpfUserExists = async (req, res, next) => {
   next()
 }
 
+const verifyRatingExistsMiddleware = async (req, res, next) => {
+  const ratingDB = await rating.findOne({
+    client: req.query.clientid,
+    product: req.query.productid
+  })
+
+  if (ratingDB) {
+    throw new ErrorBusinessRule(`Você já curtiu esse produto!`)
+  }
+  next()
+}
+
+const verifyRatingNotExistsMiddleware = async (req, res, next) => {
+  const ratingDB = await rating.findOne({
+    client: req.query.clientid,
+    product: req.query.productid
+  })
+
+  if (!ratingDB) {
+    throw new ErrorUnprocessableEntity(`Esta curtida não existe!`)
+  }
+  next()
+}
+
 module.exports = {
   verifyIdUserDbMiddleware,
   verifyIdClientDbMiddleware,
@@ -94,5 +119,7 @@ module.exports = {
   verifyIdRatingDbMiddleware,
   verifyIdSolicitationDbMiddleware,
   verifyEmailUserExists,
-  verifyCpfUserExists
+  verifyCpfUserExists,
+  verifyRatingExistsMiddleware,
+  verifyRatingNotExistsMiddleware
 }
