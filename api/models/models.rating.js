@@ -8,7 +8,7 @@ const ratingSchema = Schema(
     text: { type: String, required: true },
     score: { type: Number, default: 1 },
     product: { type: Schema.Types.ObjectId, ref: 'product', required: true },
-    store: { type: Schema.Types.ObjectId, ref: 'store', required: true }
+    client: { type: Schema.Types.ObjectId, ref: 'client', required: true }
   },
   { timestamps: true }
 )
