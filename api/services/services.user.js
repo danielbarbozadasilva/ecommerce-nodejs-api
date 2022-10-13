@@ -1,7 +1,7 @@
 const { user, client } = require('../models/models.index')
 const cryptography = require('../utils/utils.cryptography')
 const emailUtils = require('../utils/utils.email')
-const { Email } = require('../utils/utils.email.message')
+const { Email } = require('../utils/utils.email.recovery')
 const userMapper = require('../mappers/mappers.user')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const ErrorNotAuthenticatedUser = require('../utils/errors/errors.user-not-authenticated')
@@ -37,10 +37,9 @@ const profile = [
       'UPLOAD_IMAGE_PRODUCT',
       'DELETE_PRODUCT',
       'DELETE_RATING',
-      'CREATE_VARIATION',
-      'UPDATE_VARIATION',
-      'DELETE_VARIATION',
-      'UPLOAD_IMAGE_VARIATION'
+      'LIST_ALL_SOLICITATION',
+      'LIST_ID_SOLICITATION',
+      'LIST_CLIENT_SOLICITATION'
     ]
   },
   {
@@ -57,7 +56,11 @@ const profile = [
       'LIST_CATEGORY',
       'LIST_CATEGORY_AVAILABILITY',
       'LIST_CATEGORY_ID',
-      'CREATE_RATING'
+      'CREATE_RATING',
+      'DELETE_RATING',
+      'SOLICITATION_CREATE',
+      'LIST_ID_SOLICITATION',
+      'LIST_CLIENT_SOLICITATION'
     ]
   }
 ]
