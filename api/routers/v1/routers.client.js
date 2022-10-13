@@ -131,7 +131,7 @@ module.exports = (router) => {
     authenticationMiddleware(),
     authorization.authorizationMiddleware('LIST_CLIENT_SOLICITATION'),
     verifyIdDbMiddleware.verifyIdClientDbMiddleware,
-    clientController.listSolicitationController
+    clientController.listSolicitationClientController
   )
 
   router

@@ -1,8 +1,11 @@
+const { ObjectId } = require('mongodb')
 const {
+  solicitation,
+  product,
+  payment,
   user,
   client,
-  solicitation,
-  product
+  deliveries
 } = require('../models/models.index')
 
 const clientMapper = require('../mappers/mappers.client')
@@ -29,35 +32,39 @@ const listAllClientsService = async (offset, limit) => {
 
 const listClientSolicitationService = async (offset, limit, search) => {
   try {
-    const resultClient = await client.find({
-      $text: { $search: new RegExp(search, 'i'), $diacriticSensitive: false }
-    })
-
-    const ordered = await solicitation.paginate(
-      { client: { $in: resultClient.map((item) => item._id) } },
+    const resultDB = await client.aggregate([
       {
-        offset: Number(offset || 0),
-        limit: Number(limit || 30),
-        populate: ['client', 'payment', 'deliveries']
+        $match: {
+          $text: {
+            $search: `.*${search}.*`
+          }
+        }
+      },
+      {
+        $lookup: {
+          from: solicitation.collection.name,
+          localField: '_id',
+          foreignField: 'client',
+          as: 'solicitations'
+        }
+      },
+      {
+        $facet: {
+          metadata: [{ $count: 'total' }],
+          data: [
+            { $skip: Number(offset) || 0 },
+            { $limit: Number(limit) || 30 }
+          ]
+        }
       }
-    )
-
-    ordered.docs = await Promise.all(
-      ordered.docs.map(async (ord) => {
-        ord.cart = await Promise.all(
-          ord.cart.map(async (item) => {
-            item.product = await product.findById(item.product)
-            return item
-          })
-        )
-        return ordered
-      })
-    )
+    ])
 
     return {
       success: true,
-      message: 'Operation performed successfully',
-      data: ordered
+      message: 'Solicitations listed successfully',
+      data: resultDB[0].data.map((item) =>
+        clientMapper.toDTOClientSolicitations(item)
+      )
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -169,31 +176,59 @@ const listByIdClientService = async (clientid) => {
   }
 }
 
-const listSolicitationService = async (offset, limit, clientid) => {
+const listSolicitationClientService = async (offset, limit, clientid) => {
   try {
-    const resp = await solicitation.paginate(
-      { client: clientid },
+    const resultDB = await solicitation.aggregate([
+      { $match: { client: ObjectId(clientid) } },
       {
-        offset: Number(offset || 0),
-        limit: Number(limit || 30),
-        populate: ['client', 'payment', 'deliveries']
+        $lookup: {
+          from: product.collection.name,
+          localField: 'cart.product',
+          foreignField: '_id',
+          as: 'products'
+        }
+      },
+      {
+        $lookup: {
+          from: client.collection.name,
+          localField: 'client',
+          foreignField: '_id',
+          as: 'client'
+        }
+      },
+      {
+        $lookup: {
+          from: payment.collection.name,
+          localField: 'payment',
+          foreignField: '_id',
+          as: 'payment'
+        }
+      },
+      {
+        $lookup: {
+          from: deliveries.collection.name,
+          localField: 'deliveries',
+          foreignField: '_id',
+          as: 'deliveries'
+        }
+      },
+      {
+        $facet: {
+          metadata: [{ $count: 'total' }],
+          data: [
+            { $skip: Number(offset) || 0 },
+            { $limit: Number(limit) || 30 }
+          ]
+        }
       }
-    )
-    resp.docs = await Promise.all(
-      resp.docs.map(async (solic) => {
-        solic.cart = await Promise.all(
-          solic.cart.map(async (item) => {
-            item.product = await product.findById(item.product)
-            return item
-          })
-        )
-        return solic
-      })
-    )
+    ])
+
     return {
       success: true,
-      message: 'Operation performed successfully',
-      data: resp
+      message: 'Solicitations listed successfully',
+      data: resultDB[0].data.map((item) =>
+        clientMapper.toDTOSolicitations(item)
+      )
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -244,6 +279,6 @@ module.exports = {
   updateClientService,
   deleteClientService,
   listByIdClientService,
-  listSolicitationService,
+  listSolicitationClientService,
   createClientService
 }

@@ -59,10 +59,11 @@ const showCartSolicitationController = async (req, res) => {
 }
 
 const createSolicitationController = async (req, res) => {
-  const { clientid } = req.query
+  const { clientid, storeid } = req.query
   const { body } = req
 
   const resultService = await solicitationService.createSolicitationService(
+    storeid,
     clientid,
     body
   )

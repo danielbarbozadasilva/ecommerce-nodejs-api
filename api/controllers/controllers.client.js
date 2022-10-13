@@ -77,10 +77,10 @@ const deleteClientController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
-const listSolicitationController = async (req, res) => {
+const listSolicitationClientController = async (req, res) => {
   const { clientid } = req.params
   const { offset, limit } = req.query
-  const resultService = await clientService.listSolicitationService(
+  const resultService = await clientService.listSolicitationClientService(
     offset,
     limit,
     clientid
@@ -111,6 +111,6 @@ module.exports = {
   listByIdClientController,
   updaterClientController,
   deleteClientController,
-  listSolicitationController,
+  listSolicitationClientController,
   createClientController
 }
