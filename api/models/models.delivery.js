@@ -3,7 +3,7 @@ const mongoosePaginate = require('mongoose-paginate')
 
 const { Schema } = mongoose
 
-const deliverySchema = Schema(
+const deliveriesSchema = Schema(
   {
     status: { type: String, required: true },
     trackingCode: { type: String },
@@ -22,17 +22,11 @@ const deliverySchema = Schema(
       },
       required: true
     },
-    solicitation: {
-      type: Schema.Types.ObjectId,
-      ref: 'solicitation',
-      required: true
-    },
-    store: { type: Schema.Types.ObjectId, ref: 'store', required: true },
-    payload: { type: Object }
+    store: { type: Schema.Types.ObjectId, ref: 'store', required: true }
   },
   { timestamps: true }
 )
 
-deliverySchema.plugin(mongoosePaginate)
+deliveriesSchema.plugin(mongoosePaginate)
 
-module.exports = mongoose.model('delivery', deliverySchema)
+module.exports = mongoose.model('deliveries', deliveriesSchema)
