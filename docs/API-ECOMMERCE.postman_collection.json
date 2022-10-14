@@ -46,7 +46,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"danielbarboza56@hotmail.com\",\n    \"password\": \"daniel\"\n}",
+							"raw": "{\n    \"email\": \"daniel95barboza@gmail.com\",\n    \"password\": \"daniel\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -661,7 +661,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/client/?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/client?offset=0&limit=30",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -669,13 +669,16 @@
 							"port": "3011",
 							"path": [
 								"v1",
-								"client",
-								""
+								"client"
 							],
 							"query": [
 								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "30"
 								}
 							]
 						}
@@ -704,7 +707,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/client/632b6e607826306349c6e6f9?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e?offset=0&limit=30",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -713,12 +716,16 @@
 							"path": [
 								"v1",
 								"client",
-								"632b6e607826306349c6e6f9"
+								"6320f577156b47ff1082586e"
 							],
 							"query": [
 								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "30"
 								}
 							]
 						}
@@ -747,7 +754,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/client/search/(11)2423-2198?storeid=631e00f5190d800a90c6fa4d&limit=20&offset=20",
+							"raw": "http://localhost:3011/v1/client/search/Silva/solicitations?offset=0&limit=30",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -757,20 +764,17 @@
 								"v1",
 								"client",
 								"search",
-								"(11)2423-2198"
+								"Silva",
+								"solicitations"
 							],
 							"query": [
 								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
+									"key": "offset",
+									"value": "0"
 								},
 								{
 									"key": "limit",
-									"value": "20"
-								},
-								{
-									"key": "offset",
-									"value": "20"
+									"value": "30"
 								}
 							]
 						}
@@ -778,7 +782,7 @@
 					"response": []
 				},
 				{
-					"name": "client.clientStoreSolicitations",
+					"name": "client.listByClientId",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -799,7 +803,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e/solicitations?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e/solicitations",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -810,12 +814,6 @@
 								"client",
 								"6320f577156b47ff1082586e",
 								"solicitations"
-							],
-							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								}
 							]
 						}
 					},
@@ -854,7 +852,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Daniel\",\r\n    \"email\": \"132DASD3@gmail.com\",\r\n    \"cpf\": \"222.321.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"location\": \"Rio de janeiro\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"name\": \"Daniel\",\r\n    \"email\": \"132DdddASD3@gmail.com\",\r\n    \"cpf\": \"333.321.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"location\": \"Rio de janeiro\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -862,7 +860,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/client/?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/client",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -870,14 +868,7 @@
 							"port": "3011",
 							"path": [
 								"v1",
-								"client",
-								""
-							],
-							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								}
+								"client"
 							]
 						}
 					},
@@ -916,7 +907,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"111Daniel\",\r\n    \"email\": \"132d3@gmail.com\",\r\n    \"cpf\": \"123.222.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"location\": \"Rio de janeiro\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"name\": \"1222211Daniel\",\r\n    \"email\": \"132d3@gmail.com\",\r\n    \"cpf\": \"523.222.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"location\": \"Rio de janeiro\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -924,7 +915,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/client/632b7c288f410ea452cd5eb8/user/632b7c288f410ea452cd5eb6?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e/user/6320f577156b47ff1082586c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -933,15 +924,9 @@
 							"path": [
 								"v1",
 								"client",
-								"632b7c288f410ea452cd5eb8",
+								"6320f577156b47ff1082586e",
 								"user",
-								"632b7c288f410ea452cd5eb6"
-							],
-							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								}
+								"6320f577156b47ff1082586c"
 							]
 						}
 					},
@@ -983,7 +968,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/client/632b7c288f410ea452cd5eb8",
+							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -992,7 +977,7 @@
 							"path": [
 								"v1",
 								"client",
-								"632b7c288f410ea452cd5eb8"
+								"6320f577156b47ff1082586e"
 							]
 						}
 					},
@@ -1004,7 +989,7 @@
 			"name": "category",
 			"item": [
 				{
-					"name": "category.listByStore",
+					"name": "category.listAll",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1025,7 +1010,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/category?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/category",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1034,19 +1019,13 @@
 							"path": [
 								"v1",
 								"category"
-							],
-							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "category.listByStoreAvailability",
+					"name": "category.listById",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1067,7 +1046,44 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/category/availability?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/category/6320f577156b47ff1082586e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"category",
+								"6320f577156b47ff1082586e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category.listByAvailability",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/category/availability",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1077,62 +1093,13 @@
 								"v1",
 								"category",
 								"availability"
-							],
-							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "category.listByIdCategory",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3011/v1/category/632ddebec72cf112ddccfd04?storeid=631e00f5190d800a90c6fa4d",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"category",
-								"632ddebec72cf112ddccfd04"
-							],
-							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "category.listByIdCategoryWithProducts",
+					"name": "category.listByIdWithProducts",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1215,7 +1182,7 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "Periféricos",
+									"value": "Processadores",
 									"type": "text"
 								},
 								{
@@ -1364,63 +1331,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "category.updateProducts",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"products\": [\r\n        \"632c8fd67408d4d6213b1e33\"\r\n    ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3011/v1/category/6320f577156b47ff1082586e/products",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"category",
-								"6320f577156b47ff1082586e",
-								"products"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -1449,7 +1359,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/product?storeid=631e00f5190d800a90c6fa4d&offset=0&limit=30&sortType=alfabetica_a-z",
+							"raw": "http://localhost:3011/v1/product?offset=0&limit=30&sortType=alfabetica_a-z",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1460,10 +1370,6 @@
 								"product"
 							],
 							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								},
 								{
 									"key": "offset",
 									"value": "0"
@@ -1503,7 +1409,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/product/available?storeid=631e00f5190d800a90c6fa4d&offset=0&limit=30&sortType=alfabetica_a-z",
+							"raw": "http://localhost:3011/v1/product/available?offset=0&limit=30&sortType=alfabetica_a-z",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1515,10 +1421,6 @@
 								"available"
 							],
 							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								},
 								{
 									"key": "offset",
 									"value": "0"
@@ -1552,7 +1454,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3011/v1/product/search/Dell?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/product/search/Placa",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1562,13 +1464,7 @@
 								"v1",
 								"product",
 								"search",
-								"Dell"
-							],
-							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								}
+								"Placa"
 							]
 						}
 					},
@@ -1596,7 +1492,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/product/632c8edcca30799b1446cc63",
+							"raw": "http://localhost:3011/v1/product/63432f02a7f855351c99dc71",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1605,7 +1501,7 @@
 							"path": [
 								"v1",
 								"product",
-								"632c8edcca30799b1446cc63"
+								"63432f02a7f855351c99dc71"
 							]
 						}
 					},
@@ -1633,7 +1529,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/product/632c8edcca30799b1446cc63/rating",
+							"raw": "http://localhost:3011/v1/product/63432f02a7f855351c99dc71/rating",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1642,46 +1538,8 @@
 							"path": [
 								"v1",
 								"product",
-								"632c8edcca30799b1446cc63",
+								"63432f02a7f855351c99dc71",
 								"rating"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "product.listByIdProductVariations",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3011/v1/product/632c8edcca30799b1446cc63/variations",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"product",
-								"632c8edcca30799b1446cc63",
-								"variations"
 							]
 						}
 					},
@@ -1719,42 +1577,16 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "title",
-									"value": "Teclado Dell Gh5yf",
-									"type": "text"
-								},
-								{
-									"key": "description",
-									"value": "Com fio, Usb",
-									"type": "text"
-								},
-								{
-									"key": "price",
-									"value": "29.90",
-									"type": "text"
-								},
-								{
-									"key": "sku",
-									"value": "a1b1c1",
-									"type": "text"
-								},
-								{
-									"key": "category",
-									"value": "632ddebec72cf112ddccfd04",
-									"type": "text"
-								},
-								{
-									"key": "promotion",
-									"value": "12321",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Monitor LG 24\",\r\n    \"description\": \"Led\",\r\n    \"price\": 499.90,\r\n    \"sku\": \"c1a2v1\",\r\n    \"quantity\": 70,\r\n    \"category\": \"6320f577156b47ff1082586e\",\r\n    \"promotion\": 22.5,\r\n    \"dimensions\": {\r\n        \"height\": 8,\r\n        \"width\": 10,\r\n        \"depth\": 27\r\n    },\r\n    \"weight\": 1,\r\n    \"freeShipping\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/product?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/product",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1763,12 +1595,6 @@
 							"path": [
 								"v1",
 								"product"
-							],
-							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								}
 							]
 						}
 					},
@@ -1806,53 +1632,16 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "title",
-									"value": "Multilaser WebCam 124dag",
-									"type": "text"
-								},
-								{
-									"key": "availability",
-									"value": "true",
-									"type": "text"
-								},
-								{
-									"key": "description",
-									"value": "Com fio",
-									"type": "text"
-								},
-								{
-									"key": "photos",
-									"value": "",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "price",
-									"value": "133.90",
-									"type": "text"
-								},
-								{
-									"key": "promotion",
-									"value": "23",
-									"type": "text"
-								},
-								{
-									"key": "sku",
-									"value": "4144231",
-									"type": "text"
-								},
-								{
-									"key": "category",
-									"value": "632ddebec72cf112ddccfd04",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"1dddddTeclado Dell Gh5yf\",\r\n    \"description\": \"1Com fio, Usb\",\r\n    \"price\": 19.90,\r\n    \"sku\": \"a1b1c1\",\r\n    \"quantity\": 50,\r\n    \"category\": \"6320f577156b47ff1082586e\",\r\n    \"promotion\": 22.5,\r\n    \"dimensions\": {\r\n        \"height\": 8,\r\n        \"width\": 10,\r\n        \"depth\": 27\r\n    },\r\n    \"weight\": 2,\r\n    \"freeShipping\": false,\r\n    \"availability\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/product/632c8fd67408d4d6213b1e33?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/product/6347178b594bbd99ff5126a2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1861,13 +1650,7 @@
 							"path": [
 								"v1",
 								"product",
-								"632c8fd67408d4d6213b1e33"
-							],
-							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								}
+								"6347178b594bbd99ff5126a2"
 							]
 						}
 					},
@@ -1910,12 +1693,12 @@
 								{
 									"key": "files",
 									"type": "file",
-									"src": "/C:/Users/pc01/Pictures/Yoda2.jpg"
+									"src": "/C:/Users/pc01/Pictures/img0.jpg"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/product/images/632c8fd67408d4d6213b1e33?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/product/images/6347178b594bbd99ff5126a2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1925,13 +1708,7 @@
 								"v1",
 								"product",
 								"images",
-								"632c8fd67408d4d6213b1e33"
-							],
-							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								}
+								"6347178b594bbd99ff5126a2"
 							]
 						}
 					},
@@ -1978,7 +1755,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/product/632c8ef9bc19533e5e986c45?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/product/6347178b594bbd99ff5126a2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1987,13 +1764,7 @@
 							"path": [
 								"v1",
 								"product",
-								"632c8ef9bc19533e5e986c45"
-							],
-							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								}
+								"6347178b594bbd99ff5126a2"
 							]
 						}
 					},
@@ -2016,7 +1787,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/rating?storeid=631e00f5190d800a90c6fa4d&productid=632c8edcca30799b1446cc63",
+							"raw": "http://localhost:3011/v1/rating?productid=63432f02a7f855351c99dc71",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2028,12 +1799,8 @@
 							],
 							"query": [
 								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								},
-								{
 									"key": "productid",
-									"value": "632c8edcca30799b1446cc63"
+									"value": "63432f02a7f855351c99dc71"
 								}
 							]
 						}
@@ -2052,7 +1819,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/rating/632f8dfbbee2dc3077bcb361?storeid=631e00f5190d800a90c6fa4d&productid=632c8edcca30799b1446cc63",
+							"raw": "http://localhost:3011/v1/rating/63471a1ac51740994725d9ea?productid=63432f02a7f855351c99dc71",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2061,16 +1828,12 @@
 							"path": [
 								"v1",
 								"rating",
-								"632f8dfbbee2dc3077bcb361"
+								"63471a1ac51740994725d9ea"
 							],
 							"query": [
 								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								},
-								{
 									"key": "productid",
-									"value": "632c8edcca30799b1446cc63"
+									"value": "63432f02a7f855351c99dc71"
 								}
 							]
 						}
@@ -2118,7 +1881,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/rating?storeid=631e00f5190d800a90c6fa4d&productid=632c8edcca30799b1446cc63",
+							"raw": "http://localhost:3011/v1/rating?clientid=6320f577156b47ff1082586e&productid=63432f02a7f855351c99dc71",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2130,12 +1893,12 @@
 							],
 							"query": [
 								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
+									"key": "clientid",
+									"value": "6320f577156b47ff1082586e"
 								},
 								{
 									"key": "productid",
-									"value": "632c8edcca30799b1446cc63"
+									"value": "63432f02a7f855351c99dc71"
 								}
 							]
 						}
@@ -2178,7 +1941,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/rating/632f8dfbbee2dc3077bcb361",
+							"raw": "http://localhost:3011/v1/rating?clientid=6320f577156b47ff1082586e&productid=63432f02a7f855351c99dc71",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2186,8 +1949,17 @@
 							"port": "3011",
 							"path": [
 								"v1",
-								"rating",
-								"632f8dfbbee2dc3077bcb361"
+								"rating"
+							],
+							"query": [
+								{
+									"key": "clientid",
+									"value": "6320f577156b47ff1082586e"
+								},
+								{
+									"key": "productid",
+									"value": "63432f02a7f855351c99dc71"
+								}
 							]
 						}
 					},
@@ -2196,10 +1968,10 @@
 			]
 		},
 		{
-			"name": "variation",
+			"name": "solicitation",
 			"item": [
 				{
-					"name": "variation.listAll",
+					"name": "solicitation.listAll",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -2220,7 +1992,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/variation?storeid=631e00f5190d800a90c6fa4d&productid=632c8edcca30799b1446cc63",
+							"raw": "http://localhost:3011/v1/solicitation?limit=30&offset=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2228,16 +2000,16 @@
 							"port": "3011",
 							"path": [
 								"v1",
-								"variation"
+								"solicitation"
 							],
 							"query": [
 								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
+									"key": "limit",
+									"value": "30"
 								},
 								{
-									"key": "productid",
-									"value": "632c8edcca30799b1446cc63"
+									"key": "offset",
+									"value": "0"
 								}
 							]
 						}
@@ -2245,7 +2017,7 @@
 					"response": []
 				},
 				{
-					"name": "variation.listById",
+					"name": "solicitation.listById",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -2266,7 +2038,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/variation/6330a9b9d9563650e58b3452?storeid=631e00f5190d800a90c6fa4d&productid=632c8edcca30799b1446cc63",
+							"raw": "http://localhost:3011/v1/solicitation/63434348a7b076da94874bef?limit=30&offset=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2274,17 +2046,17 @@
 							"port": "3011",
 							"path": [
 								"v1",
-								"variation",
-								"6330a9b9d9563650e58b3452"
+								"solicitation",
+								"63434348a7b076da94874bef"
 							],
 							"query": [
 								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
+									"key": "limit",
+									"value": "30"
 								},
 								{
-									"key": "productid",
-									"value": "632c8edcca30799b1446cc63"
+									"key": "offset",
+									"value": "0"
 								}
 							]
 						}
@@ -2292,7 +2064,55 @@
 					"response": []
 				},
 				{
-					"name": "variation.create",
+					"name": "solicitation.listCart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/solicitation/634874c8c2da29a7d278bf34/cart?limit=30&offset=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"solicitation",
+								"634874c8c2da29a7d278bf34",
+								"cart"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "30"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "solicitation.create",
 					"event": [
 						{
 							"listen": "test",
@@ -2324,7 +2144,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"code\": \"0909897899888\",\r\n    \"name\": \"P\",\r\n    \"price\": 15,\r\n    \"delivery\": {\r\n        \"dimensions\": {\r\n            \"height\": 15,\r\n            \"width\": 17,\r\n            \"depth\": 45\r\n        },\r\n        \"weight\": 0.5\r\n    }\r\n}",
+							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 2199.99,\r\n            \"quantity\": 1,\r\n            \"shipping\": 10\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 829.99,\r\n            \"quantity\": 2,\r\n            \"shipping\": 10\r\n        }\r\n    ],\r\n    \"payment\": {\r\n        \"price\": 3039.98,\r\n        \"type\": \"BOLETO\",\r\n        \"installments\": 1,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"location\": \"Rio de janeiro\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"Rio de janeiro\",\r\n            \"zipCode\": \"21987-200\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 10,\r\n        \"type\": \"04014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"location\": \"Rio de janeiro\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"Rio de janeiro\",\r\n            \"zipCode\": \"21987-200\"\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2332,7 +2152,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/variation?storeid=631e00f5190d800a90c6fa4d&productid=632c8edcca30799b1446cc63",
+							"raw": "http://localhost:3011/v1/solicitation?storeid=631e00f5190d800a90c6fa4d&clientid=6320f577156b47ff1082586e",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2340,7 +2160,7 @@
 							"port": "3011",
 							"path": [
 								"v1",
-								"variation"
+								"solicitation"
 							],
 							"query": [
 								{
@@ -2348,8 +2168,8 @@
 									"value": "631e00f5190d800a90c6fa4d"
 								},
 								{
-									"key": "productid",
-									"value": "632c8edcca30799b1446cc63"
+									"key": "clientid",
+									"value": "6320f577156b47ff1082586e"
 								}
 							]
 						}
@@ -2357,7 +2177,7 @@
 					"response": []
 				},
 				{
-					"name": "variation.update",
+					"name": "solicitation.update",
 					"event": [
 						{
 							"listen": "test",
@@ -2397,7 +2217,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/variation/6330a9b9d9563650e58b3452?storeid=631e00f5190d800a90c6fa4d&productid=632c8edcca30799b1446cc63",
+							"raw": "http://localhost:3011/v1/solicitation/6330a9b9d9563650e58b3452?storeid=631e00f5190d800a90c6fa4d&productid=632c8edcca30799b1446cc63",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2405,7 +2225,7 @@
 							"port": "3011",
 							"path": [
 								"v1",
-								"variation",
+								"solicitation",
 								"6330a9b9d9563650e58b3452"
 							],
 							"query": [
@@ -2423,75 +2243,7 @@
 					"response": []
 				},
 				{
-					"name": "variation.updateImage",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "files",
-									"type": "file",
-									"src": "/C:/Users/pc01/Pictures/maxresdefault.jpg"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://localhost:3011/v1/variation/images/6330a9b9d9563650e58b3452?storeid=631e00f5190d800a90c6fa4d&productid=632c8edcca30799b1446cc63",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"variation",
-								"images",
-								"6330a9b9d9563650e58b3452"
-							],
-							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								},
-								{
-									"key": "productid",
-									"value": "632c8edcca30799b1446cc63"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "variation.remove",
+					"name": "solicitation.remove",
 					"event": [
 						{
 							"listen": "test",
@@ -2531,7 +2283,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/variation/6330a9b9d9563650e58b3452?storeid=631e00f5190d800a90c6fa4d&productid=632c8edcca30799b1446cc63",
+							"raw": "http://localhost:3011/v1/solicitation/6349ace99826bc4babad38f9?clientid=6320f577156b47ff1082586e",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2539,17 +2291,13 @@
 							"port": "3011",
 							"path": [
 								"v1",
-								"variation",
-								"6330a9b9d9563650e58b3452"
+								"solicitation",
+								"6349ace99826bc4babad38f9"
 							],
 							"query": [
 								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								},
-								{
-									"key": "productid",
-									"value": "632c8edcca30799b1446cc63"
+									"key": "clientid",
+									"value": "6320f577156b47ff1082586e"
 								}
 							]
 						}
