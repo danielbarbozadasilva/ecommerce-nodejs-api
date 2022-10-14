@@ -38,8 +38,10 @@ const profile = [
       'DELETE_PRODUCT',
       'DELETE_RATING',
       'LIST_ALL_SOLICITATION',
+      'SOLICITATION_DELETE',
       'LIST_ID_SOLICITATION',
-      'LIST_CLIENT_SOLICITATION'
+      'LIST_CLIENT_SOLICITATION',
+      'LIST_CART_PRODUCT'
     ]
   },
   {
@@ -59,8 +61,10 @@ const profile = [
       'CREATE_RATING',
       'DELETE_RATING',
       'SOLICITATION_CREATE',
+      'SOLICITATION_DELETE',
       'LIST_ID_SOLICITATION',
-      'LIST_CLIENT_SOLICITATION'
+      'LIST_CLIENT_SOLICITATION',
+      'LIST_CART_PRODUCT'
     ]
   }
 ]
