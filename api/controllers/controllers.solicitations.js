@@ -34,8 +34,10 @@ const listByIdSolicitationController = async (req, res) => {
 
 const deleteSolicitationController = async (req, res) => {
   const { solicitationid } = req.params
+  const { clientid } = req.query
   const resultService = await solicitationService.deleteSolicitationService(
-    solicitationid
+    solicitationid,
+    clientid
   )
   const code = resultService.success ? 200 : 400
   const message = resultService.success
