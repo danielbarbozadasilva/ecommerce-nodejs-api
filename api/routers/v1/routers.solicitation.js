@@ -225,6 +225,8 @@ module.exports = (router) => {
       solicitationController.listByIdSolicitationController
     )
     .delete(
+      authenticationMiddleware(),
+      authorization.authorizationMiddleware('SOLICITATION_DELETE'),
       validateDTOMiddleware('params', {
         solicitationid: joi
           .string()
@@ -237,11 +239,25 @@ module.exports = (router) => {
               '"solicitation id" out of the expected format'
           })
       }),
+      validateDTOMiddleware('query', {
+        clientid: joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .required()
+          .messages({
+            'any.required': '"client id" is a required field',
+            'string.empty': '"client id" can not be empty',
+            'string.pattern.base': '"client id" out of the expected format'
+          })
+      }),
       verifyIdDbMiddleware.verifyIdSolicitationDbMiddleware,
+      verifyIdDbMiddleware.verifyIdClientDbMiddleware,
       solicitationController.deleteSolicitationController
     )
 
   router.route('/solicitation/:solicitationid/cart').get(
+    authenticationMiddleware(),
+    authorization.authorizationMiddleware('LIST_CART_PRODUCT'),
     validateDTOMiddleware('params', {
       solicitationid: joi
         .string()
