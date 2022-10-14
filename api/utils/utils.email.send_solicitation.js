@@ -1,20 +1,22 @@
 const moment = require('moment')
 
-const sendSolicitationClientEmail = (store, solicitation, client, product) => ` 
-    <h1 style="text-align:left;">Seu pedido foi recebido</h1>
+const sendSolicitationClientEmail = (solicitation, client) => ` 
+    <p>
+    Prezado ${client[0].name},
     <br />
-    <p>O seu pedido foi realizado hoje ${moment(solicitation.createdAt).format(
+    O seu pedido foi realizado hoje ${moment(solicitation.createdAt).format(
       'DD/MM/YYYY'
     )} às ${moment(solicitation.createdAt).format('hh:mm:ss')}.</p>
     <br />
     
     <h2>Dados do pedido: </h2>
-    
-    ${solicitation.map(
-      (item, i) => `
-    <h3>
-      Nome: ${product[i].title}
-    </h3>
+    <hr />
+
+    ${solicitation.cart.map(
+      (item) => `
+      <h3>
+        Nome: ${item.product.title}
+      </h3>
       <h3>
         Preço unitário: ${item.unitPrice.toLocaleString('pt-br', {
           style: 'currency',
@@ -39,6 +41,7 @@ const sendSolicitationClientEmail = (store, solicitation, client, product) => `
       (item) => `  
       <h2>
         Dados para entrega:
+        <hr />
       </h2>
       <h3>
         Localização: ${item.address.location}
@@ -64,15 +67,16 @@ const sendSolicitationClientEmail = (store, solicitation, client, product) => `
     `
     )}
     <br /><br />
-
+    <hr />
     <p>Atenciosamente,</p>
     <p>Equipe - E-commerce</p>
 `
 
-const sendSolicitationAdminEmail = (solicitation, client, product) => ` 
-<h1 style="text-align:left;">Pedido Recebido</h1>
+const sendSolicitationAdminEmail = (solicitation, client) => ` 
+<p>
+Prezado administrador,
 <br />
-<p>O cliente ${client[0].name} realizou um pedido no dia ${moment(
+O cliente ${client[0].name} realizou um pedido no dia ${moment(
   solicitation.createdAt
 ).format('DD/MM/YYYY')} às ${moment(solicitation.createdAt).format(
   'hh:mm:ss'
@@ -80,6 +84,8 @@ const sendSolicitationAdminEmail = (solicitation, client, product) => `
 <br />
 
 <h2>Dados do Cliente: </h2>
+<hr />
+
 ${client.map(
   (item) => `
   <h3>
@@ -102,6 +108,8 @@ ${client.map(
   <h2>
     Dados para entrega:
   </h2>
+  <hr />
+
   <h3>
     Localização: ${item.address.location}
   </h3>
@@ -127,11 +135,13 @@ ${client.map(
 )}
 <br />
 
-<h2>Dados do pedido: </h2>
-${solicitation.map(
-  (item, i) => `
+<h2>Dados do pedido:</h2>
+<hr />
+
+${solicitation.cart.map(
+  (item) => `
   <h3>
-    Nome: ${product[i].title}
+    Nome: ${item.product.title}
   </h3>
   <h3>
     Preço unitário: ${item.unitPrice.toLocaleString('pt-br', {
@@ -152,21 +162,12 @@ ${solicitation.map(
 `
 )}
 <br /><br />
+<hr />
 <p>Atenciosamente,</p>
-<p>Equipe - E-commerce</p>
-`
-
-const cancelSolicitationEmail = () => ` 
-    <h1>Pedido cancelado</h1>
-      <br />
-      <p>
-         Seu pedido foi cancelado com sucesso!
-      </p>
-      <br /><br /><hr />
+<p>E-commerce</p>
 `
 
 module.exports = {
   sendSolicitationClientEmail,
-  sendSolicitationAdminEmail,
-  cancelSolicitationEmail
+  sendSolicitationAdminEmail
 }
