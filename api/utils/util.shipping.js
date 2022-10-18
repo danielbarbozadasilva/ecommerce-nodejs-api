@@ -1,27 +1,20 @@
 const Correios = require('node-correios')
+
 const correios = new Correios()
 const config = require('./util.correios')
 const { calcBox } = require('./helpers/calcBox')
 
-const calculateShipping = async (zipCode, products) => {
-  const _produtos = products.map((item) => ({
-    pesoKg: item.product.weight,
-    profundidadeCm: item.product.dimensions.depth,
-    alturaCm: item.product.dimensions.height,
-    larguraCm: item.product.dimensions.width,
-    quantidade: item.quantity,
-    preco: item.product.price
-  }))
+const calculateShipping = async (zipCode, data, cart) => {
+  const box = calcBox(data)
 
-  const box = calcBox(_produtos)
-
-  const pesoTotal = _produtos.reduce(
-    (all, item) => all + item.pesoKg * item.quantidade,
+  const totalWeight = data.reduce(
+    (all, item) =>
+      all + item.weight * cart.reduce((all, item) => all + item.quantity, 0),
     0
   )
 
-  const valorFinal = _produtos.reduce(
-    (all, item) => all + item.preco * item.quantidade,
+  const finalPrice = cart.reduce(
+    (all, item) => all + item.shipping * item.quantity,
     0
   )
 
@@ -29,13 +22,13 @@ const calculateShipping = async (zipCode, products) => {
     nCdServico: config.nCdServico,
     sCepOrigem: config.sCepOrigem,
     sCepDestino: zipCode,
-    nVlPeso: pesoTotal,
+    nVlPeso: totalWeight,
     nCdFormato: 1,
-    nVlComprimento: box.comprimento,
-    nVlAltura: box.altura,
-    nVlLargura: box.largura,
+    nVlComprimento: box.length,
+    nVlAltura: box.height,
+    nVlLargura: box.width,
     nVlDiamentro: 0,
-    nVlValorDeclarado: valorFinal < 19.5 ? 19.5 : valorFinal
+    nVlValorDeclarado: finalPrice < 23.5 ? 23.5 : finalPrice
   })
 
   return result[0]

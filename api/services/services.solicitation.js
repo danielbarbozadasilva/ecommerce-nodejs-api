@@ -263,25 +263,26 @@ const verifyPrice = async (cart) => {
   }
 }
 
-// const checkShipping = async (cart, deliveries) => {
-//   const productDB = await Promise.all(
-//     cart.map(async (item) => {
-//       item.product = await product.findById(item.product)
-//       return item
-//     })
-//   )
-// console.log(deliveries);
-//   const resultCalc = await calculateShipping(
-//     deliveries.address.zipCode,
-//     productDB
-//   )
+const calcShipping = async (cart, deliveries) => {
+  const productDB = await Promise.all(
+    cart.map(async (item) => {
+      item = await product.findById(item.product)
+      return item
+    })
+  )
 
-//   if (resultCalc.Erro != 0) {
-//     throw new ErrorUnprocessableEntity('Dados de entrega inválidos!')
-//   }
+  const resultCalc = await calculateShipping(
+    deliveries.address.zipCode,
+    productDB,
+    cart
+  )
 
-//   return resultCalc
-// }
+  if (resultCalc.Erro != 0) {
+    throw new ErrorUnprocessableEntity('Dados de entrega inválidos!')
+  }
+
+  return resultCalc
+}
 
 const checkCard = async (cart, payment) => {
   let totalPrice = 0
@@ -351,7 +352,8 @@ const createSolicitationService = async (storeid, clientid, body) => {
   await verifyQuantity(body.cart)
   await verifyPrice(body.cart)
   await checkCard(body.cart, body.payment)
-
+  const { Valor, PrazoEntrega } = await calcShipping(body.cart, body.deliveries)
+  console.log(Valor)
   try {
     const resultPayment = await payment.create({
       price: body.payment.price,
