@@ -1,6 +1,6 @@
 const moment = require('moment')
 
-const sendSolicitationClientEmail = (solicitation, client) => ` 
+const sendSolicitationClientEmail = (solicitation, client, shipping) => ` 
     <p>
     Prezado ${client[0].name},
     <br />
@@ -24,18 +24,19 @@ const sendSolicitationClientEmail = (solicitation, client) => `
         })}
       </h3>
       <h3>
-        Quantidade: ${item.quantity} unidades
-      </h3>
-      <h3>
-        Frete:
-        ${item.shipping.toLocaleString('pt-br', {
-          style: 'currency',
-          currency: 'BRL'
-        })}
-      </h3>
-    `
+      Quantidade: ${item.quantity} unidades
+    </h3>`
     )}
-    <br />
+  <br />
+  
+    <h3>
+      Frete:
+      ${shipping.toLocaleString('pt-br', {
+        style: 'currency',
+        currency: 'BRL'
+      })}
+    </h3>
+  <br />
 
     ${client.map(
       (item) => `  
@@ -72,7 +73,7 @@ const sendSolicitationClientEmail = (solicitation, client) => `
     <p>Equipe - E-commerce</p>
 `
 
-const sendSolicitationAdminEmail = (solicitation, client) => ` 
+const sendSolicitationAdminEmail = (solicitation, client, shipping) => ` 
 <p>
 Prezado administrador,
 <br />
@@ -152,15 +153,17 @@ ${solicitation.cart.map(
   <h3>
     Quantidade: ${item.quantity} unidades
   </h3>
+  `
+)}
+<br />
   <h3>
     Frete:
-    ${item.shipping.toLocaleString('pt-br', {
+    ${shipping.toLocaleString('pt-br', {
       style: 'currency',
       currency: 'BRL'
     })}
   </h3>
-`
-)}
+
 <br /><br />
 <hr />
 <p>Atenciosamente,</p>

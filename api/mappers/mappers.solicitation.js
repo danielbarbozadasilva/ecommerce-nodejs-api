@@ -22,8 +22,7 @@ const toDTO = (model) => ({
   cart: model.cart.map((item) => ({
     product: item.product,
     quantity: item.quantity,
-    unitPrice: item.unitPrice,
-    shipping: item.shipping
+    unitPrice: item.unitPrice
   })),
   payment: model.payment.map((item) => ({
     id: item._id,
@@ -44,6 +43,7 @@ const toDTO = (model) => ({
     store: item.store,
     pagSeguroCode: item.pagSeguroCode
   })),
+  shipping: model.shipping,
   deliveries: model.deliveries.map((item) => ({
     id: item._id,
     status: item.status,
@@ -89,9 +89,9 @@ const toDTOCart = (model) => ({
   cart: model.cart.map((item, i) => ({
     product: model.products[i],
     quantity: item.quantity,
-    unitPrice: item.unitPrice,
-    shipping: item.shipping,
-  }))
+    unitPrice: item.unitPrice
+  })),
+  shipping: model.shipping
 })
 
 const toDTOList = (solicitation, deliveries) => ({

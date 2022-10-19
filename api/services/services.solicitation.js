@@ -226,75 +226,79 @@ const showCartSolicitationService = async (solicitationid) => {
   }
 }
 
+const searchProductCart = async (cart) => {
+  const productId = cart.map((item) => item.product)
+  const productDB = await product.find({
+    _id: {
+      $in: productId
+    }
+  })
+  return productDB
+}
+
 const verifyQuantity = async (cart) => {
-  let checkFound = true
+  let checkFound = false
 
-  await Promise.all(
-    cart.map(async (item) => {
-      const resultDB = await product.findOne(item._id)
-      if (resultDB.quantity < item.quantity) {
-        checkFound = false
-      }
-    })
-  )
+  const productDB = await searchProductCart(cart)
 
-  if (!checkFound) {
+  cart.map((item, i) => {
+    if (productDB[i].quantity < item.quantity) {
+      checkFound = true
+    }
+  })
+
+  if (checkFound) {
     throw new ErrorBusinessRule('Produto não possui quantidade em estoque!')
   }
 }
 
 const verifyPrice = async (cart) => {
-  let checkPrice = true
+  let checkPrice = false
 
-  await Promise.all(
-    cart.map(async (item) => {
-      const resultDB = await product.findById(item.product)
-      if (
-        (resultDB.promotion || resultDB.price) * item.quantity !==
-        item.unitPrice * item.quantity
-      ) {
-        checkPrice = false
-      }
-    })
-  )
+  const productDB = await searchProductCart(cart)
 
-  if (!checkPrice) {
+  cart.map((item, i) => {
+    if (
+      (productDB[i].promotion || productDB[i].price) * item.quantity !==
+      item.unitPrice * item.quantity
+    ) {
+      checkPrice = true
+    }
+  })
+
+  if (checkPrice) {
     throw new ErrorUnprocessableEntity('Carrinho inválido!')
   }
 }
 
-const calcShipping = async (cart, deliveries) => {
-  const productDB = await Promise.all(
-    cart.map(async (item) => {
-      item = await product.findById(item.product)
-      return item
-    })
-  )
+const calcShipping = async (cart, deliveries, shipping) => {
+  const productDB = await searchProductCart(cart)
 
-  const resultCalc = await calculateShipping(
+  const result = await calculateShipping(
     deliveries.address.zipCode,
     productDB,
-    cart
+    cart,
+    shipping
   )
+  console.log(result);
 
-  if (resultCalc.Erro != 0) {
+  if (result.Erro != 0) {
     throw new ErrorUnprocessableEntity('Dados de entrega inválidos!')
   }
-
-  return resultCalc
+  return result
 }
 
-const checkCard = async (cart, payment) => {
+const checkCard = async (cart, payment, shipping) => {
   let totalPrice = 0
   let total = 0
 
-  await Promise.all(
-    cart.map(async (item) => {
-      const resultDB = await product.findById(item.product)
-      total += resultDB.promotion || resultDB.price
-    })
-  )
-  totalPrice = total + cart[0].shipping
+  const productDB = await searchProductCart(cart)
+
+  cart.map((item, i) => {
+    total += (productDB[i].promotion || productDB[i].price) * item.quantity
+  })
+
+  totalPrice = total + shipping
 
   const checkTotal =
     totalPrice.toFixed(2) === payment.price.toFixed(2) &&
@@ -305,33 +309,35 @@ const checkCard = async (cart, payment) => {
   }
 }
 
-const sendEmailAdminSolicitation = async (clientid, solicitationid) => {
+const sendEmailAdminSolicitation = async (clientid, id, shipping) => {
   const resultClient = await client.findById(clientid).populate('user')
-  const resultSolicitation = await showCartSolicitationService(solicitationid)
+  const resultSolicitation = await showCartSolicitationService(id)
 
   emailUtils.utilSendEmail({
     to: resultClient.user.email,
     from: process.env.SENDGRID_SENDER,
-    subject: `E-commerce - Pedido ${solicitationid} recebido!`,
+    subject: `E-commerce - Pedido ${id} recebido!`,
     html: emailSolicitation.sendSolicitationAdminEmail(
       resultSolicitation.data,
-      [resultClient]
+      [resultClient],
+      shipping
     )
   })
 }
 
-const sendEmailClientSolicitation = async (clientid, solicitationid) => {
+const sendEmailClientSolicitation = async (clientid, id, shipping) => {
   const resultClient = await client.findById(clientid).populate('user')
-  const resultSolicitation = await showCartSolicitationService(solicitationid)
+  const resultSolicitation = await showCartSolicitationService(id)
 
   emailUtils.utilSendEmail({
     to: resultClient.user.email,
     from: process.env.SENDGRID_SENDER,
-    subject: `Pedido ${solicitationid} recebido!`,
+    subject: `Pedido ${id} recebido!`,
 
     html: emailSolicitation.sendSolicitationClientEmail(
       resultSolicitation.data,
-      [resultClient]
+      [resultClient],
+      shipping
     )
   })
 }
@@ -351,9 +357,9 @@ const updateQuantity = async (data) => {
 const createSolicitationService = async (storeid, clientid, body) => {
   await verifyQuantity(body.cart)
   await verifyPrice(body.cart)
-  await checkCard(body.cart, body.payment)
-  const { Valor, PrazoEntrega } = await calcShipping(body.cart, body.deliveries)
-  console.log(Valor)
+  await checkCard(body.cart, body.payment, body.shipping)
+  await calcShipping(body.cart, body.deliveries, body.shipping)
+
   try {
     const resultPayment = await payment.create({
       price: body.payment.price,
@@ -381,6 +387,7 @@ const createSolicitationService = async (storeid, clientid, body) => {
       client: clientid,
       store: storeid,
       cart: body.cart,
+      shipping: body.shipping,
       payment: resultPayment._id,
       deliveries: resultDeliveries._id
     })
@@ -390,10 +397,17 @@ const createSolicitationService = async (storeid, clientid, body) => {
       type: 'solicitation',
       situation: 'created_solicitation'
     })
-
     await updateQuantity(body.cart)
-    await sendEmailAdminSolicitation(clientid, resultSolicitation._id)
-    await sendEmailClientSolicitation(clientid, resultSolicitation._id)
+    await sendEmailAdminSolicitation(
+      clientid,
+      resultSolicitation._id,
+      body.shipping
+    )
+    await sendEmailClientSolicitation(
+      clientid,
+      resultSolicitation._id,
+      body.shipping
+    )
 
     return {
       success: true,

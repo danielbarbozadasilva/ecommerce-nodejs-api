@@ -16,11 +16,11 @@ const solicitationSchema = Schema(
           },
           staticProduct: { type: String },
           quantity: { type: Number, default: 1 },
-          unitPrice: { type: Number, required: true },
-          shipping: { type: Number, required: true }
+          unitPrice: { type: Number, required: true }
         }
       ]
     },
+    shipping: { type: Number, required: true },
     payment: {
       type: Schema.Types.ObjectId,
       ref: 'payment',
