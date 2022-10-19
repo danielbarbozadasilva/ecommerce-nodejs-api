@@ -63,14 +63,14 @@ module.exports = (router) => {
               quantity: joi.number().required().messages({
                 'any.required': '"quantity" is a required field',
                 'number.empty': '"quantity" can not be empty'
-              }),
-              shipping: joi.number().required().messages({
-                'any.required': '"shipping" is a required field',
-                'number.empty': '"shipping" can not be empty'
               })
             })
           )
           .required(),
+        shipping: joi.number().required().messages({
+          'any.required': '"shipping" is a required field',
+          'number.empty': '"shipping" can not be empty'
+        }),
         payment: joi
           .object({
             price: joi.number().required().messages({

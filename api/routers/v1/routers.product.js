@@ -76,6 +76,10 @@ module.exports = (router) => {
         freeShipping: joi.boolean().required().messages({
           'any.required': '"freeShipping" is a required field',
           'boolean.empty': '"freeShipping" can not be empty'
+        }),
+        shipping: joi.number().required().messages({
+          'any.required': '"shipping" is a required field',
+          'number.empty': '"shipping" can not be empty'
         })
       }),
       productController.createProductController
@@ -181,6 +185,10 @@ module.exports = (router) => {
         freeShipping: joi.boolean().required().messages({
           'any.required': '"freeShipping" is a required field',
           'boolean.empty': '"freeShipping" can not be empty'
+        }),
+        shipping: joi.number().required().messages({
+          'any.required': '"shipping" is a required field',
+          'number.empty': '"shipping" can not be empty'
         })
       }),
       verifyIdDbMiddleware.verifyIdProductDbMiddleware,

@@ -233,9 +233,9 @@ db.solicitations.insert([
       cart: [{
         product: ObjectId("63432f02a7f855351c99dc71"),
         quantity: 2,
-        unitPrice: 2199.99,
-        shipping: 10
+        unitPrice: 2199.99
       }],
+        shipping: 10,
         payment: ObjectId("63434348a7b076da94874be8"),
         deliveries: ObjectId("63434348a7b076da94874bec"),
         canceled: false
@@ -246,9 +246,9 @@ db.solicitations.insert([
       cart: [{
         product: ObjectId("63432f02a7f855351c99dc72"),
         quantity: 1,
-        unitPrice: 829.99,
-        shipping: 10
-      }],
+        unitPrice: 829.99
+       }],
+        shipping: 10,
         payment: ObjectId("6343516f3fb56efda46c2de5"),
         deliveries: ObjectId("6343516f3fb56efda46c2de8"),
         canceled: false
