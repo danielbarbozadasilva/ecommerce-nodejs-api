@@ -1,7 +1,7 @@
 module.exports = {
   // nCdEmpresa: "",
   // sDsSenha :"",
-  nCdServico: '04014',
+  nCdServico: '04014,04510',
   //   Código do serviço:
   // 04014 = SEDEX à vista
   // 04065 = SEDEX à vista pagamento na entrega
