@@ -2085,7 +2085,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/solicitation/634874c8c2da29a7d278bf34/cart?limit=30&offset=0",
+							"raw": "http://localhost:3011/v1/solicitation/634fffbb31525140ecaa9642/cart?limit=30&offset=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2094,7 +2094,7 @@
 							"path": [
 								"v1",
 								"solicitation",
-								"634874c8c2da29a7d278bf34",
+								"634fffbb31525140ecaa9642",
 								"cart"
 							],
 							"query": [
@@ -2144,7 +2144,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 2199.99,\r\n            \"quantity\": 1,\r\n            \"shipping\": 10\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 829.99,\r\n            \"quantity\": 2,\r\n            \"shipping\": 10\r\n        }\r\n    ],\r\n    \"payment\": {\r\n        \"price\": 3039.98,\r\n        \"type\": \"BOLETO\",\r\n        \"installments\": 1,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"location\": \"Rio de janeiro\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"Rio de janeiro\",\r\n            \"zipCode\": \"21987-200\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 10,\r\n        \"type\": \"04014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"location\": \"Rio de janeiro\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"Rio de janeiro\",\r\n            \"zipCode\": \"21987-200\"\r\n        }\r\n    }\r\n}",
+							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 2199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 829.99,\r\n            \"quantity\": 2\r\n        }\r\n    ],\r\n    \"shipping\": 34.33,\r\n    \"payment\": {\r\n        \"price\": 3894.2999999999997,\r\n        \"type\": \"BOLETO\",\r\n        \"installments\": 1,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"location\": \"Rio de janeiro\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"Rio de janeiro\",\r\n            \"zipCode\": \"21987-200\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 34.33,\r\n        \"type\": \"04014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"location\": \"Rio de janeiro\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"Rio de janeiro\",\r\n            \"zipCode\": \"21987-200\"\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2170,72 +2170,6 @@
 								{
 									"key": "clientid",
 									"value": "6320f577156b47ff1082586e"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "solicitation.update",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"code\": \"1909897899888\",\r\n    \"name\": \"M\",\r\n    \"price\": 13,\r\n    \"promotion\": 10,\r\n    \"delivery\": {\r\n        \"dimensions\": {\r\n            \"height\": 15,\r\n            \"width\": 17,\r\n            \"depth\": 45\r\n        },\r\n        \"weight\": 0.5,\r\n        \"freeShipping\": true\r\n    },\r\n    \"quantity\": 110\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3011/v1/solicitation/6330a9b9d9563650e58b3452?storeid=631e00f5190d800a90c6fa4d&productid=632c8edcca30799b1446cc63",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"solicitation",
-								"6330a9b9d9563650e58b3452"
-							],
-							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								},
-								{
-									"key": "productid",
-									"value": "632c8edcca30799b1446cc63"
 								}
 							]
 						}
