@@ -4,14 +4,14 @@ const toDTO = (model) => ({
   name: model.name,
   price: model.price,
   promotion: model.promotion,
-  delivery: {
+  deliveries: {
     dimensions: {
-      height: model.delivery.dimensions.height,
-      width: model.delivery.dimensions.width,
-      depth: model.delivery.dimensions.depth
+      height: model.deliveries.dimensions.height,
+      width: model.deliveries.dimensions.width,
+      depth: model.deliveries.dimensions.depth
     },
-    weight: model.delivery.weight,
-    freeShipping: model.delivery.freeShipping
+    weight: model.deliveries.weight,
+    freeShipping: model.deliveries.freeShipping
   },
   quantity: model.quantity,
   store: model.store,

@@ -1,11 +1,10 @@
 const {
   user,
-  store,
   client,
   category,
   product,
   rating,
-  variation
+  solicitation
 } = require('../../models/models.index')
 const ErrorUnprocessableEntity = require('../errors/errors.unprocessable-entity')
 const ErrorBusinessRule = require('../errors/errors.business-rule')
@@ -19,18 +18,10 @@ const verifyIdUserDbMiddleware = async (req, res, next) => {
 }
 
 const verifyIdClientDbMiddleware = async (req, res, next) => {
-  const clientDB = await client.findOne({ _id: req.params.clientid })
+  const id = req.params.clientid || req.query.clientid
+  const clientDB = await client.findOne({ _id: id })
   if (!clientDB) {
     throw new ErrorUnprocessableEntity(`Não existe um cliente com esse id!`)
-  }
-  next()
-}
-
-const verifyIdStoreDbMiddleware = async (req, res, next) => {
-  const id = req.query.storeid || req.params.storeid
-  const storeDB = await store.findOne({ _id: id })
-  if (!storeDB) {
-    throw new ErrorUnprocessableEntity(`Não existe uma loja com esse id!`)
   }
   next()
 }
@@ -62,12 +53,12 @@ const verifyIdRatingDbMiddleware = async (req, res, next) => {
   next()
 }
 
-const verifyIdVariationDbMiddleware = async (req, res, next) => {
-  const variationDB = await variation.findOne({ _id: req.params.variationid })
-  if (!variationDB) {
-    throw new ErrorUnprocessableEntity(
-      `Não existe nenhuma variação com esse id!`
-    )
+const verifyIdSolicitationDbMiddleware = async (req, res, next) => {
+  const solicitationDB = await solicitation.findOne({
+    _id: req.params.solicitationid
+  })
+  if (!solicitationDB) {
+    throw new ErrorUnprocessableEntity(`Pedido não encontrado!`)
   }
   next()
 }
@@ -96,29 +87,26 @@ const verifyCpfUserExists = async (req, res, next) => {
   next()
 }
 
-const verifyCnpjStoreExists = async (req, res, next) => {
-  const id = req.query.storeid || req.params.storeid
+const verifyRatingExistsMiddleware = async (req, res, next) => {
+  const ratingDB = await rating.findOne({
+    client: req.query.clientid,
+    product: req.query.productid
+  })
 
-  const resulCnpj = await store
-    .findOne({ cnpj: req.body.cnpj })
-    .where('_id')
-    .ne(id)
-
-  if (resulCnpj) {
-    throw new ErrorBusinessRule('Este cnpj já está em uso!')
+  if (ratingDB) {
+    throw new ErrorBusinessRule(`Você já curtiu esse produto!`)
   }
   next()
 }
 
-const verifyEmailStoreExists = async (req, res, next) => {
-  const id = req.query.storeid || req.params.storeid
+const verifyRatingNotExistsMiddleware = async (req, res, next) => {
+  const ratingDB = await rating.findOne({
+    client: req.query.clientid,
+    product: req.query.productid
+  })
 
-  const resultEmail = await store
-    .findOne({ email: req.body.email })
-    .where('_id')
-    .ne(id)
-  if (resultEmail) {
-    throw new ErrorBusinessRule('Este e-mail já está em uso!')
+  if (!ratingDB) {
+    throw new ErrorUnprocessableEntity(`Esta curtida não existe!`)
   }
   next()
 }
@@ -126,13 +114,12 @@ const verifyEmailStoreExists = async (req, res, next) => {
 module.exports = {
   verifyIdUserDbMiddleware,
   verifyIdClientDbMiddleware,
-  verifyIdStoreDbMiddleware,
   verifyIdCategoryDbMiddleware,
   verifyIdProductDbMiddleware,
   verifyIdRatingDbMiddleware,
-  verifyIdVariationDbMiddleware,
+  verifyIdSolicitationDbMiddleware,
   verifyEmailUserExists,
   verifyCpfUserExists,
-  verifyCnpjStoreExists,
-  verifyEmailStoreExists
+  verifyRatingExistsMiddleware,
+  verifyRatingNotExistsMiddleware
 }

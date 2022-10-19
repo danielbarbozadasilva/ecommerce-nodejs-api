@@ -3,9 +3,9 @@ const { category, product } = require('../models/models.index')
 const categoryMapper = require('../mappers/mappers.category')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 
-const listCategoryByStoreService = async (storeid) => {
+const listAllCategoryService = async () => {
   try {
-    const resultDB = await category.find({ store: storeid })
+    const resultDB = await category.find({})
 
     return {
       success: true,
@@ -17,9 +17,9 @@ const listCategoryByStoreService = async (storeid) => {
   }
 }
 
-const listCategoryAvailabilityByStoreService = async (storeid) => {
+const listCategoryAvailabilityService = async () => {
   try {
-    const resultDB = await category.find({ store: storeid, availability: true })
+    const resultDB = await category.find({ availability: true })
 
     return {
       success: true,
@@ -31,32 +31,26 @@ const listCategoryAvailabilityByStoreService = async (storeid) => {
   }
 }
 
-const listCategoryByIdService = async (storeid, categoryid) => {
+const listCategoryByIdService = async (categoryid) => {
   try {
-    const resultDB = await category
-      .find({
-        _id: categoryid,
-        store: storeid
-      })
-      .populate('products')
+    const resultDB = await category.find({ _id: categoryid })
 
     return {
       success: true,
       message: 'Category listed successfully',
-      data: resultDB.map((item) => categoryMapper.toDTOWithProducts(item))
+      data: resultDB.map((item) => categoryMapper.toDTO(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
   }
 }
 
-const createCategoryByStoreService = async (storeid, body) => {
+const createCategoryByStoreService = async (body) => {
   try {
     const resultDB = await category.create({
       name: body.name,
       code: body.code,
-      availability: true,
-      store: storeid
+      availability: true
     })
 
     return {
@@ -77,8 +71,7 @@ const updateCategoryService = async (categoryid, body) => {
         $set: {
           name: body.name,
           code: body.code,
-          availability: body.availability,
-          products: body.products
+          availability: body.availability
         }
       },
       { new: true }
@@ -87,7 +80,7 @@ const updateCategoryService = async (categoryid, body) => {
     return {
       success: true,
       message: 'Category updated successfully',
-      data: categoryMapper.toDTOWithProducts(result)
+      data: categoryMapper.toDTO(result)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -117,22 +110,7 @@ const listCategoryWithProductsService = async (categoryid, offset, limit) => {
     return {
       success: true,
       message: 'Categories successfully listed',
-      data: resultDB.map((item) => categoryMapper.toDTOWithProducts(item))
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
-const updateProductsByIdCategoryService = async (categoryid, body) => {
-  try {
-    const resultCategory = await category.findById(categoryid)
-    resultCategory.products = body.products
-    await resultCategory.save()
-
-    return {
-      success: true,
-      message: 'Data updated successfully'
+      data: resultDB.docs.map((item) => categoryMapper.toDTOWithProducts(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -140,12 +118,11 @@ const updateProductsByIdCategoryService = async (categoryid, body) => {
 }
 
 module.exports = {
-  listCategoryByStoreService,
-  listCategoryAvailabilityByStoreService,
+  listAllCategoryService,
+  listCategoryAvailabilityService,
   listCategoryByIdService,
   createCategoryByStoreService,
   updateCategoryService,
   deleteCategoryService,
-  listCategoryWithProductsService,
-  updateProductsByIdCategoryService
+  listCategoryWithProductsService
 }

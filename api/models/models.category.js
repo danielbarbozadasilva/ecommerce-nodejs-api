@@ -6,9 +6,7 @@ const categorySchema = Schema(
   {
     name: { type: String, required: true },
     code: { type: String, required: true },
-    availability: { type: Boolean, default: true },
-    products: { type: [{ type: Schema.Types.ObjectId, ref: 'product' }] },
-    store: { type: Schema.Types.ObjectId, ref: 'store' }
+    availability: { type: Boolean, default: true }
   },
   { timestamps: true }
 )

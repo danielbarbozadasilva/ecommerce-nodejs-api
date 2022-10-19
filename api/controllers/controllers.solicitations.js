@@ -1,7 +1,12 @@
-const storeService = require('../services/services.store')
+const solicitationService = require('../services/services.solicitation')
 
-const listAllStoresController = async (req, res) => {
-  const resultService = await storeService.listAllStoresService()
+const listAllSolicitationController = async (req, res) => {
+  const { offset, limit } = req.query
+
+  const resultService = await solicitationService.listAllSolicitationService(
+    offset,
+    limit
+  )
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
@@ -10,9 +15,15 @@ const listAllStoresController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
-const listByIdStoreController = async (req, res) => {
-  const { storeid } = req.params
-  const resultService = await storeService.listByIdStoreService(storeid)
+const listByIdSolicitationController = async (req, res) => {
+  const { offset, limit } = req.query
+  const { solicitationid } = req.params
+
+  const resultService = await solicitationService.listByIdSolicitationService(
+    offset,
+    limit,
+    solicitationid
+  )
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
@@ -21,32 +32,43 @@ const listByIdStoreController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
-const updateStoreController = async (req, res) => {
+const deleteSolicitationController = async (req, res) => {
+  const { solicitationid } = req.params
+  const { clientid } = req.query
+  const resultService = await solicitationService.deleteSolicitationService(
+    solicitationid,
+    clientid
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
+const showCartSolicitationController = async (req, res) => {
+  const { solicitationid } = req.params
+  const resultService = await solicitationService.showCartSolicitationService(
+    solicitationid
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
+const createSolicitationController = async (req, res) => {
+  const { clientid, storeid } = req.query
   const { body } = req
-  const { storeid } = req.query
-  const resultService = await storeService.updateStoreService(storeid, body)
-  const code = resultService.success ? 200 : 400
-  const message = resultService.success
-    ? { message: resultService.message }
-    : { details: resultService.details }
-  const data = resultService.data ? resultService.data : ''
-  return res.status(code).send({ message, data })
-}
 
-const deleteStoreController = async (req, res) => {
-  const { storeid } = req.query
-  const resultService = await storeService.deleteStoreService(storeid)
-  const code = resultService.success ? 200 : 400
-  const message = resultService.success
-    ? { message: resultService.message }
-    : { details: resultService.details }
-  const data = resultService.data ? resultService.data : ''
-  return res.status(code).send({ message, data })
-}
-
-const createStoreController = async (req, res) => {
-  const { body } = req
-  const resultService = await storeService.createStoreService(body)
+  const resultService = await solicitationService.createSolicitationService(
+    storeid,
+    clientid,
+    body
+  )
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
@@ -56,9 +78,9 @@ const createStoreController = async (req, res) => {
 }
 
 module.exports = {
-  listAllStoresController,
-  listByIdStoreController,
-  updateStoreController,
-  deleteStoreController,
-  createStoreController
+  listAllSolicitationController,
+  listByIdSolicitationController,
+  deleteSolicitationController,
+  showCartSolicitationController,
+  createSolicitationController
 }

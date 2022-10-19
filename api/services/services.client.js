@@ -1,25 +1,24 @@
+const { ObjectId } = require('mongodb')
 const {
-  user,
-  client,
   solicitation,
   product,
-  variation
+  payment,
+  user,
+  client,
+  deliveries
 } = require('../models/models.index')
 
 const clientMapper = require('../mappers/mappers.client')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const cryptography = require('../utils/utils.cryptography')
 
-const listAllClientsService = async (offset, limit, store) => {
+const listAllClientsService = async (offset, limit) => {
   try {
-    const resultDB = await client.paginate(
-      { store },
-      {
-        populate: 'user',
-        offset: Number(offset || 0),
-        limit: Number(limit || 30)
-      }
-    )
+    const resultDB = await client.paginate({
+      populate: 'user',
+      offset: Number(offset || 0),
+      limit: Number(limit || 30)
+    })
 
     return {
       success: true,
@@ -31,49 +30,50 @@ const listAllClientsService = async (offset, limit, store) => {
   }
 }
 
-const listClientSolicitationService = async (offset, limit, store, search) => {
+const listClientSolicitationService = async (offset, limit, search) => {
   try {
-    const resultClient = await client.find({
-      store,
-      $text: { $search: new RegExp(search, 'i'), $diacriticSensitive: false }
-    })
-
-    const ordered = await solicitation.paginate(
-      { store, client: { $in: resultClient.map((item) => item._id) } },
+    const resultDB = await client.aggregate([
       {
-        offset: Number(offset || 0),
-        limit: Number(limit || 30),
-        populate: ['client', 'payment', 'delivery']
+        $match: {
+          $text: {
+            $search: `.*${search}.*`
+          }
+        }
+      },
+      {
+        $lookup: {
+          from: solicitation.collection.name,
+          localField: '_id',
+          foreignField: 'client',
+          as: 'solicitations'
+        }
+      },
+      {
+        $facet: {
+          metadata: [{ $count: 'total' }],
+          data: [
+            { $skip: Number(offset) || 0 },
+            { $limit: Number(limit) || 30 }
+          ]
+        }
       }
-    )
-
-    ordered.docs = await Promise.all(
-      ordered.docs.map(async (ord) => {
-        ord.cart = await Promise.all(
-          ord.cart.map(async (item) => {
-            item.product = await product.findById(item.product)
-            item.variation = await variation.findById(item.variation)
-            return item
-          })
-        )
-        return ordered
-      })
-    )
+    ])
 
     return {
       success: true,
-      message: 'Operation performed successfully',
-      data: ordered
+      message: 'Solicitations listed successfully',
+      data: resultDB[0].data.map((item) =>
+        clientMapper.toDTOClientSolicitations(item)
+      )
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
   }
 }
 
-const listClientSearchService = async (offset, limit, store, search) => {
+const listClientSearchService = async (offset, limit, search) => {
   try {
     const resultDB = await client.paginate({
-      store,
       $or: [{ $text: { $search: `${search}`, $diacriticSensitive: false } }],
       $or: [{ phones: { $in: search } }],
       offset: Number(offset || 0),
@@ -89,7 +89,7 @@ const listClientSearchService = async (offset, limit, store, search) => {
   }
 }
 
-const updateClientService = async (id, store, body) => {
+const updateClientService = async (id, body) => {
   try {
     const salt = cryptography.createSalt()
 
@@ -109,7 +109,6 @@ const updateClientService = async (id, store, body) => {
             zipCode: body.address.zipCode,
             state: body.address.state
           },
-          store,
           birthDate: body.birthDate
         }
       },
@@ -122,7 +121,6 @@ const updateClientService = async (id, store, body) => {
         $set: {
           name: body.name,
           email: body.email,
-          store,
           salt,
           hash: cryptography.createHash(body.password, salt)
         }
@@ -162,10 +160,10 @@ const deleteClientService = async (id) => {
   }
 }
 
-const listByIdClientService = async (clientid, storeid) => {
+const listByIdClientService = async (clientid) => {
   try {
     const resultDB = await client
-      .findOne({ _id: clientid, store: storeid })
+      .findOne({ _id: clientid })
       .populate('user', '-salt -hash')
 
     return {
@@ -178,46 +176,71 @@ const listByIdClientService = async (clientid, storeid) => {
   }
 }
 
-const listSolicitationService = async (offset, limit, store, clientid) => {
+const listSolicitationClientService = async (offset, limit, clientid) => {
   try {
-    const resp = await solicitation.paginate(
-      { store, client: clientid },
+    const resultDB = await solicitation.aggregate([
+      { $match: { client: ObjectId(clientid) } },
       {
-        offset: Number(offset || 0),
-        limit: Number(limit || 30),
-        populate: ['client', 'payment', 'delivery']
+        $lookup: {
+          from: product.collection.name,
+          localField: 'cart.product',
+          foreignField: '_id',
+          as: 'products'
+        }
+      },
+      {
+        $lookup: {
+          from: client.collection.name,
+          localField: 'client',
+          foreignField: '_id',
+          as: 'client'
+        }
+      },
+      {
+        $lookup: {
+          from: payment.collection.name,
+          localField: 'payment',
+          foreignField: '_id',
+          as: 'payment'
+        }
+      },
+      {
+        $lookup: {
+          from: deliveries.collection.name,
+          localField: 'deliveries',
+          foreignField: '_id',
+          as: 'deliveries'
+        }
+      },
+      {
+        $facet: {
+          metadata: [{ $count: 'total' }],
+          data: [
+            { $skip: Number(offset) || 0 },
+            { $limit: Number(limit) || 30 }
+          ]
+        }
       }
-    )
-    resp.docs = await Promise.all(
-      resp.docs.map(async (solic) => {
-        solic.cart = await Promise.all(
-          solic.cart.map(async (item) => {
-            item.product = await product.findById(item.product)
-            item.variation = await variation.findById(item.variation)
-            return item
-          })
-        )
-        return solic
-      })
-    )
+    ])
+
     return {
       success: true,
-      message: 'Operation performed successfully',
-      data: resp
+      message: 'Solicitations listed successfully',
+      data: resultDB[0].data.map((item) =>
+        clientMapper.toDTOSolicitations(item)
+      )
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
   }
 }
 
-const createClientService = async (store, body) => {
+const createClientService = async (body) => {
   try {
     const salt = cryptography.createSalt()
-
     const userDB = await user.create({
       name: body.name,
       email: body.email,
-      store,
       salt,
       hash: cryptography.createHash(body.password, salt)
     })
@@ -235,7 +258,6 @@ const createClientService = async (store, body) => {
         zipCode: body.address.zipCode,
         state: body.address.state
       },
-      store,
       user: userDB._id,
       birthDate: body.birthDate
     })
@@ -257,6 +279,6 @@ module.exports = {
   updateClientService,
   deleteClientService,
   listByIdClientService,
-  listSolicitationService,
+  listSolicitationClientService,
   createClientService
 }

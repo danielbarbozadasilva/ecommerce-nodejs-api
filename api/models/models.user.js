@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
 
-const { Schema } = mongoose
-
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -12,11 +10,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       lowerCase: true,
       unique: true
-    },
-    store: {
-      type: Schema.Types.ObjectId,
-      ref: 'store',
-      required: true
     },
     permissions: {
       type: Array,

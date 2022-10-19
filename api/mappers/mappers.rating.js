@@ -4,7 +4,7 @@ const toDTO = (model) => ({
   text: model.text,
   score: model.score,
   product: model.product,
-  store: model.store
+  client: model.client
 })
 
 module.exports = {

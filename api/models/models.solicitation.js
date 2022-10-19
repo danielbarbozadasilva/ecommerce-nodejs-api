@@ -14,23 +14,23 @@ const solicitationSchema = Schema(
             ref: 'product',
             required: true
           },
-          variation: {
-            type: Schema.Types.ObjectId,
-            ref: 'variation',
-            required: true
-          },
           staticProduct: { type: String },
           quantity: { type: Number, default: 1 },
           unitPrice: { type: Number, required: true }
         }
       ]
     },
+    shipping: { type: Number, required: true },
     payment: {
       type: Schema.Types.ObjectId,
       ref: 'payment',
       required: true
     },
-    delivery: { type: Schema.Types.ObjectId, ref: 'delivery', required: true },
+    deliveries: {
+      type: Schema.Types.ObjectId,
+      ref: 'deliveries',
+      required: true
+    },
     canceled: { type: Boolean, default: false },
     store: { type: Schema.Types.ObjectId, ref: 'store', required: true }
   },

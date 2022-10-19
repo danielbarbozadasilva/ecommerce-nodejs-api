@@ -29,16 +29,11 @@ const paymentSchema = Schema(
         birthDate: { type: String, required: true },
         creditCardToken: { type: String, required: true },
         cpf: { type: String, required: true }
-      }
+      },
+      required: false
     },
     addressDeliveryIgualCharging: { type: Boolean, default: true },
-    solicitation: {
-      type: Schema.Types.ObjectId,
-      ref: 'solicitation',
-      required: true
-    },
     store: { type: Schema.Types.ObjectId, ref: 'store', required: true },
-    payload: { type: Array },
     pagSeguroCode: { type: String }
   },
   { timestamps: true }
