@@ -280,7 +280,6 @@ const calcShipping = async (cart, deliveries, shipping) => {
     cart,
     shipping
   )
-  console.log(result);
 
   if (result.Erro != 0) {
     throw new ErrorUnprocessableEntity('Dados de entrega inválidos!')
