@@ -11,7 +11,7 @@ module.exports = (router) => {
     .route('/delivery/:deliveryid')
     .get(
       authenticationMiddleware(),
-      authorization.authorizationMiddleware('LIST_DELIVERY'),
+      // authorization.authorizationMiddleware('LIST_DELIVERY'),
       validateDTOMiddleware('params', {
         deliveryid: joi
           .string()
@@ -23,13 +23,12 @@ module.exports = (router) => {
             'string.pattern.base': '"delivery id" out of the expected format'
           })
       }),
-      verifyIdDbMiddleware.verifyIdProductDbMiddleware,
-      verifyIdDbMiddleware.verifyIdRatingDbMiddleware,
+      verifyIdDbMiddleware.verifyIdDeliveryDbMiddleware,
       deliveryController.listByIdDeliveryController
     )
     .put(
       authenticationMiddleware(),
-      authorization.authorizationMiddleware('UPDATE_DELIVERY'),
+      // authorization.authorizationMiddleware('UPDATE_DELIVERY'),
       validateDTOMiddleware('params', {
         deliveryid: joi
           .string()
@@ -51,9 +50,41 @@ module.exports = (router) => {
           'string.empty': '"trackingCode" can not be empty'
         })
       }),
-      verifyIdDbMiddleware.verifyIdClientDbMiddleware,
-      verifyIdDbMiddleware.verifyIdProductDbMiddleware,
-      verifyIdDbMiddleware.verifyRatingExistsMiddleware,
+      verifyIdDbMiddleware.verifyIdDeliveryDbMiddleware,
       deliveryController.updateDeliveryController
     )
+  router.route('/calculate').post(
+    validateDTOMiddleware('body', {
+      cart: joi
+        .array()
+        .items(
+          joi.object({
+            product: joi
+              .string()
+              .regex(/^[0-9a-fA-F]{24}$/)
+              .required()
+              .messages({
+                'any.required': '"product id" is a required field',
+                'string.empty': '"product id" can not be empty',
+                'string.pattern.base': '"product id" out of the expected format'
+              }),
+            unitPrice: joi.number().required().messages({
+              'any.required': '"unit price" is a required field',
+              'number.empty': '"unit price" can not be empty'
+            }),
+            quantity: joi.number().required().messages({
+              'any.required': '"quantity" is a required field',
+              'number.empty': '"quantity" can not be empty'
+            })
+          })
+        )
+        .required(),
+      shipping: joi.number().required().messages({
+        'any.required': '"shipping" is a required field',
+        'number.empty': '"shipping" can not be empty'
+      })
+    }),
+
+    deliveryController.calculateShippingController
+  )
 }

@@ -1,12 +1,19 @@
 const { ObjectId } = require('mongodb')
+const Correios = require('node-correios')
+
+const correios = new Correios()
 const {
   delivery,
   orderRegistration,
-  solicitation
+  solicitation,
+  product
 } = require('../models/models.index')
 const emailUtils = require('../utils/email/utils.email')
 const emailUpdateSolicitation = require('../utils/email/utils.email.update_solicitation')
 const deliveryMapper = require('../mappers/mappers.delivery')
+
+const config = require('../utils/util.correios')
+const { calcBox } = require('../utils/helpers/helpers.calcBox')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 
 const listByIdDeliveryService = async (id) => {
@@ -20,7 +27,7 @@ const listByIdDeliveryService = async (id) => {
 
     return {
       success: true,
-      message: 'Products listed successfully',
+      message: 'Deliveries listed successfully',
       data: resultDB.map((item) => deliveryMapper.toDTO(item))
     }
   } catch (err) {
@@ -51,7 +58,7 @@ const updateDeliveryService = async (body, id) => {
       {
         $set: {
           solicitation: deliveryDB.solicitation,
-          tipy: 'entrega',
+          type: 'entrega',
           situation: body.status,
           payload: body
         }
@@ -71,7 +78,51 @@ const updateDeliveryService = async (body, id) => {
   }
 }
 
+const calculateShippingService = async (body) => {
+  try {
+    const productId = body.cart.map((item) => item.product)
+    const productDB = await product.find({
+      _id: {
+        $in: productId
+      }
+    })
+
+    const box = calcBox(productDB)
+
+    const totalWeight = product.reduce(
+      (all, item) =>
+        all +
+        item.weight * body.cart.reduce((all, item) => all + item.quantity, 0),
+      0
+    )
+
+    const finalPrice = body.cart.reduce((all, item) => all * item.quantity, 0)
+
+    const resultAll = await Promise.all(
+      config.nCdServico.split(',').map(async (service) => {
+        const result = await correios.calcPrecoPrazo({
+          nCdServico: service,
+          sCepOrigem: config.sCepOrigem,
+          sCepDestino: body.zipCode,
+          nVlPeso: totalWeight,
+          nCdFormato: 1,
+          nVlComprimento: box.length,
+          nVlAltura: box.height,
+          nVlLargura: box.width,
+          nVlDiamentro: 0,
+          nVlValorDeclarado: finalPrice < 23.5 ? 23.5 : finalPrice
+        })
+        return result[0]
+      })
+    )
+    return resultAll
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listByIdDeliveryService,
-  updateDeliveryService
+  updateDeliveryService,
+  calculateShippingService
 }
