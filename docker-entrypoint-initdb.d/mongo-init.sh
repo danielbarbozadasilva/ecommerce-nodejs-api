@@ -146,7 +146,7 @@ db.payments.insert([
   price: 2209.99,
   type: "CREDITO",
   installments: 1,
-  status: "starting",
+  status: "started",
   address: {
       location: "Rio de janeiro",
       number: "1223",
@@ -172,7 +172,7 @@ db.payments.insert([
   price: 839.99,
   type: "BOLETO",
   installments: 1,
-  status: "starting",
+  status: "started",
   address: {
       location: "Rio de janeiro",
       number: "1223",
@@ -261,13 +261,19 @@ db.orderregistrations.insert([
       _id: ObjectId("6346e2fdcb561bd0b2f1abdd"),
       solicitation: ObjectId("63434348a7b076da94874bef"),
       type: "solicitation",
-      situation: "created_solicitation"
+      situation: "created"
   },
   {
       _id: ObjectId("6346e3bdcb561bd0b2f1abef"),
       solicitation: ObjectId("6343516f3fb56efda46c2deb"),
       type: "solicitation",
-      situation: "created_solicitation"
+      situation: "created"
+  },
+  {
+      _id: ObjectId("6346e3bdcb561bd0b2f1abef"),
+      solicitation: ObjectId("6343516f3fb56efda46c2deb"),
+      type: "started",
+      situation: "created"
   }
 ])
 
