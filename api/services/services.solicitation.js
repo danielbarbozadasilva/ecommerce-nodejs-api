@@ -1,19 +1,17 @@
 const { ObjectId } = require('mongodb')
 const {
   solicitation,
-  orderRegistration,
+  orderregistrations,
   product,
   payment,
-  store,
   client,
   deliveries
 } = require('../models/models.index')
 
 const solicitationMapper = require('../mappers/mappers.solicitation')
-const emailUtils = require('../utils/utils.email')
-const emailSolicitation = require('../utils/utils.email.send_solicitation')
-const emailCancelation = require('../utils/utils.email.cancel_solicitation')
-const { calculateShipping } = require('../utils/util.shipping')
+const emailUtils = require('../utils/email/utils.email')
+const emailSolicitation = require('../utils/email/utils.email.send_solicitation')
+const emailCancelation = require('../utils/email/utils.email.cancel_solicitation')
 
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const ErrorBusinessRule = require('../utils/errors/errors.business-rule')
@@ -184,7 +182,7 @@ const deleteSolicitationService = async (id, clientid) => {
       { new: true }
     )
 
-    await orderRegistration.create({
+    await orderregistrations.create({
       solicitation: id,
       type: 'solicitation',
       situation: 'canceled'
@@ -271,22 +269,6 @@ const verifyPrice = async (cart) => {
   }
 }
 
-const calcShipping = async (cart, deliveries, shipping) => {
-  const productDB = await searchProductCart(cart)
-
-  const result = await calculateShipping(
-    deliveries.address.zipCode,
-    productDB,
-    cart,
-    shipping
-  )
-
-  if (result.Erro != 0) {
-    throw new ErrorUnprocessableEntity('Dados de entrega inválidos!')
-  }
-  return result
-}
-
 const checkCard = async (cart, payment, shipping) => {
   let totalPrice = 0
   let total = 0
@@ -357,7 +339,6 @@ const createSolicitationService = async (storeid, clientid, body) => {
   await verifyQuantity(body.cart)
   await verifyPrice(body.cart)
   await checkCard(body.cart, body.payment, body.shipping)
-  await calcShipping(body.cart, body.deliveries, body.shipping)
 
   try {
     const resultPayment = await payment.create({
@@ -367,7 +348,7 @@ const createSolicitationService = async (storeid, clientid, body) => {
       addressDeliveryIgualCharging: body.payment.addressDeliveryIgualCharging,
       address: body.payment.address,
       card: body.payment.card,
-      status: 'starting',
+      status: 'started',
       store: storeid,
       pagSeguroCode: Math.floor(Math.random() * new Date().getTime())
     })
@@ -391,10 +372,10 @@ const createSolicitationService = async (storeid, clientid, body) => {
       deliveries: resultDeliveries._id
     })
 
-    await orderRegistration.create({
+    await orderregistrations.create({
       solicitation: resultSolicitation._id,
       type: 'solicitation',
-      situation: 'created_solicitation'
+      situation: 'created'
     })
     await updateQuantity(body.cart)
     await sendEmailAdminSolicitation(

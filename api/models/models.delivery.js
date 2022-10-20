@@ -21,8 +21,7 @@ const deliveriesSchema = Schema(
         zipCode: { type: String, required: true }
       },
       required: true
-    },
-    store: { type: Schema.Types.ObjectId, ref: 'store', required: true }
+    }
   },
   { timestamps: true }
 )

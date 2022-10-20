@@ -1,7 +1,7 @@
 const { user, client } = require('../models/models.index')
 const cryptography = require('../utils/utils.cryptography')
-const emailUtils = require('../utils/utils.email')
-const { Email } = require('../utils/utils.email.recovery')
+const emailUtils = require('../utils/email/utils.email')
+const { Email } = require('../utils/email/utils.email.recovery')
 const userMapper = require('../mappers/mappers.user')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const ErrorNotAuthenticatedUser = require('../utils/errors/errors.user-not-authenticated')
@@ -41,7 +41,8 @@ const profile = [
       'SOLICITATION_DELETE',
       'LIST_ID_SOLICITATION',
       'LIST_CLIENT_SOLICITATION',
-      'LIST_CART_PRODUCT'
+      'LIST_CART_PRODUCT',
+      'UPDATE_DELIVERY'
     ]
   },
   {
@@ -64,7 +65,8 @@ const profile = [
       'SOLICITATION_DELETE',
       'LIST_ID_SOLICITATION',
       'LIST_CLIENT_SOLICITATION',
-      'LIST_CART_PRODUCT'
+      'LIST_CART_PRODUCT',
+      'LIST_DELIVERY'
     ]
   }
 ]

@@ -5,7 +5,6 @@ const { Schema } = mongoose
 
 const solicitationSchema = Schema(
   {
-    client: { type: Schema.Types.ObjectId, ref: 'client', required: true },
     cart: {
       type: [
         {
@@ -21,6 +20,7 @@ const solicitationSchema = Schema(
       ]
     },
     shipping: { type: Number, required: true },
+    client: { type: Schema.Types.ObjectId, ref: 'client', required: true },
     payment: {
       type: Schema.Types.ObjectId,
       ref: 'payment',
@@ -31,8 +31,8 @@ const solicitationSchema = Schema(
       ref: 'deliveries',
       required: true
     },
-    canceled: { type: Boolean, default: false },
-    store: { type: Schema.Types.ObjectId, ref: 'store', required: true }
+    store: { type: Schema.Types.ObjectId, ref: 'store', required: true },
+    canceled: { type: Boolean, default: false }
   },
   { timestamps: true }
 )
