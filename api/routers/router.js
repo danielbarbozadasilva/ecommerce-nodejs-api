@@ -8,6 +8,7 @@ const routersV1Category = require('./v1/routers.category')
 const routersV1Product = require('./v1/routers.product')
 const routersV1Rating = require('./v1/routers.rating')
 const routersV1Solicitation = require('./v1/routers.solicitation')
+const routersV1Delivery = require('./v1/routers.delivery')
 
 module.exports = (app) => {
   app.get('/', (req, res, next) => {
@@ -21,6 +22,7 @@ module.exports = (app) => {
   routersV1Product(routesV1)
   routersV1Rating(routesV1)
   routersV1Solicitation(routesV1)
+  routersV1Delivery(routesV1)
 
   app.use('/v1', routesV1)
 
