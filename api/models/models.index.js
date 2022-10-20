@@ -7,7 +7,7 @@ const rating = require('./models.rating')
 const solicitation = require('./models.solicitation')
 const payment = require('./models.payment')
 const deliveries = require('./models.delivery')
-const orderRegistration = require('./models.order-registration')
+const orderregistrations = require('./models.order-registration')
 
 module.exports = {
   store,
@@ -19,5 +19,5 @@ module.exports = {
   solicitation,
   payment,
   deliveries,
-  orderRegistration
+  orderregistrations
 }

@@ -17,4 +17,4 @@ const orderRegistrationSchema = Schema(
   { timestamps: true }
 )
 
-module.exports = mongoose.model('orderRegistration', orderRegistrationSchema)
+module.exports = mongoose.model('orderregistrations', orderRegistrationSchema)
