@@ -2,7 +2,7 @@ const Correios = require('node-correios')
 
 const correios = new Correios()
 const config = require('./util.correios')
-const { calcBox } = require('./helpers/calcBox')
+const { calcBox } = require('./helpers/helpers.calcBox')
 
 const calculateShipping = async (zipCode, product, cart, shipping) => {
   const box = calcBox(product)
