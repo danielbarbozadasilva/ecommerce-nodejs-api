@@ -41,7 +41,8 @@ const profile = [
       'SOLICITATION_DELETE',
       'LIST_ID_SOLICITATION',
       'LIST_CLIENT_SOLICITATION',
-      'LIST_CART_PRODUCT'
+      'LIST_CART_PRODUCT',
+      'UPDATE_DELIVERY'
     ]
   },
   {
@@ -64,7 +65,8 @@ const profile = [
       'SOLICITATION_DELETE',
       'LIST_ID_SOLICITATION',
       'LIST_CLIENT_SOLICITATION',
-      'LIST_CART_PRODUCT'
+      'LIST_CART_PRODUCT',
+      'LIST_DELIVERY'
     ]
   }
 ]
