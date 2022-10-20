@@ -6,7 +6,9 @@ const {
   deliveries,
   orderregistrations,
   solicitation,
-  product
+  product,
+  client,
+  user
 } = require('../models/models.index')
 const emailUtils = require('../utils/email/utils.email')
 const emailUpdateSolicitation = require('../utils/email/utils.email.update_solicitation')
@@ -40,12 +42,12 @@ const listByIdDeliveryService = async (id) => {
           'deliveries._id': new ObjectId(id),
           'orderregistrations.type': 'started'
         }
-      } 
+      }
     ])
-  
+
     return {
       success: true,
-      message: 'Deliveries listed successfully',
+      message: 'Delivery listed successfully',
       data: deliveryMapper.toDTO(...resultDB)
     }
   } catch (err) {
@@ -54,28 +56,55 @@ const listByIdDeliveryService = async (id) => {
 }
 
 const sendEmailUpdate = async (solicitationid) => {
-  const result = await solicitation.findById(solicitationid).populate({
-    path: 'client',
-    populate: { path: 'user' }
-  })
+  const result = await solicitation.aggregate([
+    { $match: { _id: ObjectId(solicitationid) } },
+    {
+      $lookup: {
+        from: client.collection.name,
+        localField: 'client',
+        foreignField: '_id',
+        as: 'client'
+      }
+    },
+    { $unwind: '$client' },
+    {
+      $lookup: {
+        from: user.collection.name,
+        localField: 'client.user',
+        foreignField: '_id',
+        as: 'user'
+      }
+    },
+    { $unwind: '$user' },
+
+    {
+      $lookup: {
+        from: product.collection.name,
+        localField: 'cart.product',
+        foreignField: '_id',
+        as: 'products'
+      }
+    },
+    { $unwind: '$products' }
+  ])
 
   emailUtils.utilSendEmail({
-    to: result.user.email,
+    to: result[0].user.email,
     from: process.env.SENDGRID_SENDER,
     subject: `E-commerce - Seu pedido ${solicitationid} saiu para entrega!`,
-    html: emailUpdateSolicitation.sendSolicitationUpdateEmail(result.data)
+    html: emailUpdateSolicitation.sendSolicitationUpdateEmail(result)
   })
 }
 
 const updateDeliveryService = async (body, id) => {
   try {
-    const deliveryDB = await deliveries.findById(id)
+    const solicitationDB = await solicitation.findOne({ deliveries: id })
 
-    const resultDB = await orderregistration.findOneAndUpdate(
-      { solicitation: deliveryDB.solicitation, type: 'solicitation' },
+    const resultDB = await orderregistrations.findOneAndUpdate(
+      { solicitation: solicitationDB._id, type: 'solicitation' },
       {
         $set: {
-          solicitation: deliveryDB.solicitation,
+          solicitation: solicitationDB._id,
           type: 'started',
           situation: body.status,
           payload: body
@@ -84,11 +113,11 @@ const updateDeliveryService = async (body, id) => {
       { new: true }
     )
 
-    await sendEmailUpdate(deliveryDB.solicitation)
+    await sendEmailUpdate(solicitationDB._id)
 
     return {
       success: true,
-      message: 'Delivery listed successfully',
+      message: 'Request updated successfully!',
       data: resultDB
     }
   } catch (err) {
@@ -107,14 +136,17 @@ const calculateShippingService = async (body) => {
 
     const box = calcBox(productDB)
 
-    const totalWeight = product.reduce(
+    const totalWeight = productDB.reduce(
       (all, item) =>
         all +
         item.weight * body.cart.reduce((all, item) => all + item.quantity, 0),
       0
     )
 
-    const finalPrice = body.cart.reduce((all, item) => all * item.quantity, 0)
+    const finalPrice = body.cart.reduce(
+      (all, item) => all + body.shipping * item.quantity,
+      0
+    )
 
     const resultAll = await Promise.all(
       config.nCdServico.split(',').map(async (service) => {
@@ -130,10 +162,15 @@ const calculateShippingService = async (body) => {
           nVlDiamentro: 0,
           nVlValorDeclarado: finalPrice < 23.5 ? 23.5 : finalPrice
         })
-        return result[0]
+        return result
       })
     )
-    return resultAll
+
+    return {
+      success: true,
+      message: 'Shipping calculated successfully!',
+      data: resultAll
+    }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
   }
