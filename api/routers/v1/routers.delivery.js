@@ -53,7 +53,7 @@ module.exports = (router) => {
       verifyIdDbMiddleware.verifyIdDeliveryDbMiddleware,
       deliveryController.updateDeliveryController
     )
-  router.route('/calculate').post(
+  router.route('/delivery/calculate').post(
     validateDTOMiddleware('body', {
       cart: joi
         .array()

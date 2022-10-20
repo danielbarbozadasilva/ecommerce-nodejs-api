@@ -3,8 +3,8 @@ const Correios = require('node-correios')
 
 const correios = new Correios()
 const {
-  delivery,
-  orderRegistration,
+  deliveries,
+  orderregistrations,
   solicitation,
   product
 } = require('../models/models.index')
@@ -18,17 +18,35 @@ const ErrorGeneric = require('../utils/errors/erros.generic-error')
 
 const listByIdDeliveryService = async (id) => {
   try {
-    const deliveryDB = await delivery.findById(id)
-
-    const resultDB = await orderRegistration.find({
-      solicitation: deliveryDB.solicitation,
-      type: 'solicitation'
-    })
-
+    const resultDB = await solicitation.aggregate([
+      {
+        $lookup: {
+          from: deliveries.collection.name,
+          localField: 'deliveries',
+          foreignField: '_id',
+          as: 'deliveries'
+        }
+      },
+      {
+        $lookup: {
+          from: orderregistrations.collection.name,
+          localField: '_id',
+          foreignField: 'solicitation',
+          as: 'orderregistrations'
+        }
+      },
+      {
+        $match: {
+          'deliveries._id': new ObjectId(id),
+          'orderregistrations.type': 'started'
+        }
+      } 
+    ])
+  
     return {
       success: true,
       message: 'Deliveries listed successfully',
-      data: resultDB.map((item) => deliveryMapper.toDTO(item))
+      data: deliveryMapper.toDTO(...resultDB)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -51,14 +69,14 @@ const sendEmailUpdate = async (solicitationid) => {
 
 const updateDeliveryService = async (body, id) => {
   try {
-    const deliveryDB = await delivery.findById(id)
+    const deliveryDB = await deliveries.findById(id)
 
-    const resultDB = await orderRegistration.findOneAndUpdate(
+    const resultDB = await orderregistration.findOneAndUpdate(
       { solicitation: deliveryDB.solicitation, type: 'solicitation' },
       {
         $set: {
           solicitation: deliveryDB.solicitation,
-          type: 'entrega',
+          type: 'started',
           situation: body.status,
           payload: body
         }
