@@ -270,22 +270,6 @@ const verifyPrice = async (cart) => {
   }
 }
 
-const calcShipping = async (cart, deliveries, shipping) => {
-  const productDB = await searchProductCart(cart)
-
-  const result = await calculateShipping(
-    deliveries.address.zipCode,
-    productDB,
-    cart,
-    shipping
-  )
-
-  if (result.Erro != 0) {
-    throw new ErrorUnprocessableEntity('Dados de entrega inválidos!')
-  }
-  return result
-}
-
 const checkCard = async (cart, payment, shipping) => {
   let totalPrice = 0
   let total = 0
@@ -356,7 +340,6 @@ const createSolicitationService = async (storeid, clientid, body) => {
   await verifyQuantity(body.cart)
   await verifyPrice(body.cart)
   await checkCard(body.cart, body.payment, body.shipping)
-  await calcShipping(body.cart, body.deliveries, body.shipping)
 
   try {
     const resultPayment = await payment.create({
