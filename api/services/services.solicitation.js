@@ -4,15 +4,14 @@ const {
   orderRegistration,
   product,
   payment,
-  store,
   client,
   deliveries
 } = require('../models/models.index')
 
 const solicitationMapper = require('../mappers/mappers.solicitation')
-const emailUtils = require('../utils/utils.email')
-const emailSolicitation = require('../utils/utils.email.send_solicitation')
-const emailCancelation = require('../utils/utils.email.cancel_solicitation')
+const emailUtils = require('../utils/email/utils.email')
+const emailSolicitation = require('../utils/email/utils.email.send_solicitation')
+const emailCancelation = require('../utils/email/utils.email.cancel_solicitation')
 const { calculateShipping } = require('../utils/util.shipping')
 
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
