@@ -11,7 +11,8 @@ const orderRegistrationSchema = Schema(
     },
     type: { type: String, required: true },
     situation: { type: String, required: true },
-    date: { type: Date, default: Date.now }
+    date: { type: Date, default: Date.now },
+    payload: { type: Object }
   },
   { timestamps: true }
 )
