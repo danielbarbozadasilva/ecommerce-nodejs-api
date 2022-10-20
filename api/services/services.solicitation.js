@@ -1,7 +1,7 @@
 const { ObjectId } = require('mongodb')
 const {
   solicitation,
-  orderRegistration,
+  orderregistrations,
   product,
   payment,
   client,
@@ -12,7 +12,6 @@ const solicitationMapper = require('../mappers/mappers.solicitation')
 const emailUtils = require('../utils/email/utils.email')
 const emailSolicitation = require('../utils/email/utils.email.send_solicitation')
 const emailCancelation = require('../utils/email/utils.email.cancel_solicitation')
-const { calculateShipping } = require('../utils/util.shipping')
 
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const ErrorBusinessRule = require('../utils/errors/errors.business-rule')
@@ -183,7 +182,7 @@ const deleteSolicitationService = async (id, clientid) => {
       { new: true }
     )
 
-    await orderRegistration.create({
+    await orderregistrations.create({
       solicitation: id,
       type: 'solicitation',
       situation: 'canceled'
@@ -349,7 +348,7 @@ const createSolicitationService = async (storeid, clientid, body) => {
       addressDeliveryIgualCharging: body.payment.addressDeliveryIgualCharging,
       address: body.payment.address,
       card: body.payment.card,
-      status: 'starting',
+      status: 'started',
       store: storeid,
       pagSeguroCode: Math.floor(Math.random() * new Date().getTime())
     })
@@ -373,10 +372,10 @@ const createSolicitationService = async (storeid, clientid, body) => {
       deliveries: resultDeliveries._id
     })
 
-    await orderRegistration.create({
+    await orderregistrations.create({
       solicitation: resultSolicitation._id,
       type: 'solicitation',
-      situation: 'created_solicitation'
+      situation: 'created'
     })
     await updateQuantity(body.cart)
     await sendEmailAdminSolicitation(
