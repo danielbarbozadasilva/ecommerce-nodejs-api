@@ -4,7 +4,8 @@ const {
   category,
   product,
   rating,
-  solicitation
+  solicitation,
+  delivery
 } = require('../../models/models.index')
 const ErrorUnprocessableEntity = require('../errors/errors.unprocessable-entity')
 const ErrorBusinessRule = require('../errors/errors.business-rule')
@@ -59,6 +60,16 @@ const verifyIdSolicitationDbMiddleware = async (req, res, next) => {
   })
   if (!solicitationDB) {
     throw new ErrorUnprocessableEntity(`Pedido não encontrado!`)
+  }
+  next()
+}
+
+const verifyIdDeliveryDbMiddleware = async (req, res, next) => {
+  const deliveryDB = await delivery.findOne({
+    _id: req.params.deliveryid
+  })
+  if (!deliveryDB) {
+    throw new ErrorUnprocessableEntity(`Entrega não encontrada!`)
   }
   next()
 }
@@ -118,6 +129,7 @@ module.exports = {
   verifyIdProductDbMiddleware,
   verifyIdRatingDbMiddleware,
   verifyIdSolicitationDbMiddleware,
+  verifyIdDeliveryDbMiddleware,
   verifyEmailUserExists,
   verifyCpfUserExists,
   verifyRatingExistsMiddleware,
