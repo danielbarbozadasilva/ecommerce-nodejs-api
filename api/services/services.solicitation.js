@@ -12,7 +12,7 @@ const solicitationMapper = require('../mappers/mappers.solicitation')
 const emailUtils = require('../utils/email/utils.email')
 const emailSolicitation = require('../utils/email/utils.email.send_solicitation')
 const emailCancelation = require('../utils/email/utils.email.cancel_solicitation')
-
+const { calculateShippingService } = require('./services.delivery')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const ErrorBusinessRule = require('../utils/errors/errors.business-rule')
 const ErrorUnprocessableEntity = require('../utils/errors/errors.unprocessable-entity')
@@ -265,7 +265,21 @@ const verifyPrice = async (cart) => {
   })
 
   if (checkPrice) {
-    throw new ErrorUnprocessableEntity('Carrinho inválido!')
+    throw new ErrorUnprocessableEntity('Dados de carrinho inválidos!')
+  }
+}
+
+const verifyShipping = async (body, price, code) => {
+  const result = await calculateShippingService(body)
+
+  const verify = result.data.map(
+    (item) =>
+      item.price.replace(',', '.') === String(price) &&
+      String(item.code) === code
+  )
+
+  if (!verify) {
+    throw new ErrorUnprocessableEntity('Dados de entrega inválidos!')
   }
 }
 
@@ -286,7 +300,7 @@ const checkCard = async (cart, payment, shipping) => {
     (!payment.installments || payment.installments <= 6)
 
   if (!checkTotal) {
-    throw new ErrorBusinessRule('Dados de Pagamento Inválidos!')
+    throw new ErrorBusinessRule('Dados de pagamento inválidos!')
   }
 }
 
@@ -338,6 +352,7 @@ const updateQuantity = async (data) => {
 const createSolicitationService = async (storeid, clientid, body) => {
   await verifyQuantity(body.cart)
   await verifyPrice(body.cart)
+  await verifyShipping(body, body.deliveries.price, body.deliveries.type)
   await checkCard(body.cart, body.payment, body.shipping)
 
   try {

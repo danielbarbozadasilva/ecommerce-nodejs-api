@@ -82,10 +82,6 @@ module.exports = (router) => {
       zipCode: joi.string().required().messages({
         'any.required': '"zipCode" is a required field',
         'string.empty': '"zipCode" can not be empty'
-      }),
-      shipping: joi.number().required().messages({
-        'any.required': '"shipping" is a required field',
-        'number.empty': '"shipping" can not be empty'
       })
     }),
 
