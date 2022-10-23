@@ -2144,7 +2144,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 2199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 829.99,\r\n            \"quantity\": 2\r\n        }\r\n    ],\r\n    \"shipping\": 34.33,\r\n    \"payment\": {\r\n        \"price\": 3894.2999999999997,\r\n        \"type\": \"BOLETO\",\r\n        \"installments\": 1,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"location\": \"Rio de janeiro\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"Rio de janeiro\",\r\n            \"zipCode\": \"21987-200\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 34.33,\r\n        \"type\": \"04014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"location\": \"Rio de janeiro\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"Rio de janeiro\",\r\n            \"zipCode\": \"21987-200\"\r\n        }\r\n    }\r\n}",
+							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 429.99,\r\n            \"quantity\": 2\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\",\r\n    \"shipping\": 67.93,\r\n    \"payment\": {\r\n        \"price\": 2127.90,\r\n        \"type\": \"BOLETO\",\r\n        \"installments\": 1,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"location\": \"Rio de janeiro\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"Rio de janeiro\",\r\n            \"zipCode\": \"21987-200\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 67.93,\r\n        \"type\": \"4014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"location\": \"Rio de janeiro\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"Rio de janeiro\",\r\n            \"zipCode\": \"21987-200\"\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2255,7 +2255,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/delivery/6343516f3fb56efda46c2de8",
+							"raw": "http://localhost:3011/v1/delivery/63434348a7b076da94874bec",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2264,7 +2264,7 @@
 							"path": [
 								"v1",
 								"delivery",
-								"6343516f3fb56efda46c2de8"
+								"63434348a7b076da94874bec"
 							]
 						}
 					},
@@ -2317,7 +2317,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/delivery/6343516f3fb56efda46c2de8",
+							"raw": "http://localhost:3011/v1/delivery/63434348a7b076da94874bec",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2326,7 +2326,7 @@
 							"path": [
 								"v1",
 								"delivery",
-								"6343516f3fb56efda46c2de8"
+								"63434348a7b076da94874bec"
 							]
 						}
 					},
@@ -2365,7 +2365,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 2199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 829.99,\r\n            \"quantity\": 2\r\n        }\r\n    ],\r\n    \"shipping\": 34.33,\r\n    \"zipCode\": \"21987-200\"\r\n}",
+							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 429.99,\r\n            \"quantity\": 2\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
