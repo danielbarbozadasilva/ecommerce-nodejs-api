@@ -495,7 +495,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cnpj\": \"22.222.654/0001-81\",\r\n    \"name\": \"1Daniel\",\r\n    \"email\": \"ddddd@gmail.com\",\r\n    \"phones\": [\"(11)2343-1249\", \"(22)99099-8990\"],\r\n    \"address\": {\r\n        \"location\": \"112Rio de janeiro\",\r\n        \"number\": \"11\",\r\n        \"complement\": \"1111\",\r\n        \"district\": \"1111 de janeiro\",\r\n        \"city\": \"1111221Rio de janeiro\",\r\n        \"zipCode\": \"112256-782\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"cnpj\": \"22.222.654/0001-81\",\r\n    \"name\": \"1Daniel\",\r\n    \"email\": \"ddddd@gmail.com\",\r\n    \"phones\": [\"(11)2343-1249\", \"(22)99099-8990\"],\r\n    \"address\": {\r\n        \"street\": \"Av. Manuel Gomes\",\r\n        \"number\": \"11\",\r\n        \"complement\": \"1111\",\r\n        \"district\": \"1111 de janeiro\",\r\n        \"city\": \"1111221Rio de janeiro\",\r\n        \"zipCode\": \"112256-782\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -556,7 +556,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cnpj\": \"11.302.654/0001-81\",\r\n    \"name\": \"Daniel\",\r\n    \"email\": \"daniel80barboza@gmail.com\",\r\n    \"phones\": [\"(21)2423-2198\", \"(21)99099-8990\"],\r\n    \"address\": {\r\n        \"location\": \"Rio de janeiro\",\r\n        \"number\": \"12211\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23456-782\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"cnpj\": \"11.302.654/0001-81\",\r\n    \"name\": \"Daniel\",\r\n    \"email\": \"daniel80barboza@gmail.com\",\r\n    \"phones\": [\"(21)2423-2198\", \"(21)99099-8990\"],\r\n    \"address\": {\r\n        \"street\": \"Av. Manuel Gomes\",\r\n        \"number\": \"12211\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23456-782\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -852,7 +852,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Daniel\",\r\n    \"email\": \"132DdddASD3@gmail.com\",\r\n    \"cpf\": \"333.321.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"location\": \"Rio de janeiro\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"name\": \"Daniel\",\r\n    \"email\": \"132DdddASD3@gmail.com\",\r\n    \"cpf\": \"333.321.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"street\": \"Av. Manuel Gomes\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -907,7 +907,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"1222211Daniel\",\r\n    \"email\": \"132d3@gmail.com\",\r\n    \"cpf\": \"523.222.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"location\": \"Rio de janeiro\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"name\": \"1222211Daniel\",\r\n    \"email\": \"132d3@gmail.com\",\r\n    \"cpf\": \"523.222.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"street\": \"Av. Manuel Gomes\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2144,7 +2144,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 429.99,\r\n            \"quantity\": 2\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\",\r\n    \"shipping\": 67.93,\r\n    \"payment\": {\r\n        \"price\": 2127.90,\r\n        \"type\": \"BOLETO\",\r\n        \"installments\": 1,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"location\": \"Rio de janeiro\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"Rio de janeiro\",\r\n            \"zipCode\": \"21987-200\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 67.93,\r\n        \"type\": \"4014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"location\": \"Rio de janeiro\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"Rio de janeiro\",\r\n            \"zipCode\": \"21987-200\"\r\n        }\r\n    }\r\n}",
+							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 429.99,\r\n            \"quantity\": 2\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\",\r\n    \"shipping\": 67.93,\r\n    \"payment\": {\r\n        \"price\": 2127.90,\r\n        \"type\": \"BOLETO\",\r\n        \"installments\": 1,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"Rio de janeiro\",\r\n            \"zipCode\": \"21987-200\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 67.93,\r\n        \"type\": \"4014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"Rio de janeiro\",\r\n            \"zipCode\": \"21987-200\"\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
