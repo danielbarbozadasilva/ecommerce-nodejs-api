@@ -45,7 +45,7 @@ const sendSolicitationClientEmail = (solicitation, client, shipping) => `
         <hr />
       </h2>
       <h3>
-        Localização: ${item.address.location}
+        Rua: ${item.address.street}
       </h3>
       <h3>
       Número: ${item.address.number}
@@ -112,7 +112,7 @@ ${client.map(
   <hr />
 
   <h3>
-    Localização: ${item.address.location}
+    Rua: ${item.address.street}
   </h3>
   <h3>
   Número: ${item.address.number}
