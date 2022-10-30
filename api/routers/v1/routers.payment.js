@@ -45,7 +45,7 @@ module.exports = (router) => {
           })
       }),
       validateDTOMiddleware('body', {
-        status: joi.string().required().messages({
+        status: joi.boolean().required().messages({
           'any.required': '"status" is a required field',
           'boolean.empty': '"status" can not be empty'
         })
@@ -53,4 +53,27 @@ module.exports = (router) => {
       verifyIdDbMiddleware.verifyIdPaymentDbMiddleware,
       paymentController.updatePaymentController
     )
+  router.route('/take/payment/:paymentid').post(
+    authenticationMiddleware(),
+    //   authorization.authorizationMiddleware('UPDATE_PAYMENT'),
+    validateDTOMiddleware('params', {
+      paymentid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"payment id" is a required field',
+          'string.empty': '"payment id" can not be empty',
+          'string.pattern.base': '"payment id" out of the expected format'
+        })
+    }),
+    validateDTOMiddleware('body', {
+      senderHash: joi.string().required().messages({
+        'any.required': '"senderHash" is a required field',
+        'string.empty': '"senderHash" can not be empty'
+      })
+    }),
+    verifyIdDbMiddleware.verifyIdPaymentDbMiddleware,
+    paymentController.createPaymentController
+  )
 }

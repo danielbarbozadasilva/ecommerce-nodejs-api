@@ -6,7 +6,10 @@ const {
 } = require('../models/models.index')
 const paymentMapper = require('../mappers/mappers.payment')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
-const { getTransactionStatus } = require('../utils/pagseguro/pagseguro.index')
+const {
+  getTransactionStatus,
+  createPayment
+} = require('../utils/pagseguro/pagseguro.index')
 const emailUpdatePayment = require('../utils/email/email.update_solicitation')
 const emailUtils = require('../utils/email/email.index')
 const { showCartSolicitationService } = require('./services.solicitation')
@@ -142,7 +145,42 @@ const updatePaymentService = async (paymentid, body) => {
   }
 }
 
+const createPaymentService = async (paymentid, body) => {
+  try {
+    const resultPayment = await payment.findById(paymentid)
+    const resultSolicitation = await solicitation
+      .findById(resultPayment.solicitation)
+      .populate([
+        { path: 'client', populate: 'user' },
+        { path: 'delivery' },
+        { path: 'payment' }
+      ])
+    resultSolicitation.carrinho = await Promise.all(
+      resultSolicitation.carrinho.map(async (item) => {
+        item.produto = await product.findById(item.produto)
+        return item
+      })
+    )
+
+    const payload = await createPayment(body.senderHash, resultSolicitation)
+    resultPayment.payload = resultPayment.payload
+      ? resultPayment.payload.concat([payload])
+      : [payload]
+    if (payload.code) resultPayment.pagSeguroCode = payload.code
+    await resultPayment.save()
+
+    return {
+      success: true,
+      message: 'Payment created successfully',
+      data: paymentMapper.toDTO(resultPayment)
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listByIdPaymentService,
-  updatePaymentService
+  updatePaymentService,
+  createPaymentService
 }
