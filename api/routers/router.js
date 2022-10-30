@@ -9,6 +9,7 @@ const routersV1Product = require('./v1/routers.product')
 const routersV1Rating = require('./v1/routers.rating')
 const routersV1Solicitation = require('./v1/routers.solicitation')
 const routersV1Delivery = require('./v1/routers.delivery')
+const routersV1Payment = require('./v1/routers.payment')
 
 module.exports = (app) => {
   app.get('/', (req, res, next) => {
@@ -23,6 +24,7 @@ module.exports = (app) => {
   routersV1Rating(routesV1)
   routersV1Solicitation(routesV1)
   routersV1Delivery(routesV1)
+  routersV1Payment(routesV1)
 
   app.use('/v1', routesV1)
 
