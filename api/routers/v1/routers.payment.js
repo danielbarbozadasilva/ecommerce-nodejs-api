@@ -76,4 +76,20 @@ module.exports = (router) => {
     verifyIdDbMiddleware.verifyIdPaymentDbMiddleware,
     paymentController.createPaymentController
   )
+  router.route('/payment/notification').post(
+    authenticationMiddleware(),
+    //   authorization.authorizationMiddleware('NOTIFICATION_PAYMENT'),
+    validateDTOMiddleware('body', {
+      notificationCode: joi.string().required().messages({
+        'any.required': '"notificationCode" is a required field',
+        'string.empty': '"notificationCode" can not be empty'
+      }),
+      notificationType: joi.string().required().messages({
+        'any.required': '"notificationType" is a required field',
+        'string.empty': '"notificationType" can not be empty'
+      })
+    }),
+    verifyIdDbMiddleware.verifyIdPaymentDbMiddleware,
+    paymentController.showNotificationPaymentController
+  )
 }

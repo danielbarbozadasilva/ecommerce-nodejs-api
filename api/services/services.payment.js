@@ -8,7 +8,8 @@ const paymentMapper = require('../mappers/mappers.payment')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const {
   getTransactionStatus,
-  createPayment
+  createPayment,
+  getNotification
 } = require('../utils/pagseguro/pagseguro.index')
 const emailUpdatePayment = require('../utils/email/email.update_solicitation')
 const emailUtils = require('../utils/email/email.index')
@@ -37,7 +38,7 @@ const listByIdPaymentService = async (paymentid) => {
         resultRegistration[resultRegistration.length - 1].payload.code !==
           situation.code)
     ) {
-      const registroPedido = await orderregistrations.create({
+      const resultSolicitation = await orderregistrations.create({
         solicitation: resultPayment.solicitation,
         type: 'payment',
         situation: situation.status || 'situation',
@@ -47,7 +48,7 @@ const listByIdPaymentService = async (paymentid) => {
       resultPayment.status = situation.status
 
       await resultPayment.save()
-      await registroPedido.save()
+      await resultSolicitation.save()
     }
 
     return {
@@ -179,8 +180,76 @@ const createPaymentService = async (paymentid, body) => {
   }
 }
 
+const showNotificationPaymentService = async (body) => {
+  try {
+    if (body.notificationType !== 'transaction') {
+      return {
+        success: true,
+        message: 'Payment created successfully'
+      }
+    }
+
+    const resultNotification = await getNotification(body.notificationCode)
+
+    const resultPayment = await payment.findOne({
+      pagSeguroCode: resultNotification.code
+    })
+
+    if (!resultPayment) {
+      return {
+        success: false,
+        message: 'Payment does not exist'
+      }
+    }
+
+    const resultRegistration = await orderregistrations.find({
+      solicitation: resultPayment.solicitation,
+      type: 'payment'
+    })
+
+    const resultSituation = resultPayment.pagSeguroCode
+      ? await getTransactionStatus(resultPayment.pagSeguroCode)
+      : null
+
+    if (
+      resultSituation &&
+      (resultRegistration.length === 0 ||
+        resultRegistration[resultRegistration.length - 1].payload.code !==
+          resultSituation.code)
+    ) {
+      const resultOrderDB = await orderregistrations.create({
+        solicitation: resultPayment.solicitation,
+        type: 'payment',
+        situation: resultSituation.status || 'situation',
+        payload: resultSituation
+      })
+
+      resultPayment.status = resultSituation.status
+
+      await resultPayment.save()
+      await resultOrderDB.save()
+
+      await sendEmailClientPaymentUpdate(resultPayment.solicitation)
+
+      if (body.status.toLowerCase().includes('pago')) {
+        await updateQuantity(resultRegistration.solicitation)
+      } else if (body.status.toLowerCase().includes('cancelado')) {
+        await updateQuantityCancelation(resultRegistration.solicitation)
+      }
+    }
+    return {
+      success: true,
+      message: 'Payment created successfully',
+      data: paymentMapper.toDTO(resultPayment)
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listByIdPaymentService,
   updatePaymentService,
-  createPaymentService
+  createPaymentService,
+  showNotificationPaymentService
 }
