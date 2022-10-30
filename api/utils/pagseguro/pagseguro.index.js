@@ -1,9 +1,8 @@
 const pagSeguroConfig = require('./pagseguro.config')
 const PagSeguro = require('./pagseguro.operations')
 
-const _createPaymentWithBoleto = (senderHash, data) => {
-    return new Promise((resolve, reject) => {
-    
+const _createPaymentWithBoleto = (senderHash, data) =>
+  new Promise((resolve, reject) => {
     const { client, cart, delivery, payment } = data
     const pag = new PagSeguro(pagSeguroConfig)
 
@@ -23,7 +22,7 @@ const _createPaymentWithBoleto = (senderHash, data) => {
       city: delivery.address.city,
       state: delivery.address.state,
       postal_code: delivery.address.zipCode.replace(/-/g, ''),
-      same_for_billing: payment.addressDeliveryIgualCharging 
+      same_for_billing: payment.addressDeliveryIgualCharging
     })
 
     pag.setBilling({
@@ -59,11 +58,9 @@ const _createPaymentWithBoleto = (senderHash, data) => {
       (err, data) => (err ? reject(err) : resolve(data))
     )
   })
-}
 
-const _createPaymentWithCreditCard = (senderHash, data) => {
-    return new Promise((resolve, reject) => {
-    
+const _createPaymentWithCreditCard = (senderHash, data) =>
+  new Promise((resolve, reject) => {
     const { client, cart, delivery, payment } = data
     const pag = new PagSeguro(pagSeguroConfig)
 
@@ -110,12 +107,13 @@ const _createPaymentWithCreditCard = (senderHash, data) => {
 
     pag.setCreditCardHolder({
       name: payment.card.fullName || client.name,
-      area_code:
-        payment.card.areaCode.trim() || client.phones[0].slice(0, 2),
+      area_code: payment.card.areaCode.trim() || client.phones[0].slice(0, 2),
       phone: (payment.card.phone.trim() || client.phones[0].slice(2))
         .split(' ')
         .join(''),
-      birth_date: payment.card.birthDate.toLocaleDateString('pt-BR') || client.birthDate.toLocaleDateString('pt-BR'),
+      birth_date:
+        payment.card.birthDate.toLocaleDateString('pt-BR') ||
+        client.birthDate.toLocaleDateString('pt-BR'),
       cpf_cnpj: (payment.card.cpf || client.cpf).replace(/[-\.]/g, '')
     })
 
@@ -133,44 +131,50 @@ const _createPaymentWithCreditCard = (senderHash, data) => {
       (err, data) => (err ? reject(err) : resolve(data))
     )
   })
-}
 
 const createPayment = async (senderHash, data) => {
-    try {
-        if ( data.payment.type === "boleto" ){
-            return await _createPaymentWithBoleto(senderHash, data)
-        } else if ( data.payment.type === "creditCard" ) {
-            return await _createPaymentWithCreditCard(senderHash, data)
-        } else {
-            return { 
-                errorMessage: "Payment method not found." 
-            }
-        }
-
-    } catch(error){
-        console.log(error);
-        return { 
-            errorMessage: "Ocorreu um erro", 
-            errors: error 
-        }
+  try {
+    if (data.payment.type === 'boleto') {
+      return await _createPaymentWithBoleto(senderHash, data)
     }
+    if (data.payment.type === 'creditCard') {
+      return await _createPaymentWithCreditCard(senderHash, data)
+    }
+    return {
+      errorMessage: 'Payment method not found.'
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      errorMessage: 'Ocorreu um erro',
+      errors: error
+    }
+  }
 }
 
-const getSessionId = () => new Promise((resolve, reject) => {
-        const pag = new PagSeguro(pagSeguroConfig);
-        pag.sessionId((err, session_id) => (err) ? reject(err) : resolve(session_id));
-    })
-}
+const getSessionId = () =>
+  new Promise((resolve, reject) => {
+    const pag = new PagSeguro(pagSeguroConfig)
+    pag.sessionId((err, session_id) =>
+      err ? reject(err) : resolve(session_id)
+    )
+  })
 
-const getTransactionStatus = (codigo) => new Promise((resolve, reject) => {
-        const pag = new PagSeguro(pagSeguroConfig);
-        pag.transactionStatus(codigo, (err, result) => (err) ? reject(err) : resolve(result));
-    })
+const getTransactionStatus = (codigo) =>
+  new Promise((resolve, reject) => {
+    const pag = new PagSeguro(pagSeguroConfig)
+    pag.transactionStatus(codigo, (err, result) =>
+      err ? reject(err) : resolve(result)
+    )
+  })
 
-const getNotification = (codigo) => new Promise((resolve, reject) => {
-        const pag = new PagSeguro(pagSeguroConfig);
-        pag.getNotification(codigo, (err, result) => (err) ? reject(err) : resolve(result));
-    })
+const getNotification = (codigo) =>
+  new Promise((resolve, reject) => {
+    const pag = new PagSeguro(pagSeguroConfig)
+    pag.getNotification(codigo, (err, result) =>
+      err ? reject(err) : resolve(result)
+    )
+  })
 
 module.exports = {
   createPayment,
