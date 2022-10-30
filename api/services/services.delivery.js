@@ -40,7 +40,7 @@ const listByIdDeliveryService = async (id) => {
       {
         $match: {
           'deliveries._id': new ObjectId(id),
-          'orderregistrations.type': 'started'
+          'orderregistrations.type': 'solicitation'
         }
       }
     ])
@@ -118,7 +118,7 @@ const updateDeliveryService = async (body, id) => {
     return {
       success: true,
       message: 'Request updated successfully!',
-      data: resultDB
+      data: deliveryMapper.toDTOList(resultDB)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -137,39 +137,33 @@ const calculateShippingService = async (body) => {
     const box = calcBox(productDB)
 
     const totalWeight = productDB.reduce(
-      (all, item) =>
-        all +
-        item.weight * body.cart.reduce((all, item) => all + item.quantity, 0),
+      (all, item, i) => all + item.weight * body.cart[i].quantity,
       0
     )
 
-    const finalPrice = body.cart.reduce(
-      (all, item) => all + body.shipping * item.quantity,
+    const finalPrice = productDB.reduce(
+      (all, item, i) =>
+        all + (item.promotion || item.price) * body.cart[i].quantity,
       0
     )
 
-    const resultAll = await Promise.all(
-      config.nCdServico.split(',').map(async (service) => {
-        const result = await correios.calcPrecoPrazo({
-          nCdServico: service,
-          sCepOrigem: config.sCepOrigem,
-          sCepDestino: body.zipCode,
-          nVlPeso: totalWeight,
-          nCdFormato: 1,
-          nVlComprimento: box.length,
-          nVlAltura: box.height,
-          nVlLargura: box.width,
-          nVlDiamentro: 0,
-          nVlValorDeclarado: finalPrice < 23.5 ? 23.5 : finalPrice
-        })
-        return result
-      })
-    )
+    const result = await correios.calcPrecoPrazo({
+      nCdServico: config.nCdServico,
+      sCepOrigem: config.sCepOrigem,
+      sCepDestino: body.zipCode,
+      nVlPeso: totalWeight,
+      nCdFormato: 1,
+      nVlComprimento: box.length,
+      nVlAltura: box.height,
+      nVlLargura: box.width,
+      nVlDiamentro: 0,
+      nVlValorDeclarado: finalPrice < 23.5 ? 23.5 : finalPrice
+    })
 
     return {
       success: true,
       message: 'Shipping calculated successfully!',
-      data: resultAll
+      data: result.map((item) => deliveryMapper.toDTOShipping(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)

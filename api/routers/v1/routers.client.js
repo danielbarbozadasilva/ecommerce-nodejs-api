@@ -51,9 +51,9 @@ module.exports = (router) => {
           'string.empty': '"password" can not be empty'
         }),
         address: joi.object({
-          location: joi.string().required().messages({
-            'any.required': '"location" is a required field',
-            'string.empty': '"location" can not be empty'
+          street: joi.string().required().messages({
+            'any.required': '"street" is a required field',
+            'string.empty': '"street" can not be empty'
           }),
           number: joi.string().required().messages({
             'any.required': '"number" is a required field',
@@ -225,9 +225,9 @@ module.exports = (router) => {
         'string.empty': '"password" can not be empty'
       }),
       address: joi.object({
-        location: joi.string().required().messages({
-          'any.required': '"location" is a required field',
-          'string.empty': '"location" can not be empty'
+        street: joi.string().required().messages({
+          'any.required': '"street" is a required field',
+          'string.empty': '"street" can not be empty'
         }),
         number: joi.string().required().messages({
           'any.required': '"number" is a required field',

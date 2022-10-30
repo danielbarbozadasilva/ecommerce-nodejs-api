@@ -22,7 +22,7 @@ db.stores.insert([
     email: "store@gmail.com",
     phones: ["(21)2435-8906", "(21)99099-8990"],
       address: {
-        location: "Rio de janeiro",
+        street: "Rio de janeiro",
         number: "2265",
         complement: "casa",
         district: "Rio de janeiro",
@@ -66,7 +66,7 @@ db.clients.insert([
     ],
     deleted: false,
     address: {
-        location: "Rio de janeiro",
+        street: "Av. Professor Dutra",
         number: "2234",
         complement: "casa",
         district: "Rio de janeiro",
@@ -102,7 +102,7 @@ db.products.insert([
   description: "(1-Click OC) LHR, 12GB GDDR6, 15 Gbps, Ray Tracing, DLSS - 36NOL7MD1VOC",
   photos: [],
   price: 2399.99,
-  promotion: 2199.99,
+  promotion: 1199.99,
   sku: "PVNV3060RTX",
   quantity: 49,
   blockedQuantity: 1,
@@ -123,7 +123,7 @@ db.products.insert([
   description: "(4.3GHz Max Turbo), Cache 12MB, 6 Núcleos, 12 Threads, LGA 1200 - BX8070110400F",
   photos: [],
   price: 849.99,
-  promotion: 829.99,
+  promotion: 429.99,
   sku: "PCINTI510400F",
   quantity: 148,
   blockedQuantity: 2,
@@ -148,7 +148,7 @@ db.payments.insert([
   installments: 1,
   status: "started",
   address: {
-      location: "Rio de janeiro",
+      street: "Rio de janeiro",
       number: "1223",
       complement: "casa",
       district: "Rio de janeiro",
@@ -174,7 +174,7 @@ db.payments.insert([
   installments: 1,
   status: "started",
   address: {
-      location: "Rio de janeiro",
+      street: "Rio de janeiro",
       number: "1223",
       complement: "casa",
       district: "Rio de janeiro",
@@ -197,7 +197,7 @@ db.deliveries.insert([
   price: 10,
   deliveryTime: 2,
    address: {
-    location: "Rio de janeiro",
+    street: "Rio de janeiro",
     number: "1223",
     complement: "casa",
     district: "Rio de janeiro",
@@ -214,7 +214,7 @@ db.deliveries.insert([
   price: 10,
   deliveryTime: 2,
    address: {
-    location: "Rio de janeiro",
+    street: "Rio de janeiro",
     number: "1223",
     complement: "casa",
     district: "Rio de janeiro",

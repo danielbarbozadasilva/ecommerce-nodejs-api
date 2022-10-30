@@ -67,6 +67,10 @@ module.exports = (router) => {
             })
           )
           .required(),
+        zipCode: joi.string().required().messages({
+          'any.required': '"shipping" is a required field',
+          'string.empty': '"shipping" can not be empty'
+        }),
         shipping: joi.number().required().messages({
           'any.required': '"shipping" is a required field',
           'number.empty': '"shipping" can not be empty'
@@ -89,9 +93,9 @@ module.exports = (router) => {
             }),
             address: joi
               .object({
-                location: joi.string().required().messages({
-                  'any.required': '"location" is a required field',
-                  'string.empty': '"location" can not be empty'
+                street: joi.string().required().messages({
+                  'any.required': '"street" is a required field',
+                  'string.empty': '"street" can not be empty'
                 }),
                 number: joi.string().required().messages({
                   'any.required': '"number" is a required field',
@@ -166,9 +170,9 @@ module.exports = (router) => {
             }),
             address: joi
               .object({
-                location: joi.string().required().messages({
-                  'any.required': '"location" is a required field',
-                  'string.empty': '"location" can not be empty'
+                street: joi.string().required().messages({
+                  'any.required': '"street" is a required field',
+                  'string.empty': '"street" can not be empty'
                 }),
                 number: joi.string().required().messages({
                   'any.required': '"number" is a required field',
