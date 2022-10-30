@@ -10,8 +10,8 @@ const {
   client,
   user
 } = require('../models/models.index')
-const emailUtils = require('../utils/email/utils.email')
-const emailUpdateSolicitation = require('../utils/email/utils.email.update_solicitation')
+const emailUtils = require('../utils/email/email.index')
+const emailUpdateSolicitation = require('../utils/email/email.update_solicitation')
 const deliveryMapper = require('../mappers/mappers.delivery')
 
 const config = require('../utils/util.correios')

@@ -9,9 +9,9 @@ const {
 } = require('../models/models.index')
 
 const solicitationMapper = require('../mappers/mappers.solicitation')
-const emailUtils = require('../utils/email/utils.email')
-const emailSolicitation = require('../utils/email/utils.email.send_solicitation')
-const emailCancelation = require('../utils/email/utils.email.cancel_solicitation')
+const emailUtils = require('../utils/email/email.index')
+const emailSolicitation = require('../utils/email/email.send_solicitation')
+const emailCancelation = require('../utils/email/email.cancel_solicitation')
 const { calculateShippingService } = require('./services.delivery')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const ErrorBusinessRule = require('../utils/errors/errors.business-rule')
@@ -336,6 +336,7 @@ const sendEmailClientSolicitation = async (clientid, id, shipping) => {
     )
   })
 }
+
 const updateQuantity = async (data) => {
   try {
     data.map(async (item) => {
