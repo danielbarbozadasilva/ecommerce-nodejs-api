@@ -10,6 +10,24 @@ const listByIdPaymentController = async (req, res) => {
   const data = resultService.data ? resultService.data : ''
   return res.status(code).send({ message, data })
 }
+
+const updatePaymentController = async (req, res) => {
+  const { paymentid } = req.params
+  const { body } = req
+
+  const resultService = await paymentService.updatePaymentService(
+    paymentid,
+    body
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
-  listByIdPaymentController
+  listByIdPaymentController,
+  updatePaymentController
 }
