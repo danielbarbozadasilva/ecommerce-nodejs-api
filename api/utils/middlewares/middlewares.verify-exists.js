@@ -5,7 +5,8 @@ const {
   product,
   rating,
   solicitation,
-  deliveries
+  deliveries,
+  payment
 } = require('../../models/models.index')
 const ErrorUnprocessableEntity = require('../errors/errors.unprocessable-entity')
 const ErrorBusinessRule = require('../errors/errors.business-rule')
@@ -75,6 +76,17 @@ const verifyIdDeliveryDbMiddleware = async (req, res, next) => {
   next()
 }
 
+const verifyIdPaymentDbMiddleware = async (req, res, next) => {
+  const paymentDB = await payment.findOne({
+    _id: req.params.paymentid
+  })
+
+  if (!paymentDB) {
+    throw new ErrorUnprocessableEntity(`Pagamento não encontrado!`)
+  }
+  next()
+}
+
 const verifyEmailUserExists = async (req, res, next) => {
   const resultDB = await user
     .findOne({ email: req.body.email })
@@ -131,6 +143,7 @@ module.exports = {
   verifyIdRatingDbMiddleware,
   verifyIdSolicitationDbMiddleware,
   verifyIdDeliveryDbMiddleware,
+  verifyIdPaymentDbMiddleware,
   verifyEmailUserExists,
   verifyCpfUserExists,
   verifyRatingExistsMiddleware,
