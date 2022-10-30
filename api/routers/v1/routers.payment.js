@@ -53,9 +53,10 @@ module.exports = (router) => {
       verifyIdDbMiddleware.verifyIdPaymentDbMiddleware,
       paymentController.updatePaymentController
     )
+
   router.route('/take/payment/:paymentid').post(
     authenticationMiddleware(),
-    //   authorization.authorizationMiddleware('UPDATE_PAYMENT'),
+    //   authorization.authorizationMiddleware('TAKE_PAYMENT'),
     validateDTOMiddleware('params', {
       paymentid: joi
         .string()
@@ -76,6 +77,7 @@ module.exports = (router) => {
     verifyIdDbMiddleware.verifyIdPaymentDbMiddleware,
     paymentController.createPaymentController
   )
+
   router.route('/payment/notification').post(
     authenticationMiddleware(),
     //   authorization.authorizationMiddleware('NOTIFICATION_PAYMENT'),
@@ -89,7 +91,12 @@ module.exports = (router) => {
         'string.empty': '"notificationType" can not be empty'
       })
     }),
-    verifyIdDbMiddleware.verifyIdPaymentDbMiddleware,
     paymentController.showNotificationPaymentController
+  )
+
+  router.route('/payment/session').get(
+    authenticationMiddleware(),
+    //   authorization.authorizationMiddleware('SESSION_PAYMENT'),
+    paymentController.showSessionPaymentController
   )
 }

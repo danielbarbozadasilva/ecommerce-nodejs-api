@@ -9,7 +9,8 @@ const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const {
   getTransactionStatus,
   createPayment,
-  getNotification
+  getNotification,
+  getSessionId
 } = require('../utils/pagseguro/pagseguro.index')
 const emailUpdatePayment = require('../utils/email/email.update_solicitation')
 const emailUtils = require('../utils/email/email.index')
@@ -247,9 +248,24 @@ const showNotificationPaymentService = async (body) => {
   }
 }
 
+const showSessionService = async () => {
+  try {
+    const sessionId = await getSessionId()
+
+    return {
+      success: true,
+      message: 'Payment created successfully',
+      data: sessionId
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listByIdPaymentService,
   updatePaymentService,
   createPaymentService,
-  showNotificationPaymentService
+  showNotificationPaymentService,
+  showSessionService
 }

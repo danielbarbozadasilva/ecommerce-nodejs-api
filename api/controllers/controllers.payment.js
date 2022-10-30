@@ -57,9 +57,20 @@ const showNotificationPaymentController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const showSessionPaymentController = async (req, res) => {
+  const resultService = await paymentService.showSessionService()
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
   listByIdPaymentController,
   updatePaymentController,
   createPaymentController,
-  showNotificationPaymentController
+  showNotificationPaymentController,
+  showSessionPaymentController
 }
