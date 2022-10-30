@@ -22,7 +22,7 @@ db.stores.insert([
     email: "store@gmail.com",
     phones: ["(21)2435-8906", "(21)99099-8990"],
       address: {
-        location: "Rio de janeiro",
+        street: "Rio de janeiro",
         number: "2265",
         complement: "casa",
         district: "Rio de janeiro",
@@ -66,7 +66,7 @@ db.clients.insert([
     ],
     deleted: false,
     address: {
-        location: "Rio de janeiro",
+        street: "Av. Professor Dutra",
         number: "2234",
         complement: "casa",
         district: "Rio de janeiro",
@@ -148,7 +148,7 @@ db.payments.insert([
   installments: 1,
   status: "started",
   address: {
-      location: "Rio de janeiro",
+      street: "Rio de janeiro",
       number: "1223",
       complement: "casa",
       district: "Rio de janeiro",
@@ -174,7 +174,7 @@ db.payments.insert([
   installments: 1,
   status: "started",
   address: {
-      location: "Rio de janeiro",
+      street: "Rio de janeiro",
       number: "1223",
       complement: "casa",
       district: "Rio de janeiro",
@@ -197,7 +197,7 @@ db.deliveries.insert([
   price: 10,
   deliveryTime: 2,
    address: {
-    location: "Rio de janeiro",
+    street: "Rio de janeiro",
     number: "1223",
     complement: "casa",
     district: "Rio de janeiro",
@@ -214,7 +214,7 @@ db.deliveries.insert([
   price: 10,
   deliveryTime: 2,
    address: {
-    location: "Rio de janeiro",
+    street: "Rio de janeiro",
     number: "1223",
     complement: "casa",
     district: "Rio de janeiro",

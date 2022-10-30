@@ -22,7 +22,7 @@ const toDTO = (model) => ({
     }),
     deliveryTime: item?.deliveryTime,
     address: {
-      location: item.address.location,
+      street: item.address.street,
       number: item.address.number,
       complement: item.address.complement,
       district: item.address.district,

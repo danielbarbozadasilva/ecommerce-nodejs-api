@@ -11,7 +11,7 @@ const paymentSchema = Schema(
     status: { type: String, required: true },
     address: {
       type: {
-        location: { type: String, required: true },
+        street: { type: String, required: true },
         number: { type: String, required: true },
         complement: { type: String },
         district: { type: String, required: true },

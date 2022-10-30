@@ -7,7 +7,7 @@ const toDTO = (model) => ({
   birthDate: model.birthDate,
   user: model.user,
   address: {
-    location: model.address.location,
+    street: model.address.street,
     number: model.address.number,
     complement: model.address.complement,
     district: model.address.district,
@@ -26,7 +26,7 @@ const toDTOList = (userDB, clientDB) => ({
   birthDate: clientDB.birthDate,
   user: clientDB.user,
   address: {
-    location: clientDB.address.location,
+    street: clientDB.address.street,
     number: clientDB.address.number,
     complement: clientDB.address.complement,
     district: clientDB.address.district,
@@ -54,7 +54,7 @@ const toClientDTO = (model) => ({
     store: model.store
   },
   address: {
-    location: model.address.location,
+    street: model.address.street,
     number: model.address.number,
     complement: model.address.complement,
     district: model.address.district,
@@ -76,7 +76,7 @@ const toDTOSolicitations = (model) => ({
     phones: model.client[0].phones,
     deleted: model.client[0].deleted,
     address: {
-      location: model.client[0].address.location,
+      street: model.client[0].address.street,
       number: model.client[0].address.number,
       complement: model.client[0].address.complement,
       district: model.client[0].address.district,
@@ -97,7 +97,7 @@ const toDTOSolicitations = (model) => ({
     installments: item.installments,
     status: item.status,
     address: {
-      location: item.address.location,
+      street: item.address.street,
       number: item.address.number,
       complement: item.address.complement,
       district: item.address.district,
@@ -118,7 +118,7 @@ const toDTOSolicitations = (model) => ({
     price: item.price,
     deliveryTime: item.deliveryTime,
     address: {
-      location: item.address.location,
+      street: item.address.street,
       number: item.address.number,
       complement: item.address.complement,
       district: item.address.district,

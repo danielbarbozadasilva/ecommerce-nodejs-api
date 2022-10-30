@@ -101,7 +101,7 @@ const updateClientService = async (id, body) => {
           cpf: body.cpf,
           phones: body.phones,
           address: {
-            location: body.address.location,
+            street: body.address.street,
             number: body.address.number,
             complement: body.address.complement,
             district: body.address.district,
@@ -250,7 +250,7 @@ const createClientService = async (body) => {
       cpf: body.cpf,
       phones: body.phones,
       address: {
-        location: body.address.location,
+        street: body.address.street,
         number: body.address.number,
         complement: body.address.complement,
         district: body.address.district,

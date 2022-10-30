@@ -10,7 +10,7 @@ const toDTO = (model) => ({
     phones: model.client[0].phones,
     deleted: model.client[0].deleted,
     address: {
-      location: model.client[0].address.location,
+      street: model.client[0].address.street,
       number: model.client[0].address.number,
       complement: model.client[0].address.complement,
       district: model.client[0].address.district,
@@ -31,7 +31,7 @@ const toDTO = (model) => ({
     installments: item.installments,
     status: item.status,
     address: {
-      location: item.address.location,
+      street: item.address.street,
       number: item.address.number,
       complement: item.address.complement,
       district: item.address.district,
@@ -52,7 +52,7 @@ const toDTO = (model) => ({
     price: item.price,
     deliveryTime: item.deliveryTime,
     address: {
-      location: item.address.location,
+      street: item.address.street,
       number: item.address.number,
       complement: item.address.complement,
       district: item.address.district,

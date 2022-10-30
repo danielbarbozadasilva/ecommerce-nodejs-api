@@ -9,7 +9,7 @@ const storeSchema = mongoose.Schema(
       type: [{ type: String }]
     },
     address: {
-      location: { type: String, required: true },
+      street: { type: String, required: true },
       number: { type: String, required: true },
       complement: { type: String },
       district: { type: String, required: true },

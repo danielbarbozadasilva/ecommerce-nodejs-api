@@ -12,7 +12,7 @@ const clientSchema = Schema(
     phones: { type: [{ type: String }] },
     deleted: { type: Boolean, default: false },
     address: {
-      location: { type: String, required: true },
+      street: { type: String, required: true },
       number: { type: String, required: true },
       complement: { type: String },
       district: { type: String, required: true },
