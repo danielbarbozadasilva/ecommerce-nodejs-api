@@ -2,8 +2,11 @@ const compression = require('compression')
 const express = require('express')
 require('express-async-errors')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const cors = require('cors')
+const path = require('path')
+
 const router = require('./routers/router')
 const db = require('../db/config')
 
@@ -16,12 +19,16 @@ mongoose.connect(db.uri, { useNewUrlParser: true }, (err) => {
     )
 })
 
-if (!process.env.NODE_ENV === 'development') app.use(morgan('dev'))
+if (process.env.NODE_ENV === 'development') app.use(morgan('dev'))
 app.use(cors())
 app.use('/static', express.static(`${__dirname}/..` + `/api/utils/file`))
 app.use(compression())
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: false, limit: 1.5 * 1024 * 1024 }))
+app.use(bodyParser.json({ limit: 1.5 * 1024 * 1024 }))
+app.set('view engine', 'ejs')
+app.set('views', path.join(`${__dirname}/..` + `/api/views/pagseguro`))
+
+app.disable('x-powered-by')
 
 router(app)
 
