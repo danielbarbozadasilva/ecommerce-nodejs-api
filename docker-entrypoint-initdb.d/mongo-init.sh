@@ -142,62 +142,87 @@ db.products.insert([
 db.createCollection("payments")
 db.payments.insert([
 {
-  _id: ObjectId("63434348a7b076da94874be8"),
-  price: 2209.99,
-  type: "CREDITO",
-  installments: 1,
+  _id: ObjectId("63602cffbcf665837b144ace"),
+  price: 2127.9,
+  type: "CREDITCARD",
+  installments: 2,
   status: "started",
   address: {
-      street: "Rio de janeiro",
-      number: "1223",
-      complement: "casa",
-      district: "Rio de janeiro",
-      city: "Rio de janeiro",
-      state: "Rio de janeiro",
-      zipCode: "21987-200"
+    street: "Av. Manuel Gomes",
+    number: "1223",
+    complement: "casa",
+    district: "Rio de janeiro",
+    city: "Rio de janeiro",
+    state: "Rio de janeiro",
+    zipCode: "21987-200"
   },
   card: {
-      fullName: "DANIEL BARBOZA DA SILVA",
-      areaCode: "21987-200",
-      phone: "(21)2434-1207",
-      birthDate: "2000-02-09",
-      creditCardToken: "234324234342343423",
-      cpf: "219.877.200-90"
+    fullName: "DANIEL BARBOZA DA SILVA",
+    areaCode: "21987-200",
+    phone: "(21)2434-1207",
+    birthDate: "2000-02-09",
+    creditCardToken: "51ae1b1ae9cf421abe6c02ac99838cf1",
+    cpf: "04275271041"
   },
-    addressDeliveryIgualCharging: false,
-    pagSeguroCode: "1231232132"
+  addressDeliveryIgualCharging: false,
+  solicitation: ObjectId("63602cffbcf665837b144ad5")
 },
 {
-  _id: ObjectId("6343516f3fb56efda46c2de5"),
-  price: 839.99,
+  _id: ObjectId("63602d11bcf665837b144af4"),
+  price: 2127.9,
   type: "BOLETO",
-  installments: 1,
   status: "started",
   address: {
-      street: "Rio de janeiro",
-      number: "1223",
-      complement: "casa",
-      district: "Rio de janeiro",
-      city: "Rio de janeiro",
-      state: "Rio de janeiro",
-      zipCode: "21987-200"
+    street: "Av. Manuel Gomes",
+    number: "1223",
+    complement: "casa",
+    district: "Rio de janeiro",
+    city: "Rio de janeiro",
+    state: "Rio de janeiro",
+    zipCode: "21987-200"
   },
-    addressDeliveryIgualCharging: false,
-    pagSeguroCode: "1231232132"
+  addressDeliveryIgualCharging: false,
+  solicitation: ObjectId("63602d11bcf665837b144afa")
+},
+{
+  _id: ObjectId("63602d21bcf665837b144b19"),
+  price: 2569.29,
+  type: "CREDITCARD",
+  installments: 6,
+  status: "started",
+  address: {
+    street: "Av. Manuel Gomes",
+    number: "1223",
+    complement: "casa",
+    district: "Rio de janeiro",
+    city: "Rio de janeiro",
+    state: "Rio de janeiro",
+    zipCode: "21987-200"
+  },
+  card: {
+    fullName: "DANIEL BARBOZA DA SILVA",
+    areaCode: "21987-200",
+    phone: "(21)2434-1207",
+    birthDate: "2000-02-09",
+    creditCardToken: "51ae1b1ae9cf421abe6c02ac99838cf1",
+    cpf: "04275271041"
+  },
+  addressDeliveryIgualCharging: false,
+  solicitation: ObjectId("63602d21bcf665837b144b20")
 }
 ])
 
 db.createCollection("deliveries")
 db.deliveries.insert([
 {
-  _id: ObjectId("63434348a7b076da94874bec"),
+  _id: ObjectId("63602cffbcf665837b144ad2"),
   status: "not started",
-  trackingCode: "23123123",
-  type: "04014",
-  price: 10,
+  trackingCode: "1178633798952",
+  type: "4014",
+  price: 67.93,
   deliveryTime: 2,
-   address: {
-    street: "Rio de janeiro",
+  address: {
+    street: "Av. Manuel Gomes",
     number: "1223",
     complement: "casa",
     district: "Rio de janeiro",
@@ -207,14 +232,31 @@ db.deliveries.insert([
   }
 },
 {
-  _id: ObjectId("6343516f3fb56efda46c2de8"),
+  _id: ObjectId("63602d11bcf665837b144af7"),
   status: "not started",
-  trackingCode: "23123123",
-  type: "04014",
-  price: 10,
+  trackingCode: "806588464286",
+  type: "4014",
+  price: 67.93,
   deliveryTime: 2,
-   address: {
-    street: "Rio de janeiro",
+  address:{
+    street: "Av. Manuel Gomes",
+    number: "1223",
+    complement: "casa",
+    district: "Rio de janeiro",
+    city: "Rio de janeiro",
+    state: "Rio de janeiro",
+    zipCode: "21987-200"
+  }
+},
+{
+  _id: ObjectId("63602d21bcf665837b144b1d"),
+  status: "not started",
+  trackingCode: "1645051777765",
+  type: "4014",
+  price: 79.33,
+  deliveryTime: 2,
+  address: {
+    street: "Av. Manuel Gomes",
     number: "1223",
     complement: "casa",
     district: "Rio de janeiro",
@@ -227,54 +269,91 @@ db.deliveries.insert([
 
 db.createCollection("solicitations")
 db.solicitations.insert([
+{
+  _id: ObjectId("63602cffbcf665837b144ad5"),
+  cart:[
   {
-      _id: ObjectId("63434348a7b076da94874bef"),
-      client: ObjectId("6320f577156b47ff1082586e"),
-      cart: [{
-        product: ObjectId("63432f02a7f855351c99dc71"),
-        quantity: 2,
-        unitPrice: 2199.99
-      }],
-        shipping: 10,
-        payment: ObjectId("63434348a7b076da94874be8"),
-        deliveries: ObjectId("63434348a7b076da94874bec"),
-        canceled: false
+    product: ObjectId("63432f02a7f855351c99dc71"),
+    quantity: 1,
+    unitPrice: 1199.99
   },
   {
-      _id: ObjectId("6343516f3fb56efda46c2deb"),
-      client: ObjectId("6320f577156b47ff1082586e"),
-      cart: [{
-        product: ObjectId("63432f02a7f855351c99dc72"),
-        quantity: 1,
-        unitPrice: 829.99
-       }],
-        shipping: 10,
-        payment: ObjectId("6343516f3fb56efda46c2de5"),
-        deliveries: ObjectId("6343516f3fb56efda46c2de8"),
-        canceled: false
-  }
+    product: ObjectId("63432f02a7f855351c99dc72"),
+    quantity: 2,
+    unitPrice: 429.99
+  }],
+  shipping: 67.93,
+  client: ObjectId("6320f577156b47ff1082586e"),
+  payment: ObjectId("63602cffbcf665837b144ace"),
+  deliveries: ObjectId("63602cffbcf665837b144ad2"),
+  store: ObjectId("631e00f5190d800a90c6fa4d"),
+  canceled: false
+},
+{
+  _id: ObjectId("63602d11bcf665837b144afa"),
+  cart:[
+  {
+    product: ObjectId("63432f02a7f855351c99dc71"),
+    quantity: 1,
+    unitPrice: 1199.99
+  },
+  {
+    product: ObjectId("63432f02a7f855351c99dc72"),
+    quantity: 2,
+    unitPrice: 429.99
+  }],
+  shipping: 67.93,
+  client: ObjectId("6320f577156b47ff1082586e"),
+  payment: ObjectId("63602d11bcf665837b144af4"),
+  deliveries: ObjectId("63602d11bcf665837b144af7"),
+  store: ObjectId("631e00f5190d800a90c6fa4d"),
+  canceled: false
+},
+{
+  _id: ObjectId("63602d21bcf665837b144b20"),
+  cart: [
+  {
+    product: ObjectId("63432f02a7f855351c99dc71"),
+    quantity: 1,
+    unitPrice: 1199.99
+  },
+  {
+    product: ObjectId("63432f02a7f855351c99dc72"),
+    quantity: 3,
+    unitPrice: 429.99
+  }],
+  shipping: 79.33,
+  client: ObjectId("6320f577156b47ff1082586e"),
+  payment: ObjectId("63602d21bcf665837b144b19"),
+  deliveries: ObjectId("63602d21bcf665837b144b1d"),
+  store: ObjectId("631e00f5190d800a90c6fa4d"),
+  canceled: false
+}
 ])
 
 db.createCollection("orderregistrations")
 db.orderregistrations.insert([
-  {
-      _id: ObjectId("6346e2fdcb561bd0b2f1abdd"),
-      solicitation: ObjectId("63434348a7b076da94874bef"),
-      type: "solicitation",
-      situation: "created"
-  },
-  {
-      _id: ObjectId("6346e3bdcb561bd0b2f1abef"),
-      solicitation: ObjectId("6343516f3fb56efda46c2deb"),
-      type: "solicitation",
-      situation: "created"
-  },
-  {
-      _id: ObjectId("6346e3bdcb561bd0b2f1abef"),
-      solicitation: ObjectId("6343516f3fb56efda46c2deb"),
-      type: "started",
-      situation: "created"
-  }
+{
+  _id: ObjectId("63602cffbcf665837b144ad9"),
+  solicitation: ObjectId("63602cffbcf665837b144ad5"),
+  type: "payment",
+  situation: "created",
+  date: "2022-10-31T20:15:59.731Z"
+},
+{
+  _id: ObjectId("63602d11bcf665837b144afe"),
+  solicitation: ObjectId("63602d11bcf665837b144afa"),
+  type: "payment",
+  situation: "created",
+  date: "2022-10-31T20:16:17.782Z"
+},
+{
+  _id: ObjectId("63602d21bcf665837b144b24"),
+  solicitation: ObjectId("63602d21bcf665837b144b20"),
+  type: "payment",
+  situation: "created",
+  date: "2022-10-31T20:16:33.219Z"
+}
 ])
 
 EOF
