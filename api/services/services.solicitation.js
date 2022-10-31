@@ -288,11 +288,10 @@ const checkCard = async (cart, payment, shipping) => {
   let total = 0
 
   const productDB = await searchProductCart(cart)
-
   cart.map((item, i) => {
     total += (productDB[i].promotion || productDB[i].price) * item.quantity
   })
-
+  
   totalPrice = total + shipping
 
   const checkTotal =

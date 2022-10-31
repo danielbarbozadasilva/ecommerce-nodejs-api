@@ -142,14 +142,10 @@ module.exports = (router) => {
                   'any.required': '"creditCardToken" is a required field',
                   'string.empty': '"creditCardToken" can not be empty'
                 }),
-                cpf: joi
-                  .string()
-                  .regex(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/)
-                  .required()
-                  .messages({
-                    'any.required': '"cpf" is a required field',
-                    'string.empty': '"cpf" can not be empty'
-                  })
+                cpf: joi.string().required().messages({
+                  'any.required': '"cpf" is a required field',
+                  'string.empty': '"cpf" can not be empty'
+                })
               })
               .when('type', {
                 is: 'CREDITCARD',
