@@ -151,7 +151,10 @@ module.exports = (router) => {
                     'string.empty': '"cpf" can not be empty'
                   })
               })
-              .optional()
+              .when('type', {
+                is: 'CREDITCARD',
+                then: joi.object().required()
+              })
           })
           .required(),
         deliveries: joi
