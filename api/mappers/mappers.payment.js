@@ -1,28 +1,36 @@
-const toDTO = (model) => ({
+const toDTO = (payment, registration) => ({
   payment: {
-    id: model._id,
-    price: model.price,
-    type: model.type,
-    installments: model.installments,
-    status: model.status,
+    id: payment._id,
+    price: payment.price,
+    type: payment.type,
+    installments: payment.installments,
+    status: payment.status,
     address: {
-      street: model.address.street,
-      number: model.address.number,
-      complement: model.address.complement,
-      district: model.address.district,
-      city: model.address.city,
-      state: model.address.state,
-      zipCode: model.address.zipCode
+      street: payment.address.street,
+      number: payment.address.number,
+      complement: payment.address.complement,
+      district: payment.address.district,
+      city: payment.address.city,
+      state: payment.address.state,
+      zipCode: payment.address.zipCode
     },
-    addressDeliveryIgualCharging: model.addressDeliveryIgualCharging,
-    store: model.store,
-    pagSeguroCode: model.pagSeguroCode
+    card: {
+      fullName: payment.card.fullName,
+      areaCode: payment.card.areaCode,
+      phone: payment.card.phone,
+      birthDate: payment.card.birthDate,
+      creditCardToken: payment.card.creditCardToken,
+      cpf: payment.card.cpf
+    },
+    solicitation: payment.solicitation,
+    addressDeliveryIgualCharging: payment.addressDeliveryIgualCharging,
+    pagSeguroCode: payment.pagSeguroCode
   },
   registration: {
-    _id: model._id,
-    solicitation: model.solicitation,
-    type: model.type,
-    situation: model.situation
+    id: registration._id,
+    solicitation: registration.solicitation,
+    type: registration.type,
+    situation: registration.situation
   }
 })
 

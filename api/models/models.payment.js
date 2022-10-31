@@ -33,8 +33,9 @@ const paymentSchema = Schema(
       required: false
     },
     addressDeliveryIgualCharging: { type: Boolean, default: true },
-    store: { type: Schema.Types.ObjectId, ref: 'store', required: true },
-    pagSeguroCode: { type: String }
+    pagSeguroCode: { type: String },
+    payload: { type: Array },
+    solicitation: { type: Schema.Types.ObjectId, ref: 'solicitation' }
   },
   { timestamps: true }
 )
