@@ -63,8 +63,8 @@ const showSessionPaymentController = async (req, res) => {
   const message = resultService.success
     ? { message: resultService.message }
     : { details: resultService.details }
-  const data = resultService.data ? resultService.data : ''
-  return res.status(code).send({ message, data })
+  const sessionId = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, sessionId })
 }
 
 module.exports = {

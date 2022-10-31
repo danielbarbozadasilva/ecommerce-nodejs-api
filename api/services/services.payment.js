@@ -250,12 +250,12 @@ const showNotificationPaymentService = async (body) => {
 
 const showSessionService = async () => {
   try {
-    const sessionId = await getSessionId()
+    const resultId = await getSessionId()
 
     return {
       success: true,
-      message: 'Payment created successfully',
-      data: sessionId
+      message: 'Session id listed successfully',
+      data: resultId
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)

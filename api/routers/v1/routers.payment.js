@@ -8,9 +8,13 @@ const paymentController = require('../../controllers/controllers.payment')
 
 module.exports = (router) => {
   if (process.env.NODE_ENV !== 'production') {
-    router.get('/payment/token')
+    router.get('/payment/tokens', (req, res) => res.render('index'))
   }
-
+  router.route('/payment/session').get(
+    // authenticationMiddleware(),
+    //   authorization.authorizationMiddleware('SESSION_PAYMENT'),
+    paymentController.showSessionPaymentController
+  )
   router
     .route('/payment/:paymentid')
     .get(
@@ -45,10 +49,7 @@ module.exports = (router) => {
           })
       }),
       validateDTOMiddleware('body', {
-        status: joi.boolean().required().messages({
-          'any.required': '"status" is a required field',
-          'boolean.empty': '"status" can not be empty'
-        })
+        status: joi.boolean().optional()
       }),
       verifyIdDbMiddleware.verifyIdPaymentDbMiddleware,
       paymentController.updatePaymentController
@@ -79,7 +80,7 @@ module.exports = (router) => {
   )
 
   router.route('/payment/notification').post(
-    authenticationMiddleware(),
+    // authenticationMiddleware(),
     //   authorization.authorizationMiddleware('NOTIFICATION_PAYMENT'),
     validateDTOMiddleware('body', {
       notificationCode: joi.string().required().messages({
@@ -94,9 +95,5 @@ module.exports = (router) => {
     paymentController.showNotificationPaymentController
   )
 
-  router.route('/payment/session').get(
-    authenticationMiddleware(),
-    //   authorization.authorizationMiddleware('SESSION_PAYMENT'),
-    paymentController.showSessionPaymentController
-  )
+  
 }
