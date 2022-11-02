@@ -53,12 +53,12 @@ const toDTOCart = (model) => ({
     zipCode: model.address.zipCode
   },
   card: {
-    fullName: model.card.fullName,
-    areaCode: model.card.areaCode,
-    phone: model.card.phone,
-    birthDate: model.card.birthDate,
-    creditCardToken: model.card.creditCardToken,
-    cpf: model.card.cpf
+    fullName: model?.card?.fullName,
+    areaCode: model?.card?.areaCode,
+    phone: model?.card?.phone,
+    birthDate: model?.card?.birthDate,
+    creditCardToken: model?.card?.creditCardToken,
+    cpf: model?.card?.cpf
   },
   addressDeliveryIgualCharging: model.addressDeliveryIgualCharging,
   solicitation: {
@@ -151,8 +151,8 @@ const toDTOPay = (model) => ({
     'pt-BR'
   )} - ${new Date(model.date).toLocaleTimeString()}`,
   paymentMethod: {
-    type: model.paymentMethod.type,
-    code: model.paymentMethod.code
+    type: model?.paymentMethod?.type,
+    code: model?.paymentMethod?.code
   },
   grossAmount: Number(model.grossAmount).toLocaleString('pt-br', {
     style: 'currency',
@@ -172,7 +172,7 @@ const toDTOPay = (model) => ({
   }),
   installmentCount: model.installmentCount,
   itemCount: model.itemCount,
-  items: model.items.item.map((item) => ({
+  items: model.items?.item?.map((item) => ({
     id: item.id,
     description: item.description,
     quantity: item.quantity,
@@ -208,17 +208,18 @@ const toDTOPay = (model) => ({
     }
   },
   gatewaySystem: {
-    type: model.gatewaySystem.type,
-    rawCode: model.gatewaySystem.rawCode,
-    rawMessage: model.gatewaySystem.rawMessage,
-    normalizedCode: model.gatewaySystem.normalizedCode,
-    normalizedMessage: model.gatewaySystem.normalizedMessage,
-    authorizationCode: model.gatewaySystem.authorizationCode,
-    nsu: model.gatewaySystem.nsu,
-    tid: model.gatewaySystem.tid,
-    establishmentCode: model.gatewaySystem.establishmentCode,
-    acquirerName: model.gatewaySystem.acquirerName
-  }
+    type: model?.gatewaySystem?.type,
+    rawCode: model?.gatewaySystem?.rawCode,
+    rawMessage: model?.gatewaySystem?.rawMessage,
+    normalizedCode: model?.gatewaySystem?.normalizedCode,
+    normalizedMessage: model?.gatewaySystem?.normalizedMessage,
+    authorizationCode: model?.gatewaySystem?.authorizationCode,
+    nsu: model?.gatewaySystem?.nsu,
+    tid: model?.gatewaySystem?.tid,
+    establishmentCode: model?.gatewaySystem?.establishmentCode,
+    acquirerName: model?.gatewaySystem?.acquirerName
+  },
+  paymentLink: model.paymentLink
 })
 
 module.exports = {
