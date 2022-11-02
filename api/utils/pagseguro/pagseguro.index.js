@@ -10,9 +10,7 @@ const _createPaymentWithBoleto = (senderHash, data) =>
       email: data.user.email,
       cpf_cnpj: data.client.cpf.replace(/[-\.]/g, ''),
       area_code: data.client.phones[0].slice(1, 3),
-      phone:
-        data.card.phone.trim().slice(4).replace(/[-\.]/g, '') ||
-        data.client.phones[0].trim().slice(4).replace(/[-\.]/g, ''),
+      phone: data.client.phones[0].trim().slice(4).replace(/[-\.]/g, ''),
       birth_date: new Date(data.client.birthDate).toLocaleDateString('pt-BR')
     })
 
@@ -25,7 +23,7 @@ const _createPaymentWithBoleto = (senderHash, data) =>
       postal_code: data.deliveries.address.zipCode.replace(/-/g, ''),
       same_for_billing: data.addressDeliveryIgualCharging
     })
-
+    
     pag.setBilling({
       street: data.address.street,
       number: data.address.number,
