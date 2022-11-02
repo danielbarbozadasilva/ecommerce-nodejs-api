@@ -11,7 +11,7 @@ const {
   user
 } = require('../models/models.index')
 const emailUtils = require('../utils/email/email.index')
-const emailUpdateSolicitation = require('../utils/email/email.update_solicitation')
+const emailUpdateSolicitation = require('../utils/email/email.notification_payment')
 const deliveryMapper = require('../mappers/mappers.delivery')
 
 const config = require('../utils/util.correios')
