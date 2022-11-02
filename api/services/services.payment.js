@@ -1,8 +1,12 @@
+const { ObjectId } = require('mongodb')
 const {
   payment,
   solicitation,
   orderregistrations,
-  product
+  product,
+  client,
+  user,
+  deliveries
 } = require('../models/models.index')
 const paymentMapper = require('../mappers/mappers.payment')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
@@ -55,7 +59,7 @@ const listByIdPaymentService = async (paymentid) => {
     return {
       success: true,
       message: 'Payment listed successfully',
-      data: paymentMapper.toDTO(resultPayment, resultRegistration)
+      data: paymentMapper.toDTO(resultPayment, ...resultRegistration)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -68,7 +72,6 @@ const sendEmailClientPaymentUpdate = async (id) => {
     .populate('client')
     .populate('user')
 
-  console.log(`resultClient----${JSON.stringify(resultClient)}`)
   const resultSolicitation = await showCartSolicitationService(id)
 
   emailUtils.utilSendEmail({
@@ -149,32 +152,78 @@ const updatePaymentService = async (paymentid, body) => {
 
 const createPaymentService = async (paymentid, body) => {
   try {
-    const resultPayment = await payment.findById(paymentid)
-    const resultSolicitation = await solicitation
-      .findById(resultPayment.solicitation)
-      .populate([
-        { path: 'client', populate: 'user' },
-        { path: 'delivery' },
-        { path: 'payment' }
-      ])
-    resultSolicitation.carrinho = await Promise.all(
-      resultSolicitation.carrinho.map(async (item) => {
-        item.produto = await product.findById(item.produto)
-        return item
-      })
+    const result = await payment.aggregate([
+      { $match: { _id: ObjectId(paymentid) } },
+      {
+        $lookup: {
+          from: solicitation.collection.name,
+          localField: '_id',
+          foreignField: 'payment',
+          as: 'solicitation'
+        }
+      },
+      { $unwind: '$solicitation' },
+
+      {
+        $lookup: {
+          from: product.collection.name,
+          localField: 'solicitation.cart.product',
+          foreignField: '_id',
+          as: 'products'
+        }
+      },
+      {
+        $lookup: {
+          from: deliveries.collection.name,
+          localField: 'solicitation.deliveries',
+          foreignField: '_id',
+          as: 'deliveries'
+        }
+      },
+      { $unwind: '$deliveries' },
+
+      {
+        $lookup: {
+          from: client.collection.name,
+          localField: 'solicitation.client',
+          foreignField: '_id',
+          as: 'client'
+        }
+      },
+      { $unwind: '$client' },
+
+      {
+        $lookup: {
+          from: user.collection.name,
+          localField: 'client.user',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      { $unset: ['user.hash', 'user.salt', 'user.permissions'] },
+      { $unwind: '$user' }
+    ])
+
+    const payload = await createPayment(
+      body.senderHash,
+      paymentMapper.toDTOCart(...result)
     )
 
-    const payload = await createPayment(body.senderHash, resultSolicitation)
-    resultPayment.payload = resultPayment.payload
-      ? resultPayment.payload.concat([payload])
-      : [payload]
-    if (payload.code) resultPayment.pagSeguroCode = payload.code
-    await resultPayment.save()
+    await payment.findOneAndUpdate(
+      { _id: ObjectId(paymentid) },
+      {
+        $set: {
+          payload,
+          pagSeguroCode: payload.code
+        }
+      },
+      { new: true }
+    )
 
     return {
       success: true,
       message: 'Payment created successfully',
-      data: paymentMapper.toDTO(resultPayment)
+      data: paymentMapper.toDTOPay(payload)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
