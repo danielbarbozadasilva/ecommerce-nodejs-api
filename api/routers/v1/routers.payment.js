@@ -49,7 +49,10 @@ module.exports = (router) => {
           })
       }),
       validateDTOMiddleware('body', {
-        status: joi.boolean().optional()
+        status: joi.string().required().messages({
+          'any.required': '"status" is a required field',
+          'string.empty': '"status" can not be empty'
+        })
       }),
       verifyIdDbMiddleware.verifyIdPaymentDbMiddleware,
       paymentController.updatePaymentController
@@ -94,6 +97,4 @@ module.exports = (router) => {
     }),
     paymentController.showNotificationPaymentController
   )
-
-  
 }
