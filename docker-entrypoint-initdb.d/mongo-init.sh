@@ -146,7 +146,7 @@ db.payments.insert([
   price: 2127.9,
   type: "CREDITCARD",
   installments: 2,
-  status: "started",
+  status: "Aguardando pagamento",
   address: {
     street: "Av. Manuel Gomes",
     number: "1223",
@@ -166,49 +166,6 @@ db.payments.insert([
   },
   addressDeliveryIgualCharging: false,
   solicitation: ObjectId("63602cffbcf665837b144ad5")
-},
-{
-  _id: ObjectId("63602d11bcf665837b144af4"),
-  price: 2127.9,
-  type: "BOLETO",
-  status: "started",
-  address: {
-    street: "Av. Manuel Gomes",
-    number: "1223",
-    complement: "casa",
-    district: "Rio de janeiro",
-    city: "Rio de janeiro",
-    state: "Rio de janeiro",
-    zipCode: "21987-200"
-  },
-  addressDeliveryIgualCharging: false,
-  solicitation: ObjectId("63602d11bcf665837b144afa")
-},
-{
-  _id: ObjectId("63602d21bcf665837b144b19"),
-  price: 2569.29,
-  type: "CREDITCARD",
-  installments: 6,
-  status: "started",
-  address: {
-    street: "Av. Manuel Gomes",
-    number: "1223",
-    complement: "casa",
-    district: "Rio de janeiro",
-    city: "Rio de janeiro",
-    state: "Rio de janeiro",
-    zipCode: "21987-200"
-  },
-  card: {
-    fullName: "DANIEL BARBOZA DA SILVA",
-    areaCode: "21987-200",
-    phone: "(21)2434-1207",
-    birthDate: "2000-02-09",
-    creditCardToken: "51ae1b1ae9cf421abe6c02ac99838cf1",
-    cpf: "04275271041"
-  },
-  addressDeliveryIgualCharging: false,
-  solicitation: ObjectId("63602d21bcf665837b144b20")
 }
 ])
 
@@ -220,40 +177,6 @@ db.deliveries.insert([
   trackingCode: "1178633798952",
   type: "4014",
   price: 67.93,
-  deliveryTime: 2,
-  address: {
-    street: "Av. Manuel Gomes",
-    number: "1223",
-    complement: "casa",
-    district: "Rio de janeiro",
-    city: "Rio de janeiro",
-    state: "Rio de janeiro",
-    zipCode: "21987-200"
-  }
-},
-{
-  _id: ObjectId("63602d11bcf665837b144af7"),
-  status: "not started",
-  trackingCode: "806588464286",
-  type: "4014",
-  price: 67.93,
-  deliveryTime: 2,
-  address:{
-    street: "Av. Manuel Gomes",
-    number: "1223",
-    complement: "casa",
-    district: "Rio de janeiro",
-    city: "Rio de janeiro",
-    state: "Rio de janeiro",
-    zipCode: "21987-200"
-  }
-},
-{
-  _id: ObjectId("63602d21bcf665837b144b1d"),
-  status: "not started",
-  trackingCode: "1645051777765",
-  type: "4014",
-  price: 79.33,
   deliveryTime: 2,
   address: {
     street: "Av. Manuel Gomes",
@@ -288,46 +211,6 @@ db.solicitations.insert([
   deliveries: ObjectId("63602cffbcf665837b144ad2"),
   store: ObjectId("631e00f5190d800a90c6fa4d"),
   canceled: false
-},
-{
-  _id: ObjectId("63602d11bcf665837b144afa"),
-  cart:[
-  {
-    product: ObjectId("63432f02a7f855351c99dc71"),
-    quantity: 1,
-    unitPrice: 1199.99
-  },
-  {
-    product: ObjectId("63432f02a7f855351c99dc72"),
-    quantity: 2,
-    unitPrice: 429.99
-  }],
-  shipping: 67.93,
-  client: ObjectId("6320f577156b47ff1082586e"),
-  payment: ObjectId("63602d11bcf665837b144af4"),
-  deliveries: ObjectId("63602d11bcf665837b144af7"),
-  store: ObjectId("631e00f5190d800a90c6fa4d"),
-  canceled: false
-},
-{
-  _id: ObjectId("63602d21bcf665837b144b20"),
-  cart: [
-  {
-    product: ObjectId("63432f02a7f855351c99dc71"),
-    quantity: 1,
-    unitPrice: 1199.99
-  },
-  {
-    product: ObjectId("63432f02a7f855351c99dc72"),
-    quantity: 3,
-    unitPrice: 429.99
-  }],
-  shipping: 79.33,
-  client: ObjectId("6320f577156b47ff1082586e"),
-  payment: ObjectId("63602d21bcf665837b144b19"),
-  deliveries: ObjectId("63602d21bcf665837b144b1d"),
-  store: ObjectId("631e00f5190d800a90c6fa4d"),
-  canceled: false
 }
 ])
 
@@ -339,20 +222,6 @@ db.orderregistrations.insert([
   type: "payment",
   situation: "created",
   date: "2022-10-31T20:15:59.731Z"
-},
-{
-  _id: ObjectId("63602d11bcf665837b144afe"),
-  solicitation: ObjectId("63602d11bcf665837b144afa"),
-  type: "payment",
-  situation: "created",
-  date: "2022-10-31T20:16:17.782Z"
-},
-{
-  _id: ObjectId("63602d21bcf665837b144b24"),
-  solicitation: ObjectId("63602d21bcf665837b144b20"),
-  type: "payment",
-  situation: "created",
-  date: "2022-10-31T20:16:33.219Z"
 }
 ])
 
