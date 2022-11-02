@@ -185,7 +185,7 @@ const deleteSolicitationService = async (id, clientid) => {
     await orderregistrations.create({
       solicitation: id,
       type: 'solicitation',
-      situation: 'canceled'
+      situation: 'cancelado'
     })
 
     await updateQuantityCancelation(resultDB.cart)
@@ -296,7 +296,7 @@ const checkCard = async (cart, payment, shipping) => {
 
   const checkTotal =
     totalPrice.toFixed(2) === payment.price.toFixed(2) &&
-    (!payment.installments || payment.installments <= 6)
+    (!payment.installments || payment.installments <= 5)
 
   if (!checkTotal) {
     throw new ErrorBusinessRule('Dados de pagamento inválidos!')
@@ -363,7 +363,7 @@ const createSolicitationService = async (storeid, clientid, body) => {
       addressDeliveryIgualCharging: body.payment.addressDeliveryIgualCharging,
       address: body.payment.address,
       card: body.payment.card,
-      status: 'started',
+      status: 'Aguardando pagamento',
       store: storeid,
       pagSeguroCode: Math.floor(Math.random() * new Date().getTime())
     })
