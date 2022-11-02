@@ -88,11 +88,17 @@ const toDTOSolicitations = (model) => ({
   cart: model.cart.map((item) => ({
     product: item.product,
     quantity: item.quantity,
-    unitPrice: item.unitPrice
+    unitPrice: item.unitPrice.toLocaleString('pt-br', {
+      style: 'currency',
+      currency: 'BRL'
+    })
   })),
   payment: model.payment.map((item) => ({
     id: item._id,
-    price: item.price,
+    price: item.price.toLocaleString('pt-br', {
+      style: 'currency',
+      currency: 'BRL'
+    }),
     type: item.type,
     installments: item.installments,
     status: item.status,
@@ -115,7 +121,10 @@ const toDTOSolicitations = (model) => ({
     status: item.status,
     trackingCode: item.trackingCode,
     type: item.type,
-    price: item.price,
+    price: item.price.toLocaleString('pt-br', {
+      style: 'currency',
+      currency: 'BRL'
+    }),
     deliveryTime: item.deliveryTime,
     address: {
       street: item.address.street,
@@ -134,8 +143,14 @@ const toDTOSolicitations = (model) => ({
     availability: item.availability,
     description: item.description,
     photos: item.photos,
-    price: item.price,
-    promotion: item.promotion,
+    price: item.price.toLocaleString('pt-br', {
+      style: 'currency',
+      currency: 'BRL'
+    }),
+    promotion: item.promotion.toLocaleString('pt-br', {
+      style: 'currency',
+      currency: 'BRL'
+    }),
     sku: item.sku,
     quantity: item.quantity,
     blockedQuantity: item.blockedQuantity,

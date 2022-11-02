@@ -13,8 +13,14 @@ const toDTOWithProducts = (model) => ({
   availability: model.availability,
   description: model.description,
   photos: model.photos,
-  price: model.price,
-  promotion: model.promotion,
+  price: model.price.toLocaleString('pt-br', {
+    style: 'currency',
+    currency: 'BRL'
+  }),
+  promotion: model.promotion.toLocaleString('pt-br', {
+    style: 'currency',
+    currency: 'BRL'
+  }),
   sku: model.sku,
   category: model.category,
   store: model.store,

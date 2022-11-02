@@ -4,8 +4,14 @@ const toDTO = (model) => ({
   availability: model.availability,
   description: model.description,
   photos: model.photos,
-  price: model.price,
-  promotion: model.promotion,
+  price: model.price.toLocaleString('pt-br', {
+    style: 'currency',
+    currency: 'BRL'
+  }),
+  promotion: model.promotion.toLocaleString('pt-br', {
+    style: 'currency',
+    currency: 'BRL'
+  }),
   sku: model.sku,
   quantity: model.quantity,
   store: model.storeid,
@@ -38,8 +44,14 @@ const toDTORating = (model) => ({
     availability: model.product.availability,
     description: model.product.description,
     photos: model.product.photos,
-    price: model.product.price,
-    promotion: model.product.promotion,
+    price: model.product.price.toLocaleString('pt-br', {
+      style: 'currency',
+      currency: 'BRL'
+    }),
+    promotion: model.product.promotion.toLocaleString('pt-br', {
+      style: 'currency',
+      currency: 'BRL'
+    }),
     sku: model.product.sku,
     quantity: model.quantity,
     dimensions: {

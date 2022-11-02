@@ -51,7 +51,10 @@ const toDTOList = (model) => ({
 
 const toDTOShipping = (model) => ({
   code: model.Codigo,
-  price: model.Valor,
+  price: model.Valor.toLocaleString('pt-br', {
+    style: 'currency',
+    currency: 'BRL'
+  }),
   deadlineDelivery: model.PrazoEntrega,
   ownHandvalue: model.ValorMaoPropria,
   receiptNoticevalue: model.ValorAvisoRecebimento,
