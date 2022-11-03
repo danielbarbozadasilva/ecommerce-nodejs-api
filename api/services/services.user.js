@@ -42,7 +42,8 @@ const profile = [
       'LIST_ID_SOLICITATION',
       'LIST_CLIENT_SOLICITATION',
       'LIST_CART_PRODUCT',
-      'UPDATE_DELIVERY'
+      'UPDATE_DELIVERY',
+      'UPDATE_PAYMENT'
     ]
   },
   {
@@ -66,7 +67,9 @@ const profile = [
       'LIST_ID_SOLICITATION',
       'LIST_CLIENT_SOLICITATION',
       'LIST_CART_PRODUCT',
-      'LIST_DELIVERY'
+      'LIST_DELIVERY',
+      'LIST_PAYMENT_ID',
+      'TAKE_PAYMENT'
     ]
   }
 ]
