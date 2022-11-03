@@ -59,7 +59,7 @@ db.clients.insert([
     user: ObjectId("6320f577156b47ff1082586c"),
     name: "Daniel Silva",
     birthDate: "2000-09-09",
-    cpf: "111.231.455-81",
+    cpf: "82429888467",
     phones: [
         "(11)2423-2198",
         "(11)99099-8990"
@@ -104,8 +104,8 @@ db.products.insert([
   price: 2399.99,
   promotion: 1199.99,
   sku: "PVNV3060RTX",
-  quantity: 49,
-  blockedQuantity: 1,
+  quantity: 50,
+  blockedQuantity: 0,
   dimensions: {
     height: 8,
     width: 10,
@@ -125,8 +125,8 @@ db.products.insert([
   price: 849.99,
   promotion: 429.99,
   sku: "PCINTI510400F",
-  quantity: 148,
-  blockedQuantity: 2,
+  quantity: 150,
+  blockedQuantity: 0,
   dimensions: {
     height: 8,
     width: 10,
@@ -139,90 +139,6 @@ db.products.insert([
 }
 ])
 
-db.createCollection("payments")
-db.payments.insert([
-{
-  _id: ObjectId("63602cffbcf665837b144ace"),
-  price: 2127.9,
-  type: "CREDITCARD",
-  installments: 2,
-  status: "Aguardando pagamento",
-  address: {
-    street: "Av. Manuel Gomes",
-    number: "1223",
-    complement: "casa",
-    district: "Rio de janeiro",
-    city: "Rio de janeiro",
-    state: "Rio de janeiro",
-    zipCode: "21987-200"
-  },
-  card: {
-    fullName: "DANIEL BARBOZA DA SILVA",
-    areaCode: "21987-200",
-    phone: "(21)2434-1207",
-    birthDate: "2000-02-09",
-    creditCardToken: "51ae1b1ae9cf421abe6c02ac99838cf1",
-    cpf: "04275271041"
-  },
-  addressDeliveryIgualCharging: false,
-  solicitation: ObjectId("63602cffbcf665837b144ad5")
-}
-])
 
-db.createCollection("deliveries")
-db.deliveries.insert([
-{
-  _id: ObjectId("63602cffbcf665837b144ad2"),
-  status: "not started",
-  trackingCode: "1178633798952",
-  type: "4014",
-  price: 67.93,
-  deliveryTime: 2,
-  address: {
-    street: "Av. Manuel Gomes",
-    number: "1223",
-    complement: "casa",
-    district: "Rio de janeiro",
-    city: "Rio de janeiro",
-    state: "Rio de janeiro",
-    zipCode: "21987-200"
-  }
-}
-])
-
-db.createCollection("solicitations")
-db.solicitations.insert([
-{
-  _id: ObjectId("63602cffbcf665837b144ad5"),
-  cart:[
-  {
-    product: ObjectId("63432f02a7f855351c99dc71"),
-    quantity: 1,
-    unitPrice: 1199.99
-  },
-  {
-    product: ObjectId("63432f02a7f855351c99dc72"),
-    quantity: 2,
-    unitPrice: 429.99
-  }],
-  shipping: 67.93,
-  client: ObjectId("6320f577156b47ff1082586e"),
-  payment: ObjectId("63602cffbcf665837b144ace"),
-  deliveries: ObjectId("63602cffbcf665837b144ad2"),
-  store: ObjectId("631e00f5190d800a90c6fa4d"),
-  canceled: false
-}
-])
-
-db.createCollection("orderregistrations")
-db.orderregistrations.insert([
-{
-  _id: ObjectId("63602cffbcf665837b144ad9"),
-  solicitation: ObjectId("63602cffbcf665837b144ad5"),
-  type: "payment",
-  situation: "created",
-  date: "2022-10-31T20:15:59.731Z"
-}
-])
 
 EOF
