@@ -4,7 +4,7 @@ const sendUpdateEmail = (dataCart, dataClient, status) => `
     <p>
     Prezado ${dataClient[0].client.name},
     <br />
-    A sua transação foi ${status.toLowerCase()}! <br />
+    A sua transação foi ${status.toLowerCase()} com sucesso! <br />
     Data: ${moment(new Date()).format('DD/MM/YYYY')} às ${moment(
   new Date()).format('hh:mm:ss')}.</p>
     <br />
