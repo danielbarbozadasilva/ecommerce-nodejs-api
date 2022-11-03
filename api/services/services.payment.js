@@ -103,7 +103,7 @@ const sendEmailClientUpdate = async (id, status) => {
   })
 }
 
-const updateQuantityConfirmOrder = async (id) => {
+const updateQuantityConfirm = async (id) => {
   try {
     const resultSolicitation = await solicitation.findById(id)
     resultSolicitation.cart.map(async (item) => {
@@ -132,6 +132,25 @@ const updateQuantityCancelation = async (id) => {
 
 const updatePaymentService = async (paymentid, body) => {
   try {
+    const resultDB = await solicitation.aggregate([
+      {
+        $lookup: {
+          from: payment.collection.name,
+          localField: 'payment',
+          foreignField: '_id',
+          as: 'payment',
+          pipeline: [
+            {
+              $match: {
+                $expr: { $eq: ['$_id', ObjectId(paymentid)] }
+              }
+            }
+          ]
+        }
+      },
+      { $unwind: '$payment' }
+    ])
+
     const resultPayment = await payment.findOneAndUpdate(
       { _id: paymentid },
       {
@@ -143,16 +162,16 @@ const updatePaymentService = async (paymentid, body) => {
     )
 
     const resultRegistration = await orderregistrations.create({
-      solicitation: resultPayment.solicitation,
+      solicitation: resultDB[0]._id,
       type: 'payment',
-      situation: body.status
+      situation: resultPayment.status
     })
 
-    await sendEmailClientUpdate(resultPayment.solicitation, body.status)
+    await sendEmailClientUpdate(resultDB[0]._id, resultPayment.status)
 
-    if (body.status.toLowerCase().includes('pago')) {
-      await updateQuantityConfirmOrder(resultRegistration.solicitation)
-    } else if (body.status.toLowerCase().includes('cancelado')) {
+    if (body.status.toLowerCase().includes('paga')) {
+      await updateQuantityConfirm(resultRegistration.solicitation)
+    } else if (body.status.toLowerCase().includes('cancelada')) {
       await updateQuantityCancelation(resultRegistration.solicitation)
     }
 
@@ -238,7 +257,7 @@ const createPaymentService = async (paymentid, body) => {
 
     return {
       success: true,
-      message: 'Payment created successfully',
+      message: 'Sales communication made successfully to Pagseguro',
       data: paymentMapper.toDTOPay(payload)
     }
   } catch (err) {
@@ -249,44 +268,50 @@ const createPaymentService = async (paymentid, body) => {
 const showNotificationPaymentService = async (body) => {
   try {
     const resultNotification = await getNotification(body.notificationCode)
-    const resultPayment = await payment.findOne({
-      pagSeguroCode: resultNotification.code
-    })
 
-    if (!resultPayment) {
-      return {
-        success: false,
-        message: 'Payment does not exist'
-      }
-    }
+    const result = await payment.aggregate([
+      { $match: { pagSeguroCode: resultNotification.code } },
+      {
+        $lookup: {
+          from: solicitation.collection.name,
+          localField: 'payment._id',
+          foreignField: 'solicitation',
+          as: 'solicitation'
+        }
+      },
+      { $unwind: '$solicitation' },
+      {
+        $lookup: {
+          from: orderregistrations.collection.name,
+          localField: 'solicitation._id',
+          foreignField: 'solicitation',
+          as: 'orderregistrations',
+          pipeline: [
+            {
+              $match: { $expr: { $eq: ['$type', 'solicitation'] } }
+            }
+          ]
+        }
+      },
+      { $unwind: '$orderregistrations' }
+    ])
 
-    const resultSolicitation = await solicitation.findOne({
-      payment: resultPayment._id
-    })
-
-    const resultRegistration = await orderregistrations.find({
-      solicitation: resultSolicitation._id,
-      type: 'payment'
-    })
+    const resultPayment = paymentMapper.toDTOPayment(...result)
 
     const resultSituation = resultPayment.pagSeguroCode
       ? await getTransactionStatus(resultPayment.pagSeguroCode)
       : null
-    if (
-      resultSituation &&
-      (resultRegistration.length === 0 ||
-        resultRegistration[resultRegistration.length - 1].payload.code !==
-          resultSituation.code)
-    ) {
-      const result = await orderregistrations.create({
-        solicitation: resultSolicitation._id,
+
+    if (resultSituation && resultPayment.orderregistrations) {
+      const resultOrder = await orderregistrations.create({
+        solicitation: resultPayment.solicitation.id,
         type: 'payment',
         situation: resultSituation.status || 'situation',
         payload: resultSituation
       })
 
       await payment.findOneAndUpdate(
-        { _id: resultPayment._id },
+        { _id: resultPayment.id },
         {
           $set: {
             status: resultSituation.status
@@ -296,17 +321,16 @@ const showNotificationPaymentService = async (body) => {
       )
 
       await sendEmailClientUpdate(
-        resultSolicitation._id,
+        resultPayment.solicitation.id,
         resultSituation.status
       )
 
       if (resultSituation.status.toLowerCase().includes('paga')) {
-        await updateQuantityConfirmOrder(result.solicitation)
+        await updateQuantityConfirm(resultOrder.solicitation)
       } else if (resultSituation.status.toLowerCase().includes('cancelada')) {
-        await updateQuantityCancelation(result.solicitation)
+        await updateQuantityCancelation(resultOrder.solicitation)
       }
     }
-
     return {
       success: true,
       message: 'Payment created successfully'
@@ -322,7 +346,7 @@ const showSessionService = async () => {
 
     return {
       success: true,
-      message: 'Session id listed successfully',
+      message: 'Sesson id listed successfully',
       data: resultId
     }
   } catch (err) {

@@ -255,9 +255,58 @@ const toDTOPay = (model) => ({
   paymentLink: model.paymentLink
 })
 
+const toDTOPayment = (model) => ({
+  id: model._id,
+  price: Number(model.price).toLocaleString('pt-br', {
+    style: 'currency',
+    currency: 'BRL'
+  }),
+  type: model.type,
+  installments: model.installments,
+  status: model.status,
+  address: {
+    street: model.address.street,
+    number: model.address.number,
+    complement: model.address.complement,
+    district: model.address.district,
+    city: model.address.city,
+    state: model.address.state,
+    zipCode: model.address.zipCode
+  },
+  card: {
+    fullName: model.card.fullName,
+    areaCode: model.card.areaCode,
+    phone: model.card.phone,
+    birthDate: new Date(model.card.birthDate).toLocaleDateString('pt-BR'),
+    creditCardToken: model.card.creditCardToken,
+    cpf: model.card.cpf
+  },
+  addressDeliveryIgualCharging: model.addressDeliveryIgualCharging,
+  payload: model.payload[0],
+  pagSeguroCode: model.pagSeguroCode,
+  solicitation: {
+    id: model.solicitation._id,
+    cart: model.solicitation.cart,
+    shipping: model.solicitation.shipping,
+    client: model.solicitation.client,
+    payment: model.solicitation.payment,
+    deliveries: model.solicitation.deliveries,
+    store: model.solicitation.store,
+    canceled: model.solicitation.canceled
+  },
+  orderregistrations: {
+    id: model.orderregistrations._id,
+    solicitation: model.orderregistrations.solicitation,
+    type: model.orderregistrations.type,
+    situation: model.orderregistrations.situation,
+    date: new Date(model.orderregistrations.date).toLocaleDateString('pt-BR')
+  }
+})
+
 module.exports = {
   toDTO,
   toDTOList,
   toDTOCart,
-  toDTOPay
+  toDTOPay,
+  toDTOPayment
 }
