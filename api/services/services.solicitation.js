@@ -291,7 +291,7 @@ const checkCard = async (cart, payment, shipping) => {
   cart.map((item, i) => {
     total += (productDB[i].promotion || productDB[i].price) * item.quantity
   })
-  
+
   totalPrice = total + shipping
 
   const checkTotal =
@@ -336,7 +336,7 @@ const sendEmailClientSolicitation = async (clientid, id, shipping) => {
   })
 }
 
-const updateQuantity = async (data) => {
+const updateQuantitySave = async (data) => {
   try {
     data.map(async (item) => {
       const resultProduct = await product.findOne({ _id: item.product })
@@ -364,8 +364,7 @@ const createSolicitationService = async (storeid, clientid, body) => {
       address: body.payment.address,
       card: body.payment.card,
       status: 'Aguardando pagamento',
-      store: storeid,
-      pagSeguroCode: Math.floor(Math.random() * new Date().getTime())
+      store: storeid
     })
 
     const resultDeliveries = await deliveries.create({
@@ -374,8 +373,7 @@ const createSolicitationService = async (storeid, clientid, body) => {
       deliveryTime: body.deliveries.deliveryTime,
       address: body.deliveries.address,
       status: 'not started',
-      store: storeid,
-      trackingCode: Math.floor(Math.random() * new Date().getTime())
+      store: storeid
     })
 
     const resultSolicitation = await solicitation.create({
@@ -392,7 +390,9 @@ const createSolicitationService = async (storeid, clientid, body) => {
       type: 'solicitation',
       situation: 'created'
     })
-    await updateQuantity(body.cart)
+
+    
+    await updateQuantitySave(body.cart)
     await sendEmailAdminSolicitation(
       clientid,
       resultSolicitation._id,
