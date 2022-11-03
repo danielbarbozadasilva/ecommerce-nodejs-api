@@ -23,7 +23,7 @@ const _createPaymentWithBoleto = (senderHash, data) =>
       postal_code: data.deliveries.address.zipCode.replace(/-/g, ''),
       same_for_billing: data.addressDeliveryIgualCharging
     })
-    
+
     pag.setBilling({
       street: data.address.street,
       number: data.address.number,
@@ -65,7 +65,7 @@ const _createPaymentWithCreditCard = (senderHash, data) =>
       name: data.client.name,
       email: data.user.email,
       cpf_cnpj: data.client.cpf.replace(/[-\.]/g, ''),
-      area_code: data.client.phones[0].slice(1, 3),
+      area_code: data.card.areaCode.trim(),
       phone:
         data.card.phone.trim().slice(4).replace(/[-\.]/g, '') ||
         data.client.phones[0].trim().slice(4).replace(/[-\.]/g, ''),
@@ -107,9 +107,7 @@ const _createPaymentWithCreditCard = (senderHash, data) =>
 
     pag.setCreditCardHolder({
       name: data.card.fullName || data.client.name,
-      area_code:
-        data.card.areaCode.trim().slice(1, 3) ||
-        data.client.phones[0].trim().slice(1, 3),
+      area_code: data.card.areaCode.trim(),
       phone:
         data.card.phone.trim().slice(4).replace(/[-\.]/g, '') ||
         data.client.phones[0].trim().slice(4).replace(/[-\.]/g, ''),
