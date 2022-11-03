@@ -2085,7 +2085,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/solicitation/634fffbb31525140ecaa9642/cart?limit=30&offset=0",
+							"raw": "http://localhost:3011/v1/solicitation/63602cffbcf665837b144ad5/cart?limit=30&offset=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2094,7 +2094,7 @@
 							"path": [
 								"v1",
 								"solicitation",
-								"634fffbb31525140ecaa9642",
+								"63602cffbcf665837b144ad5",
 								"cart"
 							],
 							"query": [
@@ -2144,7 +2144,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 429.99,\r\n            \"quantity\": 2\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\",\r\n    \"shipping\": 67.93,\r\n    \"payment\": {\r\n        \"price\": 2127.90,\r\n        \"type\": \"BOLETO\",\r\n        \"installments\": 1,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"Rio de janeiro\",\r\n            \"zipCode\": \"21987-200\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 67.93,\r\n        \"type\": \"4014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"Rio de janeiro\",\r\n            \"zipCode\": \"21987-200\"\r\n        }\r\n    }\r\n}",
+							"raw": "\r\n{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 429.99,\r\n            \"quantity\": 3\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\",\r\n    \"shipping\": 79.33,\r\n    \"payment\": {\r\n        \"price\": 2569.29,\r\n        \"type\": \"CREDITCARD\",\r\n        \"installments\": 3,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987-200\"\r\n        },\r\n        \"card\": {\r\n            \"fullName\": \"DANIEL BARBOZA DA SILVA\",\r\n            \"areaCode\": \"21\",\r\n            \"phone\": \"(21)2434-1207\",\r\n            \"birthDate\": \"2000-02-09\",\r\n            \"creditCardToken\": \"51ae1b1ae9cf421abe6c02ac99838cf1\",\r\n            \"cpf\": \"82429888467\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 79.33,\r\n        \"type\": \"4014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987200\"\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2365,7 +2365,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 429.99,\r\n            \"quantity\": 2\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\"\r\n}",
+							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 429.99,\r\n            \"quantity\": 3\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2383,6 +2383,212 @@
 								"v1",
 								"delivery",
 								"calculate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "payment",
+			"item": [
+				{
+					"name": "payment.listById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/payment/63602d21bcf665837b144b19",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"payment",
+								"63602d21bcf665837b144b19"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "payment.communicationPagseguro",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "senderHash",
+									"value": "fe9def6c992bb8281b151f1cf2096f5595ae636d499a09c4fa76edf021ef8a60",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/take/payment/6364237e54385bd70b72d023",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"take",
+								"payment",
+								"6364237e54385bd70b72d023"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "payment.sessionPagseguro",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_id\": \"6320f577156b47ff1082586e\",\r\n    \"title\": \"Nvidia GTX1080\",\r\n    \"availability\": true,\r\n    \"description\": \"Placa de vídeo\",\r\n    \"photos\": \"43242342342343224\",\r\n    \"price\": \"43242342342343224\",\r\n    \"promotion\": \"43242342342343224\",\r\n    \"sku\": \"43242342342343224\",\r\n    \"category\": \"631e00f5190d800a90c6fa43\",\r\n    \"store\": \"631e00f5190d800a90c6fa43\",\r\n    \"rating\": \"631e00f5190d800a90c6fa43\",\r\n    \"variations\": \"631e00f5190d800a90c6fa43\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/payment/session",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"payment",
+								"session"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "payment.manuallyAction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "status",
+									"value": "paga",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/payment/6364237e54385bd70b72d023",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"payment",
+								"6364237e54385bd70b72d023"
 							]
 						}
 					},
