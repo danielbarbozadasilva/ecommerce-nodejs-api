@@ -212,8 +212,18 @@ const showCartSolicitationService = async (solicitationid) => {
           foreignField: '_id',
           as: 'products'
         }
-      }
+      },
+      {
+        $lookup: {
+          from: payment.collection.name,
+          localField: 'payment',
+          foreignField: '_id',
+          as: 'payment'
+        }
+      },
+      { $unwind: '$payment' }
     ])
+
     return {
       success: true,
       message: 'Cart listed successfully',
@@ -391,7 +401,6 @@ const createSolicitationService = async (storeid, clientid, body) => {
       situation: 'created'
     })
 
-    
     await updateQuantitySave(body.cart)
     await sendEmailAdminSolicitation(
       clientid,

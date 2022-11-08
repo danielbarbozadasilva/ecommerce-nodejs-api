@@ -109,7 +109,28 @@ const toDTOCart = (model) => ({
       currency: 'BRL'
     })
   })),
-  shipping: model.shipping
+  shipping: model.shipping,
+  payment:{
+    id: model.payment._id,
+    price: model.payment.price.toLocaleString('pt-br', {
+      style: 'currency',
+      currency: 'BRL'
+    }),
+    type: model.payment.type,
+    installments: model.payment.installments,
+    status: model.payment.status,
+    address: {
+      street: model.payment.address.street,
+      number: model.payment.address.number,
+      complement: model.payment.address.complement,
+      district: model.payment.address.district,
+      city: model.payment.address.city,
+      state: model.payment.address.state,
+      zipCode: model.payment.address.zipCode
+    },
+    addressDeliveryIgualCharging: model.payment.addressDeliveryIgualCharging,
+    pagSeguroCode: model.payment.pagSeguroCode
+  }
 })
 
 const toDTOList = (solicitation, deliveries) => ({
