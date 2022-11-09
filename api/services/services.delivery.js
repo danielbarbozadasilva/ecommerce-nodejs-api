@@ -8,10 +8,11 @@ const {
   solicitation,
   product,
   client,
-  user
+  user,
+  payment
 } = require('../models/models.index')
 const emailUtils = require('../utils/email/email.index')
-const emailUpdateSolicitation = require('../utils/email/email.notification_payment')
+const emailUpdateSolicitation = require('../utils/email/email.update_payment')
 const deliveryMapper = require('../mappers/mappers.delivery')
 
 const config = require('../utils/util.correios')
@@ -55,56 +56,88 @@ const listByIdDeliveryService = async (id) => {
   }
 }
 
-const sendEmailUpdate = async (solicitationid) => {
-  const result = await solicitation.aggregate([
-    { $match: { _id: ObjectId(solicitationid) } },
-    {
-      $lookup: {
-        from: client.collection.name,
-        localField: 'client',
-        foreignField: '_id',
-        as: 'client'
-      }
-    },
-    { $unwind: '$client' },
-    {
-      $lookup: {
-        from: user.collection.name,
-        localField: 'client.user',
-        foreignField: '_id',
-        as: 'user'
-      }
-    },
-    { $unwind: '$user' },
+const searchCartSolicitation = async (id) => {
+  try {
+    const result = await solicitation.aggregate([
+      { $match: { _id: ObjectId(id) } },
+      {
+        $lookup: {
+          from: client.collection.name,
+          localField: 'client',
+          foreignField: '_id',
+          as: 'client'
+        }
+      },
+      { $unwind: '$client' },
 
-    {
-      $lookup: {
-        from: product.collection.name,
-        localField: 'cart.product',
-        foreignField: '_id',
-        as: 'products'
-      }
-    },
-    { $unwind: '$products' }
-  ])
+      {
+        $lookup: {
+          from: user.collection.name,
+          localField: 'client.user',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      { $unwind: '$user' },
 
+      {
+        $lookup: {
+          from: deliveries.collection.name,
+          localField: 'deliveries',
+          foreignField: '_id',
+          as: 'deliveries'
+        }
+      },
+      { $unwind: '$deliveries' },
+      {
+        $lookup: {
+          from: product.collection.name,
+          localField: 'cart.product',
+          foreignField: '_id',
+          as: 'products'
+        }
+      },
+      {
+        $lookup: {
+          from: payment.collection.name,
+          localField: 'payment',
+          foreignField: '_id',
+          as: 'payment'
+        }
+      },
+      { $unwind: '$payment' }
+    ])
+
+    return {
+      success: true,
+      message: 'Cart listed successfully',
+      data: deliveryMapper.toDTOCart(...result)
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
+const sendEmailUpdate = async (id) => {
+  const result = await searchCartSolicitation(id)
+  
   emailUtils.utilSendEmail({
-    to: result[0].user.email,
+    to: result.data.user.email,
     from: process.env.SENDGRID_SENDER,
-    subject: `E-commerce - Seu pedido ${solicitationid} saiu para entrega!`,
-    html: emailUpdateSolicitation.sendSolicitationUpdateEmail(result)
+    subject: `E-commerce - Seu pedido saiu para Entrega!`,
+    html: emailUpdateSolicitation.sendSolicitationUpdateEmail(result.data)
   })
 }
 
 const updateDeliveryService = async (body, id) => {
   try {
-    const solicitationDB = await solicitation.findOne({ deliveries: id })
+    const resultSolicitation = await solicitation.findOne({ deliveries: id })
 
     const resultDB = await orderregistrations.findOneAndUpdate(
-      { solicitation: solicitationDB._id, type: 'solicitation' },
+      { solicitation: resultSolicitation._id, type: 'solicitation' },
       {
         $set: {
-          solicitation: solicitationDB._id,
+          solicitation: resultSolicitation._id,
           type: 'started',
           situation: body.status,
           payload: body
@@ -113,7 +146,17 @@ const updateDeliveryService = async (body, id) => {
       { new: true }
     )
 
-    await sendEmailUpdate(solicitationDB._id)
+    await deliveries.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          trackingCode: body.trackingCode
+        }
+      },
+      { new: true }
+    )
+
+    await sendEmailUpdate(resultSolicitation._id)
 
     return {
       success: true,

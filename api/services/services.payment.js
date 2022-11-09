@@ -22,9 +22,7 @@ const { showCartSolicitationService } = require('./services.solicitation')
 
 const listByIdPaymentService = async (paymentid) => {
   try {
-    const resultPayment = await payment.findOne({
-      _id: paymentid
-    })
+    const resultPayment = await payment.findById(paymentid)
 
     const resultRegistration = await orderregistrations.find({
       solicitation: resultPayment.solicitation,
@@ -66,40 +64,25 @@ const listByIdPaymentService = async (paymentid) => {
   }
 }
 
-const sendEmailClientUpdate = async (id, status) => {
-  const resultClient = await solicitation.aggregate([
-    { $match: { _id: ObjectId(id) } },
-    {
-      $lookup: {
-        from: client.collection.name,
-        localField: 'client',
-        foreignField: '_id',
-        as: 'client'
-      }
-    },
-    { $unwind: '$client' },
-    {
-      $lookup: {
-        from: user.collection.name,
-        localField: 'client.user',
-        foreignField: '_id',
-        as: 'user'
-      }
-    },
-    { $unwind: '$user' }
-  ])
-  const resultSolicitation = await showCartSolicitationService(id)
+const sendEmailClientSuccessfullyPaid = async (id) => {
+  const result = await showCartSolicitationService(id)
 
   emailUtils.utilSendEmail({
-    to: resultClient[0].user.email,
+    to: result.data.user.email,
     from: process.env.SENDGRID_SENDER,
-    subject: `Pedido ${id} foi atualizado!`,
+    subject: `E-commerce - Pagamento Confirmado!`,
+    html: emailUpdatePayment.sendEmailSuccessfullyPaid(result.data)
+  })
+}
 
-    html: emailUpdatePayment.sendUpdateEmail(
-      resultSolicitation.data,
-      resultClient,
-      status
-    )
+const sendEmailClientPaymentFailed = async (id) => {
+  const result = await showCartSolicitationService(id)
+
+  emailUtils.utilSendEmail({
+    to: result.data.user.email,
+    from: process.env.SENDGRID_SENDER,
+    subject: `E-commerce - Pagamento Cancelado!`,
+    html: emailUpdatePayment.sendEmailPaymentFailed(result.data)
   })
 }
 
@@ -133,22 +116,34 @@ const updateQuantityCancelation = async (id) => {
 const updatePaymentService = async (paymentid, body) => {
   try {
     const resultDB = await solicitation.aggregate([
+      { $match: { payment: ObjectId(paymentid) } },
       {
         $lookup: {
           from: payment.collection.name,
           localField: 'payment',
           foreignField: '_id',
-          as: 'payment',
-          pipeline: [
-            {
-              $match: {
-                $expr: { $eq: ['$_id', ObjectId(paymentid)] }
-              }
-            }
-          ]
+          as: 'payment'
         }
       },
-      { $unwind: '$payment' }
+      { $unwind: '$payment' },
+      {
+        $lookup: {
+          from: client.collection.name,
+          localField: 'client',
+          foreignField: '_id',
+          as: 'client'
+        }
+      },
+      { $unwind: '$client' },
+      {
+        $lookup: {
+          from: user.collection.name,
+          localField: 'client.user',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      { $unwind: '$user' }
     ])
 
     const resultPayment = await payment.findOneAndUpdate(
@@ -167,11 +162,11 @@ const updatePaymentService = async (paymentid, body) => {
       situation: resultPayment.status
     })
 
-    await sendEmailClientUpdate(resultDB[0]._id, resultPayment.status)
-
     if (body.status.toLowerCase().includes('paga')) {
       await updateQuantityConfirm(resultRegistration.solicitation)
+      await sendEmailClientSuccessfullyPaid(resultDB[0]._id)
     } else if (body.status.toLowerCase().includes('cancelada')) {
+      await sendEmailClientPaymentFailed(resultDB[0]._id)
       await updateQuantityCancelation(resultRegistration.solicitation)
     }
 
@@ -254,7 +249,6 @@ const createPaymentService = async (paymentid, body) => {
       },
       { new: true }
     )
-
     return {
       success: true,
       message: 'Sales communication made successfully to Pagseguro',
@@ -320,15 +314,12 @@ const showNotificationPaymentService = async (body) => {
         { new: true }
       )
 
-      await sendEmailClientUpdate(
-        resultPayment.solicitation.id,
-        resultSituation.status
-      )
-
       if (resultSituation.status.toLowerCase().includes('paga')) {
         await updateQuantityConfirm(resultOrder.solicitation)
+        await sendEmailClientSuccessfullyPaid(resultPayment.solicitation.id)
       } else if (resultSituation.status.toLowerCase().includes('cancelada')) {
         await updateQuantityCancelation(resultOrder.solicitation)
+        await sendEmailClientPaymentFailed(resultPayment.solicitation.id)
       }
     }
     return {

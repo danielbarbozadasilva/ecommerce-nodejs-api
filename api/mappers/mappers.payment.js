@@ -1,6 +1,6 @@
 const toDTO = (payment, registration) => ({
   payment: {
-    id: payment._id,
+    id: payment.id,
     price: payment.price.toLocaleString('pt-br', {
       style: 'currency',
       currency: 'BRL'
@@ -30,10 +30,10 @@ const toDTO = (payment, registration) => ({
     pagSeguroCode: payment.pagSeguroCode
   },
   registration: {
-    id: registration._id,
-    solicitation: registration.solicitation,
-    type: registration.type,
-    situation: registration.situation
+    id: registration?.id,
+    solicitation: registration?.solicitation,
+    type: registration?.type,
+    situation: registration?.situation
   }
 })
 
