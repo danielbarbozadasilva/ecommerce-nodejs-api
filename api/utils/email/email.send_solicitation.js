@@ -162,7 +162,15 @@ const sendSolicitationClientEmail = (data) => `
                                                                                         <table cellpadding="0" cellspacing="0" width="100%">
                                                                                             <tbody>
                                                                                                 <tr>
-                                                                                                    <td align="center" class="esd-block-image" style="font-size: 0px;"><a target="_blank"><img class="adapt-img" src="https://pjnogm.stripocdn.email/content/guids/CABINET_c67048fd0acf81b47e18129166337c05/images/79021618299486570.png" alt style="display: block;" width="70"></a></td>
+                                                                                                <img class="adapt-img" src=${`http://localhost:3011/static/image/${[
+                                                                                                  item.product
+                                                                                                ].map(
+                                                                                                  (
+                                                                                                    data
+                                                                                                  ) =>
+                                                                                                    data
+                                                                                                      .photos[0]
+                                                                                                )}`} style="display: block;" width="70">
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
@@ -387,7 +395,7 @@ const sendSolicitationClientEmail = (data) => `
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-p10t es-p10b">
-                                                                                        <p>Alguma dúvida?&nbsp;Entre em contato por e-mail&nbsp;<a target="_blank" href="mailto:">support@</a>ecommerce.com.br</p>
+                                                                                        <p>Alguma dúvida?&nbsp;Entre em contato por e-mail&nbsp;<a target="_blank" href="mailto:">danielbarboza56@hotmail.com</a></p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -653,7 +661,15 @@ const sendSolicitationAdminEmail = (data) => `
                                                                                         <table cellpadding="0" cellspacing="0" width="100%">
                                                                                             <tbody>
                                                                                                 <tr>
-                                                                                                    <td align="center" class="esd-block-image" style="font-size: 0px;"><a target="_blank"><img class="adapt-img" src="https://pjnogm.stripocdn.email/content/guids/CABINET_c67048fd0acf81b47e18129166337c05/images/79021618299486570.png" alt style="display: block;" width="70"></a></td>
+                                                                                                <img class="adapt-img" src=${`http://localhost:3011/static/image/${[
+                                                                                                  item.product
+                                                                                                ].map(
+                                                                                                  (
+                                                                                                    data
+                                                                                                  ) =>
+                                                                                                    data
+                                                                                                      .photos[0]
+                                                                                                )}`} style="display: block;" width="70">
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
@@ -878,7 +894,7 @@ const sendSolicitationAdminEmail = (data) => `
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-p10t es-p10b">
-                                                                                        <p>Alguma dúvida?&nbsp;Entre em contato por e-mail&nbsp;<a target="_blank" href="mailto:">support@</a>ecommerce.com.br</p>
+                                                                                        <p>Alguma dúvida?&nbsp;Entre em contato por e-mail&nbsp;<a target="_blank" href="mailto:">danielbarboza56@hotmail.com</a></p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>

@@ -3,7 +3,9 @@ const toDTO = (model) => ({
   title: model.title,
   availability: model.availability,
   description: model.description,
-  photos: model.photos,
+  photos: model.photos.map(
+    (item) => `http://localhost:3011/static/image/${item}`
+  ),
   price: model.price.toLocaleString('pt-br', {
     style: 'currency',
     currency: 'BRL'
@@ -43,7 +45,9 @@ const toDTORating = (model) => ({
     title: model.product.title,
     availability: model.product.availability,
     description: model.product.description,
-    photos: model.product.photos,
+    photos: model.photos.map(
+      (item) => `http://localhost:3011/static/image/${item}`
+    ),
     price: model.product.price.toLocaleString('pt-br', {
       style: 'currency',
       currency: 'BRL'

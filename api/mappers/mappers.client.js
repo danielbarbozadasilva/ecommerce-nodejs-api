@@ -142,7 +142,9 @@ const toDTOSolicitations = (model) => ({
     title: item.title,
     availability: item.availability,
     description: item.description,
-    photos: item.photos,
+    photos: model.photos.map(
+      (item) => `http://localhost:3011/static/image/${item}`
+    ),
     price: item.price.toLocaleString('pt-br', {
       style: 'currency',
       currency: 'BRL'
