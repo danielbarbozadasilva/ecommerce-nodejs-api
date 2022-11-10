@@ -389,7 +389,7 @@ const cancelSolicitationClientEmail = (data) => `
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-p10t es-p10b">
-                                                                                        <p>Alguma dúvida?&nbsp;Entre em contato por e-mail&nbsp;<a target="_blank" href="mailto:">support@</a>ecommerce.com.br</p>
+                                                                                        <p>Alguma dúvida?&nbsp;Entre em contato por e-mail&nbsp;<a target="_blank" href="mailto:">danielbarboza56@hotmail.com</a></p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -880,7 +880,7 @@ const cancelSolicitationAdminEmail = (data) => `
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-p10t es-p10b">
-                                                                                        <p>Alguma dúvida?&nbsp;Entre em contato por e-mail&nbsp;<a target="_blank" href="mailto:">support@</a>ecommerce.com.br</p>
+                                                                                        <p>Alguma dúvida?&nbsp;Entre em contato por e-mail&nbsp;<a target="_blank" href="mailto:">danielbarboza56@hotmail.com</a></p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>

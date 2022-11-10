@@ -123,7 +123,7 @@ const sendEmailSuccessfullyPaid = (data) => `
                                                                                     <td align="center" class="esd-block-text es-m-txt-c">
                                                                                         <h2><a target="_blank">
                                                                                                 <font color="#333333">Pedido&nbsp;</font>${
-                                                                                                    data.id
+                                                                                                  data.id
                                                                                                 }
                                                                                             </a></h2>
                                                                                     </td>
@@ -132,8 +132,12 @@ const sendEmailSuccessfullyPaid = (data) => `
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-p5t es-p15b es-p40r es-p40l es-m-p0r es-m-p0l">
                                                                                         <p>Prezado <strong>${
-                                                                                            data.client.name
-                                                                                        }</strong>, o pagamento do seu pedido <strong>${data.id}</strong> foi aprovado!<br/>Vamos separar e embrulhar seu(s) produto(s) e, em breve, será entregue a transportadora. Aguarde nosso e-mail com mais informações. Veja os produtos que você vai receber:
+                                                                                          data
+                                                                                            .client
+                                                                                            .name
+                                                                                        }</strong>, o pagamento do seu pedido <strong>${
+  data.id
+}</strong> foi aprovado!<br/>Vamos separar e embrulhar seu(s) produto(s) e, em breve, será entregue a transportadora. Aguarde nosso e-mail com mais informações. Veja os produtos que você vai receber:
                                                                                        <br /> <br />
                                                                                         </p>
                                                                                     </td>
@@ -275,19 +279,23 @@ const sendEmailSuccessfullyPaid = (data) => `
                                                                                           }
                                                                                         )}</strong></p>
                                                                                         <p>Subtotal:&nbsp;<strong>${data.subTotal.toLocaleString(
-                                                                                            'pt-br',
-                                                                                            {
-                                                                                                style: 'currency',
-                                                                                                currency: 'BRL'
-                                                                                            }
-                                                                                            )}</strong></p>
+                                                                                          'pt-br',
+                                                                                          {
+                                                                                            style:
+                                                                                              'currency',
+                                                                                            currency:
+                                                                                              'BRL'
+                                                                                          }
+                                                                                        )}</strong></p>
                                                                                             <p>Total:&nbsp;<strong>${data.payment.price.toLocaleString(
-                                                                                                'pt-br',
-                                                                                                {
-                                                                                                    style: 'currency',
-                                                                                                    currency: 'BRL'
-                                                                                                }
-                                                                                                )}  </strong></p>
+                                                                                              'pt-br',
+                                                                                              {
+                                                                                                style:
+                                                                                                  'currency',
+                                                                                                currency:
+                                                                                                  'BRL'
+                                                                                              }
+                                                                                            )}  </strong></p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -347,7 +355,16 @@ const sendEmailSuccessfullyPaid = (data) => `
                                                                                         <p> 
                                                                                          
                                                                                           <strong>
-                                                                                            ${data.client.address.street}, ${data.client.address.number}, ${data.client.address.complement}, ${data.client.address.district}, ${data.client.address.city}, ${data.client.address.zipCode}, ${data.client.address.state}.
+                                                                                            ${
+                                                                                              data
+                                                                                                .client
+                                                                                                .address
+                                                                                                .street
+                                                                                            }, ${
+  data.client.address.number
+}, ${data.client.address.complement}, ${data.client.address.district}, ${
+  data.client.address.city
+}, ${data.client.address.zipCode}, ${data.client.address.state}.
                                                                                         
                                                                                         
                                                                                         </strong></p>
@@ -373,7 +390,7 @@ const sendEmailSuccessfullyPaid = (data) => `
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-p10t es-p10b">
-                                                                                        <p>Alguma dúvida?&nbsp;Entre em contato por e-mail&nbsp;<a target="_blank" href="mailto:">support@</a>ecommerce.com.br</p>
+                                                                                        <p>Alguma dúvida?&nbsp;Entre em contato por e-mail&nbsp;<a target="_blank" href="mailto:">danielbarboza56@hotmail.com</a></p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -476,7 +493,6 @@ const sendEmailSuccessfullyPaid = (data) => `
 </body>
 </html>
 `
-
 
 const sendEmailPaymentFailed = (data) => ` 
    
@@ -610,8 +626,12 @@ const sendEmailPaymentFailed = (data) => `
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-p5t es-p15b es-p40r es-p40l es-m-p0r es-m-p0l">
                                                                                         <p>Prezado <strong>${
-                                                                                            data.client.name
-                                                                                        }</strong>, ocorreu um erro ao realizar o pagamento do seu pedido <strong>${data.id}</strong>, e este foi cancelado!<br/>
+                                                                                          data
+                                                                                            .client
+                                                                                            .name
+                                                                                        }</strong>, ocorreu um erro ao realizar o pagamento do seu pedido <strong>${
+  data.id
+}</strong>, e este foi cancelado!<br/>
                                                                                        <br /> <br />
                                                                                         </p>
                                                                                     </td>
@@ -753,19 +773,23 @@ const sendEmailPaymentFailed = (data) => `
                                                                                           }
                                                                                         )}</strong></p>
                                                                                         <p>Subtotal:&nbsp;<strong>${data.subTotal.toLocaleString(
-                                                                                            'pt-br',
-                                                                                            {
-                                                                                                style: 'currency',
-                                                                                                currency: 'BRL'
-                                                                                            }
-                                                                                            )}</strong></p>
+                                                                                          'pt-br',
+                                                                                          {
+                                                                                            style:
+                                                                                              'currency',
+                                                                                            currency:
+                                                                                              'BRL'
+                                                                                          }
+                                                                                        )}</strong></p>
                                                                                             <p>Total:&nbsp;<strong>${data.payment.price.toLocaleString(
-                                                                                                'pt-br',
-                                                                                                {
-                                                                                                    style: 'currency',
-                                                                                                    currency: 'BRL'
-                                                                                                }
-                                                                                                )}  </strong></p>
+                                                                                              'pt-br',
+                                                                                              {
+                                                                                                style:
+                                                                                                  'currency',
+                                                                                                currency:
+                                                                                                  'BRL'
+                                                                                              }
+                                                                                            )}  </strong></p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -825,7 +849,16 @@ const sendEmailPaymentFailed = (data) => `
                                                                                         <p> 
                                                                                          
                                                                                           <strong>
-                                                                                            ${data.client.address.street}, ${data.client.address.number}, ${data.client.address.complement}, ${data.client.address.district}, ${data.client.address.city}, ${data.client.address.zipCode}, ${data.client.address.state}.
+                                                                                            ${
+                                                                                              data
+                                                                                                .client
+                                                                                                .address
+                                                                                                .street
+                                                                                            }, ${
+  data.client.address.number
+}, ${data.client.address.complement}, ${data.client.address.district}, ${
+  data.client.address.city
+}, ${data.client.address.zipCode}, ${data.client.address.state}.
                                                                                         
                                                                                         
                                                                                         </strong></p>
@@ -851,7 +884,7 @@ const sendEmailPaymentFailed = (data) => `
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-p10t es-p10b">
-                                                                                        <p>Alguma dúvida?&nbsp;Entre em contato por e-mail&nbsp;<a target="_blank" href="mailto:">support@</a>ecommerce.com.br</p>
+                                                                                        <p>Alguma dúvida?&nbsp;Entre em contato por e-mail&nbsp;<a target="_blank" href="mailto:">danielbarboza56@hotmail.com</a></p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>

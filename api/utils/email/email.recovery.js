@@ -70,7 +70,7 @@ const Email = (token) => `
                                                                       <tbody>
                                                                           <tr>
                                                                               <td align="center" class="esd-block-text es-p10t es-p10b">
-                                                                                  <p style="line-height: 150%;"><br>Alguma dúvida?&nbsp;Entre em contato por e-mail&nbsp;<a target="_blank" href="mailto:">support@</a>ecommerce.com.br</p>
+                                                                                  <p style="line-height: 150%;"><br>Alguma dúvida?&nbsp;Entre em contato por e-mail&nbsp;<a target="_blank" href="mailto:">danielbarboza56@hotmail.com</a></p>
                                                                               </td>
                                                                           </tr>
                                                                       </tbody>

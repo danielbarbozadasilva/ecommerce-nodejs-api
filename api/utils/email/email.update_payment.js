@@ -122,7 +122,7 @@ const sendSolicitationUpdateEmail = (data) => `
                                                                                     <td align="center" class="esd-block-text es-m-txt-c">
                                                                                         <h2><a target="_blank">
                                                                                                 <font color="#333333">Pedido&nbsp;</font>${
-                                                                                                    data.id
+                                                                                                  data.id
                                                                                                 }
                                                                                             </a></h2>
                                                                                     </td>
@@ -134,8 +134,14 @@ const sendSolicitationUpdateEmail = (data) => `
                                                                                           data
                                                                                             .client
                                                                                             .name
-                                                                                        }</strong>, o seu pedido <strong>${data.id}</strong> saiu para a entrega!<br/>
-                                                                                        Código de rastreamento: <strong>${data.deliveries.trackingCode}</strong>
+                                                                                        }</strong>, o seu pedido <strong>${
+  data.id
+}</strong> saiu para a entrega!<br/>
+                                                                                        Código de rastreamento: <strong>${
+                                                                                          data
+                                                                                            .deliveries
+                                                                                            .trackingCode
+                                                                                        }</strong>
                                                                                        <br /> <br />
                                                                                         </p>
                                                                                     </td>
@@ -388,7 +394,7 @@ const sendSolicitationUpdateEmail = (data) => `
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-p10t es-p10b">
-                                                                                        <p>Alguma dúvida?&nbsp;Entre em contato por e-mail&nbsp;<a target="_blank" href="mailto:">support@</a>ecommerce.com.br</p>
+                                                                                        <p>Alguma dúvida?&nbsp;Entre em contato por e-mail&nbsp;<a target="_blank" href="mailto:">danielbarboza56@hotmail.com</a></p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
