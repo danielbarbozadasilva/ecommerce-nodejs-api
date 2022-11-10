@@ -97,10 +97,10 @@ db.createCollection("products")
 db.products.insert([
 {
   _id: ObjectId("63432f02a7f855351c99dc71"),
-  title: "Placa de Vídeo Galax GeForce RTX 3060",
+  title: "Placa de Vídeo Zotac GeForce RTX 3060",
   availability: true,
   description: "(1-Click OC) LHR, 12GB GDDR6, 15 Gbps, Ray Tracing, DLSS - 36NOL7MD1VOC",
-  photos: [],
+  photos:["files-1668078769319.jpg","files-1668079012525.jpg"],  
   price: 2399.99,
   promotion: 1199.99,
   sku: "PVNV3060RTX",
@@ -121,7 +121,7 @@ db.products.insert([
   title: "Processador Intel Core i5-10400F, 2.9GHz",
   availability: true,
   description: "(4.3GHz Max Turbo), Cache 12MB, 6 Núcleos, 12 Threads, LGA 1200 - BX8070110400F",
-  photos: [],
+  photos:["files-1668078750488.jpg"],
   price: 849.99,
   promotion: 429.99,
   sku: "PCINTI510400F",
