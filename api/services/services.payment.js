@@ -22,51 +22,50 @@ const { showCartSolicitationService } = require('./services.solicitation')
 
 const listByIdPaymentService = async (paymentid) => {
   try {
-    const resultPayment = await payment.findById(paymentid)
+    const paymentdb = await payment.findById(paymentid)
 
-    const resultRegistration = await orderregistrations.find({
-      solicitation: resultPayment.solicitation,
+    const registrationdb = await orderregistrations.find({
+      solicitation: paymentdb.solicitation,
       type: 'payment'
     })
 
-    const situation = resultPayment.pagSeguroCode
-      ? await getTransactionStatus(resultPayment.pagSeguroCode)
+    const situation = paymentdb.pagSeguroCode
+      ? await getTransactionStatus(paymentdb.pagSeguroCode)
       : null
 
     if (
       situation &&
-      (resultRegistration.length === 0 ||
-        !resultRegistration[resultRegistration.length - 1].payload ||
-        !resultRegistration[resultRegistration.length - 1].payload.code ||
-        resultRegistration[resultRegistration.length - 1].payload.code !==
+      (registrationdb.length === 0 ||
+        !registrationdb[registrationdb.length - 1].payload ||
+        !registrationdb[registrationdb.length - 1].payload.code ||
+        registrationdb[registrationdb.length - 1].payload.code !==
           situation.code)
     ) {
       const resultSolicitation = await orderregistrations.create({
-        solicitation: resultPayment.solicitation,
+        solicitation: paymentdb.solicitation,
         type: 'payment',
         situation: situation.status || 'situation',
         payload: situation
       })
 
-      resultPayment.status = situation.status
+      paymentdb.status = situation.status
 
-      await resultPayment.save()
+      await paymentdb.save()
       await resultSolicitation.save()
     }
 
     return {
       success: true,
       message: 'Payment listed successfully',
-      data: paymentMapper.toDTO(resultPayment, ...resultRegistration)
+      data: paymentMapper.toDTO(paymentdb, ...registrationdb)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
   }
 }
 
-const sendEmailClientSuccessfullyPaid = async (id) => {
-  const result = await showCartSolicitationService(id)
-
+const sendEmailClientSuccessPaid = async (solicitationNumber) => {
+  const result = await showCartSolicitationService(solicitationNumber)
   emailUtils.utilSendEmail({
     to: result.data.user.email,
     from: process.env.SENDGRID_SENDER,
@@ -75,8 +74,18 @@ const sendEmailClientSuccessfullyPaid = async (id) => {
   })
 }
 
-const sendEmailClientPaymentFailed = async (id) => {
-  const result = await showCartSolicitationService(id)
+const sendEmailAdmSuccessfullyPaid = async (solicitationNumber) => {
+  const result = await showCartSolicitationService(solicitationNumber)
+  emailUtils.utilSendEmail({
+    to: result.data.user.email,
+    from: process.env.SENDGRID_SENDER,
+    subject: `E-commerce - Pagamento Confirmado!`,
+    html: emailUpdatePayment.sendAdmEmailSuccessfullyPaid(result.data)
+  })
+}
+
+const sendEmailClientPaymentFailed = async (solicitationNumber) => {
+  const result = await showCartSolicitationService(solicitationNumber)
 
   emailUtils.utilSendEmail({
     to: result.data.user.email,
@@ -86,6 +95,16 @@ const sendEmailClientPaymentFailed = async (id) => {
   })
 }
 
+const sendEmailAdmPaymentFailed = async (solicitationNumber) => {
+  const result = await showCartSolicitationService(solicitationNumber)
+
+  emailUtils.utilSendEmail({
+    to: result.data.user.email,
+    from: process.env.SENDGRID_SENDER,
+    subject: `E-commerce - Pagamento Cancelado!`,
+    html: emailUpdatePayment.sendAdmEmailPaymentFailed(result.data)
+  })
+}
 const updateQuantityConfirm = async (id) => {
   try {
     const resultSolicitation = await solicitation.findById(id)
@@ -115,7 +134,7 @@ const updateQuantityCancelation = async (id) => {
 
 const updatePaymentService = async (paymentid, body) => {
   try {
-    const resultDB = await solicitation.aggregate([
+    const solicitationdb = await solicitation.aggregate([
       { $match: { payment: ObjectId(paymentid) } },
       {
         $lookup: {
@@ -146,7 +165,7 @@ const updatePaymentService = async (paymentid, body) => {
       { $unwind: '$user' }
     ])
 
-    const resultPayment = await payment.findOneAndUpdate(
+    const paymentdb = await payment.findOneAndUpdate(
       { _id: paymentid },
       {
         $set: {
@@ -156,24 +175,26 @@ const updatePaymentService = async (paymentid, body) => {
       { new: true }
     )
 
-    const resultRegistration = await orderregistrations.create({
-      solicitation: resultDB[0]._id,
+    const registrationdb = await orderregistrations.create({
+      solicitation: solicitationdb[0]._id,
       type: 'payment',
-      situation: resultPayment.status
+      situation: paymentdb.status
     })
 
     if (body.status.toLowerCase().includes('paga')) {
-      await updateQuantityConfirm(resultRegistration.solicitation)
-      await sendEmailClientSuccessfullyPaid(resultDB[0]._id)
+      await updateQuantityConfirm(registrationdb.solicitation)
+      await sendEmailClientSuccessPaid(solicitationdb[0].solicitationNumber)
+      await sendEmailAdmSuccessfullyPaid(solicitationdb[0].solicitationNumber)
     } else if (body.status.toLowerCase().includes('cancelada')) {
-      await sendEmailClientPaymentFailed(resultDB[0]._id)
-      await updateQuantityCancelation(resultRegistration.solicitation)
+      await updateQuantityCancelation(registrationdb.solicitation)
+      await sendEmailClientPaymentFailed(solicitationdb[0].solicitationNumber)
+      await sendEmailAdmPaymentFailed(solicitationdb[0].solicitationNumber)
     }
 
     return {
       success: true,
       message: 'Payment listed successfully',
-      data: paymentMapper.toDTOList(resultPayment)
+      data: paymentMapper.toDTOList(paymentdb)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -261,10 +282,10 @@ const createPaymentService = async (paymentid, body) => {
 
 const showNotificationPaymentService = async (body) => {
   try {
-    const resultNotification = await getNotification(body.notificationCode)
+    const notification = await getNotification(body.notificationCode)
 
     const result = await payment.aggregate([
-      { $match: { pagSeguroCode: resultNotification.code } },
+      { $match: { pagSeguroCode: notification.code } },
       {
         $lookup: {
           from: solicitation.collection.name,
@@ -290,36 +311,46 @@ const showNotificationPaymentService = async (body) => {
       { $unwind: '$orderregistrations' }
     ])
 
-    const resultPayment = paymentMapper.toDTOPayment(...result)
+    const paymentdb = paymentMapper.toDTOPayment(...result)
 
-    const resultSituation = resultPayment.pagSeguroCode
-      ? await getTransactionStatus(resultPayment.pagSeguroCode)
+    const situation = paymentdb.pagSeguroCode
+      ? await getTransactionStatus(paymentdb.pagSeguroCode)
       : null
 
-    if (resultSituation && resultPayment.orderregistrations) {
-      const resultOrder = await orderregistrations.create({
-        solicitation: resultPayment.solicitation.id,
+    if (situation && paymentdb.orderregistrations) {
+      const orderdb = await orderregistrations.create({
+        solicitation: paymentdb.solicitation.id,
         type: 'payment',
-        situation: resultSituation.status || 'situation',
-        payload: resultSituation
+        situation: situation.status || 'situation',
+        payload: situation
       })
 
       await payment.findOneAndUpdate(
-        { _id: resultPayment.id },
+        { _id: paymentdb.id },
         {
           $set: {
-            status: resultSituation.status
+            status: situation.status
           }
         },
         { new: true }
       )
 
-      if (resultSituation.status.toLowerCase().includes('paga')) {
-        await updateQuantityConfirm(resultOrder.solicitation)
-        await sendEmailClientSuccessfullyPaid(resultPayment.solicitation.id)
-      } else if (resultSituation.status.toLowerCase().includes('cancelada')) {
-        await updateQuantityCancelation(resultOrder.solicitation)
-        await sendEmailClientPaymentFailed(resultPayment.solicitation.id)
+      if (situation.status.toLowerCase().includes('paga')) {
+        await updateQuantityConfirm(orderdb.solicitation)
+        await sendEmailClientSuccessPaid(
+          paymentdb.solicitation.solicitationNumber
+        )
+        await sendEmailAdmSuccessfullyPaid(
+          paymentdb.solicitation.solicitationNumber
+        )
+      } else if (situation.status.toLowerCase().includes('cancelada')) {
+        await updateQuantityCancelation(orderdb.solicitation)
+        await sendEmailClientPaymentFailed(
+          paymentdb.solicitation.solicitationNumber
+        )
+        await sendEmailAdmPaymentFailed(
+          paymentdb.solicitation.solicitationNumber
+        )
       }
     }
     return {

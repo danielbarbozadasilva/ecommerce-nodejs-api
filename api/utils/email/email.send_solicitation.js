@@ -121,8 +121,8 @@ const sendSolicitationClientEmail = (data) => `
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-m-txt-c">
                                                                                         <h2><a target="_blank">
-                                                                                                <font color="#333333">Pedido&nbsp;</font>${
-                                                                                                  data.id
+                                                                                                <font color="#333333">Pedido:&nbsp;</font>${
+                                                                                                  data.solicitationNumber
                                                                                                 }
                                                                                             </a></h2>
                                                                                     </td>
@@ -134,7 +134,7 @@ const sendSolicitationClientEmail = (data) => `
                                                                                           data
                                                                                             .client
                                                                                             .name
-                                                                                        }</strong>, estamos aguardando a confirmação de pagamento. Para sua segurança, o pedido poderá passar por uma análise de dados cadastrais. Então, é importante que você os mantenha sempre atualizados em nosso site.&nbsp;Assim que o seu pedido for aprovado, você receberá um e-mail de confirmação.</p>
+                                                                                        }</strong>, estamos aguardando a confirmação do pagamento. Para sua segurança, o pedido poderá passar por uma análise de dados cadastrais. Então, é importante que você os mantenha sempre atualizados em nosso site.&nbsp;Assim que o seu pedido for aprovado, você receberá um e-mail de confirmação.</p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -322,7 +322,7 @@ const sendSolicitationClientEmail = (data) => `
                                                                                 <tr>
                                                                                     <td align="left" class="esd-block-text">
                                                                                         <p>Número do pedido:&nbsp;<strong>${
-                                                                                          data.id
+                                                                                          data.solicitationNumber
                                                                                         }</strong></p>
                                                                                         <p>Data:&nbsp;<strong>${moment(
                                                                                           data.createdAt
@@ -620,8 +620,8 @@ const sendSolicitationAdminEmail = (data) => `
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-m-txt-c">
                                                                                         <h2><a target="_blank">
-                                                                                                <font color="#333333">Pedido&nbsp;</font>${
-                                                                                                  data.id
+                                                                                                <font color="#333333">Pedido:&nbsp;</font>${
+                                                                                                  data.solicitationNumber
                                                                                                 }
                                                                                             </a></h2>
                                                                                     </td>
@@ -821,7 +821,7 @@ const sendSolicitationAdminEmail = (data) => `
                                                                                 <tr>
                                                                                     <td align="left" class="esd-block-text">
                                                                                         <p>Número do pedido:&nbsp;<strong>${
-                                                                                          data.id
+                                                                                          data.solicitationNumber
                                                                                         }</strong></p>
                                                                                         <p>Data:&nbsp;<strong>${moment(
                                                                                           data.createdAt

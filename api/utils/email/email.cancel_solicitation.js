@@ -121,8 +121,8 @@ const cancelSolicitationClientEmail = (data) => `
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-m-txt-c">
                                                                                         <h2><a target="_blank">
-                                                                                                <font color="#333333">Pedido&nbsp;</font>${
-                                                                                                  data.id
+                                                                                                <font color="#333333">Pedido:&nbsp;</font>${
+                                                                                                  data.solicitationNumber
                                                                                                 }
                                                                                             </a></h2>
                                                                                     </td>
@@ -135,7 +135,7 @@ const cancelSolicitationClientEmail = (data) => `
                                                                                             .client
                                                                                             .name
                                                                                         }</strong>, o seu pedido <strong>${
-  data.id
+  data.solicitationNumber
 } foi cancelado!</strong><br/>
                                                                                        <br /> <br />
                                                                                         </p>
@@ -150,114 +150,122 @@ const cancelSolicitationClientEmail = (data) => `
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="esd-structure es-p10t es-p10b es-p20r es-p20l esdev-adapt-off" align="left" esd-custom-block-id="388986">
-                                                    ${data.cart.map(
-                                                      (
-                                                        item
-                                                      ) => `  <table width="560" cellpadding="0" cellspacing="0" class="esdev-mso-table">
-                                                            <tbody>
-                                                       
-                                                                <tr>
-                                                                    <td class="esdev-mso-td" valign="top">
-                                                                        <table cellpadding="0" cellspacing="0" class="es-left" align="left">
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td width="70" class="es-m-p0r esd-container-frame" align="center">
-                                                                                        <table cellpadding="0" cellspacing="0" width="100%">
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td align="center" class="esd-block-image" style="font-size: 0px;"><a target="_blank"><img class="adapt-img" src="https://pjnogm.stripocdn.email/content/guids/CABINET_c67048fd0acf81b47e18129166337c05/images/79021618299486570.png" alt style="display: block;" width="70"></a></td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </td>
-                                                                    <td width="20"></td>
-                                                                    
-                                                                    <td class="esdev-mso-td" valign="top">
-                                                                        <table cellpadding="0" cellspacing="0" class="es-left" align="left">
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td width="265" class="esd-container-frame" align="center">
-                                                                                        <table cellpadding="0" cellspacing="0" width="100%">
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td align="left" class="esd-block-text">
-                                                                                                        <p><strong>${
-                                                                                                          item
-                                                                                                            .product
-                                                                                                            .title
-                                                                                                        }</strong></p>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                               
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </td>
-                                                                    <td width="20"></td>
-                                                                    <td class="esdev-mso-td" valign="top">
-                                                                        <table cellpadding="0" cellspacing="0" class="es-left" align="left">
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td width="80" align="left" class="esd-container-frame">
-                                                                                        <table cellpadding="0" cellspacing="0" width="100%">
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td align="center" class="esd-block-text">
-                                                                                                        <p>${
-                                                                                                          item.quantity
-                                                                                                        }</p>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </td>
-                                                                    <td width="20"></td>
-                                                                    <td class="esdev-mso-td" valign="top">
-                                                                        <table cellpadding="0" cellspacing="0" class="es-right" align="right">
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td width="85" align="left" class="esd-container-frame">
-                                                                                        <table cellpadding="0" cellspacing="0" width="100%">
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td align="right" class="esd-block-text">
-                                                                                                        <p>Preço unitário: ${item.unitPrice.toLocaleString(
-                                                                                                          'pt-br',
-                                                                                                          {
-                                                                                                            style:
-                                                                                                              'currency',
-                                                                                                            currency:
-                                                                                                              'BRL'
-                                                                                                          }
-                                                                                                        )}</p>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                        `
-                                                    )}
-                                                    </td>
-                                                </tr>
+                                                <td class="esd-structure es-p10t es-p10b es-p20r es-p20l esdev-adapt-off" align="left" esd-custom-block-id="388986">
+                                                ${data.cart.map(
+                                                  (
+                                                    item
+                                                  ) => `  <table width="560" cellpadding="0" cellspacing="0" class="esdev-mso-table">
+                                                        <tbody>
+                                                   
+                                                            <tr>
+                                                                <td class="esdev-mso-td" valign="top">
+                                                                    <table cellpadding="0" cellspacing="0" class="es-left" align="left">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td width="70" class="es-m-p0r esd-container-frame" align="center">
+                                                                                    <table cellpadding="0" cellspacing="0" width="100%">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                            <img class="adapt-img" src=${`http://localhost:3011/static/image/${[
+                                                                                              item.product
+                                                                                            ].map(
+                                                                                              (
+                                                                                                data
+                                                                                              ) =>
+                                                                                                data
+                                                                                                  .photos[0]
+                                                                                            )}`} style="display: block;" width="70">
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td width="20"></td>
+                                                                
+                                                                <td class="esdev-mso-td" valign="top">
+                                                                    <table cellpadding="0" cellspacing="0" class="es-left" align="left">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td width="265" class="esd-container-frame" align="center">
+                                                                                    <table cellpadding="0" cellspacing="0" width="100%">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td align="left" class="esd-block-text">
+                                                                                                    <p><strong>${
+                                                                                                      item
+                                                                                                        .product
+                                                                                                        .title
+                                                                                                    }</strong></p>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                           
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td width="20"></td>
+                                                                <td class="esdev-mso-td" valign="top">
+                                                                    <table cellpadding="0" cellspacing="0" class="es-left" align="left">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td width="80" align="left" class="esd-container-frame">
+                                                                                    <table cellpadding="0" cellspacing="0" width="100%">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td align="center" class="esd-block-text">
+                                                                                                    <p>${
+                                                                                                      item.quantity
+                                                                                                    }</p>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td width="20"></td>
+                                                                <td class="esdev-mso-td" valign="top">
+                                                                    <table cellpadding="0" cellspacing="0" class="es-right" align="right">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td width="85" align="left" class="esd-container-frame">
+                                                                                    <table cellpadding="0" cellspacing="0" width="100%">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td align="right" class="esd-block-text">
+                                                                                                    <p>Preço unitário: ${item.unitPrice.toLocaleString(
+                                                                                                      'pt-br',
+                                                                                                      {
+                                                                                                        style:
+                                                                                                          'currency',
+                                                                                                        currency:
+                                                                                                          'BRL'
+                                                                                                      }
+                                                                                                    )}</p>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    `
+                                                )}
+                                                </td>
+                                            </tr>
                                                  <tr>
                                                     <td class="esd-structure es-p10t es-p20r es-p20l" align="left">
                                                         <table cellpadding="0" cellspacing="0" width="100%">
@@ -318,7 +326,7 @@ const cancelSolicitationClientEmail = (data) => `
                                                                                 <tr>
                                                                                     <td align="left" class="esd-block-text">
                                                                                         <p>Número do pedido:&nbsp;<strong>${
-                                                                                          data.id
+                                                                                          data.solicitationNumber
                                                                                         }</strong></p>
                                                                                         <p>Data:&nbsp;<strong>${moment(
                                                                                           data.createdAt
@@ -614,8 +622,8 @@ const cancelSolicitationAdminEmail = (data) => `
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-m-txt-c">
                                                                                         <h2><a target="_blank">
-                                                                                                <font color="#333333">Pedido&nbsp;</font>${
-                                                                                                  data.id
+                                                                                                <font color="#333333">Pedido:&nbsp;</font>${
+                                                                                                  data.solicitationNumber
                                                                                                 }
                                                                                             </a></h2>
                                                                                     </td>
@@ -624,7 +632,7 @@ const cancelSolicitationAdminEmail = (data) => `
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-p5t es-p15b es-p40r es-p40l es-m-p0r es-m-p0l">
                                                                                         <p>O pedido <strong>${
-                                                                                          data.id
+                                                                                          data.solicitationNumber
                                                                                         }</strong> do cliente <strong>${
   data.client.name
 }</strong> foi cancelado!</strong><br/>
@@ -641,114 +649,122 @@ const cancelSolicitationAdminEmail = (data) => `
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="esd-structure es-p10t es-p10b es-p20r es-p20l esdev-adapt-off" align="left" esd-custom-block-id="388986">
-                                                    ${data.cart.map(
-                                                      (
-                                                        item
-                                                      ) => `  <table width="560" cellpadding="0" cellspacing="0" class="esdev-mso-table">
-                                                            <tbody>
-                                                       
-                                                                <tr>
-                                                                    <td class="esdev-mso-td" valign="top">
-                                                                        <table cellpadding="0" cellspacing="0" class="es-left" align="left">
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td width="70" class="es-m-p0r esd-container-frame" align="center">
-                                                                                        <table cellpadding="0" cellspacing="0" width="100%">
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td align="center" class="esd-block-image" style="font-size: 0px;"><a target="_blank"><img class="adapt-img" src="https://pjnogm.stripocdn.email/content/guids/CABINET_c67048fd0acf81b47e18129166337c05/images/79021618299486570.png" alt style="display: block;" width="70"></a></td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </td>
-                                                                    <td width="20"></td>
-                                                                    
-                                                                    <td class="esdev-mso-td" valign="top">
-                                                                        <table cellpadding="0" cellspacing="0" class="es-left" align="left">
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td width="265" class="esd-container-frame" align="center">
-                                                                                        <table cellpadding="0" cellspacing="0" width="100%">
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td align="left" class="esd-block-text">
-                                                                                                        <p><strong>${
-                                                                                                          item
-                                                                                                            .product
-                                                                                                            .title
-                                                                                                        }</strong></p>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                               
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </td>
-                                                                    <td width="20"></td>
-                                                                    <td class="esdev-mso-td" valign="top">
-                                                                        <table cellpadding="0" cellspacing="0" class="es-left" align="left">
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td width="80" align="left" class="esd-container-frame">
-                                                                                        <table cellpadding="0" cellspacing="0" width="100%">
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td align="center" class="esd-block-text">
-                                                                                                        <p>${
-                                                                                                          item.quantity
-                                                                                                        }</p>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </td>
-                                                                    <td width="20"></td>
-                                                                    <td class="esdev-mso-td" valign="top">
-                                                                        <table cellpadding="0" cellspacing="0" class="es-right" align="right">
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td width="85" align="left" class="esd-container-frame">
-                                                                                        <table cellpadding="0" cellspacing="0" width="100%">
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td align="right" class="esd-block-text">
-                                                                                                        <p>Preço unitário: ${item.unitPrice.toLocaleString(
-                                                                                                          'pt-br',
-                                                                                                          {
-                                                                                                            style:
-                                                                                                              'currency',
-                                                                                                            currency:
-                                                                                                              'BRL'
-                                                                                                          }
-                                                                                                        )}</p>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                        `
-                                                    )}
-                                                    </td>
-                                                </tr>
+                                                <td class="esd-structure es-p10t es-p10b es-p20r es-p20l esdev-adapt-off" align="left" esd-custom-block-id="388986">
+                                                ${data.cart.map(
+                                                  (
+                                                    item
+                                                  ) => `  <table width="560" cellpadding="0" cellspacing="0" class="esdev-mso-table">
+                                                        <tbody>
+                                                   
+                                                            <tr>
+                                                                <td class="esdev-mso-td" valign="top">
+                                                                    <table cellpadding="0" cellspacing="0" class="es-left" align="left">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td width="70" class="es-m-p0r esd-container-frame" align="center">
+                                                                                    <table cellpadding="0" cellspacing="0" width="100%">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                            <img class="adapt-img" src=${`http://localhost:3011/static/image/${[
+                                                                                              item.product
+                                                                                            ].map(
+                                                                                              (
+                                                                                                data
+                                                                                              ) =>
+                                                                                                data
+                                                                                                  .photos[0]
+                                                                                            )}`} style="display: block;" width="70">
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td width="20"></td>
+                                                                
+                                                                <td class="esdev-mso-td" valign="top">
+                                                                    <table cellpadding="0" cellspacing="0" class="es-left" align="left">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td width="265" class="esd-container-frame" align="center">
+                                                                                    <table cellpadding="0" cellspacing="0" width="100%">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td align="left" class="esd-block-text">
+                                                                                                    <p><strong>${
+                                                                                                      item
+                                                                                                        .product
+                                                                                                        .title
+                                                                                                    }</strong></p>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                           
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td width="20"></td>
+                                                                <td class="esdev-mso-td" valign="top">
+                                                                    <table cellpadding="0" cellspacing="0" class="es-left" align="left">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td width="80" align="left" class="esd-container-frame">
+                                                                                    <table cellpadding="0" cellspacing="0" width="100%">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td align="center" class="esd-block-text">
+                                                                                                    <p>${
+                                                                                                      item.quantity
+                                                                                                    }</p>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td width="20"></td>
+                                                                <td class="esdev-mso-td" valign="top">
+                                                                    <table cellpadding="0" cellspacing="0" class="es-right" align="right">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td width="85" align="left" class="esd-container-frame">
+                                                                                    <table cellpadding="0" cellspacing="0" width="100%">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td align="right" class="esd-block-text">
+                                                                                                    <p>Preço unitário: ${item.unitPrice.toLocaleString(
+                                                                                                      'pt-br',
+                                                                                                      {
+                                                                                                        style:
+                                                                                                          'currency',
+                                                                                                        currency:
+                                                                                                          'BRL'
+                                                                                                      }
+                                                                                                    )}</p>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    `
+                                                )}
+                                                </td>
+                                            </tr>
                                                  <tr>
                                                     <td class="esd-structure es-p10t es-p20r es-p20l" align="left">
                                                         <table cellpadding="0" cellspacing="0" width="100%">
@@ -809,7 +825,7 @@ const cancelSolicitationAdminEmail = (data) => `
                                                                                 <tr>
                                                                                     <td align="left" class="esd-block-text">
                                                                                         <p>Número do pedido:&nbsp;<strong>${
-                                                                                          data.id
+                                                                                          data.solicitationNumber
                                                                                         }</strong></p>
                                                                                         <p>Data:&nbsp;<strong>${moment(
                                                                                           data.createdAt
