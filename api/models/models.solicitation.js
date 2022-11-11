@@ -20,6 +20,7 @@ const solicitationSchema = Schema(
       ]
     },
     shipping: { type: Number, required: true },
+    solicitationNumber: { type: String, required: true },
     client: { type: Schema.Types.ObjectId, ref: 'client', required: true },
     payment: {
       type: Schema.Types.ObjectId,
