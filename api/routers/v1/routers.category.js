@@ -53,7 +53,7 @@ module.exports = (router) => {
             'string.pattern.base': '"category id" out of the expected format'
           })
       }),
-      verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
+      verifyIdDbMiddleware.verifyIdCategory,
       categoryController.listCategoryByIdController
     )
     .put(
@@ -95,7 +95,7 @@ module.exports = (router) => {
             })
         )
       }),
-      verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
+      verifyIdDbMiddleware.verifyIdCategory,
       categoryController.updateCategoryController
     )
     .delete(
@@ -112,7 +112,7 @@ module.exports = (router) => {
             'string.pattern.base': '"category id" out of the expected format'
           })
       }),
-      verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
+      verifyIdDbMiddleware.verifyIdCategory,
       categoryController.deleteCategoryController
     )
 
@@ -130,7 +130,7 @@ module.exports = (router) => {
           'string.pattern.base': '"category id" out of the expected format'
         })
     }),
-    verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
+    verifyIdDbMiddleware.verifyIdCategory,
     categoryController.listCategoryWithProductsController
   )
 
@@ -153,7 +153,7 @@ module.exports = (router) => {
       limit: joi.number()
     }),
 
-    verifyIdDbMiddleware.verifyIdCategoryDbMiddleware,
+    verifyIdDbMiddleware.verifyIdCategory,
     categoryController.listCategoryWithProductsController
   )
 }

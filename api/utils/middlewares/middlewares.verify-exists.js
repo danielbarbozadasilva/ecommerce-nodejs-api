@@ -11,7 +11,7 @@ const {
 const ErrorUnprocessableEntity = require('../errors/errors.unprocessable-entity')
 const ErrorBusinessRule = require('../errors/errors.business-rule')
 
-const verifyIdUserDbMiddleware = async (req, res, next) => {
+const verifyIdUser = async (req, res, next) => {
   const userDB = await user.findOne({ _id: req.params.userid })
   if (!userDB) {
     throw new ErrorUnprocessableEntity(`Não existe um usuário com esse id!`)
@@ -19,7 +19,7 @@ const verifyIdUserDbMiddleware = async (req, res, next) => {
   next()
 }
 
-const verifyIdClientDbMiddleware = async (req, res, next) => {
+const verifyIdClient = async (req, res, next) => {
   const id = req.params.clientid || req.query.clientid
   const clientDB = await client.findOne({ _id: id })
   if (!clientDB) {
@@ -28,7 +28,7 @@ const verifyIdClientDbMiddleware = async (req, res, next) => {
   next()
 }
 
-const verifyIdCategoryDbMiddleware = async (req, res, next) => {
+const verifyIdCategory = async (req, res, next) => {
   const categoryDB = await category.findOne({ _id: req.params.categoryid })
   if (!categoryDB) {
     throw new ErrorUnprocessableEntity(`Não existe uma categoria com esse id!`)
@@ -36,7 +36,7 @@ const verifyIdCategoryDbMiddleware = async (req, res, next) => {
   next()
 }
 
-const verifyIdProductDbMiddleware = async (req, res, next) => {
+const verifyIdProduct = async (req, res, next) => {
   const id = req.params.productid || req.query.productid
   const productDB = await product.findOne({ _id: id })
   if (!productDB) {
@@ -45,7 +45,7 @@ const verifyIdProductDbMiddleware = async (req, res, next) => {
   next()
 }
 
-const verifyIdRatingDbMiddleware = async (req, res, next) => {
+const verifyIdRating = async (req, res, next) => {
   const ratingDB = await rating.findOne({ _id: req.params.ratingid })
   if (!ratingDB) {
     throw new ErrorUnprocessableEntity(
@@ -55,9 +55,9 @@ const verifyIdRatingDbMiddleware = async (req, res, next) => {
   next()
 }
 
-const verifyIdSolicitationDbMiddleware = async (req, res, next) => {
+const verifyIdSolicitation = async (req, res, next) => {
   const solicitationDB = await solicitation.findOne({
-    _id: req.params.solicitationid
+    solicitationNumber: req.params.solicitationNumber
   })
   if (!solicitationDB) {
     throw new ErrorUnprocessableEntity(`Pedido não encontrado!`)
@@ -65,7 +65,18 @@ const verifyIdSolicitationDbMiddleware = async (req, res, next) => {
   next()
 }
 
-const verifyIdDeliveryDbMiddleware = async (req, res, next) => {
+const verifyIsAlreadyCanceledSolicitation = async (req, res, next) => {
+  const solicitationDB = await solicitation.findOne({
+    solicitationNumber: req.params.solicitationNumber,
+    canceled: false
+  })
+  if (!solicitationDB) {
+    throw new ErrorUnprocessableEntity(`Este pedido já foi cancelado!`)
+  }
+  next()
+}
+
+const verifyIdDelivery = async (req, res, next) => {
   const deliveryDB = await deliveries.findOne({
     _id: req.params.deliveryid
   })
@@ -76,7 +87,7 @@ const verifyIdDeliveryDbMiddleware = async (req, res, next) => {
   next()
 }
 
-const verifyIdPaymentDbMiddleware = async (req, res, next) => {
+const verifyIdPayment = async (req, res, next) => {
   const paymentDB = await payment.findOne({
     _id: req.params.paymentid
   })
@@ -136,14 +147,15 @@ const verifyRatingNotExistsMiddleware = async (req, res, next) => {
 }
 
 module.exports = {
-  verifyIdUserDbMiddleware,
-  verifyIdClientDbMiddleware,
-  verifyIdCategoryDbMiddleware,
-  verifyIdProductDbMiddleware,
-  verifyIdRatingDbMiddleware,
-  verifyIdSolicitationDbMiddleware,
-  verifyIdDeliveryDbMiddleware,
-  verifyIdPaymentDbMiddleware,
+  verifyIdUser,
+  verifyIdClient,
+  verifyIdCategory,
+  verifyIdProduct,
+  verifyIdRating,
+  verifyIdSolicitation,
+  verifyIsAlreadyCanceledSolicitation,
+  verifyIdDelivery,
+  verifyIdPayment,
   verifyEmailUserExists,
   verifyCpfUserExists,
   verifyRatingExistsMiddleware,

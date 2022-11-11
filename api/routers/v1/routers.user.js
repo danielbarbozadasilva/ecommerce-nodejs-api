@@ -66,7 +66,7 @@ module.exports = (router) => {
             'string.pattern.base': '"user id" out of the expected format'
           })
       }),
-      verifyIdDbMiddleware.verifyIdUserDbMiddleware,
+      verifyIdDbMiddleware.verifyIdUser,
       userController.listByIdUserController
     )
     .put(
@@ -98,7 +98,7 @@ module.exports = (router) => {
         })
       }),
       verifyIdDbMiddleware.verifyEmailUserExists,
-      verifyIdDbMiddleware.verifyIdUserDbMiddleware,
+      verifyIdDbMiddleware.verifyIdUser,
       userController.updateUserController
     )
     .delete(
@@ -115,7 +115,7 @@ module.exports = (router) => {
             'string.pattern.base': '"user id" out of the expected format'
           })
       }),
-      verifyIdDbMiddleware.verifyIdUserDbMiddleware,
+      verifyIdDbMiddleware.verifyIdUser,
       userController.deleteUserController
     )
 

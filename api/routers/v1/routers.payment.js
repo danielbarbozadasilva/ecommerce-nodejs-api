@@ -31,7 +31,7 @@ module.exports = (router) => {
             'string.pattern.base': '"payment id" out of the expected format'
           })
       }),
-      verifyIdDbMiddleware.verifyIdPaymentDbMiddleware,
+      verifyIdDbMiddleware.verifyIdPayment,
       paymentController.listByIdPaymentController
     )
     .put(
@@ -54,7 +54,7 @@ module.exports = (router) => {
           'string.empty': '"status" can not be empty'
         })
       }),
-      verifyIdDbMiddleware.verifyIdPaymentDbMiddleware,
+      verifyIdDbMiddleware.verifyIdPayment,
       paymentController.updatePaymentController
     )
 
@@ -78,7 +78,7 @@ module.exports = (router) => {
         'string.empty': '"senderHash" can not be empty'
       })
     }),
-    verifyIdDbMiddleware.verifyIdPaymentDbMiddleware,
+    verifyIdDbMiddleware.verifyIdPayment,
     paymentController.createPaymentController
   )
 

@@ -108,7 +108,7 @@ module.exports = (router) => {
             'string.pattern.base': '"product id" out of the expected format'
           })
       }),
-      verifyIdDbMiddleware.verifyIdProductDbMiddleware,
+      verifyIdDbMiddleware.verifyIdProduct,
       productController.listByIdProductController
     )
     .put(
@@ -191,7 +191,7 @@ module.exports = (router) => {
           'number.empty': '"shipping" can not be empty'
         })
       }),
-      verifyIdDbMiddleware.verifyIdProductDbMiddleware,
+      verifyIdDbMiddleware.verifyIdProduct,
       productController.updateProductController
     )
     .delete(
@@ -208,7 +208,7 @@ module.exports = (router) => {
             'string.pattern.base': '"product id" out of the expected format'
           })
       }),
-      verifyIdDbMiddleware.verifyIdProductDbMiddleware,
+      verifyIdDbMiddleware.verifyIdProduct,
       productController.deleteProductController
     )
 
@@ -226,7 +226,7 @@ module.exports = (router) => {
           'string.pattern.base': '"id" out of the expected format'
         })
     }),
-    verifyIdDbMiddleware.verifyIdProductDbMiddleware,
+    verifyIdDbMiddleware.verifyIdProduct,
     fileUpload.array('files', 4),
     productController.updateImageProductController
   )
@@ -258,7 +258,7 @@ module.exports = (router) => {
           'string.pattern.base': '"product id" out of the expected format'
         })
     }),
-    verifyIdDbMiddleware.verifyIdProductDbMiddleware,
+    verifyIdDbMiddleware.verifyIdProduct,
     productController.listRatingProductController
   )
 }
