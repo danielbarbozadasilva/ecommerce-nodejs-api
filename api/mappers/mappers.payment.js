@@ -1,3 +1,5 @@
+const { createAddress } = require('../utils/helpers/helpers.createAddress')
+
 const toDTO = (payment, registration) => ({
   payment: {
     id: payment.id,
@@ -114,9 +116,7 @@ const toDTOCart = (model) => ({
     title: item.title,
     availability: item.availability,
     description: item.description,
-    photos: model.photos.map(
-      (item) => `http://localhost:3011/static/image/${item}`
-    ),
+    photos: createAddress(item.photos),
     price: item.price,
     promotion: item.promotion,
     sku: item.sku,

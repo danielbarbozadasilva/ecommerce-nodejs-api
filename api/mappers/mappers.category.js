@@ -1,20 +1,17 @@
+const { createAddress } = require('../utils/helpers/helpers.createAddress')
+
 const toDTO = (model) => ({
   id: model._id,
   name: model.name,
   code: model.code,
-  availability: model.availability,
-  products: model?.products?.map((item) => ({
-    id: item
-  }))
+  availability: model.availability
 })
 
 const toDTOWithProducts = (model) => ({
   title: model.title,
   availability: model.availability,
   description: model.description,
-  photos: model.photos.map(
-    (item) => `http://localhost:3011/static/image/${item}`
-  ),
+  photos: model.photos.map((item) => createAddress(item)),
   price: model.price.toLocaleString('pt-br', {
     style: 'currency',
     currency: 'BRL'
