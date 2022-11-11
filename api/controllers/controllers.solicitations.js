@@ -15,15 +15,13 @@ const listAllSolicitationController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
-const listByIdSolicitationController = async (req, res) => {
-  const { offset, limit } = req.query
-  const { solicitationid } = req.params
+const listByNumberSolicitationController = async (req, res) => {
+  const { solicitationNumber } = req.params
 
-  const resultService = await solicitationService.listByIdSolicitationService(
-    offset,
-    limit,
-    solicitationid
-  )
+  const resultService =
+    await solicitationService.listByNumberSolicitationService(
+      solicitationNumber
+    )
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
@@ -33,10 +31,10 @@ const listByIdSolicitationController = async (req, res) => {
 }
 
 const deleteSolicitationController = async (req, res) => {
-  const { solicitationid } = req.params
+  const { solicitationNumber } = req.params
   const { clientid } = req.query
   const resultService = await solicitationService.deleteSolicitationService(
-    solicitationid,
+    solicitationNumber,
     clientid
   )
   const code = resultService.success ? 200 : 400
@@ -48,9 +46,9 @@ const deleteSolicitationController = async (req, res) => {
 }
 
 const showCartSolicitationController = async (req, res) => {
-  const { solicitationid } = req.params
+  const { solicitationNumber } = req.params
   const resultService = await solicitationService.showCartSolicitationService(
-    solicitationid
+    solicitationNumber
   )
   const code = resultService.success ? 200 : 400
   const message = resultService.success
@@ -79,7 +77,7 @@ const createSolicitationController = async (req, res) => {
 
 module.exports = {
   listAllSolicitationController,
-  listByIdSolicitationController,
+  listByNumberSolicitationController,
   deleteSolicitationController,
   showCartSolicitationController,
   createSolicitationController

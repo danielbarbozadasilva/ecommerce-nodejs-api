@@ -134,11 +134,11 @@ const updateDeliveryService = async (body, id) => {
     const resultSolicitation = await solicitation.findOne({ deliveries: id })
 
     const resultDB = await orderregistrations.findOneAndUpdate(
-      { solicitation: resultSolicitation._id, type: 'solicitation' },
+      { solicitation: resultSolicitation._id, type: 'payment' },
       {
         $set: {
           solicitation: resultSolicitation._id,
-          type: 'started',
+          type: 'delivery',
           situation: body.status,
           payload: body
         }
@@ -150,7 +150,8 @@ const updateDeliveryService = async (body, id) => {
       { _id: id },
       {
         $set: {
-          trackingCode: body.trackingCode
+          trackingCode: body.trackingCode,
+          status: 'started'
         }
       },
       { new: true }
