@@ -37,6 +37,8 @@ const listAllSolicitationService = async (offset, limit) => {
           as: 'client'
         }
       },
+      { $unwind: '$client' },
+
       {
         $lookup: {
           from: payment.collection.name,
@@ -45,6 +47,8 @@ const listAllSolicitationService = async (offset, limit) => {
           as: 'payment'
         }
       },
+      { $unwind: '$payment' },
+
       {
         $lookup: {
           from: deliveries.collection.name,
@@ -53,6 +57,8 @@ const listAllSolicitationService = async (offset, limit) => {
           as: 'deliveries'
         }
       },
+      { $unwind: '$deliveries' },
+
       {
         $facet: {
           metadata: [{ $count: 'total' }],
@@ -94,6 +100,8 @@ const listByIdSolicitationService = async (offset, limit, id) => {
           as: 'client'
         }
       },
+      { $unwind: '$client' },
+
       {
         $lookup: {
           from: payment.collection.name,
@@ -102,6 +110,8 @@ const listByIdSolicitationService = async (offset, limit, id) => {
           as: 'payment'
         }
       },
+      { $unwind: '$payment' },
+
       {
         $lookup: {
           from: deliveries.collection.name,
@@ -110,6 +120,8 @@ const listByIdSolicitationService = async (offset, limit, id) => {
           as: 'deliveries'
         }
       },
+      { $unwind: '$deliveries' },
+
       {
         $facet: {
           data: [

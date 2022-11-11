@@ -4,21 +4,21 @@ const toDTO = (model) => ({
   id: model._id,
   canceled: model.canceled,
   client: {
-    id: model.client[0]._id,
-    user: model.client[0].user,
-    name: model.client[0].name,
-    birthDate: model.client[0].birthDate,
-    cpf: model.client[0].cpf,
-    phones: model.client[0].phones,
-    deleted: model.client[0].deleted,
+    id: model.client._id,
+    user: model.client.user,
+    name: model.client.name,
+    birthDate: model.client.birthDate,
+    cpf: model.client.cpf,
+    phones: model.client.phones,
+    deleted: model.client.deleted,
     address: {
-      street: model.client[0].address.street,
-      number: model.client[0].address.number,
-      complement: model.client[0].address.complement,
-      district: model.client[0].address.district,
-      city: model.client[0].address.city,
-      zipCode: model.client[0].address.zipCode,
-      state: model.client[0].address.state
+      street: model.client.address.street,
+      number: model.client.address.number,
+      complement: model.client.address.complement,
+      district: model.client.address.district,
+      city: model.client.address.city,
+      zipCode: model.client.address.zipCode,
+      state: model.client.address.state
     }
   },
   cart: model.cart.map((item) => ({
@@ -29,49 +29,49 @@ const toDTO = (model) => ({
       currency: 'BRL'
     })
   })),
-  payment: model.payment.map((item) => ({
-    id: item._id,
-    price: item.price.toLocaleString('pt-br', {
+  payment: {
+    id: model.payment._id,
+    price: model.payment.price.toLocaleString('pt-br', {
       style: 'currency',
       currency: 'BRL'
     }),
-    type: item.type,
-    installments: item.installments,
-    status: item.status,
+    type: model.payment.type,
+    installments: model.payment.installments,
+    status: model.payment.status,
     address: {
-      street: item.address.street,
-      number: item.address.number,
-      complement: item.address.complement,
-      district: item.address.district,
-      city: item.address.city,
-      state: item.address.state,
-      zipCode: item.address.zipCode
+      street: model.payment.address.street,
+      number: model.payment.address.number,
+      complement: model.payment.address.complement,
+      district: model.payment.address.district,
+      city: model.payment.address.city,
+      state: model.payment.address.state,
+      zipCode: model.payment.address.zipCode
     },
-    addressDeliveryIgualCharging: item.addressDeliveryIgualCharging,
-    store: item.store,
-    pagSeguroCode: item.pagSeguroCode
-  })),
+    addressDeliveryIgualCharging: model.payment.addressDeliveryIgualCharging,
+    store: model.payment.store,
+    pagSeguroCode: model.payment.pagSeguroCode
+  },
   shipping: model.shipping,
-  deliveries: model.deliveries.map((item) => ({
-    id: item._id,
-    status: item.status,
-    trackingCode: item.trackingCode,
-    type: item.type,
-    price: item.price.toLocaleString('pt-br', {
+  deliveries: {
+    id: model.deliveries._id,
+    status: model.deliveries.status,
+    trackingCode: model.deliveries.trackingCode,
+    type: model.deliveries.type,
+    price: model.deliveries.price.toLocaleString('pt-br', {
       style: 'currency',
       currency: 'BRL'
     }),
-    deliveryTime: item.deliveryTime,
+    deliveryTime: model.deliveries.deliveryTime,
     address: {
-      street: item.address.street,
-      number: item.address.number,
-      complement: item.address.complement,
-      district: item.address.district,
-      city: item.address.city,
-      state: item.address.state,
-      zipCode: item.address.zipCode
+      street: model.deliveries.address.street,
+      number: model.deliveries.address.number,
+      complement: model.deliveries.address.complement,
+      district: model.deliveries.address.district,
+      city: model.deliveries.address.city,
+      state: model.deliveries.address.state,
+      zipCode: model.deliveries.address.zipCode
     }
-  })),
+  },
 
   products: model.products.map((item) => ({
     id: item._id,
@@ -179,7 +179,7 @@ const toDTOCart = (model) => {
         city: model.payment.address.city,
         state: model.payment.address.state,
         zipCode: model.payment.address.zipCode
-      },
+      }
     },
     user: {
       id: model.user._id,
