@@ -207,7 +207,6 @@ RF015 – O sistema deve calcular o valor de entrega dos produtos.
 * Git
 * Formidable
 * Crypto
-* Uuid
 * Path
 * Joi
 * Http-status
@@ -217,3 +216,59 @@ RF015 – O sistema deve calcular o valor de entrega dos produtos.
 * Eslint
 * Prettier
 * FileSystem
+<br/>
+<br/>
+<br/>
+
+> ## **Transações**
+<br/>
+
+## **Processar pagamento - Cliente**
+### Ao realizar uma compra o Sistema envia um e-mail notificando o Cliente sobre o processamento do pagamento.
+
+<br/>
+<img src="./docs/prints/1.jpg" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Processar pagamento - Administrador**
+### Quando o Cliente realiza uma compra o Sistema envia um e-mail notificando o administrador sobre o pedido. 
+
+<br/>
+<img src="./docs/prints/2.jpg" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Pagamento aprovado - Cliente**
+### Quando o cliente realiza o pagamento e este é aprovado pelo PagSeguro. O Sistema envia um e-mail ao Cliente notificando que o seu pedido foi pago.
+
+<br/>
+<img src="./docs/prints/3.jpg" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Pagamento cancelado - Cliente**
+### Quando o cliente não realiza o pagamento, o Sistema envia um e-mail ao Cliente notificando que o seu pedido não foi pago, e por isso foi cancelado.
+
+<br/>
+<img src="./docs/prints/4.jpg" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Envio do pedido - Cliente**
+### Quando o Administrador envia o pedido para a transportadora. O Sistema notifica o Cliente e informa o código de rastreamento.
+
+<br/>
+<img src="./docs/prints/5.jpg" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
