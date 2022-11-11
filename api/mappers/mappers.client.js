@@ -69,6 +69,7 @@ const toClientDTO = (model) => ({
 const toDTOSolicitations = (model) => ({
   id: model._id,
   canceled: model.canceled,
+  solicitationNumber: model.solicitationNumber,
   client: {
     id: model.client._id,
     user: model.client.user,
@@ -177,6 +178,7 @@ const toDTOClientSolicitations = (model) => ({
   },
   solicitation: model.solicitations.map((item) => ({
     id: item._id,
+    solicitationNumber: model.solicitationNumber,
     client: item.client,
     cart: item.cart,
     payment: item.payment,

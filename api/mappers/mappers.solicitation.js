@@ -3,6 +3,8 @@ const { createAddress } = require('../utils/helpers/helpers.createAddress')
 const toDTO = (model) => ({
   id: model._id,
   canceled: model.canceled,
+  solicitationNumber: model.solicitationNumber,
+  shipping: model.shipping,
   client: {
     id: model.client._id,
     user: model.client.user,
@@ -51,7 +53,6 @@ const toDTO = (model) => ({
     store: model.payment.store,
     pagSeguroCode: model.payment.pagSeguroCode
   },
-  shipping: model.shipping,
   deliveries: {
     id: model.deliveries._id,
     status: model.deliveries.status,
@@ -106,6 +107,7 @@ const toDTOCart = (model) => {
   return {
     id: model._id,
     canceled: model.canceled,
+    solicitationNumber: model.solicitationNumber,
     cart: model.cart.map((item, i) => {
       subTotal +=
         (model.products[i].promotion || model.products[i].price) * item.quantity
@@ -205,6 +207,7 @@ const toDTOList = (solicitation, deliveries) => ({
   },
   solicitation: {
     id: solicitation._id,
+    solicitationNumber: solicitation.solicitationNumber,
     client: solicitation.client,
     cart: solicitation.cart,
     payment: solicitation.payment,

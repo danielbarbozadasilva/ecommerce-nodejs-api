@@ -104,6 +104,7 @@ const toDTOCart = (model) => ({
       unitPrice: item.unitPrice
     })),
     shipping: model.solicitation.shipping,
+    solicitationNumber: model.solicitationNumber,
     client: model.solicitation.client,
     payment: model.solicitation.payment,
     deliveries: model.solicitation.deliveries,
@@ -288,6 +289,7 @@ const toDTOPayment = (model) => ({
   pagSeguroCode: model.pagSeguroCode,
   solicitation: {
     id: model.solicitation._id,
+    solicitationNumber: model.solicitation.solicitationNumber,
     cart: model.solicitation.cart,
     shipping: model.solicitation.shipping,
     client: model.solicitation.client,

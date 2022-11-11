@@ -10,6 +10,7 @@ const toDTO = (model) => ({
     })
   })),
   shipping: model?.shipping,
+  solicitationNumber: model.solicitationNumber,
   payment: model?.payment,
   deliveries: model?.deliveries.map((item) => ({
     id: item._id,
@@ -91,6 +92,7 @@ const toDTOCart = (model) => {
       currency: 'BRL'
     }),
     shipping: model.shipping,
+    solicitationNumber: model.solicitationNumber,
     payment: {
       id: model.payment._id,
       price: model.payment.price.toLocaleString('pt-br', {
