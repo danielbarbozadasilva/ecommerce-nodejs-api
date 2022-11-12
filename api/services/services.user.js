@@ -88,7 +88,7 @@ const userIsValidService = async (email, password) => {
       return resultDB
     }
   }
-  throw new ErrorNotAuthenticatedUser('Credenciais de acesso inválidas!')
+  throw new ErrorNotAuthenticatedUser('Invalid access credentials!')
 }
 
 const checkPermissionService = (permissions, rule) => {
