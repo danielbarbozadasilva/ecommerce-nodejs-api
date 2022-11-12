@@ -227,7 +227,7 @@ const sendTokenRecoveryPasswordService = async (body) => {
     )
     emailUtils.utilSendEmail({
       to: body.email,
-      from: process.env.SENDGRID_SENDER,
+      from: process.env.SENDER,
       subject: `Recuperar senha`,
       html: Email(resultToken.token)
     })

@@ -68,7 +68,7 @@ const sendEmailClientSuccessPaid = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
   emailUtils.utilSendEmail({
     to: result.data.user.email,
-    from: process.env.SENDGRID_SENDER,
+    from: process.env.SENDER,
     subject: `E-commerce - Pagamento Confirmado!`,
     html: emailUpdatePayment.sendEmailSuccessfullyPaid(result.data)
   })
@@ -77,8 +77,8 @@ const sendEmailClientSuccessPaid = async (solicitationNumber) => {
 const sendEmailAdmSuccessfullyPaid = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
   emailUtils.utilSendEmail({
-    to: result.data.user.email,
-    from: process.env.SENDGRID_SENDER,
+    to: process.env.EMAIL,
+    from: process.env.SENDER,
     subject: `E-commerce - Pagamento Confirmado!`,
     html: emailUpdatePayment.sendAdmEmailSuccessfullyPaid(result.data)
   })
@@ -89,7 +89,7 @@ const sendEmailClientPaymentFailed = async (solicitationNumber) => {
 
   emailUtils.utilSendEmail({
     to: result.data.user.email,
-    from: process.env.SENDGRID_SENDER,
+    from: process.env.SENDER,
     subject: `E-commerce - Pagamento Cancelado!`,
     html: emailUpdatePayment.sendEmailPaymentFailed(result.data)
   })
@@ -99,8 +99,8 @@ const sendEmailAdmPaymentFailed = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
 
   emailUtils.utilSendEmail({
-    to: result.data.user.email,
-    from: process.env.SENDGRID_SENDER,
+    to: process.env.EMAIL,
+    from: process.env.SENDER,
     subject: `E-commerce - Pagamento Cancelado!`,
     html: emailUpdatePayment.sendAdmEmailPaymentFailed(result.data)
   })

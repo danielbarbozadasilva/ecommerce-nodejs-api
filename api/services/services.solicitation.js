@@ -1,5 +1,6 @@
 const ShortUniqueId = require('short-unique-id')
-const uid = new ShortUniqueId({ length: 10, dictionary: 'number'})
+
+const uid = new ShortUniqueId({ length: 10, dictionary: 'number' })
 const {
   solicitation,
   orderregistrations,
@@ -214,7 +215,7 @@ const sendEmailClientCancelation = async (solicitationNumber) => {
 
   emailUtils.utilSendEmail({
     to: result.data.user.email,
-    from: process.env.SENDGRID_SENDER,
+    from: process.env.SENDER,
     subject: `E-commerce - Pedido Cancelado!`,
     html: emailCancelation.cancelSolicitationClientEmail(result.data)
   })
@@ -224,8 +225,8 @@ const sendEmailAdminCancelation = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
 
   emailUtils.utilSendEmail({
-    to: result.data.user.email,
-    from: process.env.SENDGRID_SENDER,
+    to: process.env.EMAIL,
+    from: process.env.SENDER,
     subject: `E-commerce - Pedido Cancelado!`,
     html: emailCancelation.cancelSolicitationAdminEmail(result.data)
   })
@@ -345,8 +346,8 @@ const sendEmailAdminSolicitation = async (id) => {
   const result = await showCartSolicitationService(id)
 
   emailUtils.utilSendEmail({
-    to: result.data.user.email,
-    from: process.env.SENDGRID_SENDER,
+    to: process.env.EMAIL,
+    from: process.env.SENDER,
     subject: `E-commerce - Pedido ${id} recebido!`,
     html: emailSolicitation.sendSolicitationAdminEmail(result.data)
   })
@@ -357,7 +358,7 @@ const sendEmailClientSolicitation = async (id) => {
 
   emailUtils.utilSendEmail({
     to: result.data.user.email,
-    from: process.env.SENDGRID_SENDER,
+    from: process.env.SENDER,
     subject: `Pedido ${id} recebido!`,
     html: emailSolicitation.sendSolicitationClientEmail(result.data)
   })
