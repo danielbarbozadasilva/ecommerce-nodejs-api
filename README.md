@@ -19,21 +19,24 @@ git clone https://github.com/danielbarbozadasilva/ecommerce-nodejs-api
 Abra a pasta do repositório clonado, e crie um arquivo ".env", exemplo:
 ```
 PORT=3011
+NODE_ENV=development
+
 MONGO_USER=user01
 MONGO_PASS=pFh7Ed2am1
 MONGO_HOST=localhost:27017
 MONGO_DB_NAME=ecommerce-api-teste
-NODE_ENV=development
+
 JWT_SECRET=dsfsfdsfdsdsdsfdsfs
 JWT_VALID_TIME=9000000000
+
 URL=http://localhost:3000
 IMAGE_PATH=http://localhost:3011/static/
 
-SENDER=exemplo@gmail.com
+SENDER=exemplo_email_sendgrid@gmail.com
 SENDGRID_API_KEY=exemplo
+EMAIL=exemplo_email_administrador_ecommerce@gmail.com
 
 SANDBOX_EMAIL=exemplo@sandbox.pagseguro.com.br
-EMAIL=exemplo@gmail.com
 TOKEN=exemplo
 NOTIFICATION_URL=exemplo
 ```
