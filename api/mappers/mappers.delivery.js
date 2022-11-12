@@ -1,13 +1,15 @@
+const {
+  formatDateTimeBr,
+  formatPriceBr
+} = require('../utils/helpers/helpers.format')
+
 const toDTO = (model) => ({
   id: model?._id,
   client: model?.client,
   cart: model?.cart.map((item) => ({
     product: item.product,
     quantity: item.quantity,
-    unitPrice: item.unitPrice.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL'
-    })
+    unitPrice: formatPriceBr(item.unitPrice)
   })),
   shipping: model?.shipping,
   solicitationNumber: model.solicitationNumber,
@@ -17,10 +19,7 @@ const toDTO = (model) => ({
     status: item.status,
     trackingCode: item.trackingCode,
     type: item.type,
-    price: item.price.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL'
-    }),
+    price: formatPriceBr(item.price),
     deliveryTime: item?.deliveryTime,
     address: {
       street: item.address.street,
@@ -47,17 +46,12 @@ const toDTOList = (model) => ({
   type: model?.type,
   situation: model?.situation,
   payload: model?.payload,
-  date: `${new Date(model.date).toLocaleDateString('pt-BR')} - ${new Date(
-    model.date
-  ).toLocaleTimeString()}`
+  date: formatDateTimeBr(model?.date)
 })
 
 const toDTOShipping = (model) => ({
   code: model.Codigo,
-  price: model.Valor.toLocaleString('pt-br', {
-    style: 'currency',
-    currency: 'BRL'
-  }),
+  price: formatPriceBr(model.Valor),
   deadlineDelivery: model.PrazoEntrega,
   ownHandvalue: model.ValorMaoPropria,
   receiptNoticevalue: model.ValorAvisoRecebimento,
@@ -81,24 +75,15 @@ const toDTOCart = (model) => {
       return {
         product: model.products[i],
         quantity: item.quantity,
-        unitPrice: item.unitPrice.toLocaleString('pt-br', {
-          style: 'currency',
-          currency: 'BRL'
-        })
+        unitPrice: formatPriceBr(item.unitPrice)
       }
     }),
-    subTotal: subTotal.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL'
-    }),
+    subTotal: formatPriceBr(subTotal),
     shipping: model.shipping,
     solicitationNumber: model.solicitationNumber,
     payment: {
       id: model.payment._id,
-      price: model.payment.price.toLocaleString('pt-br', {
-        style: 'currency',
-        currency: 'BRL'
-      }),
+      price: formatPriceBr(model.payment.price),
       type: model.payment.type,
       installments: model.payment.installments,
       status: model.payment.status,
@@ -119,10 +104,7 @@ const toDTOCart = (model) => {
       status: model.deliveries.status,
       trackingCode: model.deliveries.trackingCode,
       type: model.deliveries.type,
-      price: model.deliveries.price.toLocaleString('pt-br', {
-        style: 'currency',
-        currency: 'BRL'
-      }),
+      price: formatPriceBr(model.deliveries.price),
       deliveryTime: model.deliveries.deliveryTime,
       address: {
         street: model.deliveries.address.street,

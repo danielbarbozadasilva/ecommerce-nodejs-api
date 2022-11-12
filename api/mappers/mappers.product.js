@@ -1,19 +1,16 @@
-const { createAddress } = require('../utils/helpers/helpers.createAddress')
+const {
+  formatPriceBr,
+  formatAddressImage
+} = require('../utils/helpers/helpers.format')
 
 const toDTO = (model) => ({
   id: model._id,
   title: model.title,
   availability: model.availability,
   description: model.description,
-  photos: model.photos.map((item) => createAddress(item)),
-  price: model.price.toLocaleString('pt-br', {
-    style: 'currency',
-    currency: 'BRL'
-  }),
-  promotion: model.promotion.toLocaleString('pt-br', {
-    style: 'currency',
-    currency: 'BRL'
-  }),
+  photos: model.photos.map((item) => formatAddressImage(item)),
+  price: formatPriceBr(model.price),
+  promotion: formatPriceBr(model.promotion),
   sku: model.sku,
   quantity: model.quantity,
   store: model.storeid,
@@ -45,15 +42,9 @@ const toDTORating = (model) => ({
     title: model.product.title,
     availability: model.product.availability,
     description: model.product.description,
-    photos: model.photos.map((item) => createAddress(item)),
-    price: model.product.price.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL'
-    }),
-    promotion: model.product.promotion.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL'
-    }),
+    photos: model.photos.map((item) => formatAddressImage(item)),
+    price: formatPriceBr(model.product.price),
+    promotion: formatPriceBr(model.product.promotion),
     sku: model.product.sku,
     quantity: model.quantity,
     dimensions: {

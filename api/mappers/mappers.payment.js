@@ -1,12 +1,14 @@
-const { createAddress } = require('../utils/helpers/helpers.createAddress')
+const {
+  formatDateBr,
+  formatDateTimeBr,
+  formatPriceBr,
+  formatAddressImage
+} = require('../utils/helpers/helpers.format')
 
 const toDTO = (payment, registration) => ({
   payment: {
     id: payment.id,
-    price: payment.price.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL'
-    }),
+    price: formatPriceBr(payment.price),
     type: payment.type,
     installments: payment.installments,
     status: payment.status,
@@ -42,10 +44,7 @@ const toDTO = (payment, registration) => ({
 const toDTOList = (payment) => ({
   payment: {
     id: payment._id,
-    price: payment.price.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL'
-    }),
+    price: formatPriceBr(payment.price),
     type: payment.type,
     installments: payment.installments,
     status: payment.status,
@@ -117,7 +116,7 @@ const toDTOCart = (model) => ({
     title: item.title,
     availability: item.availability,
     description: item.description,
-    photos: createAddress(item.photos),
+    photos: formatAddressImage(item.photos),
     price: item.price,
     promotion: item.promotion,
     sku: item.sku,
@@ -177,45 +176,26 @@ const toDTOCart = (model) => ({
 })
 
 const toDTOPay = (model) => ({
-  date: `${new Date(model.date).toLocaleDateString('pt-BR')} - ${new Date(
-    model.date
-  ).toLocaleTimeString()}`,
+  date: formatDateTimeBr(model.date),
   code: model.code,
   type: model.type,
   status: model.status,
-  lastEventDate: `${new Date(model.lastEventDate).toLocaleDateString(
-    'pt-BR'
-  )} - ${new Date(model.date).toLocaleTimeString()}`,
+  lastEventDate: formatDateTimeBr(model.lastEventDate),
   paymentMethod: {
     type: model?.paymentMethod?.type,
     code: model?.paymentMethod?.code
   },
-  grossAmount: Number(model.grossAmount).toLocaleString('pt-br', {
-    style: 'currency',
-    currency: 'BRL'
-  }),
-  discountAmount: Number(model.discountAmount).toLocaleString('pt-br', {
-    style: 'currency',
-    currency: 'BRL'
-  }),
-  netAmount: Number(model.netAmount).toLocaleString('pt-br', {
-    style: 'currency',
-    currency: 'BRL'
-  }),
-  extraAmount: Number(model.extraAmount).toLocaleString('pt-br', {
-    style: 'currency',
-    currency: 'BRL'
-  }),
+  grossAmount: formatPriceBr(model.grossAmount),
+  discountAmount: formatPriceBr(model.discountAmount),
+  netAmount: formatPriceBr(model.netAmount),
+  extraAmount: formatPriceBr(model.extraAmount),
   installmentCount: model.installmentCount,
   itemCount: model.itemCount,
   items: model.items?.item?.map((item) => ({
     id: item.id,
     description: item.description,
     quantity: item.quantity,
-    amount: Number(item.amount).toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL'
-    })
+    amount: formatPriceBr(item.amount)
   })),
   sender: {
     name: model.sender.name,
@@ -260,10 +240,7 @@ const toDTOPay = (model) => ({
 
 const toDTOPayment = (model) => ({
   id: model._id,
-  price: Number(model.price).toLocaleString('pt-br', {
-    style: 'currency',
-    currency: 'BRL'
-  }),
+  price: formatPriceBr(model.price),
   type: model.type,
   installments: model.installments,
   status: model.status,
@@ -280,7 +257,7 @@ const toDTOPayment = (model) => ({
     fullName: model.card.fullName,
     areaCode: model.card.areaCode,
     phone: model.card.phone,
-    birthDate: new Date(model.card.birthDate).toLocaleDateString('pt-BR'),
+    birthDate: formatDateBr(model.card.birthDate),
     creditCardToken: model.card.creditCardToken,
     cpf: model.card.cpf
   },
@@ -303,7 +280,7 @@ const toDTOPayment = (model) => ({
     solicitation: model.orderregistrations.solicitation,
     type: model.orderregistrations.type,
     situation: model.orderregistrations.situation,
-    date: new Date(model.orderregistrations.date).toLocaleDateString('pt-BR')
+    date: formatDateBr(model.orderregistrations.date)
   }
 })
 

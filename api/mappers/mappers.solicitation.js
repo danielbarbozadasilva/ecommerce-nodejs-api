@@ -1,4 +1,7 @@
-const { createAddress } = require('../utils/helpers/helpers.createAddress')
+const {
+  formatPriceBr,
+  formatAddressImage
+} = require('../utils/helpers/helpers.format')
 
 const toDTO = (model) => ({
   id: model._id,
@@ -26,17 +29,11 @@ const toDTO = (model) => ({
   cart: model.cart.map((item) => ({
     product: item.product,
     quantity: item.quantity,
-    unitPrice: item.unitPrice.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL'
-    })
+    unitPrice: formatPriceBr(item.unitPrice)
   })),
   payment: {
     id: model.payment._id,
-    price: model.payment.price.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL'
-    }),
+    price: formatPriceBr(model.payment.price),
     type: model.payment.type,
     installments: model.payment.installments,
     status: model.payment.status,
@@ -58,10 +55,7 @@ const toDTO = (model) => ({
     status: model.deliveries.status,
     trackingCode: model.deliveries.trackingCode,
     type: model.deliveries.type,
-    price: model.deliveries.price.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL'
-    }),
+    price: formatPriceBr(model.deliveries.price),
     deliveryTime: model.deliveries.deliveryTime,
     address: {
       street: model.deliveries.address.street,
@@ -79,16 +73,9 @@ const toDTO = (model) => ({
     title: item.title,
     availability: item.availability,
     description: item.description,
-    photos: createAddress(item),
-
-    price: item.price.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL'
-    }),
-    promotion: item.promotion.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL'
-    }),
+    photos: formatAddressImage(item),
+    price: formatPriceBr(item.price),
+    promotion: formatPriceBr(item.promotion),
     sku: item.sku,
     quantity: item.quantity,
     blockedQuantity: item.blockedQuantity,
@@ -114,10 +101,7 @@ const toDTOCart = (model) => {
       return {
         product: model.products[i],
         quantity: item.quantity,
-        unitPrice: item.unitPrice.toLocaleString('pt-br', {
-          style: 'currency',
-          currency: 'BRL'
-        })
+        unitPrice: formatPriceBr(item.unitPrice)
       }
     }),
     subTotal: subTotal.toLocaleString('pt-br', {
@@ -127,10 +111,7 @@ const toDTOCart = (model) => {
     shipping: model.shipping,
     payment: {
       id: model.payment._id,
-      price: model.payment.price.toLocaleString('pt-br', {
-        style: 'currency',
-        currency: 'BRL'
-      }),
+      price: formatPriceBr(model.payment.price),
       type: model.payment.type,
       installments: model.payment.installments,
       status: model.payment.status,
@@ -151,10 +132,7 @@ const toDTOCart = (model) => {
       status: model.deliveries.status,
       trackingCode: model.deliveries.trackingCode,
       type: model.deliveries.type,
-      price: model.deliveries.price.toLocaleString('pt-br', {
-        style: 'currency',
-        currency: 'BRL'
-      }),
+      price: formatPriceBr(model.deliveries.price),
       deliveryTime: model.deliveries.deliveryTime,
       address: {
         street: model.deliveries.address.street,
@@ -194,10 +172,7 @@ const toDTOCart = (model) => {
 
 const toDTOList = (solicitation, deliveries) => ({
   deliveries: {
-    price: deliveries.price.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL'
-    }),
+    price: formatPriceBr(deliveries.price),
     type: deliveries.type,
     deliveryTime: deliveries.deliveryTime,
     address: deliveries.address,
