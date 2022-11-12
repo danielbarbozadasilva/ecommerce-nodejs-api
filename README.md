@@ -29,7 +29,7 @@ JWT_VALID_TIME=9000000000
 URL=http://localhost:3000
 IMAGE_PATH=http://localhost:3011/static/
 
-SENDGRID_SENDER=exemplo@gmail.com
+SENDER=exemplo@gmail.com
 SENDGRID_API_KEY=exemplo
 
 SANDBOX_EMAIL=exemplo@sandbox.pagseguro.com.br
