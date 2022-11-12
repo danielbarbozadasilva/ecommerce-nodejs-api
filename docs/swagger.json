@@ -1,0 +1,116 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Api PrimeTech E-commerce",
+        "description": "API do projeto PrimeTech E-commerce desenvolvida utilizando o NodeJs, ExpressJs e o Banco de dados MongoDB.",
+        "contact": {
+            "email": "daniel80barboza@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3011/v1",
+            "description": "Api de teste"
+        }
+    ],
+    "paths": {
+        "/auth": {
+            "post": {
+                "summary": "Logar usuário",
+                "description": "Essa rota é responsável por autenticar o usuário",
+                "tags": [
+                    "Autenticar Usuário"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Auth"
+                            },
+                            "examples": {
+                                "auth": {
+                                    "value": {
+                                        "email": "daniel95barboza@gmail.com",
+                                        "password": "daniel"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "401": {
+                        "description": "Invalid access credentials!"
+                    },
+                    "200": {
+                        "description": "User authenticated successfully!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/components/schemas/List_Auth"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Auth": {
+                "type": "object",
+                "properties": {
+                    "cpf": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "password": {
+                        "type": "string",
+                        "required": true
+                    }
+                }
+            },
+            "List_Auth": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "required": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "email": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "cpf": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "type": {
+                        "type": "integer",
+                        "required": true
+                    }
+                }
+            }
+        },
+        "securityDefinitions": {
+            "JWT": {
+                "description": "JWT token",
+                "type": "apiKey",
+                "in": "header",
+                "name": "Authorization"
+            }
+        }
+    }
+}
