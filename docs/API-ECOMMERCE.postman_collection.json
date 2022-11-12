@@ -782,7 +782,7 @@
 					"response": []
 				},
 				{
-					"name": "client.listByClientId",
+					"name": "client.solicitations",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1693,12 +1693,12 @@
 								{
 									"key": "files",
 									"type": "file",
-									"src": "/C:/Users/pc01/Pictures/img0.jpg"
+									"src": "/C:/Users/pc01/Pictures/11.jpg"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/product/images/6347178b594bbd99ff5126a2",
+							"raw": "http://localhost:3011/v1/product/images/63432f02a7f855351c99dc71",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1708,7 +1708,7 @@
 								"v1",
 								"product",
 								"images",
-								"6347178b594bbd99ff5126a2"
+								"63432f02a7f855351c99dc71"
 							]
 						}
 					},
@@ -2017,7 +2017,7 @@
 					"response": []
 				},
 				{
-					"name": "solicitation.listById",
+					"name": "solicitation.solicitationNumber",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -2038,7 +2038,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/solicitation/63434348a7b076da94874bef?limit=30&offset=0",
+							"raw": "http://localhost:3011/v1/solicitation/swVLp0bHs?limit=30&offset=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2047,7 +2047,7 @@
 							"path": [
 								"v1",
 								"solicitation",
-								"63434348a7b076da94874bef"
+								"swVLp0bHs"
 							],
 							"query": [
 								{
@@ -2085,7 +2085,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/solicitation/63602cffbcf665837b144ad5/cart?limit=30&offset=0",
+							"raw": "http://localhost:3011/v1/solicitation/swVLp0bHs/cart?limit=30&offset=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2094,7 +2094,7 @@
 							"path": [
 								"v1",
 								"solicitation",
-								"63602cffbcf665837b144ad5",
+								"swVLp0bHs",
 								"cart"
 							],
 							"query": [
@@ -2144,7 +2144,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "\r\n{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 429.99,\r\n            \"quantity\": 3\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\",\r\n    \"shipping\": 79.33,\r\n    \"payment\": {\r\n        \"price\": 2569.29,\r\n        \"type\": \"CREDITCARD\",\r\n        \"installments\": 3,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987-200\"\r\n        },\r\n        \"card\": {\r\n            \"fullName\": \"DANIEL BARBOZA DA SILVA\",\r\n            \"areaCode\": \"21\",\r\n            \"phone\": \"(21)2434-1207\",\r\n            \"birthDate\": \"2000-02-09\",\r\n            \"creditCardToken\": \"51ae1b1ae9cf421abe6c02ac99838cf1\",\r\n            \"cpf\": \"82429888467\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 79.33,\r\n        \"type\": \"4014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987200\"\r\n        }\r\n    }\r\n}",
+							"raw": "\r\n{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 429.99,\r\n            \"quantity\": 3\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\",\r\n    \"shipping\": 79.33,\r\n    \"payment\": {\r\n        \"price\": 2569.29,\r\n        \"type\": \"CREDITCARD\",\r\n        \"installments\": 3,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987-200\"\r\n        },\r\n        \"card\": {\r\n            \"fullName\": \"DANIEL BARBOZA DA SILVA\",\r\n            \"areaCode\": \"21\",\r\n            \"phone\": \"(21)2434-1207\",\r\n            \"birthDate\": \"2000-02-09\",\r\n            \"creditCardToken\": \"03d8cb4b2f9e4107a94e86863d5ff3c3\",\r\n            \"cpf\": \"82429888467\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 79.33,\r\n        \"type\": \"4014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987200\"\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2217,7 +2217,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/solicitation/6349ace99826bc4babad38f9?clientid=6320f577156b47ff1082586e",
+							"raw": "http://localhost:3011/v1/solicitation/swVLp0bHs?clientid=6320f577156b47ff1082586e",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2226,7 +2226,7 @@
 							"path": [
 								"v1",
 								"solicitation",
-								"6349ace99826bc4babad38f9"
+								"swVLp0bHs"
 							],
 							"query": [
 								{
@@ -2255,7 +2255,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/delivery/63434348a7b076da94874bec",
+							"raw": "http://localhost:3011/v1/delivery/636b6362bdde17645c78d908",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2264,7 +2264,7 @@
 							"path": [
 								"v1",
 								"delivery",
-								"63434348a7b076da94874bec"
+								"636b6362bdde17645c78d908"
 							]
 						}
 					},
@@ -2317,7 +2317,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/delivery/63434348a7b076da94874bec",
+							"raw": "http://localhost:3011/v1/delivery/636f5cfa90569154ecc69c92",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2326,7 +2326,7 @@
 							"path": [
 								"v1",
 								"delivery",
-								"63434348a7b076da94874bec"
+								"636f5cfa90569154ecc69c92"
 							]
 						}
 					},
@@ -2415,7 +2415,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/payment/63602d21bcf665837b144b19",
+							"raw": "http://localhost:3011/v1/payment/636b6361bdde17645c78d904",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2424,7 +2424,7 @@
 							"path": [
 								"v1",
 								"payment",
-								"63602d21bcf665837b144b19"
+								"636b6361bdde17645c78d904"
 							]
 						}
 					},
@@ -2466,13 +2466,13 @@
 							"urlencoded": [
 								{
 									"key": "senderHash",
-									"value": "fe9def6c992bb8281b151f1cf2096f5595ae636d499a09c4fa76edf021ef8a60",
+									"value": "a7be0a6caa7b259e1e5a62bd899997d7beff65d612c6755a52540e3bedf13a40",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/take/payment/6364237e54385bd70b72d023",
+							"raw": "http://localhost:3011/v1/take/payment/636f5cfa90569154ecc69c8e",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2482,7 +2482,7 @@
 								"v1",
 								"take",
 								"payment",
-								"6364237e54385bd70b72d023"
+								"636f5cfa90569154ecc69c8e"
 							]
 						}
 					},
@@ -2579,7 +2579,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/payment/6364237e54385bd70b72d023",
+							"raw": "http://localhost:3011/v1/payment/636e5e01894a245b4072b3d2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2588,7 +2588,7 @@
 							"path": [
 								"v1",
 								"payment",
-								"6364237e54385bd70b72d023"
+								"636e5e01894a245b4072b3d2"
 							]
 						}
 					},
