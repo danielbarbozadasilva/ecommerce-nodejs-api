@@ -1,7 +1,7 @@
 const { user, client } = require('../models/models.index')
 const cryptography = require('../utils/utils.cryptography')
-const emailUtils = require('../utils/email/utils.email')
-const { Email } = require('../utils/email/utils.email.recovery')
+const emailUtils = require('../utils/email/email.index')
+const { Email } = require('../utils/email/email.recovery')
 const userMapper = require('../mappers/mappers.user')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const ErrorNotAuthenticatedUser = require('../utils/errors/errors.user-not-authenticated')
@@ -42,7 +42,8 @@ const profile = [
       'LIST_ID_SOLICITATION',
       'LIST_CLIENT_SOLICITATION',
       'LIST_CART_PRODUCT',
-      'UPDATE_DELIVERY'
+      'UPDATE_DELIVERY',
+      'UPDATE_PAYMENT'
     ]
   },
   {
@@ -66,7 +67,9 @@ const profile = [
       'LIST_ID_SOLICITATION',
       'LIST_CLIENT_SOLICITATION',
       'LIST_CART_PRODUCT',
-      'LIST_DELIVERY'
+      'LIST_DELIVERY',
+      'LIST_PAYMENT_ID',
+      'TAKE_PAYMENT'
     ]
   }
 ]
@@ -85,7 +88,7 @@ const userIsValidService = async (email, password) => {
       return resultDB
     }
   }
-  throw new ErrorNotAuthenticatedUser('Credenciais de acesso inválidas!')
+  throw new ErrorNotAuthenticatedUser('Invalid access credentials!')
 }
 
 const checkPermissionService = (permissions, rule) => {
@@ -224,7 +227,7 @@ const sendTokenRecoveryPasswordService = async (body) => {
     )
     emailUtils.utilSendEmail({
       to: body.email,
-      from: process.env.SENDGRID_SENDER,
+      from: process.env.SENDER,
       subject: `Recuperar senha`,
       html: Email(resultToken.token)
     })

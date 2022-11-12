@@ -21,7 +21,7 @@ module.exports = (router) => {
             'string.pattern.base': '"product id" out of the expected format'
           })
       }),
-      verifyIdDbMiddleware.verifyIdProductDbMiddleware,
+      verifyIdDbMiddleware.verifyIdProduct,
       ratingController.listRatingProductController
     )
     .post(
@@ -61,8 +61,8 @@ module.exports = (router) => {
           'string.empty': '"score" can not be empty'
         })
       }),
-      verifyIdDbMiddleware.verifyIdClientDbMiddleware,
-      verifyIdDbMiddleware.verifyIdProductDbMiddleware,
+      verifyIdDbMiddleware.verifyIdClient,
+      verifyIdDbMiddleware.verifyIdProduct,
       verifyIdDbMiddleware.verifyRatingExistsMiddleware,
       ratingController.createRatingProductController
     )
@@ -89,8 +89,8 @@ module.exports = (router) => {
             'string.pattern.base': '"product id" out of the expected format'
           })
       }),
-      verifyIdDbMiddleware.verifyIdClientDbMiddleware,
-      verifyIdDbMiddleware.verifyIdProductDbMiddleware,
+      verifyIdDbMiddleware.verifyIdClient,
+      verifyIdDbMiddleware.verifyIdProduct,
       verifyIdDbMiddleware.verifyRatingNotExistsMiddleware,
       ratingController.deleteRatingProductController
     )
@@ -117,8 +117,8 @@ module.exports = (router) => {
           'string.pattern.base': '"product id" out of the expected format'
         })
     }),
-    verifyIdDbMiddleware.verifyIdProductDbMiddleware,
-    verifyIdDbMiddleware.verifyIdRatingDbMiddleware,
+    verifyIdDbMiddleware.verifyIdProduct,
+    verifyIdDbMiddleware.verifyIdRating,
     ratingController.listByIdRatingProductController
   )
 }

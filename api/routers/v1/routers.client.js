@@ -130,7 +130,7 @@ module.exports = (router) => {
     }),
     authenticationMiddleware(),
     authorization.authorizationMiddleware('LIST_CLIENT_SOLICITATION'),
-    verifyIdDbMiddleware.verifyIdClientDbMiddleware,
+    verifyIdDbMiddleware.verifyIdClient,
     clientController.listSolicitationClientController
   )
 
@@ -154,7 +154,7 @@ module.exports = (router) => {
       }),
       authenticationMiddleware(),
       authorization.authorizationMiddleware('CLIENT_ID'),
-      verifyIdDbMiddleware.verifyIdClientDbMiddleware,
+      verifyIdDbMiddleware.verifyIdClient,
       clientController.listByIdClientController
     )
     .delete(
@@ -171,7 +171,7 @@ module.exports = (router) => {
       }),
       authenticationMiddleware(),
       authorization.authorizationMiddleware('CLIENT_DELETE'),
-      verifyIdDbMiddleware.verifyIdClientDbMiddleware,
+      verifyIdDbMiddleware.verifyIdClient,
       clientController.deleteClientController
     )
   router.route('/client/:clientid/user/:userid').put(
@@ -257,7 +257,7 @@ module.exports = (router) => {
     }),
     authenticationMiddleware(),
     authorization.authorizationMiddleware('CLIENT_UPDATE'),
-    verifyIdDbMiddleware.verifyIdClientDbMiddleware,
+    verifyIdDbMiddleware.verifyIdClient,
     verifyIdDbMiddleware.verifyEmailUserExists,
     verifyIdDbMiddleware.verifyCpfUserExists,
     clientController.updaterClientController

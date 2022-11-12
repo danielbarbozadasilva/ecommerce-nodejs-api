@@ -1,20 +1,22 @@
+const {
+  formatPriceBr,
+  formatAddressImage
+} = require('../utils/helpers/helpers.format')
+
 const toDTO = (model) => ({
   id: model._id,
   name: model.name,
   code: model.code,
-  availability: model.availability,
-  products: model?.products?.map((item) => ({
-    id: item
-  }))
+  availability: model.availability
 })
 
 const toDTOWithProducts = (model) => ({
   title: model.title,
   availability: model.availability,
   description: model.description,
-  photos: model.photos,
-  price: model.price,
-  promotion: model.promotion,
+  photos: model.photos.map((item) => formatAddressImage(item)),
+  price: formatPriceBr(model.price),
+  promotion: formatPriceBr(model.promotion),
   sku: model.sku,
   category: model.category,
   store: model.store,

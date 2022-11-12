@@ -1,11 +1,16 @@
+const {
+  formatPriceBr,
+  formatAddressImage
+} = require('../utils/helpers/helpers.format')
+
 const toDTO = (model) => ({
   id: model._id,
   title: model.title,
   availability: model.availability,
   description: model.description,
-  photos: model.photos,
-  price: model.price,
-  promotion: model.promotion,
+  photos: model.photos.map((item) => formatAddressImage(item)),
+  price: formatPriceBr(model.price),
+  promotion: formatPriceBr(model.promotion),
   sku: model.sku,
   quantity: model.quantity,
   store: model.storeid,
@@ -37,9 +42,9 @@ const toDTORating = (model) => ({
     title: model.product.title,
     availability: model.product.availability,
     description: model.product.description,
-    photos: model.product.photos,
-    price: model.product.price,
-    promotion: model.product.promotion,
+    photos: model.photos.map((item) => formatAddressImage(item)),
+    price: formatPriceBr(model.product.price),
+    promotion: formatPriceBr(model.product.promotion),
     sku: model.product.sku,
     quantity: model.quantity,
     dimensions: {

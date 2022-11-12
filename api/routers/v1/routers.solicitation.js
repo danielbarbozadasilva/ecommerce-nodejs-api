@@ -142,16 +142,15 @@ module.exports = (router) => {
                   'any.required': '"creditCardToken" is a required field',
                   'string.empty': '"creditCardToken" can not be empty'
                 }),
-                cpf: joi
-                  .string()
-                  .regex(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/)
-                  .required()
-                  .messages({
-                    'any.required': '"cpf" is a required field',
-                    'string.empty': '"cpf" can not be empty'
-                  })
+                cpf: joi.string().required().messages({
+                  'any.required': '"cpf" is a required field',
+                  'string.empty': '"cpf" can not be empty'
+                })
               })
-              .optional()
+              .when('type', {
+                is: 'CREDITCARD',
+                then: joi.object().required()
+              })
           })
           .required(),
         deliveries: joi
@@ -205,43 +204,27 @@ module.exports = (router) => {
     )
 
   router
-    .route('/solicitation/:solicitationid')
+    .route('/solicitation/:solicitationNumber')
     .get(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('LIST_ID_SOLICITATION'),
       validateDTOMiddleware('params', {
-        solicitationid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"solicitation id" is a required field',
-            'string.empty': '"solicitation id" can not be empty',
-            'string.pattern.base':
-              '"solicitation id" out of the expected format'
-          })
+        solicitationNumber: joi.string().required().messages({
+          'any.required': '"solicitationNumber" is a required field',
+          'string.empty': '"solicitationNumber" can not be empty'
+        })
       }),
-      validateDTOMiddleware('query', {
-        offset: joi.number(),
-        limit: joi.number()
-      }),
-      verifyIdDbMiddleware.verifyIdSolicitationDbMiddleware,
-      solicitationController.listByIdSolicitationController
+      verifyIdDbMiddleware.verifyIdSolicitation,
+      solicitationController.listByNumberSolicitationController
     )
     .delete(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('SOLICITATION_DELETE'),
       validateDTOMiddleware('params', {
-        solicitationid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"solicitation id" is a required field',
-            'string.empty': '"solicitation id" can not be empty',
-            'string.pattern.base':
-              '"solicitation id" out of the expected format'
-          })
+        solicitationNumber: joi.string().required().messages({
+          'any.required': '"solicitationNumber" is a required field',
+          'string.empty': '"solicitationNumber" can not be empty'
+        })
       }),
       validateDTOMiddleware('query', {
         clientid: joi
@@ -254,30 +237,26 @@ module.exports = (router) => {
             'string.pattern.base': '"client id" out of the expected format'
           })
       }),
-      verifyIdDbMiddleware.verifyIdSolicitationDbMiddleware,
-      verifyIdDbMiddleware.verifyIdClientDbMiddleware,
+      verifyIdDbMiddleware.verifyIdSolicitation,
+      verifyIdDbMiddleware.verifyIsAlreadyCanceledSolicitation,
+      verifyIdDbMiddleware.verifyIdClient,
       solicitationController.deleteSolicitationController
     )
 
-  router.route('/solicitation/:solicitationid/cart').get(
+  router.route('/solicitation/:solicitationNumber/cart').get(
     authenticationMiddleware(),
     authorization.authorizationMiddleware('LIST_CART_PRODUCT'),
     validateDTOMiddleware('params', {
-      solicitationid: joi
-        .string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-          'any.required': '"solicitation id" is a required field',
-          'string.empty': '"solicitation id" can not be empty',
-          'string.pattern.base': '"solicitation id" out of the expected format'
-        })
+      solicitationNumber: joi.string().required().messages({
+        'any.required': '"solicitationNumber" is a required field',
+        'string.empty': '"solicitationNumber" can not be empty'
+      })
     }),
     validateDTOMiddleware('query', {
       offset: joi.number(),
       limit: joi.number()
     }),
-    verifyIdDbMiddleware.verifyIdSolicitationDbMiddleware,
+    verifyIdDbMiddleware.verifyIdSolicitation,
     solicitationController.showCartSolicitationController
   )
 }

@@ -1,176 +1,176 @@
 const pagSeguroConfig = require('./pagseguro.config')
 const PagSeguro = require('./pagseguro.operations')
 
-const _createPaymentWithBoleto = (senderHash, data) => {
-    return new Promise((resolve, reject) => {
-    
-    const { client, cart, delivery, payment } = data
+const _createPaymentWithBoleto = (senderHash, data) =>
+  new Promise((resolve, reject) => {
     const pag = new PagSeguro(pagSeguroConfig)
 
     pag.setSender({
-      name: client.name,
-      email: client.user.email,
-      cpf_cnpj: client.cpf.replace(/[-\.]/g, ''),
-      area_code: client.phones[0].slice(0, 2),
-      phone: client.phones[0].slice(2).trim().split(' ').join(''),
-      birth_date: client.birthDate.toLocaleDateString('pt-BR')
+      name: data.client.name,
+      email: data.user.email,
+      cpf_cnpj: data.client.cpf.replace(/[-\.]/g, ''),
+      area_code: data.client.phones[0].slice(1, 3),
+      phone: data.client.phones[0].trim().slice(4).replace(/[-\.]/g, ''),
+      birth_date: new Date(data.client.birthDate).toLocaleDateString('pt-BR')
     })
 
     pag.setShipping({
-      street: delivery.address.street,
-      number: delivery.address.number,
-      district: delivery.address.district,
-      city: delivery.address.city,
-      state: delivery.address.state,
-      postal_code: delivery.address.zipCode.replace(/-/g, ''),
-      same_for_billing: payment.addressDeliveryIgualCharging 
+      street: data.deliveries.address.street,
+      number: data.deliveries.address.number,
+      district: data.deliveries.address.district,
+      city: data.deliveries.address.city,
+      state: data.deliveries.address.state,
+      postal_code: data.deliveries.address.zipCode.replace(/-/g, ''),
+      same_for_billing: data.addressDeliveryIgualCharging
     })
 
     pag.setBilling({
-      street: payment.address.street,
-      number: payment.address.number,
-      district: payment.address.district,
-      city: payment.address.city,
-      state: payment.address.state,
-      postal_code: payment.address.zipCode.replace(/-/g, '')
+      street: data.address.street,
+      number: data.address.number,
+      district: data.address.district,
+      city: data.address.city,
+      state: data.address.state,
+      postal_code: data.address.zipCode.replace(/-/g, '')
     })
 
-    cart.forEach((item) => {
+    data.solicitation.cart.map((item) => {
       pag.addItem({
         qtde: item.quantity,
         value: item.unitPrice,
-        description: `${item.product.title} - ${item.product.description}`
+        description: item.product.description
       })
     })
 
     pag.addItem({
       qtde: 1,
-      value: delivery.price,
+      value: data.deliveries.price,
       description: `Custo de entrega - Correios`
     })
 
     pag.sendTransaction(
       {
         method: 'boleto',
-        value: payment.price,
+        value: data.price,
         installments: 1,
         hash: senderHash
       },
       (err, data) => (err ? reject(err) : resolve(data))
     )
   })
-}
 
-const _createPaymentWithCreditCard = (senderHash, data) => {
-    return new Promise((resolve, reject) => {
-    
-    const { client, cart, delivery, payment } = data
+const _createPaymentWithCreditCard = (senderHash, data) =>
+  new Promise((resolve, reject) => {
     const pag = new PagSeguro(pagSeguroConfig)
-
     pag.setSender({
-      name: client.name,
-      email: client.user.email,
-      cpf_cnpj: client.cpf.replace(/[-\.]/g, ''),
-      area_code: client.phones[0].slice(0, 2),
-      phone: client.phones[0].slice(2).trim().split(' ').join(''),
-      birth_date: client.birthDate.toLocaleDateString('pt-BR')
+      name: data.client.name,
+      email: data.user.email,
+      cpf_cnpj: data.client.cpf.replace(/[-\.]/g, ''),
+      area_code: data.card.areaCode.trim(),
+      phone:
+        data.card.phone.trim().slice(4).replace(/[-\.]/g, '') ||
+        data.client.phones[0].trim().slice(4).replace(/[-\.]/g, ''),
+      birth_date: new Date(data.client.birthDate).toLocaleDateString('pt-BR')
     })
 
     pag.setShipping({
-      street: delivery.address.street,
-      number: delivery.address.number,
-      district: delivery.address.district,
-      city: delivery.address.city,
-      state: delivery.address.state,
-      postal_code: delivery.address.zipCode.replace(/-/g, ''),
-      same_for_billing: payment.addressDeliveryIgualCharging
+      street: data.deliveries.address.street,
+      number: data.deliveries.address.number,
+      district: data.deliveries.address.district,
+      city: data.deliveries.address.city,
+      state: data.deliveries.address.state,
+      postal_code: data.deliveries.address.zipCode.replace(/-/g, ''),
+      same_for_billing: data.addressDeliveryIgualCharging
     })
 
     pag.setBilling({
-      street: payment.address.street,
-      number: payment.address.number,
-      district: payment.address.district,
-      city: payment.address.city,
-      state: payment.address.state,
-      postal_code: payment.address.zipCode.replace(/-/g, '')
+      street: data.address.street,
+      number: data.address.number,
+      district: data.address.district,
+      city: data.address.city,
+      state: data.address.state,
+      postal_code: data.address.zipCode.replace(/-/g, '')
     })
 
-    cart.forEach((item) => {
+    data.solicitation.cart.map((item) => {
       pag.addItem({
         qtde: item.quantity,
         value: item.unitPrice,
-        description: `${item.product.title} - ${item.product.description}`
+        description: item.product.description
       })
     })
+
     pag.addItem({
       qtde: 1,
-      value: delivery.price,
+      value: data.deliveries.price,
       description: `Custo de entrega - Correios`
     })
 
     pag.setCreditCardHolder({
-      name: payment.card.fullName || client.name,
-      area_code:
-        payment.card.areaCode.trim() || client.phones[0].slice(0, 2),
-      phone: (payment.card.phone.trim() || client.phones[0].slice(2))
-        .split(' ')
-        .join(''),
-      birth_date: payment.card.birthDate.toLocaleDateString('pt-BR') || client.birthDate.toLocaleDateString('pt-BR'),
-      cpf_cnpj: (payment.card.cpf || client.cpf).replace(/[-\.]/g, '')
+      name: data.card.fullName || data.client.name,
+      area_code: data.card.areaCode.trim(),
+      phone:
+        data.card.phone.trim().slice(4).replace(/[-\.]/g, '') ||
+        data.client.phones[0].trim().slice(4).replace(/[-\.]/g, ''),
+      birth_date:
+        new Date(data.card.birthDate).toLocaleDateString('pt-BR') ||
+        new Date(data.client.birthDate).toLocaleDateString('pt-BR'),
+      cpf_cnpj: (data.card.cpf || data.client.cpf).replace(/[-\.]/g, '')
     })
 
     pag.sendTransaction(
       {
         method: 'creditCard',
-        value:
-          payment.price % 2 !== 0 && payment.installments !== 1
-            ? payment.price + 0.01
-            : payment.price,
-        installments: payment.installments,
+        value: data.price,
+        installments: data.installments,
         hash: senderHash,
-        credit_card_token: payment.card.creditCardToken
+        credit_card_token: data.card.creditCardToken
       },
       (err, data) => (err ? reject(err) : resolve(data))
     )
   })
-}
 
 const createPayment = async (senderHash, data) => {
-    try {
-        if ( data.payment.type === "boleto" ){
-            return await _createPaymentWithBoleto(senderHash, data)
-        } else if ( data.payment.type === "creditCard" ) {
-            return await _createPaymentWithCreditCard(senderHash, data)
-        } else {
-            return { 
-                errorMessage: "Payment method not found." 
-            }
-        }
-
-    } catch(error){
-        console.log(error);
-        return { 
-            errorMessage: "Ocorreu um erro", 
-            errors: error 
-        }
+  try {
+    if (data.type === 'BOLETO') {
+      return await _createPaymentWithBoleto(senderHash, data)
     }
+    if (data.type === 'CREDITCARD') {
+      return await _createPaymentWithCreditCard(senderHash, data)
+    }
+    return {
+      errorMessage: 'Payment method not found.'
+    }
+  } catch (error) {
+    return {
+      errorMessage: 'Ocorreu um erro',
+      errors: error
+    }
+  }
 }
 
-const getSessionId = () => new Promise((resolve, reject) => {
-        const pag = new PagSeguro(pagSeguroConfig);
-        pag.sessionId((err, session_id) => (err) ? reject(err) : resolve(session_id));
-    })
-}
+const getSessionId = () =>
+  new Promise((resolve, reject) => {
+    const pag = new PagSeguro(pagSeguroConfig)
+    pag.sessionId((err, session_id) =>
+      err ? reject(err) : resolve(session_id)
+    )
+  })
 
-const getTransactionStatus = (codigo) => new Promise((resolve, reject) => {
-        const pag = new PagSeguro(pagSeguroConfig);
-        pag.transactionStatus(codigo, (err, result) => (err) ? reject(err) : resolve(result));
-    })
+const getTransactionStatus = (codigo) =>
+  new Promise((resolve, reject) => {
+    const pag = new PagSeguro(pagSeguroConfig)
+    pag.transactionStatus(codigo, (err, result) =>
+      err ? reject(err) : resolve(result)
+    )
+  })
 
-const getNotification = (codigo) => new Promise((resolve, reject) => {
-        const pag = new PagSeguro(pagSeguroConfig);
-        pag.getNotification(codigo, (err, result) => (err) ? reject(err) : resolve(result));
-    })
+const getNotification = (codigo) =>
+  new Promise((resolve, reject) => {
+    const pag = new PagSeguro(pagSeguroConfig)
+    pag.getNotification(codigo, (err, result) =>
+      err ? reject(err) : resolve(result)
+    )
+  })
 
 module.exports = {
   createPayment,

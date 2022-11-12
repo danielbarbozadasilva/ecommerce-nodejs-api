@@ -59,7 +59,7 @@ db.clients.insert([
     user: ObjectId("6320f577156b47ff1082586c"),
     name: "Daniel Silva",
     birthDate: "2000-09-09",
-    cpf: "111.231.455-81",
+    cpf: "82429888467",
     phones: [
         "(11)2423-2198",
         "(11)99099-8990"
@@ -97,15 +97,15 @@ db.createCollection("products")
 db.products.insert([
 {
   _id: ObjectId("63432f02a7f855351c99dc71"),
-  title: "Placa de Vídeo Galax GeForce RTX 3060",
+  title: "Placa de Vídeo Zotac GeForce RTX 3060",
   availability: true,
   description: "(1-Click OC) LHR, 12GB GDDR6, 15 Gbps, Ray Tracing, DLSS - 36NOL7MD1VOC",
-  photos: [],
+  photos:["files-1668078769319.jpg","files-1668079012525.jpg"],  
   price: 2399.99,
   promotion: 1199.99,
   sku: "PVNV3060RTX",
-  quantity: 49,
-  blockedQuantity: 1,
+  quantity: 50,
+  blockedQuantity: 0,
   dimensions: {
     height: 8,
     width: 10,
@@ -121,12 +121,12 @@ db.products.insert([
   title: "Processador Intel Core i5-10400F, 2.9GHz",
   availability: true,
   description: "(4.3GHz Max Turbo), Cache 12MB, 6 Núcleos, 12 Threads, LGA 1200 - BX8070110400F",
-  photos: [],
+  photos:["files-1668078750488.jpg"],
   price: 849.99,
   promotion: 429.99,
   sku: "PCINTI510400F",
-  quantity: 148,
-  blockedQuantity: 2,
+  quantity: 150,
+  blockedQuantity: 0,
   dimensions: {
     height: 8,
     width: 10,
@@ -139,142 +139,6 @@ db.products.insert([
 }
 ])
 
-db.createCollection("payments")
-db.payments.insert([
-{
-  _id: ObjectId("63434348a7b076da94874be8"),
-  price: 2209.99,
-  type: "CREDITO",
-  installments: 1,
-  status: "started",
-  address: {
-      street: "Rio de janeiro",
-      number: "1223",
-      complement: "casa",
-      district: "Rio de janeiro",
-      city: "Rio de janeiro",
-      state: "Rio de janeiro",
-      zipCode: "21987-200"
-  },
-  card: {
-      fullName: "DANIEL BARBOZA DA SILVA",
-      areaCode: "21987-200",
-      phone: "(21)2434-1207",
-      birthDate: "2000-02-09",
-      creditCardToken: "234324234342343423",
-      cpf: "219.877.200-90"
-  },
-    addressDeliveryIgualCharging: false,
-    pagSeguroCode: "1231232132"
-},
-{
-  _id: ObjectId("6343516f3fb56efda46c2de5"),
-  price: 839.99,
-  type: "BOLETO",
-  installments: 1,
-  status: "started",
-  address: {
-      street: "Rio de janeiro",
-      number: "1223",
-      complement: "casa",
-      district: "Rio de janeiro",
-      city: "Rio de janeiro",
-      state: "Rio de janeiro",
-      zipCode: "21987-200"
-  },
-    addressDeliveryIgualCharging: false,
-    pagSeguroCode: "1231232132"
-}
-])
 
-db.createCollection("deliveries")
-db.deliveries.insert([
-{
-  _id: ObjectId("63434348a7b076da94874bec"),
-  status: "not started",
-  trackingCode: "23123123",
-  type: "04014",
-  price: 10,
-  deliveryTime: 2,
-   address: {
-    street: "Rio de janeiro",
-    number: "1223",
-    complement: "casa",
-    district: "Rio de janeiro",
-    city: "Rio de janeiro",
-    state: "Rio de janeiro",
-    zipCode: "21987-200"
-  }
-},
-{
-  _id: ObjectId("6343516f3fb56efda46c2de8"),
-  status: "not started",
-  trackingCode: "23123123",
-  type: "04014",
-  price: 10,
-  deliveryTime: 2,
-   address: {
-    street: "Rio de janeiro",
-    number: "1223",
-    complement: "casa",
-    district: "Rio de janeiro",
-    city: "Rio de janeiro",
-    state: "Rio de janeiro",
-    zipCode: "21987-200"
-  }
-}
-])
-
-db.createCollection("solicitations")
-db.solicitations.insert([
-  {
-      _id: ObjectId("63434348a7b076da94874bef"),
-      client: ObjectId("6320f577156b47ff1082586e"),
-      cart: [{
-        product: ObjectId("63432f02a7f855351c99dc71"),
-        quantity: 2,
-        unitPrice: 2199.99
-      }],
-        shipping: 10,
-        payment: ObjectId("63434348a7b076da94874be8"),
-        deliveries: ObjectId("63434348a7b076da94874bec"),
-        canceled: false
-  },
-  {
-      _id: ObjectId("6343516f3fb56efda46c2deb"),
-      client: ObjectId("6320f577156b47ff1082586e"),
-      cart: [{
-        product: ObjectId("63432f02a7f855351c99dc72"),
-        quantity: 1,
-        unitPrice: 829.99
-       }],
-        shipping: 10,
-        payment: ObjectId("6343516f3fb56efda46c2de5"),
-        deliveries: ObjectId("6343516f3fb56efda46c2de8"),
-        canceled: false
-  }
-])
-
-db.createCollection("orderregistrations")
-db.orderregistrations.insert([
-  {
-      _id: ObjectId("6346e2fdcb561bd0b2f1abdd"),
-      solicitation: ObjectId("63434348a7b076da94874bef"),
-      type: "solicitation",
-      situation: "created"
-  },
-  {
-      _id: ObjectId("6346e3bdcb561bd0b2f1abef"),
-      solicitation: ObjectId("6343516f3fb56efda46c2deb"),
-      type: "solicitation",
-      situation: "created"
-  },
-  {
-      _id: ObjectId("6346e3bdcb561bd0b2f1abef"),
-      solicitation: ObjectId("6343516f3fb56efda46c2deb"),
-      type: "started",
-      situation: "created"
-  }
-])
 
 EOF

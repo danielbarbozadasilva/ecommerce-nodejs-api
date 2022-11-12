@@ -196,6 +196,8 @@ const listSolicitationClientService = async (offset, limit, clientid) => {
           as: 'client'
         }
       },
+      { $unwind: '$client' },
+
       {
         $lookup: {
           from: payment.collection.name,
@@ -204,6 +206,8 @@ const listSolicitationClientService = async (offset, limit, clientid) => {
           as: 'payment'
         }
       },
+      { $unwind: '$payment' },
+
       {
         $lookup: {
           from: deliveries.collection.name,
@@ -212,6 +216,8 @@ const listSolicitationClientService = async (offset, limit, clientid) => {
           as: 'deliveries'
         }
       },
+      { $unwind: '$deliveries' },
+
       {
         $facet: {
           metadata: [{ $count: 'total' }],

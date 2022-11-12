@@ -1,3 +1,7 @@
+require('dotenv').config({
+  path: process.env.NODE_ENV === 'development' ? '.env.test' : '.env'
+})
+
 module.exports = {
   mode: process.env.NODE_ENV === 'production' ? 'live' : 'sandbox',
   sandbox: process.env.NODE_ENV !== 'production',

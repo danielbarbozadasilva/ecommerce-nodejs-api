@@ -1,0 +1,59 @@
+<head>
+    <title>PagSeguro - Token</title>
+    <script type="text/javascript" src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <button onclick="main();">
+        Generate Token
+    </button>
+    <script>
+        function main(){
+            $.ajax({ url: "/v1/payment/session" }).done(function(data){
+
+                var idSession = data.sessionId;
+                console.log("ID da Sessao: ", idSession);
+
+                var hashUser = "";
+                PagSeguroDirectPayment.setSessionId(idSession);
+
+                hashUser = PagSeguroDirectPayment.getSenderHash();
+                console.log("Hash: ", hashUser);
+
+                var tokenc = "";
+
+                var month = "12";
+                var year = "2030";
+                var card = "4111111111111111";
+                var bin = "411111";
+
+                var brand = "";
+                var param = {
+                    cardNumber: card,
+                    brand,
+                    cvv: "123",
+                    expirationMonth: month,
+                    expirationYear: year,
+                    success: function(response){
+                        console.log("Credit Card Token: ",response);
+                        tokenc = response.card.token;
+                    },
+                    error: (error) => console.log(error),
+                    complete: (error) => console.log(error)
+                };
+
+                PagSeguroDirectPayment.getBrand({
+                    cardBin: bin,
+                    success: function(response){
+                        console.log(response);
+                        brand = response.name;
+                        PagSeguroDirectPayment.createCardToken(param);
+                    },
+                    error: (error) => console.log(error),
+                    complete: (error) => console.log(error)
+                });
+
+            });
+        }
+    </script>
+</body>

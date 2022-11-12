@@ -23,7 +23,7 @@ module.exports = (router) => {
             'string.pattern.base': '"delivery id" out of the expected format'
           })
       }),
-      verifyIdDbMiddleware.verifyIdDeliveryDbMiddleware,
+      verifyIdDbMiddleware.verifyIdDelivery,
       deliveryController.listByIdDeliveryController
     )
     .put(
@@ -50,7 +50,7 @@ module.exports = (router) => {
           'string.empty': '"trackingCode" can not be empty'
         })
       }),
-      verifyIdDbMiddleware.verifyIdDeliveryDbMiddleware,
+      verifyIdDbMiddleware.verifyIdDelivery,
       deliveryController.updateDeliveryController
     )
   router.route('/delivery/calculate').post(

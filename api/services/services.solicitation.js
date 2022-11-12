@@ -1,17 +1,20 @@
-const { ObjectId } = require('mongodb')
+const ShortUniqueId = require('short-unique-id')
+
+const uid = new ShortUniqueId({ length: 10, dictionary: 'number' })
 const {
   solicitation,
   orderregistrations,
   product,
   payment,
   client,
+  user,
   deliveries
 } = require('../models/models.index')
 
 const solicitationMapper = require('../mappers/mappers.solicitation')
-const emailUtils = require('../utils/email/utils.email')
-const emailSolicitation = require('../utils/email/utils.email.send_solicitation')
-const emailCancelation = require('../utils/email/utils.email.cancel_solicitation')
+const emailUtils = require('../utils/email/email.index')
+const emailSolicitation = require('../utils/email/email.send_solicitation')
+const emailCancelation = require('../utils/email/email.cancel_solicitation')
 const { calculateShippingService } = require('./services.delivery')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const ErrorBusinessRule = require('../utils/errors/errors.business-rule')
@@ -19,7 +22,7 @@ const ErrorUnprocessableEntity = require('../utils/errors/errors.unprocessable-e
 
 const listAllSolicitationService = async (offset, limit) => {
   try {
-    const resultDB = await solicitation.aggregate([
+    const resultdb = await solicitation.aggregate([
       {
         $lookup: {
           from: product.collection.name,
@@ -36,6 +39,8 @@ const listAllSolicitationService = async (offset, limit) => {
           as: 'client'
         }
       },
+      { $unwind: '$client' },
+
       {
         $lookup: {
           from: payment.collection.name,
@@ -44,6 +49,8 @@ const listAllSolicitationService = async (offset, limit) => {
           as: 'payment'
         }
       },
+      { $unwind: '$payment' },
+
       {
         $lookup: {
           from: deliveries.collection.name,
@@ -52,6 +59,8 @@ const listAllSolicitationService = async (offset, limit) => {
           as: 'deliveries'
         }
       },
+      { $unwind: '$deliveries' },
+
       {
         $facet: {
           metadata: [{ $count: 'total' }],
@@ -66,17 +75,17 @@ const listAllSolicitationService = async (offset, limit) => {
     return {
       success: true,
       message: 'Solicitations listed successfully',
-      data: resultDB[0].data.map((item) => solicitationMapper.toDTO(item))
+      data: resultdb[0].data.map((item) => solicitationMapper.toDTO(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
   }
 }
 
-const listByIdSolicitationService = async (offset, limit, id) => {
+const listByNumberSolicitationService = async (solicitationNumber) => {
   try {
-    const resultDB = await solicitation.aggregate([
-      { $match: { _id: ObjectId(id) } },
+    const resultdb = await solicitation.aggregate([
+      { $match: { solicitationNumber } },
       {
         $lookup: {
           from: product.collection.name,
@@ -93,6 +102,8 @@ const listByIdSolicitationService = async (offset, limit, id) => {
           as: 'client'
         }
       },
+      { $unwind: '$client' },
+
       {
         $lookup: {
           from: payment.collection.name,
@@ -101,6 +112,8 @@ const listByIdSolicitationService = async (offset, limit, id) => {
           as: 'payment'
         }
       },
+      { $unwind: '$payment' },
+
       {
         $lookup: {
           from: deliveries.collection.name,
@@ -109,20 +122,13 @@ const listByIdSolicitationService = async (offset, limit, id) => {
           as: 'deliveries'
         }
       },
-      {
-        $facet: {
-          data: [
-            { $skip: Number(offset) || 0 },
-            { $limit: Number(limit) || 30 }
-          ]
-        }
-      }
+      { $unwind: '$deliveries' }
     ])
 
     return {
       success: true,
       message: 'Solicitations listed successfully',
-      data: solicitationMapper.toDTO(...resultDB[0].data)
+      data: solicitationMapper.toDTO(...resultdb)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -142,38 +148,94 @@ const updateQuantityCancelation = async (data) => {
   }
 }
 
-const sendEmailClientCancelation = async (clientid, solicitation) => {
-  const resultClient = await client.findById(clientid).populate('user')
-
-  emailUtils.utilSendEmail({
-    to: resultClient.user.email,
-    from: process.env.SENDGRID_SENDER,
-    subject: `O pedido ${solicitation._id} foi cancelado`,
-    html: emailCancelation.cancelSolicitationClientEmail(
-      resultClient,
-      solicitation
-    )
-  })
-}
-
-const sendEmailAdminCancelation = async (clientid, solicitation) => {
-  const resultClient = await client.findById(clientid).populate('user')
-
-  emailUtils.utilSendEmail({
-    to: resultClient.user.email,
-    from: process.env.SENDGRID_SENDER,
-    subject: `O pedido ${solicitation._id} foi cancelado`,
-    html: emailCancelation.cancelSolicitationAdminEmail(
-      resultClient,
-      solicitation
-    )
-  })
-}
-
-const deleteSolicitationService = async (id, clientid) => {
+const showCartSolicitationService = async (solicitationNumber) => {
   try {
-    const resultDB = await solicitation.findOneAndUpdate(
-      { client: clientid, _id: id },
+    const resultdb = await solicitation.aggregate([
+      { $match: { solicitationNumber } },
+      {
+        $lookup: {
+          from: client.collection.name,
+          localField: 'client',
+          foreignField: '_id',
+          as: 'client'
+        }
+      },
+      { $unwind: '$client' },
+
+      {
+        $lookup: {
+          from: user.collection.name,
+          localField: 'client.user',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      { $unwind: '$user' },
+
+      {
+        $lookup: {
+          from: deliveries.collection.name,
+          localField: 'deliveries',
+          foreignField: '_id',
+          as: 'deliveries'
+        }
+      },
+      { $unwind: '$deliveries' },
+      {
+        $lookup: {
+          from: product.collection.name,
+          localField: 'cart.product',
+          foreignField: '_id',
+          as: 'products'
+        }
+      },
+      {
+        $lookup: {
+          from: payment.collection.name,
+          localField: 'payment',
+          foreignField: '_id',
+          as: 'payment'
+        }
+      },
+      { $unwind: '$payment' }
+    ])
+
+    return {
+      success: true,
+      message: 'Cart listed successfully',
+      data: solicitationMapper.toDTOCart(...resultdb)
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
+const sendEmailClientCancelation = async (solicitationNumber) => {
+  const result = await showCartSolicitationService(solicitationNumber)
+
+  emailUtils.utilSendEmail({
+    to: result.data.user.email,
+    from: process.env.SENDER,
+    subject: `E-commerce - Pedido Cancelado!`,
+    html: emailCancelation.cancelSolicitationClientEmail(result.data)
+  })
+}
+
+const sendEmailAdminCancelation = async (solicitationNumber) => {
+  const result = await showCartSolicitationService(solicitationNumber)
+
+  emailUtils.utilSendEmail({
+    to: process.env.EMAIL,
+    from: process.env.SENDER,
+    subject: `E-commerce - Pedido Cancelado!`,
+    html: emailCancelation.cancelSolicitationAdminEmail(result.data)
+  })
+}
+
+const deleteSolicitationService = async (solicitationNumber, clientid) => {
+  try {
+    const resultdb = await solicitation.findOneAndUpdate(
+      { solicitationNumber, client: clientid },
       {
         $set: {
           canceled: true
@@ -183,14 +245,14 @@ const deleteSolicitationService = async (id, clientid) => {
     )
 
     await orderregistrations.create({
-      solicitation: id,
+      solicitation: resultdb.id,
       type: 'solicitation',
-      situation: 'canceled'
+      situation: 'cancelado'
     })
 
-    await updateQuantityCancelation(resultDB.cart)
-    await sendEmailAdminCancelation(clientid, resultDB)
-    await sendEmailClientCancelation(clientid, resultDB)
+    await updateQuantityCancelation(resultdb.cart)
+    await sendEmailAdminCancelation(solicitationNumber)
+    await sendEmailClientCancelation(solicitationNumber)
 
     return {
       success: true,
@@ -201,46 +263,23 @@ const deleteSolicitationService = async (id, clientid) => {
   }
 }
 
-const showCartSolicitationService = async (solicitationid) => {
-  try {
-    const resultDB = await solicitation.aggregate([
-      { $match: { _id: ObjectId(solicitationid) } },
-      {
-        $lookup: {
-          from: product.collection.name,
-          localField: 'cart.product',
-          foreignField: '_id',
-          as: 'products'
-        }
-      }
-    ])
-    return {
-      success: true,
-      message: 'Cart listed successfully',
-      data: solicitationMapper.toDTOCart(resultDB[0])
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
 const searchProductCart = async (cart) => {
   const productId = cart.map((item) => item.product)
-  const productDB = await product.find({
+  const resultdb = await product.find({
     _id: {
       $in: productId
     }
   })
-  return productDB
+  return resultdb
 }
 
 const verifyQuantity = async (cart) => {
   let checkFound = false
 
-  const productDB = await searchProductCart(cart)
+  const resultdb = await searchProductCart(cart)
 
   cart.map((item, i) => {
-    if (productDB[i].quantity < item.quantity) {
+    if (resultdb[i].quantity < item.quantity) {
       checkFound = true
     }
   })
@@ -253,11 +292,11 @@ const verifyQuantity = async (cart) => {
 const verifyPrice = async (cart) => {
   let checkPrice = false
 
-  const productDB = await searchProductCart(cart)
+  const resultdb = await searchProductCart(cart)
 
   cart.map((item, i) => {
     if (
-      (productDB[i].promotion || productDB[i].price) * item.quantity !==
+      (resultdb[i].promotion || resultdb[i].price) * item.quantity !==
       item.unitPrice * item.quantity
     ) {
       checkPrice = true
@@ -270,9 +309,9 @@ const verifyPrice = async (cart) => {
 }
 
 const verifyShipping = async (body, price, code) => {
-  const result = await calculateShippingService(body)
+  const resultdb = await calculateShippingService(body)
 
-  const verify = result.data.map(
+  const verify = resultdb.data.map(
     (item) =>
       item.price.replace(',', '.') === String(price) &&
       String(item.code) === code
@@ -287,56 +326,45 @@ const checkCard = async (cart, payment, shipping) => {
   let totalPrice = 0
   let total = 0
 
-  const productDB = await searchProductCart(cart)
-
+  const resultdb = await searchProductCart(cart)
   cart.map((item, i) => {
-    total += (productDB[i].promotion || productDB[i].price) * item.quantity
+    total += (resultdb[i].promotion || resultdb[i].price) * item.quantity
   })
 
   totalPrice = total + shipping
 
   const checkTotal =
     totalPrice.toFixed(2) === payment.price.toFixed(2) &&
-    (!payment.installments || payment.installments <= 6)
+    (!payment.installments || payment.installments <= 5)
 
   if (!checkTotal) {
     throw new ErrorBusinessRule('Dados de pagamento inválidos!')
   }
 }
 
-const sendEmailAdminSolicitation = async (clientid, id, shipping) => {
-  const resultClient = await client.findById(clientid).populate('user')
-  const resultSolicitation = await showCartSolicitationService(id)
+const sendEmailAdminSolicitation = async (id) => {
+  const result = await showCartSolicitationService(id)
 
   emailUtils.utilSendEmail({
-    to: resultClient.user.email,
-    from: process.env.SENDGRID_SENDER,
+    to: process.env.EMAIL,
+    from: process.env.SENDER,
     subject: `E-commerce - Pedido ${id} recebido!`,
-    html: emailSolicitation.sendSolicitationAdminEmail(
-      resultSolicitation.data,
-      [resultClient],
-      shipping
-    )
+    html: emailSolicitation.sendSolicitationAdminEmail(result.data)
   })
 }
 
-const sendEmailClientSolicitation = async (clientid, id, shipping) => {
-  const resultClient = await client.findById(clientid).populate('user')
-  const resultSolicitation = await showCartSolicitationService(id)
+const sendEmailClientSolicitation = async (id) => {
+  const result = await showCartSolicitationService(id)
 
   emailUtils.utilSendEmail({
-    to: resultClient.user.email,
-    from: process.env.SENDGRID_SENDER,
+    to: result.data.user.email,
+    from: process.env.SENDER,
     subject: `Pedido ${id} recebido!`,
-
-    html: emailSolicitation.sendSolicitationClientEmail(
-      resultSolicitation.data,
-      [resultClient],
-      shipping
-    )
+    html: emailSolicitation.sendSolicitationClientEmail(result.data)
   })
 }
-const updateQuantity = async (data) => {
+
+const updateQuantitySave = async (data) => {
   try {
     data.map(async (item) => {
       const resultProduct = await product.findOne({ _id: item.product })
@@ -356,58 +384,50 @@ const createSolicitationService = async (storeid, clientid, body) => {
   await checkCard(body.cart, body.payment, body.shipping)
 
   try {
-    const resultPayment = await payment.create({
+    const paymentdb = await payment.create({
       price: body.payment.price,
       type: body.payment.type,
       installments: body.payment.installments || 1,
       addressDeliveryIgualCharging: body.payment.addressDeliveryIgualCharging,
       address: body.payment.address,
       card: body.payment.card,
-      status: 'started',
-      store: storeid,
-      pagSeguroCode: Math.floor(Math.random() * new Date().getTime())
+      status: 'Aguardando pagamento',
+      store: storeid
     })
 
-    const resultDeliveries = await deliveries.create({
+    const deliveriesdb = await deliveries.create({
       price: body.deliveries.price,
       type: body.deliveries.type,
       deliveryTime: body.deliveries.deliveryTime,
       address: body.deliveries.address,
       status: 'not started',
-      store: storeid,
-      trackingCode: Math.floor(Math.random() * new Date().getTime())
+      store: storeid
     })
 
-    const resultSolicitation = await solicitation.create({
+    const solicitationdb = await solicitation.create({
       client: clientid,
       store: storeid,
       cart: body.cart,
       shipping: body.shipping,
-      payment: resultPayment._id,
-      deliveries: resultDeliveries._id
+      solicitationNumber: uid(),
+      payment: paymentdb.id,
+      deliveries: deliveriesdb.id
     })
 
     await orderregistrations.create({
-      solicitation: resultSolicitation._id,
+      solicitation: solicitationdb.id,
       type: 'solicitation',
       situation: 'created'
     })
-    await updateQuantity(body.cart)
-    await sendEmailAdminSolicitation(
-      clientid,
-      resultSolicitation._id,
-      body.shipping
-    )
-    await sendEmailClientSolicitation(
-      clientid,
-      resultSolicitation._id,
-      body.shipping
-    )
+
+    await updateQuantitySave(body.cart)
+    await sendEmailAdminSolicitation(solicitationdb.solicitationNumber)
+    await sendEmailClientSolicitation(solicitationdb.solicitationNumber)
 
     return {
       success: true,
       message: 'Solicitation created successfully',
-      data: solicitationMapper.toDTOList(resultSolicitation, resultDeliveries)
+      data: solicitationMapper.toDTOList(solicitationdb, deliveriesdb)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -416,7 +436,7 @@ const createSolicitationService = async (storeid, clientid, body) => {
 
 module.exports = {
   listAllSolicitationService,
-  listByIdSolicitationService,
+  listByNumberSolicitationService,
   deleteSolicitationService,
   showCartSolicitationService,
   createSolicitationService
