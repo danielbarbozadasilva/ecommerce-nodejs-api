@@ -137,7 +137,7 @@ const sendEmailSuccessfullyPaid = (data) => `
                                                                                             .name
                                                                                         }</strong>, o pagamento do seu pedido <strong>${
   data.solicitationNumber
-}</strong> foi aprovado!<br/>Vamos separar e embrulhar seu(s) produto(s) e, em breve, será entregue a transportadora. Aguarde nosso e-mail com mais informações. Veja os produtos que você vai receber:
+}</strong> foi aprovado!<br/>Vamos separar e embrulhar seu(s) produto(s) e, em breve, será entregue a transportadora. Aguarde nosso e-mail com mais informações. Veja os produtos que você irá receber:
                                                                                        <br /> <br />
                                                                                         </p>
                                                                                     </td>
@@ -634,8 +634,8 @@ const sendAdmEmailSuccessfullyPaid = (data) => `
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-p5t es-p15b es-p40r es-p40l es-m-p0r es-m-p0l">
                                                                                         <p>Prezado Administrador</strong>, o pagamento do pedido <strong>${
-  data.solicitationNumber
-}</strong> foi aprovado!<br/>Está na hora de embrulhar e separar o pedido do Cliente, e entrega-lo a transportadora. Veja os produtos:
+                                                                                          data.solicitationNumber
+                                                                                        }</strong> foi aprovado!<br/>Está na hora de embrulhar e separar o pedido do Cliente, e entregá-lo a transportadora. Veja os produtos do pedido:
                                                                                        <br /> <br />
                                                                                         </p>
                                                                                     </td>
@@ -1634,8 +1634,8 @@ const sendAdmEmailPaymentFailed = (data) => `
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-p5t es-p15b es-p40r es-p40l es-m-p0r es-m-p0l">
                                                                                         <p>Prezado <strong> Administrador</strong>, ocorreu uma falha no pagamento do pedido ${
-  data.solicitationNumber
-}</strong>, e este foi cancelado!<br/>
+                                                                                          data.solicitationNumber
+                                                                                        }</strong>, e este foi cancelado!<br/>
                                                                                        <br /> <br />
                                                                                         </p>
                                                                                     </td>
