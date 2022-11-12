@@ -244,7 +244,17 @@ RF015 – O sistema deve calcular o valor de entrega dos produtos.
 <br/>
 
 ## **Pagamento aprovado - Cliente**
-### Quando o cliente realiza o pagamento e este é aprovado pelo PagSeguro. O Sistema envia um e-mail ao Cliente notificando que o seu pedido foi pago.
+### Quando o cliente realiza o pagamento e este é aprovado pelo PagSeguro. O Sistema envia um e-mail ao Cliente notificando que o pedido foi pago.
+
+<br/>
+<img src="./docs/prints/6.jpg" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Pagamento aprovado - Administrador**
+### Quando o pagamento é aprovado pelo PagSeguro. O Sistema envia um e-mail ao Administrador para que este separe e envie os produtos referentes ao pedido.
 
 <br/>
 <img src="./docs/prints/3.jpg" alt=""/>
