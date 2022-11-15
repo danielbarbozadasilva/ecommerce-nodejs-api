@@ -74,8 +74,7 @@ const listClientSolicitationService = async (offset, limit, search) => {
 const listClientSearchService = async (offset, limit, search) => {
   try {
     const resultDB = await client.paginate({
-      $or: [{ $text: { $search: `${search}`, $diacriticSensitive: false } }],
-      $or: [{ phones: { $in: search } }],
+      $text: { $search: `${search}`, $diacriticSensitive: false },
       offset: Number(offset || 0),
       limit: Number(limit || 30)
     })

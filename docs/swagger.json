@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "Api PrimeTech E-commerce",
-        "description": "API do projeto PrimeTech E-commerce desenvolvida utilizando o NodeJs, ExpressJs e o Banco de dados MongoDB.",
+        "description": "API do projeto PrimeTech E-commerce desenvolvida utilizando o NodeJs, ExpressJs e o Banco de dados MongoDB. Foi realizada a integração com o PagSeguro.",
         "contact": {
             "email": "daniel80barboza@gmail.com"
         },

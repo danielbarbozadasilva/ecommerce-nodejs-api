@@ -15,7 +15,7 @@ const emailUtils = require('../utils/email/email.index')
 const emailUpdateSolicitation = require('../utils/email/email.update_payment')
 const deliveryMapper = require('../mappers/mappers.delivery')
 
-const config = require('../utils/util.correios')
+const config = require('../utils/utils.correios')
 const { calcBox } = require('../utils/helpers/helpers.calcBox')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 
