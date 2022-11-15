@@ -6,7 +6,7 @@ O Sistema tem o objetivo de listar os produtos e efetuar o gerenciamento destes.
 
 Os usuários do sistema são o Cliente e o Administrador. Todos possuem acesso ao sistema e a seu respectivo espaço. Além disso o Sistema conta com uma tela inicial que permite ao público navegar de modo simples através de filtros entre as categorias, produtos e avaliações.
 
-A API foi desenvolvida utilizando o NodeJs, ExpressJs e Banco de dados MongoDB.
+A API foi desenvolvida utilizando o NodeJs, ExpressJs e Banco de dados MongoDB. Foi realizada a integração com o PagSeguro.
 <br/>
 <br/>
 
@@ -227,7 +227,7 @@ RF015 – O sistema deve calcular o valor de entrega dos produtos.
 <br/>
 
 ## **Processar pagamento - Cliente**
-### Ao realizar uma compra o Sistema envia um e-mail notificando o Cliente sobre o processamento do pagamento.
+Ao realizar uma compra o Sistema envia um e-mail notificando o Cliente sobre o processamento do pagamento.
 
 <br/>
 <img src="./docs/prints/1.jpg" alt=""/>
@@ -237,7 +237,7 @@ RF015 – O sistema deve calcular o valor de entrega dos produtos.
 <br/>
 
 ## **Processar pagamento - Administrador**
-### Quando o Cliente realiza uma compra o Sistema envia um e-mail notificando o administrador sobre o pedido. 
+Quando o Cliente realiza uma compra o Sistema envia um e-mail notificando o administrador sobre o pedido. 
 
 <br/>
 <img src="./docs/prints/2.jpg" alt=""/>
@@ -247,7 +247,7 @@ RF015 – O sistema deve calcular o valor de entrega dos produtos.
 <br/>
 
 ## **Pagamento aprovado - Cliente**
-### Quando o cliente realiza o pagamento e este é aprovado pelo PagSeguro. O Sistema envia um e-mail ao Cliente notificando que o pedido foi pago.
+Quando o cliente realiza o pagamento e este é aprovado pelo PagSeguro. O Sistema envia um e-mail ao Cliente notificando que o pedido foi pago.
 
 <br/>
 <img src="./docs/prints/6.jpg" alt=""/>
@@ -257,7 +257,7 @@ RF015 – O sistema deve calcular o valor de entrega dos produtos.
 <br/>
 
 ## **Pagamento aprovado - Administrador**
-### Quando o pagamento é aprovado pelo PagSeguro. O Sistema envia um e-mail ao Administrador para que este separe e envie os produtos referentes ao pedido.
+Quando o pagamento é aprovado pelo PagSeguro. O Sistema envia um e-mail ao Administrador para que este separe e envie os produtos referentes ao pedido.
 
 <br/>
 <img src="./docs/prints/3.jpg" alt=""/>
@@ -267,7 +267,7 @@ RF015 – O sistema deve calcular o valor de entrega dos produtos.
 <br/>
 
 ## **Pagamento cancelado - Cliente**
-### Quando o cliente não realiza o pagamento, o Sistema envia um e-mail ao Cliente notificando que o seu pedido não foi pago, e por isso foi cancelado.
+Quando o cliente não realiza o pagamento, o Sistema envia um e-mail ao Cliente notificando que o seu pedido não foi pago, e por isso foi cancelado.
 
 <br/>
 <img src="./docs/prints/4.jpg" alt=""/>
@@ -277,7 +277,7 @@ RF015 – O sistema deve calcular o valor de entrega dos produtos.
 <br/>
 
 ## **Envio do pedido - Cliente**
-### Quando o Administrador envia o pedido para a transportadora. O Sistema notifica o Cliente e informa o código de rastreamento.
+Quando o Administrador envia o pedido para a transportadora. O Sistema notifica o Cliente e informa o código de rastreamento.
 
 <br/>
 <img src="./docs/prints/5.jpg" alt=""/>
