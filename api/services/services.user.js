@@ -7,72 +7,7 @@ const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const ErrorNotAuthenticatedUser = require('../utils/errors/errors.user-not-authenticated')
 const ErrorNotAuthorizedUser = require('../utils/errors/errors.user-not-authorized')
 const ErrorBusinessRule = require('../utils/errors/errors.business-rule')
-
-const profile = [
-  {
-    permission: 'administrator',
-    rule: [
-      'USER_LIST_ID',
-      'USER_UPDATE',
-      'USER_DELETE',
-      'STORE_UPDATE',
-      'STORE_DELETE',
-      'LIST_CLIENT',
-      'SEARCH_SOLICITATION',
-      'SEARCH_CLIENT',
-      'LIST_CLIENT_SOLICITATION',
-      'CLIENT_ID',
-      'CLIENT_UPDATE',
-      'CLIENT_DELETE',
-      'LIST_CATEGORY',
-      'LIST_CATEGORY_AVAILABILITY',
-      'LIST_CATEGORY_ID',
-      'LIST_CATEGORY_PRODUCT',
-      'CREATE_CATEGORY',
-      'UPDATE_CATEGORY',
-      'DELETE_CATEGORY',
-      'UPDATE_CATEGORY_PRODUCT',
-      'CREATE_PRODUCT',
-      'UPDATE_PRODUCT',
-      'UPLOAD_IMAGE_PRODUCT',
-      'DELETE_PRODUCT',
-      'DELETE_RATING',
-      'LIST_ALL_SOLICITATION',
-      'SOLICITATION_DELETE',
-      'LIST_ID_SOLICITATION',
-      'LIST_CLIENT_SOLICITATION',
-      'LIST_CART_PRODUCT',
-      'UPDATE_DELIVERY',
-      'UPDATE_PAYMENT'
-    ]
-  },
-  {
-    permission: 'client',
-    rule: [
-      'USER_LIST_ID',
-      'USER_UPDATE',
-      'USER_DELETE',
-      'STORE_CREATE',
-      'LIST_CLIENT',
-      'CLIENT_ID',
-      'CLIENT_UPDATE',
-      'CLIENT_DELETE',
-      'LIST_CATEGORY',
-      'LIST_CATEGORY_AVAILABILITY',
-      'LIST_CATEGORY_ID',
-      'CREATE_RATING',
-      'DELETE_RATING',
-      'SOLICITATION_CREATE',
-      'SOLICITATION_DELETE',
-      'LIST_ID_SOLICITATION',
-      'LIST_CLIENT_SOLICITATION',
-      'LIST_CART_PRODUCT',
-      'LIST_DELIVERY',
-      'LIST_PAYMENT_ID',
-      'TAKE_PAYMENT'
-    ]
-  }
-]
+const profile = require('../utils/utils.rules')
 
 const userIsValidService = async (email, password) => {
   const resultDB = await user.findOne({ email })
