@@ -80,8 +80,7 @@ const registerService = async (body) => {
       name: body.name,
       email: body.email,
       salt,
-      hash: cryptography.createHash(body.password, salt),
-      store: body.store
+      hash: cryptography.createHash(body.password, salt)
     })
 
     return {
@@ -230,6 +229,7 @@ const checkIdAuthorizationService = async (idToken, userid, permissions) => {
 }
 
 module.exports = {
+  createCredentialService,
   userIsValidService,
   checkPermissionService,
   authService,
