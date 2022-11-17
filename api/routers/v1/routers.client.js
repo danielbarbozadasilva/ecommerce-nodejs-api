@@ -59,10 +59,7 @@ module.exports = (router) => {
             'any.required': '"number" is a required field',
             'string.empty': '"number" can not be empty'
           }),
-          complement: joi.string().required().messages({
-            'any.required': '"complement" is a required field',
-            'string.empty': '"complement" can not be empty'
-          }),
+          complement: joi.string().optional(),
           district: joi.string().required().messages({
             'any.required': '"district" is a required field',
             'string.empty': '"district" can not be empty'
@@ -79,7 +76,8 @@ module.exports = (router) => {
             'any.required': '"zipCode" is a required field',
             'string.empty': '"zipCode" can not be empty'
           })
-        })
+        }),
+        auth: joi.boolean().optional()
       }),
       verifyIdDbMiddleware.verifyEmailUserExists,
       verifyIdDbMiddleware.verifyCpfUserExists,
