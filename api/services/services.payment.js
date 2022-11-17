@@ -86,7 +86,6 @@ const sendEmailAdmSuccessfullyPaid = async (solicitationNumber) => {
 
 const sendEmailClientPaymentFailed = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
-
   emailUtils.utilSendEmail({
     to: result.data.user.email,
     from: process.env.SENDER,
@@ -97,7 +96,6 @@ const sendEmailClientPaymentFailed = async (solicitationNumber) => {
 
 const sendEmailAdmPaymentFailed = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
-
   emailUtils.utilSendEmail({
     to: process.env.EMAIL,
     from: process.env.SENDER,
@@ -283,7 +281,6 @@ const createPaymentService = async (paymentid, body) => {
 const showNotificationPaymentService = async (body) => {
   try {
     const notification = await getNotification(body.notificationCode)
-
     const result = await payment.aggregate([
       { $match: { pagSeguroCode: notification.code } },
       {
@@ -316,7 +313,7 @@ const showNotificationPaymentService = async (body) => {
     const situation = paymentdb.pagSeguroCode
       ? await getTransactionStatus(paymentdb.pagSeguroCode)
       : null
-
+ 
     if (situation && paymentdb.orderregistrations) {
       const orderdb = await orderregistrations.create({
         solicitation: paymentdb.solicitation.id,

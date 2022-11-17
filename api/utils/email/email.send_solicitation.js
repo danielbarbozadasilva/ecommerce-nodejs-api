@@ -1,29 +1,16 @@
 const moment = require('moment')
 
 const sendSolicitationClientEmail = (data) => ` 
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8" />
-		<meta content="width=device-width, initial-scale=1" name="viewport" />
-		<meta name="x-apple-disable-message-reformatting" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta content="telephone=no" name="format-detection" />
-    <title></title>
-    <!--[if (mso 16)]>
-    <style type="text/css">
-    a {text-decoration: none;}
-    </style>
-    
-    <style>sup { font-size: 100% !important; }</style>
-    
-<xml>
-    <o:OfficeDocumentSettings>
-    <o:AllowPNG></o:AllowPNG>
-    <o:PixelsPerInch></o:PixelsPerInch>
-    </o:OfficeDocumentSettings>
-</xml>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="telephone=no" name="format-detection">
+    <title></title>
 </head>
 
 <body>
@@ -162,15 +149,7 @@ const sendSolicitationClientEmail = (data) => `
                                                                                         <table cellpadding="0" cellspacing="0" width="100%">
                                                                                             <tbody>
                                                                                                 <tr>
-                                                                                                <img class="adapt-img" src=${`http://localhost:3011/static/image/${[
-                                                                                                  item.product
-                                                                                                ].map(
-                                                                                                  (
-                                                                                                    data
-                                                                                                  ) =>
-                                                                                                    data
-                                                                                                      .photos[0]
-                                                                                                )}`} style="display: block;" width="70">
+                                                                                                <img class="adapt-img" src=${`http://localhost:3011/static/image/${Object.values(item.product.photos)[0]}`} style="display: block;" width="70">
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
@@ -500,29 +479,16 @@ const sendSolicitationClientEmail = (data) => `
 `
 
 const sendSolicitationAdminEmail = (data) => ` 
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8" />
-		<meta content="width=device-width, initial-scale=1" name="viewport" />
-		<meta name="x-apple-disable-message-reformatting" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta content="telephone=no" name="format-detection" />
-    <title></title>
-    <!--[if (mso 16)]>
-    <style type="text/css">
-    a {text-decoration: none;}
-    </style>
-    
-    <style>sup { font-size: 100% !important; }</style>
-    
-<xml>
-    <o:OfficeDocumentSettings>
-    <o:AllowPNG></o:AllowPNG>
-    <o:PixelsPerInch></o:PixelsPerInch>
-    </o:OfficeDocumentSettings>
-</xml>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="telephone=no" name="format-detection">
+    <title></title>
 </head>
 
 <body>
@@ -633,7 +599,7 @@ const sendSolicitationAdminEmail = (data) => `
                                                                                           data
                                                                                             .client
                                                                                             .name
-                                                                                        }</strong>, realizou um pedido e está aguardando a confirmação de pagamento. O pedido poderá passar por uma análise de dados cadastrais.&nbsp;Assim que o seu pedido for aprovado, você receberá um e-mail de confirmação.</p>
+                                                                                        }</strong>, realizou um pedido e está aguardando a confirmação de pagamento. O pedido poderá passar por uma análise de dados cadastrais.&nbsp;Assim que o pedido do cliente for aprovado, você receberá um e-mail de confirmação.</p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -661,15 +627,7 @@ const sendSolicitationAdminEmail = (data) => `
                                                                                         <table cellpadding="0" cellspacing="0" width="100%">
                                                                                             <tbody>
                                                                                                 <tr>
-                                                                                                <img class="adapt-img" src=${`http://localhost:3011/static/image/${[
-                                                                                                  item.product
-                                                                                                ].map(
-                                                                                                  (
-                                                                                                    data
-                                                                                                  ) =>
-                                                                                                    data
-                                                                                                      .photos[0]
-                                                                                                )}`} style="display: block;" width="70">
+                                                                                                <img class="adapt-img" src=${`http://localhost:3011/static/image/${Object.values(item.product.photos)[0]}`} style="display: block;" width="70">
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
