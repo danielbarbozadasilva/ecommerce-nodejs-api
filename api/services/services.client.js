@@ -11,6 +11,7 @@ const {
 const clientMapper = require('../mappers/mappers.client')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const cryptography = require('../utils/utils.cryptography')
+const { createCredentialService } = require('./services.user')
 
 const listAllClientsService = async (offset, limit) => {
   try {
@@ -242,6 +243,8 @@ const listSolicitationClientService = async (offset, limit, clientid) => {
 
 const createClientService = async (body) => {
   try {
+    let data = {}
+
     const salt = cryptography.createSalt()
     const userDB = await user.create({
       name: body.name,
@@ -267,10 +270,14 @@ const createClientService = async (body) => {
       birthDate: body.birthDate
     })
 
+    if (body.auth) {
+      data = await createCredentialService(body.email)
+    }
+
     return {
       success: true,
       message: 'Client created successfully',
-      data: clientMapper.toDTOList(userDB, clientDB)
+      data: data?.token ? data : clientMapper.toDTOList(userDB, clientDB)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
