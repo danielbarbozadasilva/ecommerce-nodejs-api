@@ -41,7 +41,7 @@ const checkPermissionService = (permissions, rule) => {
 const createCredentialService = async (email) => {
   const userDB = await user.findOne({ email })
   const userDTO = userMapper.toDTO(userDB)
-  const userToken = cryptography.generateToken(userDTO)
+  const userToken = await cryptography.generateToken(userDTO)
   if (userDTO && userToken) {
     return {
       token: userToken,

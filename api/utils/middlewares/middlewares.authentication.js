@@ -2,7 +2,7 @@ const { tokenIsValid } = require('../utils.cryptography')
 
 const authenticationMiddleware = () => async (req, res, next) => {
   const { token } = req.headers
-  tokenIsValid(token)
+  await tokenIsValid(token)
   next()
 }
 

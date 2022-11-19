@@ -1,6 +1,10 @@
+const { v4: uuidv4 } = require('uuid')
+const dayjs = require('dayjs')
 const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
+const { user } = require('../models/models.index')
 require('dotenv').config()
+
 const ErrorGeneric = require('./errors/erros.generic-error')
 const ErrorNotAuthenticatedUser = require('./errors/errors.user-not-authenticated')
 
@@ -36,11 +40,46 @@ const createHash = (password, salt) => {
   }
 }
 
-const generateToken = (model) => {
+const generateRefreshToken = async (userId) => {
   try {
-    return jwt.sign({ ...model }, jwtHashSecret, {
-      expiresIn: `${jwtTimeLimit}`
-    })
+    const expiresIn = dayjs().add(15, 'second').unix()
+    const newRefreshToken = await user.findOneAndUpdate(
+      { _id: userId },
+      {
+        $set: { refreshToken: { expiresIn } }
+      }
+    )
+    return newRefreshToken
+  } catch (error) {
+    throw new ErrorGeneric(`Error generating refresh token! ${error}`)
+  }
+}
+
+const verifyRefreshToken = async (userId) => {
+  const resultToken = await user.findOne({ _id: userId })
+  const refreshTokenExpired = dayjs().isAfter(
+    dayjs.unix(resultToken.refreshToken.expiresIn)
+  )
+  if (refreshTokenExpired) {
+    console.log("Novo");
+    return generateRefreshToken(userId)
+  }
+}
+
+const generateToken = async (model) => {
+  try {
+    const { refreshToken } = await generateRefreshToken(model.id)
+
+    return jwt.sign(
+      {
+        ...model,
+        refreshToken
+      },
+      jwtHashSecret,
+      {
+        expiresIn: jwtTimeLimit
+      }
+    )
   } catch (error) {
     throw new ErrorGeneric(`Error generating token! ${error}`)
   }
@@ -65,8 +104,10 @@ const decodeToken = (token) => {
   }
 }
 
-const tokenIsValid = (token) => {
+const tokenIsValid = async (token) => {
   try {
+    const { id } = decodeToken(token)
+    await verifyRefreshToken(id)
     jwt?.verify(token, jwtHashSecret)
   } catch (err) {
     throw new ErrorNotAuthenticatedUser('Usuário não autenticado!')
