@@ -19,7 +19,6 @@ module.exports = (router) => {
       clientController.listAllClientsController
     )
     .post(
-      authenticationMiddleware(),
       authorization.authorizationMiddleware('*'),
       validateDTOMiddleware('body', {
         cpf: joi
@@ -76,8 +75,7 @@ module.exports = (router) => {
             'any.required': '"zipCode" is a required field',
             'string.empty': '"zipCode" can not be empty'
           })
-        }),
-        auth: joi.boolean().optional()
+        })
       }),
       verifyIdDbMiddleware.verifyEmailUserExists,
       verifyIdDbMiddleware.verifyCpfUserExists,

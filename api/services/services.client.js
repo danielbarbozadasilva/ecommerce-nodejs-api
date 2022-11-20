@@ -243,8 +243,6 @@ const listSolicitationClientService = async (offset, limit, clientid) => {
 
 const createClientService = async (body) => {
   try {
-    let data = {}
-
     const salt = cryptography.createSalt()
     const userDB = await user.create({
       name: body.name,
@@ -253,7 +251,7 @@ const createClientService = async (body) => {
       hash: cryptography.createHash(body.password, salt)
     })
 
-    const clientDB = await client.create({
+    await client.create({
       name: body.name,
       cpf: body.cpf,
       phones: body.phones,
@@ -270,14 +268,12 @@ const createClientService = async (body) => {
       birthDate: body.birthDate
     })
 
-    if (body.auth) {
-      data = await createCredentialService(body.email)
-    }
+    const data = await createCredentialService(body.email)
 
     return {
       success: true,
       message: 'Client created successfully',
-      data: data?.token ? data : clientMapper.toDTOList(userDB, clientDB)
+      data
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
