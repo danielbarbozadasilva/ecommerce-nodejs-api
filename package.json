@@ -27,7 +27,6 @@
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "crypto": "^1.0.1",
-    "dayjs": "^1.11.6",
     "dotenv": "^16.0.2",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
@@ -50,6 +49,7 @@
     "request": "^2.88.0",
     "short-unique-id": "^4.4.4",
     "swagger-ui-express": "^4.6.0",
+    "uuid": "^9.0.0",
     "xml2js": "^0.4.19",
     "xml2json": "^0.12.0"
   },
