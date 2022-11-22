@@ -44,7 +44,7 @@ const createCredentialService = async (email) => {
   const userToken = await cryptography.generateToken(userDTO)
   if (userDTO && userToken) {
     return {
-      token: userToken,
+      ...userToken,
       userDTO
     }
   }
@@ -70,6 +70,22 @@ const authService = async (email, password) => {
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
+const refreshTokenService = async (token) => {
+  const result = await user.findOne({ 'refreshToken._id': token })
+
+  if (!result) {
+    throw new ErrorNotAuthenticatedUser(`Refresh token invalid!`)
+  }
+
+  const resultToken = await cryptography.genereteRefreshToken(result)
+
+  return {
+    success: true,
+    message: 'Refresh token generated successfully!',
+    data: resultToken
   }
 }
 
@@ -230,6 +246,7 @@ const checkIdAuthorizationService = async (idToken, userid, permissions) => {
 
 module.exports = {
   createCredentialService,
+  refreshTokenService,
   userIsValidService,
   checkPermissionService,
   authService,

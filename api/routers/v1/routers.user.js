@@ -22,6 +22,8 @@ module.exports = (router) => {
     userController.authController
   )
 
+  router.route('/refresh-token').post(userController.refreshTokenController)
+
   router.route('/register').post(
     validateDTOMiddleware('body', {
       name: joi.string().required().messages({
