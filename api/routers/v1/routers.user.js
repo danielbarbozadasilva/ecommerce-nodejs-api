@@ -113,7 +113,6 @@ module.exports = (router) => {
     )
 
   router.route('/user/recovery/password-recovery').put(
-    authorizationMiddleware('*'),
     validateDTOMiddleware('body', {
       email: joi.string().required().messages({
         'any.required': '"email" is a required field',
@@ -124,7 +123,6 @@ module.exports = (router) => {
   )
 
   router.route('/user/recovery/reset-password').put(
-    authorizationMiddleware('*'),
     validateDTOMiddleware('body', {
       email: joi.string().required().messages({
         'any.required': '"email" is a required field',
