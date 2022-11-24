@@ -44,7 +44,7 @@
                         "description": "Internal Server Error!"
                     },
                     "401": {
-                        "description": "Invalid access credentials!"
+                        "description": "E-mail e/ou senha inválidos!"
                     },
                     "200": {
                         "description": "User authenticated successfully!",

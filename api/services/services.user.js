@@ -23,7 +23,7 @@ const userIsValidService = async (email, password) => {
       return resultDB
     }
   }
-  throw new ErrorNotAuthenticatedUser('Invalid access credentials!')
+  throw new ErrorNotAuthenticatedUser('E-mail e/ou senha inválidos!')
 }
 
 const checkPermissionService = (permissions, rule) => {
