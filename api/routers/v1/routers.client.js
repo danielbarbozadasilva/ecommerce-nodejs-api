@@ -19,16 +19,11 @@ module.exports = (router) => {
       clientController.listAllClientsController
     )
     .post(
-      authorization.authorizationMiddleware('*'),
       validateDTOMiddleware('body', {
-        cpf: joi
-          .string()
-          .regex(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/)
-          .required()
-          .messages({
-            'any.required': '"cpf" is a required field',
-            'string.empty': '"cpf" can not be empty'
-          }),
+        cpf: joi.string().required().messages({
+          'any.required': '"cpf" is a required field',
+          'string.empty': '"cpf" can not be empty'
+        }),
         name: joi.string().required().messages({
           'any.required': '"name" is a required field',
           'string.empty': '"name" can not be empty'
@@ -41,7 +36,7 @@ module.exports = (router) => {
           'any.required': '"phones" is a required field',
           'string.empty': '"phones" can not be empty'
         }),
-        birthDate: joi.date().format('YYYY-MM-DD').raw().required().messages({
+        birthDate: joi.string().required().messages({
           'any.required': '"birth date" is a required field',
           'string.empty': '"birth date" can not be empty'
         }),

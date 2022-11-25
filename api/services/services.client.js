@@ -244,13 +244,14 @@ const listSolicitationClientService = async (offset, limit, clientid) => {
 const createClientService = async (body) => {
   try {
     const salt = cryptography.createSalt()
+
     const userDB = await user.create({
       name: body.name,
       email: body.email,
       salt,
       hash: cryptography.createHash(body.password, salt)
     })
-
+    
     await client.create({
       name: body.name,
       cpf: body.cpf,

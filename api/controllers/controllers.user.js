@@ -2,6 +2,7 @@ const userService = require('../services/services.user')
 
 const authController = async (req, res) => {
   const { email, password } = req.body
+  console.log(email, password);
   const resultService = await userService.authService(email, password)
   const code = resultService.success ? 200 : 401
   const message = resultService.success
