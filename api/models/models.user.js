@@ -22,9 +22,9 @@ const userSchema = new mongoose.Schema(
       date: Date
     },
     refreshToken: {
-      _id: { type: String, required: true },
-      data: { type: String, required: true },
-      expiresIn: { type: String, required: true }
+      _id: { type: String },
+      data: { type: String },
+      expiresIn: { type: String }
     }
   },
   {
