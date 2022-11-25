@@ -134,6 +134,14 @@ const verifyRatingExistsMiddleware = async (req, res, next) => {
   next()
 }
 
+const verifyEmail = async (req, res, next) => {
+  const resultDB = await user.findOne({ email: req.body.email })
+  if (!resultDB) {
+    throw new ErrorBusinessRule('E-mail inválido!')
+  }
+  next()
+}
+
 const verifyRatingNotExistsMiddleware = async (req, res, next) => {
   const ratingDB = await rating.findOne({
     client: req.query.clientid,
@@ -159,5 +167,6 @@ module.exports = {
   verifyEmailUserExists,
   verifyCpfUserExists,
   verifyRatingExistsMiddleware,
-  verifyRatingNotExistsMiddleware
+  verifyRatingNotExistsMiddleware,
+  verifyEmail
 }

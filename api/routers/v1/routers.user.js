@@ -119,6 +119,7 @@ module.exports = (router) => {
         'string.empty': '"email" can not be empty'
       })
     }),
+    verifyIdDbMiddleware.verifyEmail,
     userController.sendTokenRecoveryPasswordController
   )
 
@@ -137,6 +138,7 @@ module.exports = (router) => {
         'string.empty': `"password" can not be empty`
       })
     }),
+    verifyIdDbMiddleware.verifyEmail,
     userController.resetPasswordController
   )
 }
