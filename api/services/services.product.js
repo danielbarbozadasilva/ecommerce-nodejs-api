@@ -119,9 +119,9 @@ const updateProductService = async (body, productid) => {
   }
 }
 
-const updateImageProductService = async (productid, files, storeid) => {
+const updateImageProductService = async (productid, files) => {
   try {
-    const result = await product.findOne({ _id: productid, store: storeid })
+    const result = await product.findOne({ _id: productid })
 
     const newImage = files.map((item) => item.filename)
     result.photos = result.photos.filter((item) => item).concat(newImage)
