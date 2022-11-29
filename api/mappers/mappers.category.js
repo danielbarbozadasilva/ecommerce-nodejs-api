@@ -7,7 +7,8 @@ const toDTO = (model) => ({
   id: model._id,
   name: model.name,
   code: model.code,
-  availability: model.availability
+  availability: model.availability,
+  photo: formatAddressImage(model.photo)
 })
 
 const toDTOWithProducts = (model) => ({

@@ -5,6 +5,7 @@ const verifyIdDbMiddleware = require('../../utils/middlewares/middlewares.verify
 const authenticationMiddleware = require('../../utils/middlewares/middlewares.authentication')
 const authorization = require('../../utils/middlewares/middlewares.authorization')
 const categoryController = require('../../controllers/controllers.category')
+const fileUpload = require('../../utils/utils.file')
 
 module.exports = (router) => {
   router
@@ -25,7 +26,8 @@ module.exports = (router) => {
         code: joi.string().required().messages({
           'any.required': '"code" is a required field',
           'string.empty': '"code" can not be empty'
-        })
+        }),
+        photo: joi.string().optional()
       }),
       categoryController.createCategoryByStoreController
     )
@@ -93,7 +95,8 @@ module.exports = (router) => {
               'string.empty': '"product id" can not be empty',
               'string.pattern.base': '"product id" out of the expected format'
             })
-        )
+        ),
+        photo: joi.string().optional()
       }),
       verifyIdDbMiddleware.verifyIdCategory,
       categoryController.updateCategoryController
@@ -115,6 +118,25 @@ module.exports = (router) => {
       verifyIdDbMiddleware.verifyIdCategory,
       categoryController.deleteCategoryController
     )
+
+  router.route('/category/image/:categoryid').put(
+    authenticationMiddleware(),
+    authorization.authorizationMiddleware('UPLOAD_IMAGE_PRODUCT'),
+    validateDTOMiddleware('params', {
+      categoryid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"id" is a required field',
+          'string.empty': '"id" can not be empty',
+          'string.pattern.base': '"id" out of the expected format'
+        })
+    }),
+    verifyIdDbMiddleware.verifyIdCategory,
+    fileUpload.array('files', 1),
+    categoryController.updateImageCategoryController
+  )
 
   router.route('/category/:categoryid/products').get(
     authenticationMiddleware(),
