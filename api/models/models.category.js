@@ -6,7 +6,8 @@ const categorySchema = Schema(
   {
     name: { type: String, required: true },
     code: { type: String, required: true },
-    availability: { type: Boolean, default: true }
+    availability: { type: Boolean, default: true },
+    photo: { type: String, required: false },
   },
   { timestamps: true }
 )
