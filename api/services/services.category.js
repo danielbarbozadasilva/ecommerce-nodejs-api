@@ -100,6 +100,21 @@ const deleteCategoryService = async (categoryid) => {
   }
 }
 
+const updateImageCategoryService = async (categoryid, file) => {
+  try {
+    const result = await category.findOne({ _id: categoryid })
+    result.photo = file.filename
+    await result.save()
+
+    return {
+      success: true,
+      message: 'Operation performed successfully'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 const listCategoryWithProductsService = async (categoryid, offset, limit) => {
   try {
     const resultDB = await product.paginate(
@@ -124,5 +139,6 @@ module.exports = {
   createCategoryByStoreService,
   updateCategoryService,
   deleteCategoryService,
-  listCategoryWithProductsService
+  listCategoryWithProductsService,
+  updateImageCategoryService
 }

@@ -44,6 +44,21 @@ const createCategoryByStoreController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const updateImageCategoryController = async (req, res) => {
+  const { categoryid } = req.params
+  const { files } = req
+  const resultService = await categoryService.updateImageCategoryService(
+    categoryid,
+    ...files
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 const updateCategoryController = async (req, res) => {
   const { categoryid } = req.params
   const { body } = req
@@ -96,5 +111,6 @@ module.exports = {
   createCategoryByStoreController,
   updateCategoryController,
   deleteCategoryController,
-  listCategoryWithProductsController
+  listCategoryWithProductsController,
+  updateImageCategoryController
 }
