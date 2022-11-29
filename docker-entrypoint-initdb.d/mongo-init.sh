@@ -83,13 +83,15 @@ db.categories.insert([
     _id: ObjectId("6320f577156b47ff1082586e"),
     name: "Placa de vídeo",
     code: "43242342342343224",
-    availability: true
+    availability: true,
+    photo: "files-1668078769223.jpg"  
 },
 {
     _id: ObjectId("63433ba03a63723e66f5f62d"),
     name: "Processadores",
     code: "23135142342333154",
-    availability: false
+    availability: false,
+    photo: "files-1668078769111.jpg"
 }
 ])
 
