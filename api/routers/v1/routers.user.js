@@ -22,6 +22,15 @@ module.exports = (router) => {
     userController.authController
   )
 
+  router.route('/check-token').post(
+    validateDTOMiddleware('body', {
+      token: joi.string().required().messages({
+        'any.required': `"token" is a required field`,
+        'string.empty': `"token" can not be empty`
+      })
+    }),
+    userController.checkTokenController
+  )
   router.route('/refresh-token').post(userController.refreshTokenController)
 
   router.route('/register').post(

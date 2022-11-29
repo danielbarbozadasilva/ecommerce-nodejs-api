@@ -89,6 +89,22 @@ const refreshTokenService = async (token) => {
   }
 }
 
+const checkTokenService = async (token) => {
+  try {
+    const { id } = cryptography.decodeToken(token)
+    const result = await user.findOne({ _id: id })
+    if (!result) {
+      throw new ErrorNotAuthenticatedUser(`Token invalid!`)
+    }
+    return {
+      success: true,
+      message: 'Token valid!'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 const registerService = async (body) => {
   try {
     const salt = cryptography.createSalt()
@@ -247,6 +263,7 @@ const checkIdAuthorizationService = async (idToken, userid, permissions) => {
 module.exports = {
   createCredentialService,
   refreshTokenService,
+  checkTokenService,
   userIsValidService,
   checkPermissionService,
   authService,
