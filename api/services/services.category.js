@@ -45,7 +45,7 @@ const listCategoryByIdService = async (categoryid) => {
   }
 }
 
-const createCategoryByStoreService = async (body) => {
+const createCategoryService = async (body) => {
   try {
     const resultDB = await category.create({
       name: body.name,
@@ -136,7 +136,7 @@ module.exports = {
   listAllCategoryService,
   listCategoryAvailabilityService,
   listCategoryByIdService,
-  createCategoryByStoreService,
+  createCategoryService,
   updateCategoryService,
   deleteCategoryService,
   listCategoryWithProductsService,

@@ -29,7 +29,7 @@ module.exports = (router) => {
         }),
         photo: joi.string().optional()
       }),
-      categoryController.createCategoryByStoreController
+      categoryController.createCategoryController
     )
 
   router
