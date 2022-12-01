@@ -81,7 +81,7 @@ db.createCollection("categories")
 db.categories.insert([
 {
     _id: ObjectId("6320f577156b47ff1082586e"),
-    name: "Placa de vídeo",
+    name: "Placas de vídeo",
     code: "43242342342343224",
     availability: true,
     photo: "files-1668078769223.jpg"  
