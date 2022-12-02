@@ -1,4 +1,5 @@
 #!/bin/bash
+
 set -e
 
 mongo <<EOF
@@ -141,6 +142,24 @@ db.products.insert([
 }
 ])
 
-
+db.createCollection("ratings")
+db.ratings.insert([
+  {
+    _id: ObjectId("638a22b10ef44976d168711e"),
+    name: "Excelente",
+    text: "Gostei bastante",
+    score: 5,
+    product: ObjectId("63432f02a7f855351c99dc71"),
+    client: ObjectId("6320f577156b47ff1082586e")
+  },
+   {
+    _id: ObjectId("638a236a0ef44976d1687126"),
+    name: "Gostei bastante",
+    text: "chegou em perfeito estado",
+    score: 4,
+    product: ObjectId("63432f02a7f855351c99dc72"),
+    client: ObjectId("6320f577156b47ff1082586e")
+  }
+])
 
 EOF
