@@ -104,6 +104,45 @@ const createClientController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const listClientLikeProductController = async (req, res) => {
+  const { userid } = req.params
+  const resultService = await clientService.listClientLikeProductService(userid)
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
+const createLikeProductController = async (req, res) => {
+  const { clientid, productid } = req.params
+  const resultService = await clientService.createLikeProductService(
+    clientid,
+    productid
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
+const removeLikeProductController = async (req, res) => {
+  const { clientid, productid } = req.params
+  const resultService = await clientService.removeLikeProductService(
+    clientid,
+    productid
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
   listAllClientsController,
   searchClientSolicitationController,
@@ -112,5 +151,8 @@ module.exports = {
   updaterClientController,
   deleteClientController,
   listSolicitationClientController,
-  createClientController
+  createClientController,
+  listClientLikeProductController,
+  createLikeProductController,
+  removeLikeProductController
 }

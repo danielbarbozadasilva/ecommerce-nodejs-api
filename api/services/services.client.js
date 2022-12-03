@@ -5,7 +5,8 @@ const {
   payment,
   user,
   client,
-  deliveries
+  deliveries,
+  rating
 } = require('../models/models.index')
 
 const clientMapper = require('../mappers/mappers.client')
@@ -251,7 +252,7 @@ const createClientService = async (body) => {
       salt,
       hash: cryptography.createHash(body.password, salt)
     })
-    
+
     await client.create({
       name: body.name,
       cpf: body.cpf,
@@ -281,6 +282,80 @@ const createClientService = async (body) => {
   }
 }
 
+const listClientLikeProductService = async (userid) => {
+  try {
+    const resultDB = await client.aggregate([
+      { $match: { user: ObjectId(userid) } },
+      {
+        $lookup: {
+          from: product.collection.name,
+          localField: 'likes',
+          foreignField: '_id',
+          as: 'products'
+        }
+      },
+      { $unwind: '$products' },
+      {
+        $lookup: {
+          from: rating.collection.name,
+          localField: 'products._id',
+          foreignField: 'product',
+          as: 'rating'
+        }
+      }
+    ])
+    return {
+      success: true,
+      message: 'likes successfully listed',
+      data: resultDB.map((item) => clientMapper.toDTOLikeList(item))
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
+const createLikeProductService = async (clientid, productid) => {
+  try {
+    await client.findOneAndUpdate(
+      { _id: clientid },
+      {
+        $push: {
+          likes: productid
+        }
+      },
+      { new: true }
+    )
+
+    return {
+      success: true,
+      message: 'Like successfully'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
+const removeLikeProductService = async (clientid, productid) => {
+  try {
+    await client.findOneAndUpdate(
+      { _id: clientid },
+      {
+        $pull: {
+          likes: productid
+        }
+      },
+      { new: true }
+    )
+
+    return {
+      success: true,
+      message: 'Like undone successfully'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listAllClientsService,
   listClientSolicitationService,
@@ -289,5 +364,8 @@ module.exports = {
   deleteClientService,
   listByIdClientService,
   listSolicitationClientService,
-  createClientService
+  createClientService,
+  listClientLikeProductService,
+  createLikeProductService,
+  removeLikeProductService
 }

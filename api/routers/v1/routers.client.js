@@ -125,6 +125,81 @@ module.exports = (router) => {
     clientController.listSolicitationClientController
   )
 
+  router.route('/client/user/:userid/like').get(
+    validateDTOMiddleware('params', {
+      userid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"user id" is a required field',
+          'string.empty': '"user id" can not be empty',
+          'string.pattern.base': '"user id" out of the expected format'
+        })
+    }),
+    authenticationMiddleware(),
+    authorization.authorizationMiddleware('LIST_CREATE_LIKE'),
+    verifyIdDbMiddleware.verifyIdUser,
+    clientController.listClientLikeProductController
+  )
+  
+  router.route('/client/:clientid/product/:productid/like').post(
+    validateDTOMiddleware('params', {
+      clientid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"client id" is a required field',
+          'string.empty': '"client id" can not be empty',
+          'string.pattern.base': '"client id" out of the expected format'
+        }),
+      productid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"product id" is a required field',
+          'string.empty': '"product id" can not be empty',
+          'string.pattern.base': '"product id" out of the expected format'
+        })
+    }),
+    authenticationMiddleware(),
+    authorization.authorizationMiddleware('CLIENT_CREATE_LIKE'),
+    verifyIdDbMiddleware.verifyIdClient,
+    verifyIdDbMiddleware.verifyIdProduct,
+    verifyIdDbMiddleware.verifyClientLikeExists,
+    clientController.createLikeProductController
+  )
+
+  router.route('/client/:clientid/product/:productid/like').delete(
+    validateDTOMiddleware('params', {
+      clientid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"client id" is a required field',
+          'string.empty': '"client id" can not be empty',
+          'string.pattern.base': '"client id" out of the expected format'
+        }),
+      productid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"product id" is a required field',
+          'string.empty': '"product id" can not be empty',
+          'string.pattern.base': '"product id" out of the expected format'
+        })
+    }),
+    authenticationMiddleware(),
+    authorization.authorizationMiddleware('CLIENT_DELETE_LIKE'),
+    verifyIdDbMiddleware.verifyIdClient,
+    verifyIdDbMiddleware.verifyIdProduct,
+    clientController.removeLikeProductController
+  )
+
   router
     .route('/client/:clientid')
     .get(

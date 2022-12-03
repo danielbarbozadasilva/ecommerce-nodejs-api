@@ -174,10 +174,40 @@ const toDTOClientSolicitations = (model) => ({
   }))
 })
 
+const toDTOLikeList = (model) => {
+  let media = 0
+  let cont = 0
+
+  return {
+    id: model.products._id,
+    title: model.products.title,
+    description: model.products.description,
+    photos: model.products.photos.map((item) => formatAddressImage(item)),
+    price: model.products.price,
+    promotion: model.products.promotion,
+    quantity: model.products.quantity,
+    freeShipping: model.products.freeShipping,
+    rating: model.rating.map((item) => {
+      media += item.score, 
+      cont++
+      return {
+        _id: item._id,
+        name: item.name,
+        text: item.text,
+        score: item.score,
+        product: item.product,
+        client: item.client
+      }
+    }),
+    total: media / cont
+  }
+}
+
 module.exports = {
   toDTO,
   toClientDTO,
   toDTOList,
   toDTOSolicitations,
-  toDTOClientSolicitations
+  toDTOClientSolicitations,
+  toDTOLikeList
 }
