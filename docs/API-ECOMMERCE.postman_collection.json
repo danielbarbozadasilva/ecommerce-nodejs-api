@@ -46,7 +46,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"danielbarboza56@hotmail.com\",\n    \"password\": \"daniel\"\n}",
+							"raw": "{\n    \"email\": \"daniel95barboza@gmail.com\",\n    \"password\": \"daniel\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -445,7 +445,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"daniel80barboza@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"email\": \"daniel95barboza@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -869,6 +869,185 @@
 								"v1",
 								"client",
 								"6320f577156b47ff1082586e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "client.listLikeProduct",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"1222211Daniel\",\r\n    \"email\": \"132d3@gmail.com\",\r\n    \"cpf\": \"523.222.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"street\": \"Av. Manuel Gomes\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/client/user/6320f577156b47ff1082586c/like",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"client",
+								"user",
+								"6320f577156b47ff1082586c",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "client.createLikeProduct",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"1222211Daniel\",\r\n    \"email\": \"132d3@gmail.com\",\r\n    \"cpf\": \"523.222.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"street\": \"Av. Manuel Gomes\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e/product/63432f02a7f855351c99dc72/like",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"client",
+								"6320f577156b47ff1082586e",
+								"product",
+								"63432f02a7f855351c99dc72",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "client.removeLikeProduct",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"1222211Daniel\",\r\n    \"email\": \"132d3@gmail.com\",\r\n    \"cpf\": \"523.222.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"street\": \"Av. Manuel Gomes\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e/product/63432f02a7f855351c99dc72/like",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"client",
+								"6320f577156b47ff1082586e",
+								"product",
+								"63432f02a7f855351c99dc72",
+								"like"
 							]
 						}
 					},
@@ -1308,7 +1487,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/product?offset=0&limit=30&sortType=alfabetica_a-z",
+							"raw": "http://localhost:3011/v1/product?offset=0&limit=30&sortType=alfabetica_z-a",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1329,7 +1508,7 @@
 								},
 								{
 									"key": "sortType",
-									"value": "alfabetica_a-z"
+									"value": "alfabetica_z-a"
 								}
 							]
 						}
@@ -1830,7 +2009,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/rating?clientid=6320f577156b47ff1082586e&productid=63432f02a7f855351c99dc71",
+							"raw": "http://localhost:3011/v1/rating?clientid=6320f577156b47ff1082586e&productid=63432f02a7f855351c99dc72",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1847,7 +2026,7 @@
 								},
 								{
 									"key": "productid",
-									"value": "63432f02a7f855351c99dc71"
+									"value": "63432f02a7f855351c99dc72"
 								}
 							]
 						}
