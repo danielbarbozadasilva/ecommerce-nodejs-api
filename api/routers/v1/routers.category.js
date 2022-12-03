@@ -10,11 +10,7 @@ const fileUpload = require('../../utils/utils.file')
 module.exports = (router) => {
   router
     .route('/category')
-    .get(
-      authenticationMiddleware(),
-      authorization.authorizationMiddleware('LIST_CATEGORY'),
-      categoryController.listAllCategoryController
-    )
+    .get(categoryController.listAllCategoryController)
     .post(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('CREATE_CATEGORY'),
@@ -36,14 +32,12 @@ module.exports = (router) => {
     .route('/category/availability')
     .get(
       authenticationMiddleware(),
-      authorization.authorizationMiddleware('LIST_CATEGORY_AVAILABILITY'),
       categoryController.listCategoryAvailabilityController
     )
   router
     .route('/category/:categoryid')
     .get(
       authenticationMiddleware(),
-      authorization.authorizationMiddleware('LIST_CATEGORY_ID'),
       validateDTOMiddleware('params', {
         categoryid: joi
           .string()
@@ -140,7 +134,6 @@ module.exports = (router) => {
 
   router.route('/category/:categoryid/products').get(
     authenticationMiddleware(),
-    authorization.authorizationMiddleware('LIST_CATEGORY_PRODUCT'),
     validateDTOMiddleware('params', {
       categoryid: joi
         .string()
@@ -158,7 +151,6 @@ module.exports = (router) => {
 
   router.route('/category/:categoryid/products').get(
     authenticationMiddleware(),
-    authorization.authorizationMiddleware('LIST_CATEGORY_PRODUCT'),
     validateDTOMiddleware('params', {
       categoryid: joi
         .string()
