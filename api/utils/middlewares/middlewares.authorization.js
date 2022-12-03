@@ -5,7 +5,6 @@ const authorizationMiddleware = (rule) => async (req, res, next) => {
   const { token } = req.headers
   const { id, permissions } = decodeToken(token)
   const user = req.params.userid || req.params.clientid
-
   if (rule !== '*') {
     services.checkPermissionService(permissions, rule)
   }

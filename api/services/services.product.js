@@ -13,23 +13,40 @@ const getSort = (sortType) => {
     case 'price-decrescente':
       return { price: -1 }
     default:
-      return {}
+      return { title: 1 }
   }
 }
 
 const listAllProductService = async (sortType, offset, limit) => {
   try {
-    const resultDB = await product.paginate({
-      offset: Number(offset || 0),
-      limit: Number(limit || 30),
-      sort: getSort(sortType),
-      populate: ['category']
-    })
-
+    const resultDB = await product.aggregate([
+      {
+        $lookup: {
+          from: rating.collection.name,
+          localField: '_id',
+          foreignField: 'product',
+          as: 'rating'
+        }
+      },
+      {
+        $sort: getSort(sortType)
+      },
+      {
+        $facet: {
+          metadata: [{ $count: 'total' }],
+          data: [
+            { $skip: Number(offset) || 0 },
+            { $limit: Number(limit) || 30 }
+          ]
+        }
+      }
+    ])
     return {
       success: true,
       message: 'Products listed successfully',
-      data: resultDB.docs.map((item) => productMapper.toDTO(item))
+      data: resultDB[0].data.map((item) =>
+        productMapper.toDTO(item, ...resultDB[0].metadata)
+      )
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -160,7 +177,7 @@ const listAvailableProductService = async (sort, offset, limit) => {
       {
         offset: Number(offset || 0),
         limit: Number(limit || 30),
-        sort: getSort(sort),
+        sort,
         populate: ['category']
       }
     )
@@ -184,7 +201,7 @@ const searchProductService = async (sort, offset, limit, search) => {
       {
         offset: Number(offset || 0),
         limit: Number(limit || 30),
-        sort: getSort(sort),
+        sort,
         populate: ['category']
       }
     )

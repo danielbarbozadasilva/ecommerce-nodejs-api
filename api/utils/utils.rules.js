@@ -14,10 +14,6 @@ module.exports = [
       'CLIENT_ID',
       'CLIENT_UPDATE',
       'CLIENT_DELETE',
-      'LIST_CATEGORY',
-      'LIST_CATEGORY_AVAILABILITY',
-      'LIST_CATEGORY_ID',
-      'LIST_CATEGORY_PRODUCT',
       'CREATE_CATEGORY',
       'UPDATE_CATEGORY',
       'DELETE_CATEGORY',
@@ -47,9 +43,6 @@ module.exports = [
       'CLIENT_ID',
       'CLIENT_UPDATE',
       'CLIENT_DELETE',
-      'LIST_CATEGORY',
-      'LIST_CATEGORY_AVAILABILITY',
-      'LIST_CATEGORY_ID',
       'CREATE_RATING',
       'DELETE_RATING',
       'SOLICITATION_CREATE',
@@ -59,7 +52,10 @@ module.exports = [
       'LIST_CART_PRODUCT',
       'LIST_DELIVERY',
       'LIST_PAYMENT_ID',
-      'TAKE_PAYMENT'
+      'TAKE_PAYMENT',
+      'LIST_CREATE_LIKE',
+      'CLIENT_CREATE_LIKE',
+      'CLIENT_DELETE_LIKE'
     ]
   }
 ]
