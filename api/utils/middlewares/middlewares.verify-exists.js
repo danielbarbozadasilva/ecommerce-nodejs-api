@@ -122,6 +122,18 @@ const verifyCpfUserExists = async (req, res, next) => {
   next()
 }
 
+const verifyClientLikeExists = async (req, res, next) => {
+  const result = await client.findOne({
+    _id: req.params.clientid,
+    likes: req.params.productid
+  })
+
+  if (result) {
+    throw new ErrorBusinessRule('Você já curtiu esse produto!')
+  }
+  next()
+}
+
 const verifyRatingExistsMiddleware = async (req, res, next) => {
   const ratingDB = await rating.findOne({
     client: req.query.clientid,
@@ -129,7 +141,7 @@ const verifyRatingExistsMiddleware = async (req, res, next) => {
   })
 
   if (ratingDB) {
-    throw new ErrorBusinessRule(`Você já curtiu esse produto!`)
+    throw new ErrorBusinessRule(`Você já avaliou esse produto!`)
   }
   next()
 }
@@ -168,5 +180,6 @@ module.exports = {
   verifyCpfUserExists,
   verifyRatingExistsMiddleware,
   verifyRatingNotExistsMiddleware,
-  verifyEmail
+  verifyEmail,
+  verifyClientLikeExists
 }
