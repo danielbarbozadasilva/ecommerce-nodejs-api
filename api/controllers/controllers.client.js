@@ -105,8 +105,10 @@ const createClientController = async (req, res) => {
 }
 
 const listClientLikeProductController = async (req, res) => {
-  const { userid } = req.params
-  const resultService = await clientService.listClientLikeProductService(userid)
+  const { clientid } = req.params
+  const resultService = await clientService.listClientLikeProductService(
+    clientid
+  )
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }

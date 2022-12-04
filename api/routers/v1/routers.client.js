@@ -125,21 +125,21 @@ module.exports = (router) => {
     clientController.listSolicitationClientController
   )
 
-  router.route('/client/user/:userid/like').get(
+  router.route('/client/:clientid/like').get(
     validateDTOMiddleware('params', {
-      userid: joi
+      clientid: joi
         .string()
         .regex(/^[0-9a-fA-F]{24}$/)
         .required()
         .messages({
-          'any.required': '"user id" is a required field',
-          'string.empty': '"user id" can not be empty',
-          'string.pattern.base': '"user id" out of the expected format'
+          'any.required': '"client id" is a required field',
+          'string.empty': '"client id" can not be empty',
+          'string.pattern.base': '"client id" out of the expected format'
         })
     }),
     authenticationMiddleware(),
     authorization.authorizationMiddleware('LIST_CREATE_LIKE'),
-    verifyIdDbMiddleware.verifyIdUser,
+    verifyIdDbMiddleware.verifyIdClient,
     clientController.listClientLikeProductController
   )
   
