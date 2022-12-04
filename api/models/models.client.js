@@ -19,9 +19,6 @@ const clientSchema = Schema(
       city: { type: String, required: true },
       state: { type: String, required: true },
       zipCode: { type: String, required: true }
-    },
-    likes: {
-      type: [{ type: Schema.Types.ObjectId, ref: 'product', required: false }]
     }
   },
   { timestamps: true }
