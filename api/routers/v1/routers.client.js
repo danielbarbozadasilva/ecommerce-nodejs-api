@@ -138,11 +138,11 @@ module.exports = (router) => {
         })
     }),
     authenticationMiddleware(),
-    authorization.authorizationMiddleware('LIST_CREATE_LIKE'),
+    authorization.authorizationMiddleware('LIST_LIKE'),
     verifyIdDbMiddleware.verifyIdClient,
     clientController.listClientLikeProductController
   )
-  
+
   router.route('/client/:clientid/product/:productid/like').post(
     validateDTOMiddleware('params', {
       clientid: joi
@@ -168,7 +168,6 @@ module.exports = (router) => {
     authorization.authorizationMiddleware('CLIENT_CREATE_LIKE'),
     verifyIdDbMiddleware.verifyIdClient,
     verifyIdDbMiddleware.verifyIdProduct,
-    verifyIdDbMiddleware.verifyClientLikeExists,
     clientController.createLikeProductController
   )
 
