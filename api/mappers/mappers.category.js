@@ -9,6 +9,7 @@ const toDTO = (model) => ({
 })
 
 const toDTOWithProducts = (model) => ({
+  id: model._id,
   title: model.title,
   availability: model.availability,
   description: model.description,

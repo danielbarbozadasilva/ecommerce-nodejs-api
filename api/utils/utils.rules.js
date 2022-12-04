@@ -53,7 +53,7 @@ module.exports = [
       'LIST_DELIVERY',
       'LIST_PAYMENT_ID',
       'TAKE_PAYMENT',
-      'LIST_CREATE_LIKE',
+      'LIST_LIKE',
       'CLIENT_CREATE_LIKE',
       'CLIENT_DELETE_LIKE'
     ]
