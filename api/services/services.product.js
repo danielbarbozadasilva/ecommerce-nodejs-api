@@ -1,4 +1,5 @@
-const { product, rating } = require('../models/models.index')
+const { ObjectId } = require('mongodb')
+const { product, rating, client } = require('../models/models.index')
 const productMapper = require('../mappers/mappers.product')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 
@@ -55,17 +56,38 @@ const listAllProductService = async (sortType, offset, limit) => {
 
 const listByIdProductService = async (productid) => {
   try {
-    const resultDB = await product.paginate(
-      { _id: productid },
+    const resultDB = await product.aggregate([
       {
-        populate: ['category']
+        $match: { _id: ObjectId(productid) }
+      },
+      {
+        $lookup: {
+          from: client.collection.name,
+          localField: 'likes',
+          foreignField: '_id',
+          as: 'client'
+        }
+      },
+      {
+        $unwind: {
+          path: '$client',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $lookup: {
+          from: rating.collection.name,
+          localField: '_id',
+          foreignField: 'product',
+          as: 'rating'
+        }
       }
-    )
+    ])
 
     return {
       success: true,
       message: 'Product listed successfully',
-      data: productMapper.toDTO(...resultDB.docs)
+      data: productMapper.toDTOProduct(...resultDB)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)

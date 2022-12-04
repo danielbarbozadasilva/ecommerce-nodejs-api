@@ -51,6 +51,29 @@ const toDTO = (model, metaData) => {
   }
 }
 
+const toDTOProduct = (model) => {
+  return {
+    id: model._id,
+    title: model.title,
+    availability: model.availability,
+    description: model.description,
+    photos: model.photos.map((item) => formatAddressImage(item)),
+    price: model.price,
+    promotion: model.promotion,
+    sku: model.sku,
+    quantity: model.quantity,
+    store: model.storeid,
+    dimensions: {
+      height: model.dimensions.height,
+      width: model.dimensions.width,
+      depth: model.dimensions.depth
+    },
+    weight: model.weight,
+    freeShipping: model.freeShipping,
+    likes: model.likes
+  }
+}
+
 const toDTORating = (model) => ({
   id: model._id,
   name: model.name,
@@ -79,5 +102,6 @@ const toDTORating = (model) => ({
 
 module.exports = {
   toDTO,
-  toDTORating
+  toDTORating,
+  toDTOProduct
 }
