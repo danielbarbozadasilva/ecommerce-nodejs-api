@@ -39,8 +39,20 @@ const checkPermissionService = (permissions, rule) => {
 }
 
 const createCredentialService = async (email) => {
-  const userDB = await user.findOne({ email })
-  const userDTO = userMapper.toDTO(userDB)
+  const userDB = await user.aggregate([
+    { $match: { email } },
+    {
+      $lookup: {
+        from: client.collection.name,
+        localField: '_id',
+        foreignField: 'user',
+        as: 'client'
+      }
+    },
+    { $unwind: '$client' }
+  ])
+
+  const userDTO = userMapper.toDTO(...userDB)
   const userToken = await cryptography.generateToken(userDTO)
   if (userDTO && userToken) {
     return {

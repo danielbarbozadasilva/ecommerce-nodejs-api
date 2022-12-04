@@ -179,14 +179,14 @@ const toDTOLikeList = (model) => {
   let cont = 0
 
   return {
-    id: model.products._id,
-    title: model.products.title,
-    description: model.products.description,
-    photos: model.products.photos.map((item) => formatAddressImage(item)),
-    price: model.products.price,
-    promotion: model.products.promotion,
-    quantity: model.products.quantity,
-    freeShipping: model.products.freeShipping,
+    id: model._id,
+    title: model.title,
+    description: model.description,
+    photos: model.photos.map((item) => formatAddressImage(item)),
+    price: model.price,
+    promotion: model.promotion,
+    quantity: model.quantity,
+    freeShipping: model.freeShipping,
     rating: model.rating.map((item) => {
       media += item.score, 
       cont++
@@ -199,7 +199,8 @@ const toDTOLikeList = (model) => {
         client: item.client
       }
     }),
-    total: media / cont
+    total: media / cont,
+    liked: !!model.client
   }
 }
 

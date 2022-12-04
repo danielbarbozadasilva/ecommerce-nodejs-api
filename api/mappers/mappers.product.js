@@ -34,8 +34,8 @@ const toDTO = (model, metaData) => {
       products: model.category.products
     },
     rating: model.rating.map((item) => {
-      media += item.score, 
-      cont++
+    media += item.score,
+    cont++
       return {
         _id: item._id,
         name: item.name,
@@ -46,7 +46,8 @@ const toDTO = (model, metaData) => {
       }
     }),
     total: media / cont,
-    metaData: metaData.total
+    metaData: metaData.total,
+    likes: model.likes
   }
 }
 

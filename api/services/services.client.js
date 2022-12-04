@@ -282,28 +282,31 @@ const createClientService = async (body) => {
   }
 }
 
-const listClientLikeProductService = async (userid) => {
+const listClientLikeProductService = async (clientid) => {
   try {
-    const resultDB = await client.aggregate([
-      { $match: { user: ObjectId(userid) } },
+    const resultDB = await product.aggregate([
       {
         $lookup: {
-          from: product.collection.name,
+          from: client.collection.name,
           localField: 'likes',
           foreignField: '_id',
-          as: 'products'
+          as: 'client'
         }
       },
-      { $unwind: '$products' },
+      { $unwind: '$client' },
+      {
+        $match: { 'client._id': ObjectId(clientid) }
+      },
       {
         $lookup: {
           from: rating.collection.name,
-          localField: 'products._id',
+          localField: '_id',
           foreignField: 'product',
           as: 'rating'
         }
       }
     ])
+
     return {
       success: true,
       message: 'likes successfully listed',
@@ -316,11 +319,11 @@ const listClientLikeProductService = async (userid) => {
 
 const createLikeProductService = async (clientid, productid) => {
   try {
-    await client.findOneAndUpdate(
-      { _id: clientid },
+    await product.findOneAndUpdate(
+      { _id: productid },
       {
         $push: {
-          likes: productid
+          likes: clientid
         }
       },
       { new: true }
@@ -337,11 +340,11 @@ const createLikeProductService = async (clientid, productid) => {
 
 const removeLikeProductService = async (clientid, productid) => {
   try {
-    await client.findOneAndUpdate(
-      { _id: clientid },
+    await product.findOneAndUpdate(
+      { _id: productid },
       {
         $pull: {
-          likes: productid
+          likes: clientid
         }
       },
       { new: true }

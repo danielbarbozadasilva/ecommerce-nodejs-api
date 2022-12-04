@@ -123,9 +123,8 @@ const verifyCpfUserExists = async (req, res, next) => {
 }
 
 const verifyClientLikeExists = async (req, res, next) => {
-  const result = await client.findOne({
-    _id: req.params.clientid,
-    likes: req.params.productid
+  const result = await product.findOne({
+    likes: req.params.clientid
   })
 
   if (result) {
