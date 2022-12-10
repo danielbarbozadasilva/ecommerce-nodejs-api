@@ -1,4 +1,5 @@
 const { ObjectId } = require('mongodb')
+const moment = require('moment')
 const {
   solicitation,
   product,
@@ -92,8 +93,6 @@ const listClientSearchService = async (offset, limit, search) => {
 
 const updateClientService = async (id, body) => {
   try {
-    const salt = cryptography.createSalt()
-
     const clientDB = await client.findOneAndUpdate(
       { _id: id },
       {
@@ -110,29 +109,29 @@ const updateClientService = async (id, body) => {
             zipCode: body.address.zipCode,
             state: body.address.state
           },
-          birthDate: body.birthDate
+          birthDate: moment(body.birthDate, 'YYYY-MM-DD')
         }
       },
       { new: true }
     )
 
-    const userDB = await user.findOneAndUpdate(
+    await user.findOneAndUpdate(
       { _id: clientDB.user },
       {
         $set: {
           name: body.name,
-          email: body.email,
-          salt,
-          hash: cryptography.createHash(body.password, salt)
+          email: body.email
         }
       },
       { new: true }
     )
 
+    const data = await createCredentialService(body.email)
+
     return {
       success: true,
       message: 'Client successfully updated',
-      data: clientMapper.toDTOList(userDB, clientDB)
+      data
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -267,7 +266,7 @@ const createClientService = async (body) => {
         state: body.address.state
       },
       user: userDB._id,
-      birthDate: body.birthDate
+      birthDate: moment(body.birthDate, 'YYYY-MM-DD')
     })
 
     const data = await createCredentialService(body.email)

@@ -1,3 +1,4 @@
+const moment = require('moment')
 const {
   formatPriceBr,
   formatAddressImage
@@ -52,7 +53,7 @@ const toClientDTO = (model) => ({
   client: {
     id: model._id,
     name: model.name,
-    birthDate: model.birthDate,
+    birthDate: moment(model.birthDate).format('DD/MM/YYYY'),
     cpf: model.cpf,
     phones: model.phones,
     deleted: model.deleted,
@@ -188,8 +189,7 @@ const toDTOLikeList = (model) => {
     quantity: model.quantity,
     freeShipping: model.freeShipping,
     rating: model.rating.map((item) => {
-      media += item.score, 
-      cont++
+      ;(media += item.score), cont++
       return {
         _id: item._id,
         name: item.name,
