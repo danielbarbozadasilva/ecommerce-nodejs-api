@@ -70,10 +70,10 @@ db.clients.insert([
         street: "Av. Professor Dutra",
         number: "2234",
         complement: "casa",
-        district: "Rio de janeiro",
-        city: "Rio de janeiro",
+        district: "RIO DE JANEIRO",
+        city: "CARMO",
         zipCode: "23098-782",
-        state: "Rio de janeiro"
+        state: "RJ"
     }
 }
 ])
@@ -91,8 +91,29 @@ db.categories.insert([
     _id: ObjectId("63433ba03a63723e66f5f62d"),
     name: "Processadores",
     code: "23135142342333154",
-    availability: false,
+    availability: true,
     photo: "files-1668078769111.jpg"
+},
+{
+    _id: ObjectId("638f004765f1c700b416aa02"),
+    name: "Monitores",
+    code: "73245148302633104",
+    availability: true,
+    photo: "files-1670316172965.jpg"
+},
+{
+    _id: ObjectId("638f00c265f1c700b416aa07"),
+    name: "Notebooks",
+    code: "64135112342336246",
+    availability: true,
+    photo: "files-1670316265765.jpg"
+},
+{
+    _id: ObjectId("638f00f265f1c700b416aa0c"),
+    name: "Smartphones",
+    code: "12531642142335131",
+    availability: true,
+    photo: "files-1670316293269.jpg"
 }
 ])
 
@@ -100,9 +121,9 @@ db.createCollection("products")
 db.products.insert([
 {
   _id: ObjectId("63432f02a7f855351c99dc71"),
-  title: "Zotac GeForce RTX 3060",
+  title: "Zotac GeForce 3060",
   availability: true,
-  description: "GeForce RTX 3060 12GB GDDR6; Núcleos CUDA: 3584; Barramento de memória: 192-bit; Engine Clock: 1807 MHz (boost); Memory Clock: 15 Gbps; PCI Express 4.0 16x; Saídas de vídeo: 3x DisplayPort 1.4a (até 7680x4320@60Hz), HDMI 2.1 (até 7680x4320@60Hz).",
+  description: "GeForce RTX 3060 12GB GDDR6; Núcleos CUDA: 3584; Engine Clock: 1807 MHz (boost)",
   photos:["files-1668078769319.jpg","files-1668079012525.jpg"],  
   price: 2399.99,
   promotion: 1199.99,
@@ -123,7 +144,7 @@ db.products.insert([
   _id: ObjectId("63432f02a7f855351c99dc72"),
   title: "Intel Core i5-10400F",
   availability: true,
-  description: "Processador Intel Core i5-10400F (Comete Lake), Hexa-Core (12 Threads), 2.90 GHz (4.30 GHz Turbo Boost), LGA 1200, 65W, 14 Nm.",
+  description: "Processador Intel Core i5-10400F (Comete Lake), Hexa-Core (12 Threads)",
   photos:["files-1668078750488.jpg"],
   price: 849.99,
   promotion: 429.99,
