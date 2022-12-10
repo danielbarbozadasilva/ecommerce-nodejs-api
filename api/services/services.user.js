@@ -49,7 +49,12 @@ const createCredentialService = async (email) => {
         as: 'client'
       }
     },
-    { $unwind: '$client' }
+    {
+      $unwind: {
+        path: '$client',
+        preserveNullAndEmptyArrays: true
+      }
+    }
   ])
 
   const userDTO = userMapper.toDTO(...userDB)
