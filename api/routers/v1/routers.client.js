@@ -261,14 +261,10 @@ module.exports = (router) => {
         })
     }),
     validateDTOMiddleware('body', {
-      cpf: joi
-        .string()
-        .regex(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/)
-        .required()
-        .messages({
-          'any.required': '"cpf" is a required field',
-          'string.empty': '"cpf" can not be empty'
-        }),
+      cpf: joi.string().required().messages({
+        'any.required': '"cpf" is a required field',
+        'string.empty': '"cpf" can not be empty'
+      }),
       name: joi.string().required().messages({
         'any.required': '"name" is a required field',
         'string.empty': '"name" can not be empty'
@@ -281,13 +277,9 @@ module.exports = (router) => {
         'any.required': '"phones" is a required field',
         'string.empty': '"phones" can not be empty'
       }),
-      birthDate: joi.date().format('YYYY-MM-DD').raw().required().messages({
+      birthDate: joi.string().required().messages({
         'any.required': '"birth date" is a required field',
-        'date.empty': '"birth date" can not be empty'
-      }),
-      password: joi.string().required().messages({
-        'any.required': '"password" is a required field',
-        'string.empty': '"password" can not be empty'
+        'string.empty': '"birth date" can not be empty'
       }),
       address: joi.object({
         street: joi.string().required().messages({
@@ -298,10 +290,7 @@ module.exports = (router) => {
           'any.required': '"number" is a required field',
           'string.empty': '"number" can not be empty'
         }),
-        complement: joi.string().required().messages({
-          'any.required': '"complement" is a required field',
-          'string.empty': '"complement" can not be empty'
-        }),
+        complement: joi.string().optional(),
         district: joi.string().required().messages({
           'any.required': '"district" is a required field',
           'string.empty': '"district" can not be empty'
