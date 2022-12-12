@@ -121,7 +121,7 @@ db.createCollection("products")
 db.products.insert([
 {
   _id: ObjectId("63432f02a7f855351c99dc71"),
-  title: "Zotac GeForce 3060",
+  title: "Placa de Vídeo RTX 3060 Twin Edge Zotac Gaming GeForce",
   availability: true,
   description: "GeForce RTX 3060 12GB GDDR6; Núcleos CUDA: 3584; Engine Clock: 1807 MHz (boost)",
   photos:["files-1668078769319.jpg","files-1668079012525.jpg"],  
@@ -159,6 +159,111 @@ db.products.insert([
   weight: 1,
   freeShipping: false,
   category: ObjectId("63433ba03a63723e66f5f62d"),
+  rating: []
+},
+{
+  _id: ObjectId("639702b94bf6b326dbc5ae87"),
+  title: "Monitor LG UltraWide 29",
+  availability: true,
+  description: "FHD FreeSync, HDR10, HDMI, 29WL500-B 75Hz 5ms",
+  photos: ["files-1670841394582.jpg"],
+  price: 2199,
+  promotion: 1149,
+  sku: "29WL500",
+  quantity: 40,
+  blockedQuantity: 0,
+  dimensions: {
+    height: 8,
+    width: 10,
+    depth: 27
+  },
+  weight: 1,
+  freeShipping: false,
+  category: ObjectId("638f004765f1c700b416aa02"),
+  rating: []
+},
+{
+  _id: ObjectId("639704f94bf6b326dbc5ae96"),
+  title: "Smart Monitor Samsung 24",
+  availability: true,
+  description: "FHD Série M5 Tizen, HDMI, HDR, LS24AM506NLMZD 60Hz 14ms",
+  photos: ["files-1670841622799.jpg"],
+  price: 1699,
+  promotion: 1340.54,
+  sku: "LS24AM506",
+  quantity: 40,
+  blockedQuantity: 0,
+  dimensions: {
+    height: 8,
+    width: 10,
+    depth: 27
+  },  
+  weight: 1,
+  freeShipping: false,
+  category: ObjectId("638f004765f1c700b416aa02"),
+  rating: []
+},
+{
+  _id: ObjectId("639707034bf6b326dbc5ae9e"),
+  title: "Notebook Samsung Book 15.6",
+  availability: true,
+  description: "Intel Celeron 6305 4GB RAM 500GB NP550XDA-KP2BR",
+  photos: ["files-1670842145993.jpg"],
+  price: 3149,
+  promotion: 2159.1,
+  sku: "NP550XDA",
+  quantity: 20,
+  blockedQuantity: 0,
+  dimensions: {
+    height: 8,
+    width: 10,
+    depth: 27
+  },
+  weight: 1,
+  freeShipping: false,
+  category: ObjectId("638f00c265f1c700b416aa07"),
+  rating: []
+},
+{
+  _id: ObjectId("6397089f4bf6b326dbc5aea6"),
+  title: "Smartphone Samsung Galaxy S22",
+  availability: true,
+  description: "5G 256 GB 6.6 Verde e Snapdragon",
+  photos: ["files-1670842566230.jpg"],
+  price: 7499.9,
+  promotion: 4999,
+  sku: "SMS906",
+  quantity: 30,
+  blockedQuantity: 0,
+   dimensions: {
+    height: 8,
+    width: 10,
+    depth: 27
+  },
+  weight: 1,
+  freeShipping: false,
+  category: ObjectId("638f00f265f1c700b416aa0c"),
+  rating: []
+},
+{
+  _id: ObjectId("63970c5915c445c9c84a9bee"),
+  title: "Smartphone Samsung Galaxy XCover Pro",
+  availability: true,
+  description: "4G 64GB 6.3 Preto 2 Câmeras Traseiras",
+  photos: ["files-1670843509386.jpg"],
+  price: 1999,
+  promotion: 1619.1,
+  sku: "SMXCPR",
+  quantity: 20,
+  blockedQuantity: 0,
+   dimensions: {
+    height: 8,
+    width: 10,
+    depth: 27
+  },
+  weight: 1,
+  freeShipping: false,
+  category: ObjectId("638f00f265f1c700b416aa0c"),
   rating: []
 }
 ])
