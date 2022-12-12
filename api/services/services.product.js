@@ -117,7 +117,7 @@ const createProductService = async (body) => {
     return {
       success: true,
       message: 'Product created successfully',
-      data: productMapper.toDTO(resultProduct)
+      data: productMapper.toDTOProduct(resultProduct)
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -231,7 +231,7 @@ const searchProductService = async (sort, offset, limit, search) => {
     return {
       success: true,
       message: 'Products listed successfully',
-      data: resultDB.docs.map((item) => productMapper.toDTO(item))
+      data: resultDB.docs.map((item) => productMapper.toDTOProduct(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)

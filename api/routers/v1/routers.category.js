@@ -37,7 +37,6 @@ module.exports = (router) => {
   router
     .route('/category/:categoryid')
     .get(
-      authenticationMiddleware(),
       validateDTOMiddleware('params', {
         categoryid: joi
           .string()
@@ -133,7 +132,6 @@ module.exports = (router) => {
   )
 
   router.route('/category/:categoryid/products').get(
-    authenticationMiddleware(),
     validateDTOMiddleware('params', {
       categoryid: joi
         .string()
