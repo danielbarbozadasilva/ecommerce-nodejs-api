@@ -130,42 +130,4 @@ module.exports = (router) => {
     fileUpload.array('files', 1),
     categoryController.updateImageCategoryController
   )
-
-  router.route('/category/:categoryid/products').get(
-    validateDTOMiddleware('params', {
-      categoryid: joi
-        .string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-          'any.required': '"category id" is a required field',
-          'string.empty': '"category id" can not be empty',
-          'string.pattern.base': '"category id" out of the expected format'
-        })
-    }),
-    verifyIdDbMiddleware.verifyIdCategory,
-    categoryController.listCategoryWithProductsController
-  )
-
-  router.route('/category/:categoryid/products').get(
-    authenticationMiddleware(),
-    validateDTOMiddleware('params', {
-      categoryid: joi
-        .string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-          'any.required': '"category id" is a required field',
-          'string.empty': '"category id" can not be empty',
-          'string.pattern.base': '"category id" out of the expected format'
-        })
-    }),
-    validateDTOMiddleware('query', {
-      offset: joi.number(),
-      limit: joi.number()
-    }),
-
-    verifyIdDbMiddleware.verifyIdCategory,
-    categoryController.listCategoryWithProductsController
-  )
 }
