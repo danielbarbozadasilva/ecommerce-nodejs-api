@@ -918,7 +918,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/client/user/6320f577156b47ff1082586c/like",
+							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e/like",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -927,8 +927,7 @@
 							"path": [
 								"v1",
 								"client",
-								"user",
-								"6320f577156b47ff1082586c",
+								"6320f577156b47ff1082586e",
 								"like"
 							]
 						}
@@ -976,7 +975,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e/product/63432f02a7f855351c99dc72/like",
+							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e/product/63432f02a7f855351c99dc71/like",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -987,7 +986,7 @@
 								"client",
 								"6320f577156b47ff1082586e",
 								"product",
-								"63432f02a7f855351c99dc72",
+								"63432f02a7f855351c99dc71",
 								"like"
 							]
 						}
@@ -1035,7 +1034,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e/product/63432f02a7f855351c99dc72/like",
+							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e/product/63432f02a7f855351c99dc71/like",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1046,7 +1045,7 @@
 								"client",
 								"6320f577156b47ff1082586e",
 								"product",
-								"63432f02a7f855351c99dc72",
+								"63432f02a7f855351c99dc71",
 								"like"
 							]
 						}
@@ -1190,7 +1189,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/category/6320f577156b47ff1082586e/products?offset=0&limit=30",
+							"raw": "http://localhost:3011/v1/category/6320f577156b47ff1082586e/products?itemsPerPage=6&page=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1204,12 +1203,12 @@
 							],
 							"query": [
 								{
-									"key": "offset",
-									"value": "0"
+									"key": "itemsPerPage",
+									"value": "6"
 								},
 								{
-									"key": "limit",
-									"value": "30"
+									"key": "page",
+									"value": "0"
 								}
 							]
 						}
@@ -1252,18 +1251,18 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "Processadores",
+									"value": "Smartphones",
 									"type": "text"
 								},
 								{
 									"key": "code",
-									"value": "43242342342343224",
+									"value": "12531642142335131",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/category/?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/category",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1271,14 +1270,7 @@
 							"port": "3011",
 							"path": [
 								"v1",
-								"category",
-								""
-							],
-							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								}
+								"category"
 							]
 						}
 					},
@@ -1439,12 +1431,12 @@
 								{
 									"key": "files",
 									"type": "file",
-									"src": "/C:/Users/pc01/Pictures/Yoda2.jpg"
+									"src": "/C:/Users/pc01/Downloads/4820514761_1GG.webp"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/category/image/6320f577156b47ff1082586e",
+							"raw": "http://localhost:3011/v1/category/image/638f00f265f1c700b416aa0c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1454,7 +1446,7 @@
 								"v1",
 								"category",
 								"image",
-								"6320f577156b47ff1082586e"
+								"638f00f265f1c700b416aa0c"
 							]
 						}
 					},
@@ -1487,7 +1479,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/product?offset=0&limit=30&sortType=alfabetica_z-a",
+							"raw": "http://localhost:3011/v1/product?sortType=alfabetica_z-a&itemsPerPage=5&page=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1499,16 +1491,16 @@
 							],
 							"query": [
 								{
-									"key": "offset",
-									"value": "0"
-								},
-								{
-									"key": "limit",
-									"value": "30"
-								},
-								{
 									"key": "sortType",
 									"value": "alfabetica_z-a"
+								},
+								{
+									"key": "itemsPerPage",
+									"value": "5"
+								},
+								{
+									"key": "page",
+									"value": "0"
 								}
 							]
 						}
@@ -1582,7 +1574,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3011/v1/product/search/Placa",
+							"raw": "http://localhost:3011/v1/product/search/Smartphone?sortType=alfabetica_z-a&itemsPerPage=6&page=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1592,7 +1584,21 @@
 								"v1",
 								"product",
 								"search",
-								"Placa"
+								"Smartphone"
+							],
+							"query": [
+								{
+									"key": "sortType",
+									"value": "alfabetica_z-a"
+								},
+								{
+									"key": "itemsPerPage",
+									"value": "6"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
 							]
 						}
 					},
@@ -1706,7 +1712,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Monitor LG 24\",\r\n    \"description\": \"Led\",\r\n    \"price\": 499.90,\r\n    \"sku\": \"c1a2v1\",\r\n    \"quantity\": 70,\r\n    \"category\": \"6320f577156b47ff1082586e\",\r\n    \"promotion\": 22.5,\r\n    \"dimensions\": {\r\n        \"height\": 8,\r\n        \"width\": 10,\r\n        \"depth\": 27\r\n    },\r\n    \"weight\": 1,\r\n    \"freeShipping\": false\r\n}",
+							"raw": "{\r\n    \"title\": \"Smartphone Samsung Galaxy XCover Pro\",\r\n    \"description\": \"4G 64GB 6.3 Preto 2 Câmeras Traseiras\",\r\n    \"price\": 1999.00,\r\n    \"sku\": \"SMXCPR\",\r\n    \"quantity\": 20,\r\n    \"category\": \"638f00f265f1c700b416aa0c\",\r\n    \"promotion\": 1619.10,\r\n    \"dimensions\": {\r\n        \"height\": 8,\r\n        \"width\": 10,\r\n        \"depth\": 27\r\n    },\r\n    \"weight\": 1,\r\n    \"freeShipping\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1821,12 +1827,12 @@
 								{
 									"key": "files",
 									"type": "file",
-									"src": "/C:/Users/pc01/Pictures/11.jpg"
+									"src": "/C:/Users/pc01/Downloads/smartphone-samsung-galaxy-xcover-pro-64gb-4gb-tela-6-3-camera-25mp-8mp-preto-101662-1661878779-7.jpg"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/product/images/63432f02a7f855351c99dc71",
+							"raw": "http://localhost:3011/v1/product/images/63970c5915c445c9c84a9bee",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1836,7 +1842,7 @@
 								"v1",
 								"product",
 								"images",
-								"63432f02a7f855351c99dc71"
+								"63970c5915c445c9c84a9bee"
 							]
 						}
 					},
@@ -1883,7 +1889,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/product/6347178b594bbd99ff5126a2",
+							"raw": "http://localhost:3011/v1/product/639704ca4bf6b326dbc5ae8f",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1892,7 +1898,7 @@
 							"path": [
 								"v1",
 								"product",
-								"6347178b594bbd99ff5126a2"
+								"639704ca4bf6b326dbc5ae8f"
 							]
 						}
 					},
@@ -2001,7 +2007,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Daniel\",\r\n    \"text\": \"Gostei bastante\",\r\n    \"score\": 4\r\n}",
+							"raw": "{\r\n    \"name\": \"Daniel\",\r\n    \"text\": \"Gostei bastante\",\r\n    \"score\": 4,\r\n    \"clientid\": \"6320f577156b47ff1082586e\",\r\n    \"productid\": \"63970c5915c445c9c84a9bee\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2009,7 +2015,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/rating?clientid=6320f577156b47ff1082586e&productid=63432f02a7f855351c99dc72",
+							"raw": "http://localhost:3011/v1/rating",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2018,16 +2024,6 @@
 							"path": [
 								"v1",
 								"rating"
-							],
-							"query": [
-								{
-									"key": "clientid",
-									"value": "6320f577156b47ff1082586e"
-								},
-								{
-									"key": "productid",
-									"value": "63432f02a7f855351c99dc72"
-								}
 							]
 						}
 					},
@@ -2272,7 +2268,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "\r\n{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 429.99,\r\n            \"quantity\": 3\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\",\r\n    \"shipping\": 79.33,\r\n    \"payment\": {\r\n        \"price\": 2569.29,\r\n        \"type\": \"CREDITCARD\",\r\n        \"installments\": 3,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987-200\"\r\n        },\r\n        \"card\": {\r\n            \"fullName\": \"DANIEL BARBOZA DA SILVA\",\r\n            \"areaCode\": \"21\",\r\n            \"phone\": \"(21)2434-1207\",\r\n            \"birthDate\": \"2000-02-09\",\r\n            \"creditCardToken\": \"0ec7d144527b410da270e13e15666294\",\r\n            \"cpf\": \"82429888467\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 79.33,\r\n        \"type\": \"4014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987200\"\r\n        }\r\n    }\r\n}",
+							"raw": "\r\n{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"price\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"price\": 429.99,\r\n            \"quantity\": 3\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\",\r\n    \"shipping\": 79.33,\r\n    \"payment\": {\r\n        \"price\": 2569.29,\r\n        \"type\": \"BANKSLIP\",\r\n        \"installments\": 3,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987-200\"\r\n        },\r\n        \"card\": {\r\n            \"fullName\": \"DANIEL BARBOZA DA SILVA\",\r\n            \"areaCode\": \"21\",\r\n            \"phone\": \"(21)2434-1207\",\r\n            \"birthDate\": \"2000-02-09\",\r\n            \"creditCardToken\": \"0ec7d144527b410da270e13e15666294\",\r\n            \"cpf\": \"82429888467\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 79.33,\r\n        \"type\": \"4014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987200\"\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2280,7 +2276,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/solicitation?storeid=631e00f5190d800a90c6fa4d&clientid=6320f577156b47ff1082586e",
+							"raw": "http://localhost:3011/v1/solicitation?clientid=6320f577156b47ff1082586e",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2291,10 +2287,6 @@
 								"solicitation"
 							],
 							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								},
 								{
 									"key": "clientid",
 									"value": "6320f577156b47ff1082586e"
@@ -2493,7 +2485,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 429.99,\r\n            \"quantity\": 3\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\"\r\n}",
+							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"price\": 1199.99,\r\n            \"quantity\": \"1\",\r\n            \"title\": \"produto01\"\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"price\": 429.99,\r\n            \"quantity\": \"3\",\r\n            \"title\": \"produto02\"\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2600,7 +2592,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/take/payment/6376acb523865f2e8363b580",
+							"raw": "http://localhost:3011/v1/take/payment/63a716c0b2b64750a0242430",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2610,7 +2602,7 @@
 								"v1",
 								"take",
 								"payment",
-								"6376acb523865f2e8363b580"
+								"63a716c0b2b64750a0242430"
 							]
 						}
 					},
@@ -2638,9 +2630,6 @@
 							}
 						}
 					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -2650,15 +2639,6 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"_id\": \"6320f577156b47ff1082586e\",\r\n    \"title\": \"Nvidia GTX1080\",\r\n    \"availability\": true,\r\n    \"description\": \"Placa de vídeo\",\r\n    \"photos\": \"43242342342343224\",\r\n    \"price\": \"43242342342343224\",\r\n    \"promotion\": \"43242342342343224\",\r\n    \"sku\": \"43242342342343224\",\r\n    \"category\": \"631e00f5190d800a90c6fa43\",\r\n    \"store\": \"631e00f5190d800a90c6fa43\",\r\n    \"rating\": \"631e00f5190d800a90c6fa43\",\r\n    \"variations\": \"631e00f5190d800a90c6fa43\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "http://localhost:3011/v1/payment/session",
 							"protocol": "http",
