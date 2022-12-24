@@ -1,7 +1,9 @@
 const productService = require('../services/services.product')
 
 const listAllProductController = async (req, res) => {
-  const { sortType, offset, limit } = req.query
+  const { sortType, page, itemsPerPage } = req.query
+  const offset = Number(page * itemsPerPage) || 0
+  const limit = Number(itemsPerPage) || 5
   const resultService = await productService.listAllProductService(
     sortType,
     offset,
@@ -94,7 +96,9 @@ const listAvailableProductController = async (req, res) => {
 }
 
 const searchProductController = async (req, res) => {
-  const { sortType, offset, limit } = req.query
+  const { sortType, page, itemsPerPage } = req.query
+  const offset = Number(page * itemsPerPage) || 0
+  const limit = Number(itemsPerPage) || 5
   const { search } = req.params
   const resultService = await productService.searchProductService(
     sortType,
@@ -121,6 +125,25 @@ const listRatingProductController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const listCategoryProductsController = async (req, res) => {
+  const { categoryid } = req.params
+  const { sortType, page, itemsPerPage } = req.query
+  const offset = Number(page * itemsPerPage) || 0
+  const limit = Number(itemsPerPage) || 5
+  const resultService = await productService.listCategoryProductsService(
+    sortType,
+    offset,
+    limit,
+    categoryid
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
   listAllProductController,
   listByIdProductController,
@@ -130,5 +153,6 @@ module.exports = {
   deleteProductController,
   listAvailableProductController,
   searchProductController,
-  listRatingProductController
+  listRatingProductController,
+  listCategoryProductsController
 }

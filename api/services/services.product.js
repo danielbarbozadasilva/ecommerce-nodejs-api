@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongodb')
-const { product, rating, client } = require('../models/models.index')
+const { product, rating, client, category } = require('../models/models.index')
 const productMapper = require('../mappers/mappers.product')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 
@@ -35,19 +35,14 @@ const listAllProductService = async (sortType, offset, limit) => {
       {
         $facet: {
           metadata: [{ $count: 'total' }],
-          data: [
-            { $skip: Number(offset) || 0 },
-            { $limit: Number(limit) || 30 }
-          ]
+          data: [{ $skip: offset }, { $limit: limit }]
         }
       }
     ])
     return {
       success: true,
       message: 'Products listed successfully',
-      data: resultDB[0].data.map((item) =>
-        productMapper.toDTO(item, ...resultDB[0].metadata)
-      )
+      data: resultDB.map((item) => productMapper.toDTO(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -81,9 +76,28 @@ const listByIdProductService = async (productid) => {
           foreignField: 'product',
           as: 'rating'
         }
-      }
+      },
+      {
+        $unwind: {
+          path: '$rating',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $lookup: {
+          from: category.collection.name,
+          localField: 'category',
+          foreignField: '_id',
+          as: 'category'
+        }
+      },
+      {
+        $unwind: {
+          path: '$category',
+          preserveNullAndEmptyArrays: true
+        }
+      },
     ])
-
     return {
       success: true,
       message: 'Product listed successfully',
@@ -214,24 +228,39 @@ const listAvailableProductService = async (sort, offset, limit) => {
   }
 }
 
-const searchProductService = async (sort, offset, limit, search) => {
+const searchProductService = async (sortType, offset, limit, search) => {
   try {
-    const resultDB = await product.paginate(
+    const resultDB = await product.aggregate([
       {
-        $text: { $search: search, $diacriticSensitive: false }
+        $match: {
+          title: {
+            $regex: `.*${search}.*`,
+            $options: 'i'
+          }
+        }
       },
       {
-        offset: Number(offset || 0),
-        limit: Number(limit || 30),
-        sort,
-        populate: ['category']
+        $lookup: {
+          from: rating.collection.name,
+          localField: '_id',
+          foreignField: 'product',
+          as: 'rating'
+        }
+      },
+      {
+        $sort: getSort(sortType)
+      },
+      {
+        $facet: {
+          metadata: [{ $count: 'total' }],
+          data: [{ $skip: offset }, { $limit: limit }]
+        }
       }
-    )
-
+    ])
     return {
       success: true,
       message: 'Products listed successfully',
-      data: resultDB.docs.map((item) => productMapper.toDTOProduct(item))
+      data: resultDB.map((item) => productMapper.toDTO(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -254,6 +283,49 @@ const listRatingProductService = async (productid) => {
   }
 }
 
+const listCategoryProductsService = async (sortType, offset, limit, id) => {
+  try {
+    const resultDB = await product.aggregate([
+      {
+        $match: { category: ObjectId(id) }
+      },
+      {
+        $lookup: {
+          from: product.collection.name,
+          localField: 'category',
+          foreignField: '_id',
+          as: 'category'
+        }
+      },
+      {
+        $lookup: {
+          from: rating.collection.name,
+          localField: '_id',
+          foreignField: 'product',
+          as: 'rating'
+        }
+      },
+      {
+        $sort: getSort(sortType)
+      },
+      {
+        $facet: {
+          metadata: [{ $count: 'total' }],
+          data: [{ $skip: offset }, { $limit: limit }]
+        }
+      }
+    ])
+
+    return {
+      success: true,
+      message: 'Products listed successfully',
+      data: resultDB.map((item) => productMapper.toDTO(item))
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 module.exports = {
   listAllProductService,
   listByIdProductService,
@@ -263,5 +335,6 @@ module.exports = {
   deleteProductService,
   listAvailableProductService,
   searchProductService,
-  listRatingProductService
+  listRatingProductService,
+  listCategoryProductsService
 }
