@@ -10,27 +10,21 @@ const paymentSchema = Schema(
     installments: { type: Number, default: 1 },
     status: { type: String, required: true },
     address: {
-      type: {
-        street: { type: String, required: true },
-        number: { type: String, required: true },
-        complement: { type: String },
-        district: { type: String, required: true },
-        city: { type: String, required: true },
-        state: { type: String, required: true },
-        zipCode: { type: String, required: true }
-      },
-      required: true
+      street: { type: String },
+      number: { type: String },
+      complement: { type: String },
+      district: { type: String },
+      city: { type: String },
+      state: { type: String },
+      zipCode: { type: String }
     },
     card: {
-      type: {
-        fullName: { type: String, required: true },
-        areaCode: { type: String, required: true },
-        phone: { type: String, required: true },
-        birthDate: { type: String, required: true },
-        creditCardToken: { type: String, required: true },
-        cpf: { type: String, required: true }
-      },
-      required: false
+      fullName: { type: String },
+      areaCode: { type: String },
+      phone: { type: String },
+      birthDate: { type: String },
+      creditCardToken: { type: String },
+      cpf: { type: String }
     },
     addressDeliveryIgualCharging: { type: Boolean, default: true },
     pagSeguroCode: { type: String },
