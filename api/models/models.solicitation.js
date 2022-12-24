@@ -15,7 +15,7 @@ const solicitationSchema = Schema(
           },
           staticProduct: { type: String },
           quantity: { type: Number, default: 1 },
-          unitPrice: { type: Number, required: true }
+          price: { type: Number, required: true }
         }
       ]
     },
@@ -32,7 +32,6 @@ const solicitationSchema = Schema(
       ref: 'deliveries',
       required: true
     },
-    store: { type: Schema.Types.ObjectId, ref: 'store', required: true },
     canceled: { type: Boolean, default: false }
   },
   { timestamps: true }
