@@ -11,9 +11,9 @@ const swaggerDocs = require('../docs/swagger.json')
 const router = require('./routers/router')
 const db = require('../db/config')
 
-
 const app = express()
 
+mongoose.set('strictQuery', true)
 mongoose.connect(db.uri, { useNewUrlParser: true }, (err) => {
   if (err)
     console.log(
