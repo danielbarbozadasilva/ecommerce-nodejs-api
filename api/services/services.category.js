@@ -115,23 +115,6 @@ const updateImageCategoryService = async (categoryid, file) => {
   }
 }
 
-const listCategoryWithProductsService = async (categoryid, offset, limit) => {
-  try {
-    const resultDB = await product.paginate(
-      { category: categoryid },
-      { offset: Number(offset) || 0, limit: Number(limit) || 30 }
-    )
-
-    return {
-      success: true,
-      message: 'Categories successfully listed',
-      data: resultDB.docs.map((item) => categoryMapper.toDTOWithProducts(item))
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
 module.exports = {
   listAllCategoryService,
   listCategoryAvailabilityService,
@@ -139,6 +122,5 @@ module.exports = {
   createCategoryService,
   updateCategoryService,
   deleteCategoryService,
-  listCategoryWithProductsService,
   updateImageCategoryService
 }
