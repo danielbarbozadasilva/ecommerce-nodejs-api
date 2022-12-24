@@ -27,7 +27,19 @@ module.exports = (router) => {
     .post(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('CREATE_RATING'),
-      validateDTOMiddleware('query', {
+      validateDTOMiddleware('body', {
+        name: joi.string().required().messages({
+          'any.required': '"name" is a required field',
+          'string.empty': '"name" can not be empty'
+        }),
+        text: joi.string().required().messages({
+          'any.required': '"text" is a required field',
+          'string.empty': '"text" can not be empty'
+        }),
+        score: joi.number().min(1).max(5).required().messages({
+          'any.required': '"score" is a required field',
+          'string.empty': '"score" can not be empty'
+        }),
         clientid: joi
           .string()
           .regex(/^[0-9a-fA-F]{24}$/)
@@ -47,22 +59,6 @@ module.exports = (router) => {
             'string.pattern.base': '"product id" out of the expected format'
           })
       }),
-      validateDTOMiddleware('body', {
-        name: joi.string().required().messages({
-          'any.required': '"name" is a required field',
-          'string.empty': '"name" can not be empty'
-        }),
-        text: joi.string().required().messages({
-          'any.required': '"text" is a required field',
-          'string.empty': '"text" can not be empty'
-        }),
-        score: joi.number().min(1).max(5).required().messages({
-          'any.required': '"score" is a required field',
-          'string.empty': '"score" can not be empty'
-        })
-      }),
-      verifyIdDbMiddleware.verifyIdClient,
-      verifyIdDbMiddleware.verifyIdProduct,
       verifyIdDbMiddleware.verifyRatingExistsMiddleware,
       ratingController.createRatingProductController
     )

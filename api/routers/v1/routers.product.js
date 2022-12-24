@@ -12,9 +12,9 @@ module.exports = (router) => {
     .route('/product')
     .get(
       validateDTOMiddleware('query', {
-        sortType: joi.string(),
-        offset: joi.number(),
-        limit: joi.number()
+        sortType: joi.string().allow(null, ''),
+        itemsPerPage: joi.string().allow(null, ''),
+        page: joi.string().allow(null, '')
       }),
       productController.listAllProductController
     )
@@ -235,9 +235,9 @@ module.exports = (router) => {
       })
     }),
     validateDTOMiddleware('query', {
-      sortType: joi.string(),
-      offset: joi.number(),
-      limit: joi.number()
+      sortType: joi.string().allow(null, ''),
+      itemsPerPage: joi.string().allow(null, ''),
+      page: joi.string().allow(null, '')
     }),
     productController.searchProductController
   )
@@ -256,5 +256,26 @@ module.exports = (router) => {
     }),
     verifyIdDbMiddleware.verifyIdProduct,
     productController.listRatingProductController
+  )
+
+  router.route('/category/:categoryid/products').get(
+    validateDTOMiddleware('params', {
+      categoryid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"category id" is a required field',
+          'string.empty': '"category id" can not be empty',
+          'string.pattern.base': '"category id" out of the expected format'
+        })
+    }),
+    validateDTOMiddleware('query', {
+      sortType: joi.string().allow(null, ''),
+      itemsPerPage: joi.string().allow(null, ''),
+      page: joi.string().allow(null, '')
+    }),
+    verifyIdDbMiddleware.verifyIdCategory,
+    productController.listCategoryProductsController
   )
 }
