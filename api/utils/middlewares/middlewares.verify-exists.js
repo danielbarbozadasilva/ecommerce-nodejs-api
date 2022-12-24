@@ -124,8 +124,8 @@ const verifyCpfUserExists = async (req, res, next) => {
 
 const verifyRatingExistsMiddleware = async (req, res, next) => {
   const ratingDB = await rating.findOne({
-    client: req.query.clientid,
-    product: req.query.productid
+    client: req.body.clientid,
+    product: req.body.productid
   })
 
   if (ratingDB) {

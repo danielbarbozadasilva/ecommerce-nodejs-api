@@ -289,25 +289,6 @@ const verifyQuantity = async (cart) => {
   }
 }
 
-const verifyPrice = async (cart) => {
-  let checkPrice = false
-
-  const resultdb = await searchProductCart(cart)
-
-  cart.map((item, i) => {
-    if (
-      (resultdb[i].promotion || resultdb[i].price) * item.quantity !==
-      item.unitPrice * item.quantity
-    ) {
-      checkPrice = true
-    }
-  })
-
-  if (checkPrice) {
-    throw new ErrorUnprocessableEntity('Dados de carrinho inválidos!')
-  }
-}
-
 const verifyShipping = async (body, price, code) => {
   const resultdb = await calculateShippingService(body)
 
@@ -377,9 +358,8 @@ const updateQuantitySave = async (data) => {
   }
 }
 
-const createSolicitationService = async (storeid, clientid, body) => {
+const createSolicitationService = async (clientid, body) => {
   await verifyQuantity(body.cart)
-  await verifyPrice(body.cart)
   await verifyShipping(body, body.deliveries.price, body.deliveries.type)
   await checkCard(body.cart, body.payment, body.shipping)
 
@@ -391,8 +371,7 @@ const createSolicitationService = async (storeid, clientid, body) => {
       addressDeliveryIgualCharging: body.payment.addressDeliveryIgualCharging,
       address: body.payment.address,
       card: body.payment.card,
-      status: 'Aguardando pagamento',
-      store: storeid
+      status: 'Aguardando pagamento'
     })
 
     const deliveriesdb = await deliveries.create({
@@ -400,13 +379,11 @@ const createSolicitationService = async (storeid, clientid, body) => {
       type: body.deliveries.type,
       deliveryTime: body.deliveries.deliveryTime,
       address: body.deliveries.address,
-      status: 'not started',
-      store: storeid
+      status: 'not started'
     })
 
     const solicitationdb = await solicitation.create({
       client: clientid,
-      store: storeid,
       cart: body.cart,
       shipping: body.shipping,
       solicitationNumber: uid(),
@@ -427,7 +404,11 @@ const createSolicitationService = async (storeid, clientid, body) => {
     return {
       success: true,
       message: 'Solicitation created successfully',
-      data: solicitationMapper.toDTOList(solicitationdb, deliveriesdb)
+      data: solicitationMapper.toDTOList(
+        solicitationdb,
+        deliveriesdb,
+        paymentdb
+      )
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)

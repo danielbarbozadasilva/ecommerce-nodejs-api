@@ -101,7 +101,7 @@ const toDTOCart = (model) => {
       return {
         product: model.products[i],
         quantity: item.quantity,
-        unitPrice: formatPriceBr(item.unitPrice)
+        unitPrice: formatPriceBr(item.price)
       }
     }),
     subTotal: subTotal.toLocaleString('pt-br', {
@@ -116,13 +116,13 @@ const toDTOCart = (model) => {
       installments: model.payment.installments,
       status: model.payment.status,
       address: {
-        street: model.payment.address.street,
-        number: model.payment.address.number,
-        complement: model.payment.address.complement,
-        district: model.payment.address.district,
-        city: model.payment.address.city,
-        state: model.payment.address.state,
-        zipCode: model.payment.address.zipCode
+        street: model.payment.address?.street,
+        number: model.payment.address?.number,
+        complement: model.payment.address?.complement,
+        district: model.payment.address?.district,
+        city: model.payment.address?.city,
+        state: model.payment.address?.state,
+        zipCode: model.payment.address?.zipCode
       },
       addressDeliveryIgualCharging: model.payment.addressDeliveryIgualCharging,
       pagSeguroCode: model.payment.pagSeguroCode
@@ -152,13 +152,13 @@ const toDTOCart = (model) => {
       phones: model.client.phones,
       deleted: model.client.deleted,
       address: {
-        street: model.payment.address.street,
-        number: model.payment.address.number,
-        complement: model.payment.address.complement,
-        district: model.payment.address.district,
-        city: model.payment.address.city,
-        state: model.payment.address.state,
-        zipCode: model.payment.address.zipCode
+        street: model.payment.address?.street,
+        number: model.payment.address?.number,
+        complement: model.payment.address?.complement,
+        district: model.payment.address?.district,
+        city: model.payment.address?.city,
+        state: model.payment.address?.state,
+        zipCode: model.payment.address?.zipCode
       }
     },
     user: {
@@ -170,15 +170,14 @@ const toDTOCart = (model) => {
   }
 }
 
-const toDTOList = (solicitation, deliveries) => ({
+const toDTOList = (solicitation, deliveries, payment) => ({
   deliveries: {
     price: formatPriceBr(deliveries.price),
     type: deliveries.type,
     deliveryTime: deliveries.deliveryTime,
     address: deliveries.address,
     status: deliveries.status,
-    trackingCode: deliveries.trackingCode,
-    store: deliveries.store
+    trackingCode: deliveries.trackingCode
   },
   solicitation: {
     id: solicitation._id,
@@ -187,7 +186,8 @@ const toDTOList = (solicitation, deliveries) => ({
     cart: solicitation.cart,
     payment: solicitation.payment,
     deliveries: solicitation.deliveries
-  }
+  },
+  paymentType: payment.type
 })
 
 module.exports = {

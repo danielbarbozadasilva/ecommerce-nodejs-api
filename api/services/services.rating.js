@@ -16,18 +16,18 @@ const listRatingProductService = async (productid) => {
   }
 }
 
-const createRatingProductService = async (clientid, productid, body) => {
+const createRatingProductService = async (body) => {
   try {
     const resultDB = await rating.create({
       name: body.name,
       text: body.text,
       score: body.score,
-      client: clientid,
-      product: productid
+      client: body.clientid,
+      product: body.productid
     })
 
     await product.findOneAndUpdate(
-      { _id: productid },
+      { _id: body.productid },
       {
         $push: { rating: resultDB._id }
       }

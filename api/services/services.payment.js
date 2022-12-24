@@ -200,64 +200,66 @@ const updatePaymentService = async (paymentid, body) => {
 }
 
 const createPaymentService = async (paymentid, body) => {
-  try {
-    const result = await payment.aggregate([
-      { $match: { _id: ObjectId(paymentid) } },
-      {
-        $lookup: {
-          from: solicitation.collection.name,
-          localField: '_id',
-          foreignField: 'payment',
-          as: 'solicitation'
-        }
-      },
-      { $unwind: '$solicitation' },
+  console.log(`paymentid:::${paymentid}`)
+  console.log(`body:::${JSON.stringify(body)}`)
+  const result = await payment.aggregate([
+    { $match: { _id: ObjectId(paymentid) } },
+    {
+      $lookup: {
+        from: solicitation.collection.name,
+        localField: '_id',
+        foreignField: 'payment',
+        as: 'solicitation'
+      }
+    },
+    { $unwind: '$solicitation' },
 
-      {
-        $lookup: {
-          from: product.collection.name,
-          localField: 'solicitation.cart.product',
-          foreignField: '_id',
-          as: 'products'
-        }
-      },
-      {
-        $lookup: {
-          from: deliveries.collection.name,
-          localField: 'solicitation.deliveries',
-          foreignField: '_id',
-          as: 'deliveries'
-        }
-      },
-      { $unwind: '$deliveries' },
+    {
+      $lookup: {
+        from: product.collection.name,
+        localField: 'solicitation.cart.product',
+        foreignField: '_id',
+        as: 'products'
+      }
+    },
+    {
+      $lookup: {
+        from: deliveries.collection.name,
+        localField: 'solicitation.deliveries',
+        foreignField: '_id',
+        as: 'deliveries'
+      }
+    },
+    { $unwind: '$deliveries' },
 
-      {
-        $lookup: {
-          from: client.collection.name,
-          localField: 'solicitation.client',
-          foreignField: '_id',
-          as: 'client'
-        }
-      },
-      { $unwind: '$client' },
+    {
+      $lookup: {
+        from: client.collection.name,
+        localField: 'solicitation.client',
+        foreignField: '_id',
+        as: 'client'
+      }
+    },
+    { $unwind: '$client' },
 
-      {
-        $lookup: {
-          from: user.collection.name,
-          localField: 'client.user',
-          foreignField: '_id',
-          as: 'user'
-        }
-      },
-      { $unset: ['user.hash', 'user.salt', 'user.permissions'] },
-      { $unwind: '$user' }
-    ])
+    {
+      $lookup: {
+        from: user.collection.name,
+        localField: 'client.user',
+        foreignField: '_id',
+        as: 'user'
+      }
+    },
+    { $unset: ['user.hash', 'user.salt', 'user.permissions'] },
+    { $unwind: '$user' }
+  ])
 
-    const payload = await createPayment(
-      body.senderHash,
-      paymentMapper.toDTOCart(...result)
-    )
+  const payload = await createPayment(
+    body.senderHash,
+    paymentMapper.toDTOCart(...result)
+  )
 
+  if (payload?.code) {
     await payment.findOneAndUpdate(
       { _id: ObjectId(paymentid) },
       {
@@ -268,13 +270,17 @@ const createPaymentService = async (paymentid, body) => {
       },
       { new: true }
     )
+
     return {
       success: true,
       message: 'Sales communication made successfully to Pagseguro',
-      data: paymentMapper.toDTOPay(payload)
+      data: payload
     }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+
+  return {
+    success: false,
+    message: 'Ocorreu um erro ao processar o seu pagamento!'
   }
 }
 
@@ -313,7 +319,7 @@ const showNotificationPaymentService = async (body) => {
     const situation = paymentdb.pagSeguroCode
       ? await getTransactionStatus(paymentdb.pagSeguroCode)
       : null
- 
+
     if (situation && paymentdb.orderregistrations) {
       const orderdb = await orderregistrations.create({
         solicitation: paymentdb.solicitation.id,

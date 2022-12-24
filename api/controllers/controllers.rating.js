@@ -12,14 +12,8 @@ const listRatingProductController = async (req, res) => {
 }
 
 const createRatingProductController = async (req, res) => {
-  const { clientid, productid } = req.query
   const { body } = req
-
-  const resultService = await ratingService.createRatingProductService(
-    clientid,
-    productid,
-    body
-  )
+  const resultService = await ratingService.createRatingProductService(body)
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
