@@ -43,31 +43,20 @@ const toDTOList = (userDB, clientDB) => ({
 })
 
 const toClientDTO = (model) => ({
-  user: {
-    id: model.user?._id,
-    name: model.user?.name,
-    email: model.user?.email,
-    store: model.user?.store,
-    permissions: model.user?.permissions
-  },
-  client: {
-    id: model._id,
-    name: model.name,
-    birthDate: moment(model.birthDate).format('DD/MM/YYYY'),
-    cpf: model.cpf,
-    phones: model.phones,
-    deleted: model.deleted,
-    store: model.store
-  },
-  address: {
-    street: model.address.street,
-    number: model.address.number,
-    complement: model.address.complement,
-    district: model.address.district,
-    city: model.address.city,
-    zipCode: model.address.zipCode,
-    state: model.address.state
-  }
+  id: model.user?._id,
+  name: model.user?.name,
+  email: model.user?.email,
+  birthDate: model.birthDate,
+  cpf: model.cpf,
+  phone01: model.phones[0],
+  phone02: model.phones[1],
+  street: model.address.street,
+  number: model.address.number,
+  complement: model.address.complement,
+  district: model.address.district,
+  city: model.address.city,
+  zipCode: model.address.zipCode,
+  uf: model.address.state
 })
 
 const toDTOSolicitations = (model) => ({
