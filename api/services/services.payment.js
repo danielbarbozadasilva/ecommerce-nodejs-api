@@ -200,8 +200,7 @@ const updatePaymentService = async (paymentid, body) => {
 }
 
 const createPaymentService = async (paymentid, body) => {
-  console.log(`paymentid:::${paymentid}`)
-  console.log(`body:::${JSON.stringify(body)}`)
+
   const result = await payment.aggregate([
     { $match: { _id: ObjectId(paymentid) } },
     {
