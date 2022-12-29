@@ -121,7 +121,7 @@ db.createCollection("products")
 db.products.insert([
 {
   _id: ObjectId("63432f02a7f855351c99dc71"),
-  title: "Placa de Vídeo RTX 3060 Twin Edge Zotac Gaming GeForce",
+  title: "Placa de Vídeo RTX 3060",
   availability: true,
   description: "GeForce RTX 3060 12GB GDDR6; Núcleos CUDA: 3584; Engine Clock: 1807 MHz (boost)",
   photos:["files-1668078769319.jpg","files-1668079012525.jpg"],  
