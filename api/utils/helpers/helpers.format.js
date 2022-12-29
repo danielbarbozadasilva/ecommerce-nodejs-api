@@ -14,9 +14,16 @@ const formatPriceBr = (data) =>
 const formatAddressImage = (data) =>
   `http://localhost:3011/static/image/${data}`
 
+const formatDate = (date) => {
+  const [day, month, year] = date.split('/')
+  const result = new Date(year, month - 1, day)
+  return result
+}
+
 module.exports = {
   formatDateBr,
   formatDateTimeBr,
   formatPriceBr,
-  formatAddressImage
+  formatAddressImage,
+  formatDate
 }
