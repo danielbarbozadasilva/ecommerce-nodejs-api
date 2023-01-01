@@ -29,7 +29,8 @@ module.exports = [
       'LIST_CLIENT_SOLICITATION',
       'LIST_CART_PRODUCT',
       'UPDATE_DELIVERY',
-      'UPDATE_PAYMENT'
+      'UPDATE_PAYMENT',
+      'LIST_ID_CLIENT_SOLICITATION'
     ]
   },
   {
@@ -55,7 +56,8 @@ module.exports = [
       'TAKE_PAYMENT',
       'LIST_LIKE',
       'CLIENT_CREATE_LIKE',
-      'CLIENT_DELETE_LIKE'
+      'CLIENT_DELETE_LIKE',
+      'LIST_ID_CLIENT_SOLICITATION'
     ]
   }
 ]
