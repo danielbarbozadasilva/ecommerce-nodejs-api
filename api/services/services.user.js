@@ -30,6 +30,7 @@ const checkPermissionService = (permissions, rule) => {
   const result = profile.filter(
     (item) => item.permission === String(permissions)
   )
+
   const check = result[0]?.rule?.includes(rule)
 
   if (!check) {
@@ -263,9 +264,8 @@ const resetPasswordUserService = async (body) => {
 }
 
 const checkIdAuthorizationService = async (idToken, userid, permissions) => {
-  const result = permissions.map((item) => item === 'administrator')
-
-  if (userid && !result[0]) {
+  const result = permissions === 'administrator'
+  if (userid && !result) {
     const userDB = await client.findOne({ _id: userid, user: idToken })
 
     if (!userDB && idToken != userid) {

@@ -3,7 +3,7 @@ const toDTO = (model) => ({
   clientid: model?.client?._id,
   name: model.name,
   email: model.email,
-  permissions: model.permissions
+  permissions: model.permissions[0]
 })
 
 module.exports = {
