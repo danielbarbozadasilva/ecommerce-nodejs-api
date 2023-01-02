@@ -49,6 +49,32 @@ const listAllProductService = async (sortType, offset, limit) => {
   }
 }
 
+const listProductService = async (sortType) => {
+  try {
+    const resultDB = await product.aggregate([
+      {
+        $lookup: {
+          from: rating.collection.name,
+          localField: '_id',
+          foreignField: 'product',
+          as: 'rating'
+        }
+      },
+      {
+        $sort: getSort(sortType)
+      }
+    ])
+
+    return {
+      success: true,
+      message: 'Products listed successfully',
+      data: resultDB.map((item) => productMapper.toDTOProduct(item))
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 const listByIdProductService = async (productid) => {
   try {
     const resultDB = await product.aggregate([
@@ -96,7 +122,7 @@ const listByIdProductService = async (productid) => {
           path: '$category',
           preserveNullAndEmptyArrays: true
         }
-      },
+      }
     ])
     return {
       success: true,
@@ -108,8 +134,10 @@ const listByIdProductService = async (productid) => {
   }
 }
 
-const createProductService = async (body) => {
+const createProductService = async (body, files) => {
   try {
+    const image = files?.map((item) => item.filename)
+
     const resultProduct = await product.create({
       title: body.title,
       availability: true,
@@ -120,12 +148,13 @@ const createProductService = async (body) => {
       quantity: body.quantity,
       category: body.category,
       dimensions: {
-        height: body.dimensions.height,
-        width: body.dimensions.width,
-        depth: body.dimensions.depth
+        height: body.height,
+        width: body.width,
+        depth: body.depth
       },
       weight: body.weight,
-      freeShipping: body.freeShipping
+      freeShipping: body.freeShipping,
+      photos: image
     })
 
     return {
@@ -152,11 +181,9 @@ const updateProductService = async (body, productid) => {
           sku: body.sku,
           quantity: body.quantity,
           category: body.category,
-          dimensions: {
-            height: body.dimensions.height,
-            width: body.dimensions.width,
-            depth: body.dimensions.depth
-          },
+          height: body.height,
+          width: body.width,
+          depth: body.depth,
           weight: body.weight,
           freeShipping: body.freeShipping
         }
@@ -328,6 +355,7 @@ const listCategoryProductsService = async (sortType, offset, limit, id) => {
 
 module.exports = {
   listAllProductService,
+  listProductService,
   listByIdProductService,
   createProductService,
   updateProductService,
