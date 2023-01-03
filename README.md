@@ -208,7 +208,6 @@ RF015 – O sistema deve calcular o valor de entrega dos produtos.
 * SendGrid
 * Swagger
 * Git
-* Formidable
 * Crypto
 * Path
 * Joi
@@ -218,7 +217,7 @@ RF015 – O sistema deve calcular o valor de entrega dos produtos.
 * Express
 * Eslint
 * Prettier
-* FileSystem
+* Multer
 <br/>
 <br/>
 <br/>
