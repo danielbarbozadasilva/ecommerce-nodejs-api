@@ -1,11 +1,19 @@
-const { category } = require('../models/models.index')
+const { category, product } = require('../models/models.index')
 const categoryMapper = require('../mappers/mappers.category')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 
 const listAllCategoryService = async () => {
   try {
-    const resultDB = await category.find({})
-
+    const resultDB = await category.aggregate([
+      {
+        $lookup: {
+          from: product.collection.name,
+          localField: '_id',
+          foreignField: 'category',
+          as: 'product'
+        }
+      }
+    ])
     return {
       success: true,
       message: 'Categories successfully listed',
@@ -75,6 +83,7 @@ const updateCategoryService = async (categoryid, body, files) => {
 const deleteCategoryService = async (categoryid) => {
   try {
     await category.deleteOne({ _id: categoryid })
+    await product.deleteMany({ category: categoryid })
 
     return {
       success: true,

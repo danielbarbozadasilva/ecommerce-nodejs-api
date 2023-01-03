@@ -1,4 +1,7 @@
-const { formatAddressImage } = require('../utils/helpers/helpers.format')
+const {
+  formatPriceBr,
+  formatAddressImage
+} = require('../utils/helpers/helpers.format')
 
 const toDTO = (model) => ({
   id: model._id,
@@ -13,7 +16,26 @@ const toDTOList = (model) => ({
   name: model.name,
   code: model.code,
   availability: model.availability ? 'Sim' : 'Não',
-  photo: formatAddressImage(model.photo)
+  photo: formatAddressImage(model.photo),
+  product: model.product.map((item) => ({
+    id: item._id,
+    title: item.title,
+    availability: item.availability,
+    description: item.description,
+    photos: item.photos,
+    price: formatPriceBr(item.price),
+    promotion: formatPriceBr(item.promotion),
+    sku: item.sku,
+    quantity: item.quantity,
+    blockedQuantity: item.blockedQuantity,
+    dimensions: {
+      height: item.dimensions.height,
+      width: item.dimensions.width,
+      depth: item.dimensions.depth
+    },
+    weight: item.weight,
+    freeShipping: item.freeShipping
+  }))
 })
 
 const toDTOWithProducts = (model) => ({
