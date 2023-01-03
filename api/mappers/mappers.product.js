@@ -53,14 +53,14 @@ const toDTO = (model) => {
   }
 }
 
-const toDTOProduct = (model) => ({
+const toDTOList = (model) => ({
   id: model._id,
   title: model.title,
   availability: model.availability,
   description: model.description,
   photos: model.photos.map((item) => formatAddressImage(item)),
-  price: model.price,
-  promotion: model.promotion,
+  price: formatPriceBr(model.price),
+  promotion: formatPriceBr(model.promotion),
   sku: model.sku,
   quantity: model.quantity,
   store: model.storeid,
@@ -74,16 +74,51 @@ const toDTOProduct = (model) => ({
   category: model.category._id,
   categoryName: model.category.name,
   likes: model.likes,
-  rating: model.rating? [
-    {
-      id: model.rating._id,
-      name: model.rating.name,
-      text: model.rating.text,
-      score: model.rating.score,
-      product: model.rating.product,
-      client: model.rating.client
-    }
-  ]: {}
+  rating: model.rating
+    ? [
+        {
+          id: model.rating._id,
+          name: model.rating.name,
+          text: model.rating.text,
+          score: model.rating.score,
+          product: model.rating.product,
+          client: model.rating.client
+        }
+      ]
+    : {}
+})
+
+const toDTOProduct = (model) => ({
+  id: model._id,
+  title: model.title,
+  availability: model.availability,
+  description: model.description,
+  photos: model.photos.map((item) => formatAddressImage(item)),
+  price: model.price,
+  promotion: model.promotion,
+  sku: model.sku,
+  quantity: model.quantity,
+  store: model.storeid,
+  height: model.dimensions.height,
+  width: model.dimensions.width,
+  depth: model.dimensions.depth,
+  weight: model.weight,
+  freeShipping: model.freeShipping ? '1' : '0',
+  category: model.category._id,
+  categoryName: model.category.name,
+  likes: model.likes,
+  rating: model.rating
+    ? [
+        {
+          id: model.rating._id,
+          name: model.rating.name,
+          text: model.rating.text,
+          score: model.rating.score,
+          product: model.rating.product,
+          client: model.rating.client
+        }
+      ]
+    : {}
 })
 
 const toDTORating = (model) => ({
@@ -115,5 +150,6 @@ const toDTORating = (model) => ({
 module.exports = {
   toDTO,
   toDTORating,
-  toDTOProduct
+  toDTOProduct,
+  toDTOList
 }
