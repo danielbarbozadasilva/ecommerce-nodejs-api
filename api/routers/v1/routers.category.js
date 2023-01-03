@@ -19,12 +19,6 @@ module.exports = (router) => {
     )
 
   router
-    .route('/category/availability')
-    .get(
-      authenticationMiddleware(),
-      categoryController.listCategoryAvailabilityController
-    )
-  router
     .route('/category/:categoryid')
     .get(
       validateDTOMiddleware('params', {

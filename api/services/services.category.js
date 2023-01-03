@@ -16,20 +16,6 @@ const listAllCategoryService = async () => {
   }
 }
 
-const listCategoryAvailabilityService = async () => {
-  try {
-    const resultDB = await category.find({ availability: true })
-
-    return {
-      success: true,
-      message: 'Categories successfully listed',
-      data: resultDB.map((item) => categoryMapper.toDTO(item))
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
 const listCategoryByIdService = async (categoryid) => {
   try {
     const resultDB = await category.find({ _id: categoryid })
@@ -101,7 +87,6 @@ const deleteCategoryService = async (categoryid) => {
 
 module.exports = {
   listAllCategoryService,
-  listCategoryAvailabilityService,
   listCategoryByIdService,
   createCategoryService,
   updateCategoryService,
