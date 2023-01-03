@@ -4,7 +4,15 @@ const toDTO = (model) => ({
   id: model._id,
   name: model.name,
   code: model.code,
-  availability: model.availability,
+  availability: model.availability ? '1' : '0',
+  photo: formatAddressImage(model.photo)
+})
+
+const toDTOList = (model) => ({
+  id: model._id,
+  name: model.name,
+  code: model.code,
+  availability: model.availability ? 'Sim' : 'Não',
   photo: formatAddressImage(model.photo)
 })
 
@@ -24,5 +32,6 @@ const toDTOWithProducts = (model) => ({
 
 module.exports = {
   toDTO,
+  toDTOList,
   toDTOWithProducts
 }
