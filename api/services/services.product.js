@@ -68,7 +68,7 @@ const listProductService = async (sortType) => {
     return {
       success: true,
       message: 'Products listed successfully',
-      data: resultDB.map((item) => productMapper.toDTOProduct(item))
+      data: resultDB.map((item) => productMapper.toDTOList(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -167,28 +167,27 @@ const createProductService = async (body, files) => {
   }
 }
 
-const updateProductService = async (body, productid) => {
+const updateProductService = async (body, files, productid) => {
   try {
-    await product.findOneAndUpdate(
-      { _id: productid },
-      {
-        $set: {
-          title: body.title,
-          availability: body.availability,
-          description: body.description,
-          price: body.price,
-          promotion: body.promotion,
-          sku: body.sku,
-          quantity: body.quantity,
-          category: body.category,
-          height: body.height,
-          width: body.width,
-          depth: body.depth,
-          weight: body.weight,
-          freeShipping: body.freeShipping
-        }
-      }
-    )
+    const productDB = await product.findOne({ _id: productid })
+    const newImages = files.map((item) => item.filename)
+
+    productDB.photos = productDB.photos.filter((item) => item).concat(newImages)
+    productDB.title = body.title
+    productDB.availability = body.availability
+    productDB.description = body.description
+    productDB.price = body.price
+    productDB.promotion = body.promotion
+    productDB.sku = body.sku
+    productDB.quantity = body.quantity
+    productDB.category = body.category
+    productDB.height = body.height
+    productDB.width = body.width
+    productDB.depth = body.depth
+    productDB.weight = body.weight
+    productDB.freeShipping = body.freeShipping
+
+    await productDB.save()
 
     return {
       success: true,

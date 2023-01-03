@@ -51,10 +51,11 @@ const createProductController = async (req, res) => {
 }
 
 const updateProductController = async (req, res) => {
-  const { body } = req
+  const { body, files } = req
   const { productid } = req.params
   const resultService = await productService.updateProductService(
     body,
+    files,
     productid
   )
   const code = resultService.success ? 200 : 400

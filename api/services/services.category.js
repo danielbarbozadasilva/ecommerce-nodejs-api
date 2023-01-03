@@ -1,5 +1,4 @@
-const { category, product } = require('../models/models.index')
-
+const { category } = require('../models/models.index')
 const categoryMapper = require('../mappers/mappers.category')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 
@@ -10,7 +9,7 @@ const listAllCategoryService = async () => {
     return {
       success: true,
       message: 'Categories successfully listed',
-      data: resultDB.map((item) => categoryMapper.toDTO(item))
+      data: resultDB.map((item) => categoryMapper.toDTOList(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -45,12 +44,13 @@ const listCategoryByIdService = async (categoryid) => {
   }
 }
 
-const createCategoryService = async (body) => {
+const createCategoryService = async (body, files) => {
   try {
     const resultDB = await category.create({
       name: body.name,
       code: body.code,
-      availability: true
+      availability: true,
+      photo: files[0].filename
     })
 
     return {
@@ -63,24 +63,23 @@ const createCategoryService = async (body) => {
   }
 }
 
-const updateCategoryService = async (categoryid, body) => {
+const updateCategoryService = async (categoryid, body, files) => {
   try {
-    const result = await category.findOneAndUpdate(
-      { _id: categoryid },
-      {
-        $set: {
-          name: body.name,
-          code: body.code,
-          availability: body.availability
-        }
-      },
-      { new: true }
-    )
+    const result = await category.findOne({ _id: categoryid })
+
+    if (files.length) {
+      result.photo = files[0].filename
+    }
+
+    result.name = body.name
+    result.code = body.code
+    result.availability = body.availability
+
+    result.save()
 
     return {
       success: true,
-      message: 'Category updated successfully',
-      data: categoryMapper.toDTO(result)
+      message: 'Category updated successfully'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -100,27 +99,11 @@ const deleteCategoryService = async (categoryid) => {
   }
 }
 
-const updateImageCategoryService = async (categoryid, file) => {
-  try {
-    const result = await category.findOne({ _id: categoryid })
-    result.photo = file.filename
-    await result.save()
-
-    return {
-      success: true,
-      message: 'Operation performed successfully'
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
 module.exports = {
   listAllCategoryService,
   listCategoryAvailabilityService,
   listCategoryByIdService,
   createCategoryService,
   updateCategoryService,
-  deleteCategoryService,
-  updateImageCategoryService
+  deleteCategoryService
 }

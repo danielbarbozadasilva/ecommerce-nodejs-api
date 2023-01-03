@@ -34,23 +34,8 @@ const listCategoryByIdController = async (req, res) => {
 }
 
 const createCategoryController = async (req, res) => {
-  const { body } = req
-  const resultService = await categoryService.createCategoryService(body)
-  const code = resultService.success ? 200 : 400
-  const message = resultService.success
-    ? { message: resultService.message }
-    : { details: resultService.details }
-  const data = resultService.data ? resultService.data : ''
-  return res.status(code).send({ message, data })
-}
-
-const updateImageCategoryController = async (req, res) => {
-  const { categoryid } = req.params
-  const { files } = req
-  const resultService = await categoryService.updateImageCategoryService(
-    categoryid,
-    ...files
-  )
+  const { body, files } = req
+  const resultService = await categoryService.createCategoryService(body, files)
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
@@ -61,11 +46,12 @@ const updateImageCategoryController = async (req, res) => {
 
 const updateCategoryController = async (req, res) => {
   const { categoryid } = req.params
-  const { body } = req
+  const { body, files } = req
 
   const resultService = await categoryService.updateCategoryService(
     categoryid,
-    body
+    body,
+    files
   )
   const code = resultService.success ? 200 : 400
   const message = resultService.success
@@ -93,6 +79,5 @@ module.exports = {
   listCategoryByIdController,
   createCategoryController,
   updateCategoryController,
-  deleteCategoryController,
-  updateImageCategoryController
+  deleteCategoryController
 }
