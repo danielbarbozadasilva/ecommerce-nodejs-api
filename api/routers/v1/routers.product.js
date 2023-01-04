@@ -115,10 +115,7 @@ module.exports = (router) => {
 
   router.route('/product/search/:search').get(
     validateDTOMiddleware('params', {
-      search: joi.string().required().messages({
-        'any.required': '"search" is a required field',
-        'string.empty': '"search" can not be empty'
-      })
+      search: joi.string().allow(null, ''),
     }),
     validateDTOMiddleware('query', {
       sortType: joi.string().allow(null, ''),
