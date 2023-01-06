@@ -273,7 +273,7 @@ db.ratings.insert([
   {
     _id: ObjectId("638a22b10ef44976d168711e"),
     name: "João Costa",
-    text: "Gostei bastante do produto. Chegou em perfeito estado!",
+    text: "Gostei bastante do produto.",
     score: 5,
     product: ObjectId("63432f02a7f855351c99dc71"),
     client: ObjectId("6320f577156b47ff1082586e")
@@ -281,7 +281,7 @@ db.ratings.insert([
    {
     _id: ObjectId("638a236a0ef44976d1687126"),
     name: "Marcos Silva",
-    text: "chegou em perfeito estado",
+    text: "Chegou em perfeito estado.",
     score: 4,
     product: ObjectId("63432f02a7f855351c99dc72"),
     client: ObjectId("6320f577156b47ff1082586e")
