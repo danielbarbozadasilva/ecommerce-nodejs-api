@@ -1,18 +1,20 @@
-const moment = require('moment')
 const {
   formatPriceBr,
-  formatAddressImage
+  formatAddressImage,
+  formatDateBr
 } = require('../utils/helpers/helpers.format')
 
 const toDTO = (model) => ({
   id: model._id,
   name: model.name,
-  email: model.email,
   cpf: model.cpf,
-  phones: model.phones,
-  birthDate: model.birthDate,
-  user: model.user,
-  address: {
+  email: model?.user?.email,
+  status: model.deleted ? 'Excluído' : 'Ativo',
+  phone01: model.phones[0],
+  phone02: model.phones[1],
+  birthDate: formatDateBr(model.birthDate),
+  address: [{
+    id: model._id,
     street: model.address.street,
     number: model.address.number,
     complement: model.address.complement,
@@ -20,7 +22,7 @@ const toDTO = (model) => ({
     city: model.address.city,
     zipCode: model.address.zipCode,
     state: model.address.state
-  }
+  }]
 })
 
 const toDTOList = (userDB, clientDB) => ({
@@ -43,13 +45,14 @@ const toDTOList = (userDB, clientDB) => ({
 })
 
 const toClientDTO = (model) => ({
-  id: model.user?._id,
-  name: model.user?.name,
-  email: model.user?.email,
+  id: model?._id,
+  name: model?.name,
   birthDate: model.birthDate,
   cpf: model.cpf,
+  email: model.user.email,
   phone01: model.phones[0],
   phone02: model.phones[1],
+  status: model.deleted ? 'Excluído' : 'Ativo',
   street: model.address.street,
   number: model.address.number,
   complement: model.address.complement,
@@ -128,7 +131,8 @@ const toDTOLikeList = (model) => {
     quantity: model.quantity,
     freeShipping: model.freeShipping,
     rating: model.rating.map((item) => {
-      ;(media += item.score), cont++
+      media += item.score, 
+      cont++
       return {
         _id: item._id,
         name: item.name,

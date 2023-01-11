@@ -2,6 +2,20 @@ const { rating, product } = require('../models/models.index')
 const ratingMapper = require('../mappers/mappers.rating')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 
+const listAllRatingService = async () => {
+  try {
+    const resultDB = await rating.find({}).populate('product')
+
+    return {
+      success: true,
+      message: 'Product ratings successfully listed',
+      data: resultDB.map((item) => ratingMapper.toDTOProduct(item))
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 const listRatingProductService = async (productid) => {
   try {
     const resultDB = await rating.find({ product: productid })
@@ -84,6 +98,7 @@ const deleteRatingProductService = async (clientid, productid) => {
 }
 
 module.exports = {
+  listAllRatingService,
   listRatingProductService,
   createRatingProductService,
   listByIdRatingProductService,

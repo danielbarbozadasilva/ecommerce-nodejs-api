@@ -31,26 +31,8 @@ module.exports = (router) => {
     }),
     userController.checkTokenController
   )
-  router.route('/refresh-token').post(userController.refreshTokenController)
 
-  router.route('/register').post(
-    validateDTOMiddleware('body', {
-      name: joi.string().required().messages({
-        'any.required': `"name" is a required field`,
-        'string.empty': `"name" can not be empty`
-      }),
-      email: joi.string().required().messages({
-        'any.required': `"email" is a required field`,
-        'string.empty': `"email" can not be empty`
-      }),
-      password: joi.string().required().messages({
-        'any.required': `"password" is a required field`,
-        'string.empty': `"password" can not be empty`
-      })
-    }),
-    verifyIdDbMiddleware.verifyEmailUserExists,
-    userController.registerController
-  )
+  router.route('/refresh-token').post(userController.refreshTokenController)
 
   router
     .route('/user/:userid')
