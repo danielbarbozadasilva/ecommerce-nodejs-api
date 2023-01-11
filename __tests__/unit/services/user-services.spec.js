@@ -20,6 +20,15 @@ describe('User services', () => {
   })
 
   describe('User Services', () => {
+    test('Make sure userIsValidService return 401 if the user credentials are invalid', async () => {
+      try {
+        const email = 'exemplo@gmail.com'
+        const password = 'daniel'
+        await services.userIsValidService(email, password)
+      } catch (error) {
+        expect(error.statusCode).toBe(401)
+      }
+    })
     test('Make sure authService return success if the access credentials are valid', async () => {
       const email = 'daniel95barboza@gmail.com'
       const password = 'daniel'
