@@ -12,10 +12,6 @@ module.exports = (router) => {
     .get(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('LIST_CLIENT'),
-      validateDTOMiddleware('query', {
-        offset: joi.number(),
-        limit: joi.number()
-      }),
       clientController.listAllClientsController
     )
     .post(
@@ -90,15 +86,11 @@ module.exports = (router) => {
     clientController.searchClientSolicitationController
   )
 
-  router.route('/client/search/:search').get(
+  router.route('/client/search').get(
     authenticationMiddleware(),
     authorization.authorizationMiddleware('SEARCH_CLIENT'),
     validateDTOMiddleware('query', {
-      offset: joi.number(),
-      limit: joi.number()
-    }),
-    validateDTOMiddleware('params', {
-      search: joi.string().required()
+      find: joi.string().allow(null, '')
     }),
     clientController.listClientSearchController
   )

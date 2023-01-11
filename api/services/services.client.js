@@ -16,18 +16,14 @@ const cryptography = require('../utils/utils.cryptography')
 const { createCredentialService } = require('./services.user')
 const { formatDate } = require('../utils/helpers/helpers.format')
 
-const listAllClientsService = async (offset, limit) => {
+const listAllClientsService = async () => {
   try {
-    const resultDB = await client.paginate({
-      populate: 'user',
-      offset: Number(offset || 0),
-      limit: Number(limit || 30)
-    })
-
+    const resultDB = await client.find({}).populate('user')
+    
     return {
       success: true,
       message: 'Successfully Listed Clients',
-      data: resultDB.docs.map((item) => clientMapper.toClientDTO(item))
+      data: resultDB.map((item) => clientMapper.toDTO(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -75,17 +71,30 @@ const listClientSolicitationService = async (offset, limit, search) => {
   }
 }
 
-const listClientSearchService = async (offset, limit, search) => {
+const listClientSearchService = async (search) => {
   try {
-    const resultDB = await client.paginate({
-      $text: { $search: `${search}`, $diacriticSensitive: false },
-      offset: Number(offset || 0),
-      limit: Number(limit || 30)
-    })
+    const resultDB = await client.aggregate([
+      {
+        $match: {
+          name: {
+            $regex: `.*${search}.*`,
+            $options: 'i'
+          }
+        }
+      },
+      {
+        $lookup: {
+          from: user.collection.name,
+          localField: 'user',
+          foreignField: '_id',
+          as: 'user'
+        }
+      }
+    ])
     return {
       success: true,
       message: 'Successfully Listed Clients',
-      data: resultDB.docs.map((item) => clientMapper.toDTO(item))
+      data: resultDB.map((item) => clientMapper.toDTO(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)

@@ -7,23 +7,25 @@ const authorization = require('../../utils/middlewares/middlewares.authorization
 const ratingController = require('../../controllers/controllers.rating')
 
 module.exports = (router) => {
+  router.route('/rating/product/:productid').get(
+    validateDTOMiddleware('params', {
+      productid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"product id" is a required field',
+          'string.empty': '"product id" can not be empty',
+          'string.pattern.base': '"product id" out of the expected format'
+        })
+    }),
+    verifyIdDbMiddleware.verifyIdProduct,
+    ratingController.listRatingProductController
+  )
+
   router
     .route('/rating')
-    .get(
-      validateDTOMiddleware('query', {
-        productid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"product id" is a required field',
-            'string.empty': '"product id" can not be empty',
-            'string.pattern.base': '"product id" out of the expected format'
-          })
-      }),
-      verifyIdDbMiddleware.verifyIdProduct,
-      ratingController.listRatingProductController
-    )
+    .get(ratingController.listAllRatingController)
     .post(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('CREATE_RATING'),
