@@ -1,0 +1,63 @@
+module.exports = [
+  {
+    permission: 'administrator',
+    rule: [
+      'USER_LIST_ID',
+      'USER_UPDATE',
+      'USER_DELETE',
+      'STORE_UPDATE',
+      'STORE_DELETE',
+      'LIST_CLIENT',
+      'SEARCH_SOLICITATION',
+      'SEARCH_CLIENT',
+      'LIST_CLIENT_SOLICITATION',
+      'CLIENT_ID',
+      'CLIENT_UPDATE',
+      'CLIENT_DELETE',
+      'CREATE_CATEGORY',
+      'UPDATE_CATEGORY',
+      'DELETE_CATEGORY',
+      'UPDATE_CATEGORY_PRODUCT',
+      'CREATE_PRODUCT',
+      'UPDATE_PRODUCT',
+      'UPLOAD_IMAGE_PRODUCT',
+      'DELETE_PRODUCT',
+      'DELETE_RATING',
+      'LIST_ALL_SOLICITATION',
+      'SOLICITATION_DELETE',
+      'LIST_ID_SOLICITATION',
+      'LIST_CLIENT_SOLICITATION',
+      'LIST_CART_PRODUCT',
+      'UPDATE_DELIVERY',
+      'UPDATE_PAYMENT',
+      'LIST_ID_CLIENT_SOLICITATION'
+    ]
+  },
+  {
+    permission: 'client',
+    rule: [
+      'USER_LIST_ID',
+      'USER_UPDATE',
+      'USER_DELETE',
+      'STORE_CREATE',
+      'LIST_CLIENT',
+      'CLIENT_ID',
+      'CLIENT_UPDATE',
+      'CLIENT_DELETE',
+      'CREATE_RATING',
+      'DELETE_RATING',
+      'SOLICITATION_CREATE',
+      'SOLICITATION_DELETE',
+      'LIST_ID_SOLICITATION',
+      'LIST_CLIENT_SOLICITATION',
+      'LIST_CART_PRODUCT',
+      'LIST_DELIVERY',
+      'LIST_PAYMENT_ID',
+      'TAKE_PAYMENT',
+      'LIST_LIKE',
+      'CLIENT_CREATE_LIKE',
+      'CLIENT_DELETE_LIKE',
+      'LIST_ID_CLIENT_SOLICITATION'
+    ]
+  }
+]

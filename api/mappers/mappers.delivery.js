@@ -49,9 +49,9 @@ const toDTOList = (model) => ({
   date: formatDateTimeBr(model?.date)
 })
 
-const toDTOShipping = (model) => ({
+const toDTOShipping = (model, zipCode) => ({
   code: model.Codigo,
-  price: formatPriceBr(model.Valor),
+  price: model.Valor,
   deadlineDelivery: model.PrazoEntrega,
   ownHandvalue: model.ValorMaoPropria,
   receiptNoticevalue: model.ValorAvisoRecebimento,
@@ -61,7 +61,8 @@ const toDTOShipping = (model) => ({
   error: model.Erro !== '0',
   msgError: model.MsgErro,
   valueWithoutSurcharges: model.ValorSemAdicionais,
-  comments: model.obsFim
+  comments: model.obsFim,
+  zipCode
 })
 
 const toDTOCart = (model) => {

@@ -22,33 +22,17 @@ module.exports = (router) => {
     userController.authController
   )
 
-  router.route('/register').post(
+  router.route('/check-token').post(
     validateDTOMiddleware('body', {
-      name: joi.string().required().messages({
-        'any.required': `"name" is a required field`,
-        'string.empty': `"name" can not be empty`
-      }),
-      email: joi.string().required().messages({
-        'any.required': `"email" is a required field`,
-        'string.empty': `"email" can not be empty`
-      }),
-      password: joi.string().required().messages({
-        'any.required': `"password" is a required field`,
-        'string.empty': `"password" can not be empty`
-      }),
-      store: joi
-        .string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-          'any.required': '"store id" is a required field',
-          'string.empty': '"store id" can not be empty',
-          'string.pattern.base': '"store id" out of the expected format'
-        })
+      token: joi.string().required().messages({
+        'any.required': `"token" is a required field`,
+        'string.empty': `"token" can not be empty`
+      })
     }),
-    verifyIdDbMiddleware.verifyEmailUserExists,
-    userController.registerController
+    userController.checkTokenController
   )
+
+  router.route('/refresh-token').post(userController.refreshTokenController)
 
   router
     .route('/user/:userid')
@@ -120,18 +104,17 @@ module.exports = (router) => {
     )
 
   router.route('/user/recovery/password-recovery').put(
-    authorizationMiddleware('*'),
     validateDTOMiddleware('body', {
       email: joi.string().required().messages({
         'any.required': '"email" is a required field',
         'string.empty': '"email" can not be empty'
       })
     }),
+    verifyIdDbMiddleware.verifyEmail,
     userController.sendTokenRecoveryPasswordController
   )
 
   router.route('/user/recovery/reset-password').put(
-    authorizationMiddleware('*'),
     validateDTOMiddleware('body', {
       email: joi.string().required().messages({
         'any.required': '"email" is a required field',
@@ -146,6 +129,7 @@ module.exports = (router) => {
         'string.empty': `"password" can not be empty`
       })
     }),
+    verifyIdDbMiddleware.verifyEmail,
     userController.resetPasswordController
   )
 }

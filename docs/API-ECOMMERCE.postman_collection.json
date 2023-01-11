@@ -69,6 +69,136 @@
 					"response": []
 				},
 				{
+					"name": "auth.refresh",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWUwMjc4ZWM5ZjQ2YzFkYTRkOTMzYSIsIm5hbWUiOiJEYW5pZWwgQmFyYm96YSIsImVtYWlsIjoiZGFuaWVsYmFyYm96YTU2QGhvdG1haWwuY29tIiwicGVybWlzc2lvbnMiOlsiYWRtaW5pc3RyYXRvciJdLCJpYXQiOjE2NjkxMzA5MDQsImV4cCI6MTAwMTY2OTEzMDkwM30.RT8PwUCRoKWy_8M5wMu5XmOInebe6RQ7w-EY2Bdhho0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"640de47f-d822-4381-b8cf-aafdd4359457\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/refresh-token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth.checktoken",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWUwMjc4ZWM5ZjQ2YzFkYTRkOTMzYSIsIm5hbWUiOiJEYW5pZWwgQmFyYm96YSIsImVtYWlsIjoiZGFuaWVsYmFyYm96YTU2QGhvdG1haWwuY29tIiwicGVybWlzc2lvbnMiOlsiYWRtaW5pc3RyYXRvciJdLCJpYXQiOjE2NjkxMzA5MDQsImV4cCI6MTAwMTY2OTEzMDkwM30.RT8PwUCRoKWy_8M5wMu5XmOInebe6RQ7w-EY2Bdhho0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWUwMjc4ZWM5ZjQ2YzFkYTRkOTMzYSIsIm5hbWUiOiJEYW5pZWwgQmFyYm96YSIsImVtYWlsIjoiZGFuaWVsYmFyYm96YTU2QGhvdG1haWwuY29tIiwicGVybWlzc2lvbnMiOlsiYWRtaW5pc3RyYXRvciJdLCJpYXQiOjE2Njk0ODIxMjgsImV4cCI6MTAwMTY2OTQ4MjEyN30.a6SFqoFf7xF-VgOSnTHyhbl4D69uGfp1DC7XU9Q5-QA\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/check-token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"check-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "auth.register",
 					"event": [
 						{
@@ -315,7 +445,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"daniel80barboza@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"email\": \"daniel95barboza@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -391,244 +521,6 @@
 								"user",
 								"recovery",
 								"reset-password"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "store",
-			"item": [
-				{
-					"name": "store.listAll",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3011/v1/store",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"store"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "store.listById",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3011/v1/store/631e00f5190d800a90c6fa4d",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"store",
-								"631e00f5190d800a90c6fa4d"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "store.update",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"cnpj\": \"22.222.654/0001-81\",\r\n    \"name\": \"1Daniel\",\r\n    \"email\": \"ddddd@gmail.com\",\r\n    \"phones\": [\"(11)2343-1249\", \"(22)99099-8990\"],\r\n    \"address\": {\r\n        \"street\": \"Av. Manuel Gomes\",\r\n        \"number\": \"11\",\r\n        \"complement\": \"1111\",\r\n        \"district\": \"1111 de janeiro\",\r\n        \"city\": \"1111221Rio de janeiro\",\r\n        \"zipCode\": \"112256-782\"\r\n    }\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3011/v1/store?storeid=631e00f5190d800a90c6fa4d",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"store"
-							],
-							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "store.create",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"cnpj\": \"11.302.654/0001-81\",\r\n    \"name\": \"Daniel\",\r\n    \"email\": \"daniel80barboza@gmail.com\",\r\n    \"phones\": [\"(21)2423-2198\", \"(21)99099-8990\"],\r\n    \"address\": {\r\n        \"street\": \"Av. Manuel Gomes\",\r\n        \"number\": \"12211\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23456-782\"\r\n    }\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3011/v1/store",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"store"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "store.remove",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:3011/v1/store?storeid=632b79d61fc6a5c0fa12e560",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"store"
-							],
-							"query": [
-								{
-									"key": "storeid",
-									"value": "632b79d61fc6a5c0fa12e560"
-								}
 							]
 						}
 					},
@@ -754,7 +646,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/client/search/Silva/solicitations?offset=0&limit=30",
+							"raw": "http://localhost:3011/v1/client/search/Silva?offset=0&limit=30",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -764,8 +656,7 @@
 								"v1",
 								"client",
 								"search",
-								"Silva",
-								"solicitations"
+								"Silva"
 							],
 							"query": [
 								{
@@ -982,6 +873,184 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "client.listLikeProduct",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"1222211Daniel\",\r\n    \"email\": \"132d3@gmail.com\",\r\n    \"cpf\": \"523.222.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"street\": \"Av. Manuel Gomes\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e/like",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"client",
+								"6320f577156b47ff1082586e",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "client.createLikeProduct",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"1222211Daniel\",\r\n    \"email\": \"132d3@gmail.com\",\r\n    \"cpf\": \"523.222.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"street\": \"Av. Manuel Gomes\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e/product/63432f02a7f855351c99dc71/like",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"client",
+								"6320f577156b47ff1082586e",
+								"product",
+								"63432f02a7f855351c99dc71",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "client.removeLikeProduct",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"1222211Daniel\",\r\n    \"email\": \"132d3@gmail.com\",\r\n    \"cpf\": \"523.222.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"street\": \"Av. Manuel Gomes\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e/product/63432f02a7f855351c99dc71/like",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"client",
+								"6320f577156b47ff1082586e",
+								"product",
+								"63432f02a7f855351c99dc71",
+								"like"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1120,7 +1189,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/category/6320f577156b47ff1082586e/products?offset=0&limit=30",
+							"raw": "http://localhost:3011/v1/category/6320f577156b47ff1082586e/products?itemsPerPage=6&page=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1134,12 +1203,12 @@
 							],
 							"query": [
 								{
-									"key": "offset",
-									"value": "0"
+									"key": "itemsPerPage",
+									"value": "6"
 								},
 								{
-									"key": "limit",
-									"value": "30"
+									"key": "page",
+									"value": "0"
 								}
 							]
 						}
@@ -1182,18 +1251,18 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "Processadores",
+									"value": "Smartphones",
 									"type": "text"
 								},
 								{
 									"key": "code",
-									"value": "43242342342343224",
+									"value": "12531642142335131",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/category/?storeid=631e00f5190d800a90c6fa4d",
+							"raw": "http://localhost:3011/v1/category",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1201,14 +1270,7 @@
 							"port": "3011",
 							"path": [
 								"v1",
-								"category",
-								""
-							],
-							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								}
+								"category"
 							]
 						}
 					},
@@ -1331,6 +1393,64 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "category.updateImage",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/C:/Users/pc01/Downloads/4820514761_1GG.webp"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/category/image/638f00f265f1c700b416aa0c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"category",
+								"image",
+								"638f00f265f1c700b416aa0c"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1359,7 +1479,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/product?offset=0&limit=30&sortType=alfabetica_a-z",
+							"raw": "http://localhost:3011/v1/product?sortType=alfabetica_z-a&itemsPerPage=5&page=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1371,16 +1491,16 @@
 							],
 							"query": [
 								{
-									"key": "offset",
-									"value": "0"
-								},
-								{
-									"key": "limit",
-									"value": "30"
-								},
-								{
 									"key": "sortType",
-									"value": "alfabetica_a-z"
+									"value": "alfabetica_z-a"
+								},
+								{
+									"key": "itemsPerPage",
+									"value": "5"
+								},
+								{
+									"key": "page",
+									"value": "0"
 								}
 							]
 						}
@@ -1454,7 +1574,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3011/v1/product/search/Placa",
+							"raw": "http://localhost:3011/v1/product/search/Smartphone?sortType=alfabetica_z-a&itemsPerPage=6&page=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1464,7 +1584,21 @@
 								"v1",
 								"product",
 								"search",
-								"Placa"
+								"Smartphone"
+							],
+							"query": [
+								{
+									"key": "sortType",
+									"value": "alfabetica_z-a"
+								},
+								{
+									"key": "itemsPerPage",
+									"value": "6"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
 							]
 						}
 					},
@@ -1578,7 +1712,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Monitor LG 24\",\r\n    \"description\": \"Led\",\r\n    \"price\": 499.90,\r\n    \"sku\": \"c1a2v1\",\r\n    \"quantity\": 70,\r\n    \"category\": \"6320f577156b47ff1082586e\",\r\n    \"promotion\": 22.5,\r\n    \"dimensions\": {\r\n        \"height\": 8,\r\n        \"width\": 10,\r\n        \"depth\": 27\r\n    },\r\n    \"weight\": 1,\r\n    \"freeShipping\": false\r\n}",
+							"raw": "{\r\n    \"title\": \"Smartphone Samsung Galaxy XCover Pro\",\r\n    \"description\": \"4G 64GB 6.3 Preto 2 Câmeras Traseiras\",\r\n    \"price\": 1999.00,\r\n    \"sku\": \"SMXCPR\",\r\n    \"quantity\": 20,\r\n    \"category\": \"638f00f265f1c700b416aa0c\",\r\n    \"promotion\": 1619.10,\r\n    \"dimensions\": {\r\n        \"height\": 8,\r\n        \"width\": 10,\r\n        \"depth\": 27\r\n    },\r\n    \"weight\": 1,\r\n    \"freeShipping\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1693,12 +1827,12 @@
 								{
 									"key": "files",
 									"type": "file",
-									"src": "/C:/Users/pc01/Pictures/11.jpg"
+									"src": "/C:/Users/pc01/Downloads/smartphone-samsung-galaxy-xcover-pro-64gb-4gb-tela-6-3-camera-25mp-8mp-preto-101662-1661878779-7.jpg"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/product/images/63432f02a7f855351c99dc71",
+							"raw": "http://localhost:3011/v1/product/images/63970c5915c445c9c84a9bee",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1708,7 +1842,7 @@
 								"v1",
 								"product",
 								"images",
-								"63432f02a7f855351c99dc71"
+								"63970c5915c445c9c84a9bee"
 							]
 						}
 					},
@@ -1755,7 +1889,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/product/6347178b594bbd99ff5126a2",
+							"raw": "http://localhost:3011/v1/product/639704ca4bf6b326dbc5ae8f",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1764,7 +1898,7 @@
 							"path": [
 								"v1",
 								"product",
-								"6347178b594bbd99ff5126a2"
+								"639704ca4bf6b326dbc5ae8f"
 							]
 						}
 					},
@@ -1873,7 +2007,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Daniel\",\r\n    \"text\": \"Gostei bastante\",\r\n    \"score\": 4\r\n}",
+							"raw": "{\r\n    \"name\": \"Daniel\",\r\n    \"text\": \"Gostei bastante\",\r\n    \"score\": 4,\r\n    \"clientid\": \"6320f577156b47ff1082586e\",\r\n    \"productid\": \"63970c5915c445c9c84a9bee\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1881,7 +2015,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/rating?clientid=6320f577156b47ff1082586e&productid=63432f02a7f855351c99dc71",
+							"raw": "http://localhost:3011/v1/rating",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1890,16 +2024,6 @@
 							"path": [
 								"v1",
 								"rating"
-							],
-							"query": [
-								{
-									"key": "clientid",
-									"value": "6320f577156b47ff1082586e"
-								},
-								{
-									"key": "productid",
-									"value": "63432f02a7f855351c99dc71"
-								}
 							]
 						}
 					},
@@ -2144,7 +2268,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "\r\n{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 429.99,\r\n            \"quantity\": 3\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\",\r\n    \"shipping\": 79.33,\r\n    \"payment\": {\r\n        \"price\": 2569.29,\r\n        \"type\": \"CREDITCARD\",\r\n        \"installments\": 3,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987-200\"\r\n        },\r\n        \"card\": {\r\n            \"fullName\": \"DANIEL BARBOZA DA SILVA\",\r\n            \"areaCode\": \"21\",\r\n            \"phone\": \"(21)2434-1207\",\r\n            \"birthDate\": \"2000-02-09\",\r\n            \"creditCardToken\": \"03d8cb4b2f9e4107a94e86863d5ff3c3\",\r\n            \"cpf\": \"82429888467\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 79.33,\r\n        \"type\": \"4014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987200\"\r\n        }\r\n    }\r\n}",
+							"raw": "\r\n{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"price\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"price\": 429.99,\r\n            \"quantity\": 3\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\",\r\n    \"shipping\": 79.33,\r\n    \"payment\": {\r\n        \"price\": 2569.29,\r\n        \"type\": \"BANKSLIP\",\r\n        \"installments\": 3,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987-200\"\r\n        },\r\n        \"card\": {\r\n            \"fullName\": \"DANIEL BARBOZA DA SILVA\",\r\n            \"areaCode\": \"21\",\r\n            \"phone\": \"(21)2434-1207\",\r\n            \"birthDate\": \"2000-02-09\",\r\n            \"creditCardToken\": \"0ec7d144527b410da270e13e15666294\",\r\n            \"cpf\": \"82429888467\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 79.33,\r\n        \"type\": \"4014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987200\"\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2152,7 +2276,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/solicitation?storeid=631e00f5190d800a90c6fa4d&clientid=6320f577156b47ff1082586e",
+							"raw": "http://localhost:3011/v1/solicitation?clientid=6320f577156b47ff1082586e",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2163,10 +2287,6 @@
 								"solicitation"
 							],
 							"query": [
-								{
-									"key": "storeid",
-									"value": "631e00f5190d800a90c6fa4d"
-								},
 								{
 									"key": "clientid",
 									"value": "6320f577156b47ff1082586e"
@@ -2317,7 +2437,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/delivery/636f5cfa90569154ecc69c92",
+							"raw": "http://localhost:3011/v1/delivery/6376981ddd290d030a1592c7",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2326,7 +2446,7 @@
 							"path": [
 								"v1",
 								"delivery",
-								"636f5cfa90569154ecc69c92"
+								"6376981ddd290d030a1592c7"
 							]
 						}
 					},
@@ -2365,7 +2485,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"unitPrice\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"unitPrice\": 429.99,\r\n            \"quantity\": 3\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\"\r\n}",
+							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"price\": 1199.99,\r\n            \"quantity\": \"1\",\r\n            \"title\": \"produto01\"\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"price\": 429.99,\r\n            \"quantity\": \"3\",\r\n            \"title\": \"produto02\"\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2466,13 +2586,13 @@
 							"urlencoded": [
 								{
 									"key": "senderHash",
-									"value": "a7be0a6caa7b259e1e5a62bd899997d7beff65d612c6755a52540e3bedf13a40",
+									"value": "d284d430f23f523754a640475cb9e4699a9cff402c71f00c34c9de5f3b57a982",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/take/payment/636f5cfa90569154ecc69c8e",
+							"raw": "http://localhost:3011/v1/take/payment/63a716c0b2b64750a0242430",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2482,7 +2602,7 @@
 								"v1",
 								"take",
 								"payment",
-								"636f5cfa90569154ecc69c8e"
+								"63a716c0b2b64750a0242430"
 							]
 						}
 					},
@@ -2510,9 +2630,6 @@
 							}
 						}
 					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -2522,15 +2639,6 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"_id\": \"6320f577156b47ff1082586e\",\r\n    \"title\": \"Nvidia GTX1080\",\r\n    \"availability\": true,\r\n    \"description\": \"Placa de vídeo\",\r\n    \"photos\": \"43242342342343224\",\r\n    \"price\": \"43242342342343224\",\r\n    \"promotion\": \"43242342342343224\",\r\n    \"sku\": \"43242342342343224\",\r\n    \"category\": \"631e00f5190d800a90c6fa43\",\r\n    \"store\": \"631e00f5190d800a90c6fa43\",\r\n    \"rating\": \"631e00f5190d800a90c6fa43\",\r\n    \"variations\": \"631e00f5190d800a90c6fa43\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "http://localhost:3011/v1/payment/session",
 							"protocol": "http",

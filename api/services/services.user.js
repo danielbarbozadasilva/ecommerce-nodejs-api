@@ -7,72 +7,7 @@ const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const ErrorNotAuthenticatedUser = require('../utils/errors/errors.user-not-authenticated')
 const ErrorNotAuthorizedUser = require('../utils/errors/errors.user-not-authorized')
 const ErrorBusinessRule = require('../utils/errors/errors.business-rule')
-
-const profile = [
-  {
-    permission: 'administrator',
-    rule: [
-      'USER_LIST_ID',
-      'USER_UPDATE',
-      'USER_DELETE',
-      'STORE_UPDATE',
-      'STORE_DELETE',
-      'LIST_CLIENT',
-      'SEARCH_SOLICITATION',
-      'SEARCH_CLIENT',
-      'LIST_CLIENT_SOLICITATION',
-      'CLIENT_ID',
-      'CLIENT_UPDATE',
-      'CLIENT_DELETE',
-      'LIST_CATEGORY',
-      'LIST_CATEGORY_AVAILABILITY',
-      'LIST_CATEGORY_ID',
-      'LIST_CATEGORY_PRODUCT',
-      'CREATE_CATEGORY',
-      'UPDATE_CATEGORY',
-      'DELETE_CATEGORY',
-      'UPDATE_CATEGORY_PRODUCT',
-      'CREATE_PRODUCT',
-      'UPDATE_PRODUCT',
-      'UPLOAD_IMAGE_PRODUCT',
-      'DELETE_PRODUCT',
-      'DELETE_RATING',
-      'LIST_ALL_SOLICITATION',
-      'SOLICITATION_DELETE',
-      'LIST_ID_SOLICITATION',
-      'LIST_CLIENT_SOLICITATION',
-      'LIST_CART_PRODUCT',
-      'UPDATE_DELIVERY',
-      'UPDATE_PAYMENT'
-    ]
-  },
-  {
-    permission: 'client',
-    rule: [
-      'USER_LIST_ID',
-      'USER_UPDATE',
-      'USER_DELETE',
-      'STORE_CREATE',
-      'LIST_CLIENT',
-      'CLIENT_ID',
-      'CLIENT_UPDATE',
-      'CLIENT_DELETE',
-      'LIST_CATEGORY',
-      'LIST_CATEGORY_AVAILABILITY',
-      'LIST_CATEGORY_ID',
-      'CREATE_RATING',
-      'DELETE_RATING',
-      'SOLICITATION_CREATE',
-      'SOLICITATION_DELETE',
-      'LIST_ID_SOLICITATION',
-      'LIST_CLIENT_SOLICITATION',
-      'LIST_CART_PRODUCT',
-      'LIST_DELIVERY',
-      'LIST_PAYMENT_ID',
-      'TAKE_PAYMENT'
-    ]
-  }
-]
+const profile = require('../utils/utils.rules')
 
 const userIsValidService = async (email, password) => {
   const resultDB = await user.findOne({ email })
@@ -88,13 +23,14 @@ const userIsValidService = async (email, password) => {
       return resultDB
     }
   }
-  throw new ErrorNotAuthenticatedUser('Invalid access credentials!')
+  throw new ErrorNotAuthenticatedUser('E-mail e/ou senha inválidos!')
 }
 
 const checkPermissionService = (permissions, rule) => {
   const result = profile.filter(
     (item) => item.permission === String(permissions)
   )
+
   const check = result[0]?.rule?.includes(rule)
 
   if (!check) {
@@ -104,12 +40,29 @@ const checkPermissionService = (permissions, rule) => {
 }
 
 const createCredentialService = async (email) => {
-  const userDB = await user.findOne({ email })
-  const userDTO = userMapper.toDTO(userDB)
-  const userToken = cryptography.generateToken(userDTO)
+  const userDB = await user.aggregate([
+    { $match: { email } },
+    {
+      $lookup: {
+        from: client.collection.name,
+        localField: '_id',
+        foreignField: 'user',
+        as: 'client'
+      }
+    },
+    {
+      $unwind: {
+        path: '$client',
+        preserveNullAndEmptyArrays: true
+      }
+    }
+  ])
+
+  const userDTO = userMapper.toDTO(...userDB)
+  const userToken = await cryptography.generateToken(userDTO)
   if (userDTO && userToken) {
     return {
-      token: userToken,
+      ...userToken,
       userDTO
     }
   }
@@ -138,6 +91,38 @@ const authService = async (email, password) => {
   }
 }
 
+const refreshTokenService = async (token) => {
+  const result = await user.findOne({ 'refreshToken._id': token })
+
+  if (!result) {
+    throw new ErrorNotAuthenticatedUser(`Refresh token invalid!`)
+  }
+
+  const resultToken = await cryptography.genereteRefreshToken(result)
+
+  return {
+    success: true,
+    message: 'Refresh token generated successfully!',
+    data: resultToken
+  }
+}
+
+const checkTokenService = async (token) => {
+  try {
+    const { id } = cryptography.decodeToken(token)
+    const result = await user.findOne({ _id: id })
+    if (!result) {
+      throw new ErrorNotAuthenticatedUser(`Token invalid!`)
+    }
+    return {
+      success: true,
+      message: 'Token valid!'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
 const registerService = async (body) => {
   try {
     const salt = cryptography.createSalt()
@@ -145,8 +130,7 @@ const registerService = async (body) => {
       name: body.name,
       email: body.email,
       salt,
-      hash: cryptography.createHash(body.password, salt),
-      store: body.store
+      hash: cryptography.createHash(body.password, salt)
     })
 
     return {
@@ -280,9 +264,8 @@ const resetPasswordUserService = async (body) => {
 }
 
 const checkIdAuthorizationService = async (idToken, userid, permissions) => {
-  const result = permissions.map((item) => item === 'administrator')
-
-  if (userid && !result[0]) {
+  const result = permissions === 'administrator'
+  if (userid && !result) {
     const userDB = await client.findOne({ _id: userid, user: idToken })
 
     if (!userDB && idToken != userid) {
@@ -295,6 +278,9 @@ const checkIdAuthorizationService = async (idToken, userid, permissions) => {
 }
 
 module.exports = {
+  createCredentialService,
+  refreshTokenService,
+  checkTokenService,
   userIsValidService,
   checkPermissionService,
   authService,

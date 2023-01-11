@@ -124,12 +124,20 @@ const verifyCpfUserExists = async (req, res, next) => {
 
 const verifyRatingExistsMiddleware = async (req, res, next) => {
   const ratingDB = await rating.findOne({
-    client: req.query.clientid,
-    product: req.query.productid
+    client: req.body.clientid,
+    product: req.body.productid
   })
 
   if (ratingDB) {
-    throw new ErrorBusinessRule(`Você já curtiu esse produto!`)
+    throw new ErrorBusinessRule(`Você já avaliou esse produto!`)
+  }
+  next()
+}
+
+const verifyEmail = async (req, res, next) => {
+  const resultDB = await user.findOne({ email: req.body.email })
+  if (!resultDB) {
+    throw new ErrorBusinessRule('E-mail inválido!')
   }
   next()
 }
@@ -159,5 +167,6 @@ module.exports = {
   verifyEmailUserExists,
   verifyCpfUserExists,
   verifyRatingExistsMiddleware,
-  verifyRatingNotExistsMiddleware
+  verifyRatingNotExistsMiddleware,
+  verifyEmail
 }

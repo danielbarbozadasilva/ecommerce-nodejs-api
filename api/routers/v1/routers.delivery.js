@@ -59,6 +59,11 @@ module.exports = (router) => {
         .array()
         .items(
           joi.object({
+            photos: joi.array().items(joi.string()).optional(),
+            price: joi.number().required().messages({
+              'any.required': '"price" is a required field',
+              'number.empty': '"price" can not be empty'
+            }),
             product: joi
               .string()
               .regex(/^[0-9a-fA-F]{24}$/)
@@ -68,13 +73,13 @@ module.exports = (router) => {
                 'string.empty': '"product id" can not be empty',
                 'string.pattern.base': '"product id" out of the expected format'
               }),
-            unitPrice: joi.number().required().messages({
-              'any.required': '"unit price" is a required field',
-              'number.empty': '"unit price" can not be empty'
-            }),
             quantity: joi.number().required().messages({
               'any.required': '"quantity" is a required field',
               'number.empty': '"quantity" can not be empty'
+            }),
+            title: joi.string().required().messages({
+              'any.required': '"title" is a required field',
+              'string.empty': '"title" can not be empty'
             })
           })
         )

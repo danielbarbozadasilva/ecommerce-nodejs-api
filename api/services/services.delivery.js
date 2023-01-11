@@ -15,7 +15,7 @@ const emailUtils = require('../utils/email/email.index')
 const emailUpdateSolicitation = require('../utils/email/email.update_payment')
 const deliveryMapper = require('../mappers/mappers.delivery')
 
-const config = require('../utils/util.correios')
+const config = require('../utils/utils.correios')
 const { calcBox } = require('../utils/helpers/helpers.calcBox')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 
@@ -177,17 +177,17 @@ const calculateShippingService = async (body) => {
         $in: productId
       }
     })
-
+    
     const box = calcBox(productDB)
 
     const totalWeight = productDB.reduce(
-      (all, item, i) => all + item.weight * body.cart[i].quantity,
+      (all, item, i) => all + item.weight * Number(body.cart[i].quantity),
       0
     )
 
     const finalPrice = productDB.reduce(
       (all, item, i) =>
-        all + (item.promotion || item.price) * body.cart[i].quantity,
+        all + (item.promotion || item.price) * Number(body.cart[i].quantity),
       0
     )
 
@@ -207,7 +207,9 @@ const calculateShippingService = async (body) => {
     return {
       success: true,
       message: 'Shipping calculated successfully!',
-      data: result.map((item) => deliveryMapper.toDTOShipping(item))
+      data: result.map((item) =>
+        deliveryMapper.toDTOShipping(item, body.zipCode)
+      )
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)

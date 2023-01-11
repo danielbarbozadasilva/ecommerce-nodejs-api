@@ -7,27 +7,41 @@ const authorization = require('../../utils/middlewares/middlewares.authorization
 const ratingController = require('../../controllers/controllers.rating')
 
 module.exports = (router) => {
+  router.route('/rating/product/:productid').get(
+    validateDTOMiddleware('params', {
+      productid: joi
+        .string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+          'any.required': '"product id" is a required field',
+          'string.empty': '"product id" can not be empty',
+          'string.pattern.base': '"product id" out of the expected format'
+        })
+    }),
+    verifyIdDbMiddleware.verifyIdProduct,
+    ratingController.listRatingProductController
+  )
+
   router
     .route('/rating')
-    .get(
-      validateDTOMiddleware('query', {
-        productid: joi
-          .string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .required()
-          .messages({
-            'any.required': '"product id" is a required field',
-            'string.empty': '"product id" can not be empty',
-            'string.pattern.base': '"product id" out of the expected format'
-          })
-      }),
-      verifyIdDbMiddleware.verifyIdProduct,
-      ratingController.listRatingProductController
-    )
+    .get(ratingController.listAllRatingController)
     .post(
       authenticationMiddleware(),
       authorization.authorizationMiddleware('CREATE_RATING'),
-      validateDTOMiddleware('query', {
+      validateDTOMiddleware('body', {
+        name: joi.string().required().messages({
+          'any.required': '"name" is a required field',
+          'string.empty': '"name" can not be empty'
+        }),
+        text: joi.string().required().messages({
+          'any.required': '"text" is a required field',
+          'string.empty': '"text" can not be empty'
+        }),
+        score: joi.number().min(1).max(5).required().messages({
+          'any.required': '"score" is a required field',
+          'string.empty': '"score" can not be empty'
+        }),
         clientid: joi
           .string()
           .regex(/^[0-9a-fA-F]{24}$/)
@@ -47,22 +61,6 @@ module.exports = (router) => {
             'string.pattern.base': '"product id" out of the expected format'
           })
       }),
-      validateDTOMiddleware('body', {
-        name: joi.string().required().messages({
-          'any.required': '"name" is a required field',
-          'string.empty': '"name" can not be empty'
-        }),
-        text: joi.string().required().messages({
-          'any.required': '"text" is a required field',
-          'string.empty': '"text" can not be empty'
-        }),
-        score: joi.number().min(1).max(5).required().messages({
-          'any.required': '"score" is a required field',
-          'string.empty': '"score" can not be empty'
-        })
-      }),
-      verifyIdDbMiddleware.verifyIdClient,
-      verifyIdDbMiddleware.verifyIdProduct,
       verifyIdDbMiddleware.verifyRatingExistsMiddleware,
       ratingController.createRatingProductController
     )

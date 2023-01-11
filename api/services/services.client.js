@@ -1,29 +1,29 @@
 const { ObjectId } = require('mongodb')
+const moment = require('moment')
 const {
   solicitation,
   product,
   payment,
   user,
   client,
-  deliveries
+  deliveries,
+  rating
 } = require('../models/models.index')
 
 const clientMapper = require('../mappers/mappers.client')
 const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const cryptography = require('../utils/utils.cryptography')
+const { createCredentialService } = require('./services.user')
+const { formatDate } = require('../utils/helpers/helpers.format')
 
-const listAllClientsService = async (offset, limit) => {
+const listAllClientsService = async () => {
   try {
-    const resultDB = await client.paginate({
-      populate: 'user',
-      offset: Number(offset || 0),
-      limit: Number(limit || 30)
-    })
-
+    const resultDB = await client.find({}).populate('user')
+    
     return {
       success: true,
       message: 'Successfully Listed Clients',
-      data: resultDB.docs.map((item) => clientMapper.toClientDTO(item))
+      data: resultDB.map((item) => clientMapper.toDTO(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -71,18 +71,30 @@ const listClientSolicitationService = async (offset, limit, search) => {
   }
 }
 
-const listClientSearchService = async (offset, limit, search) => {
+const listClientSearchService = async (search) => {
   try {
-    const resultDB = await client.paginate({
-      $or: [{ $text: { $search: `${search}`, $diacriticSensitive: false } }],
-      $or: [{ phones: { $in: search } }],
-      offset: Number(offset || 0),
-      limit: Number(limit || 30)
-    })
+    const resultDB = await client.aggregate([
+      {
+        $match: {
+          name: {
+            $regex: `.*${search}.*`,
+            $options: 'i'
+          }
+        }
+      },
+      {
+        $lookup: {
+          from: user.collection.name,
+          localField: 'user',
+          foreignField: '_id',
+          as: 'user'
+        }
+      }
+    ])
     return {
       success: true,
       message: 'Successfully Listed Clients',
-      data: resultDB.docs.map((item) => clientMapper.toDTO(item))
+      data: resultDB.map((item) => clientMapper.toDTO(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -91,8 +103,6 @@ const listClientSearchService = async (offset, limit, search) => {
 
 const updateClientService = async (id, body) => {
   try {
-    const salt = cryptography.createSalt()
-
     const clientDB = await client.findOneAndUpdate(
       { _id: id },
       {
@@ -109,29 +119,29 @@ const updateClientService = async (id, body) => {
             zipCode: body.address.zipCode,
             state: body.address.state
           },
-          birthDate: body.birthDate
+          birthDate: formatDate(body.birthDate)
         }
       },
       { new: true }
     )
 
-    const userDB = await user.findOneAndUpdate(
+    await user.findOneAndUpdate(
       { _id: clientDB.user },
       {
         $set: {
           name: body.name,
-          email: body.email,
-          salt,
-          hash: cryptography.createHash(body.password, salt)
+          email: body.email
         }
       },
       { new: true }
     )
 
+    const data = await createCredentialService(body.email)
+
     return {
       success: true,
       message: 'Client successfully updated',
-      data: clientMapper.toDTOList(userDB, clientDB)
+      data
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -244,6 +254,7 @@ const listSolicitationClientService = async (offset, limit, clientid) => {
 const createClientService = async (body) => {
   try {
     const salt = cryptography.createSalt()
+
     const userDB = await user.create({
       name: body.name,
       email: body.email,
@@ -251,7 +262,7 @@ const createClientService = async (body) => {
       hash: cryptography.createHash(body.password, salt)
     })
 
-    const clientDB = await client.create({
+    await client.create({
       name: body.name,
       cpf: body.cpf,
       phones: body.phones,
@@ -265,13 +276,92 @@ const createClientService = async (body) => {
         state: body.address.state
       },
       user: userDB._id,
-      birthDate: body.birthDate
+      birthDate: moment(body.birthDate, 'YYYY-MM-DD')
     })
+
+    const data = await createCredentialService(body.email)
 
     return {
       success: true,
       message: 'Client created successfully',
-      data: clientMapper.toDTOList(userDB, clientDB)
+      data
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
+const listClientLikeProductService = async (clientid) => {
+  try {
+    const resultDB = await product.aggregate([
+      {
+        $lookup: {
+          from: client.collection.name,
+          localField: 'likes',
+          foreignField: '_id',
+          as: 'client'
+        }
+      },
+      { $unwind: '$client' },
+      {
+        $match: { 'client._id': ObjectId(clientid) }
+      },
+      {
+        $lookup: {
+          from: rating.collection.name,
+          localField: '_id',
+          foreignField: 'product',
+          as: 'rating'
+        }
+      }
+    ])
+
+    return {
+      success: true,
+      message: 'likes successfully listed',
+      data: resultDB.map((item) => clientMapper.toDTOLikeList(item))
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
+const createLikeProductService = async (clientid, productid) => {
+  try {
+    await product.findOneAndUpdate(
+      { _id: productid },
+      {
+        $push: {
+          likes: clientid
+        }
+      },
+      { new: true }
+    )
+
+    return {
+      success: true,
+      message: 'Like successfully'
+    }
+  } catch (err) {
+    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+}
+
+const removeLikeProductService = async (clientid, productid) => {
+  try {
+    await product.findOneAndUpdate(
+      { _id: productid },
+      {
+        $pull: {
+          likes: clientid
+        }
+      },
+      { new: true }
+    )
+
+    return {
+      success: true,
+      message: 'Like undone successfully'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -286,5 +376,8 @@ module.exports = {
   deleteClientService,
   listByIdClientService,
   listSolicitationClientService,
-  createClientService
+  createClientService,
+  listClientLikeProductService,
+  createLikeProductService,
+  removeLikeProductService
 }

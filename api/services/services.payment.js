@@ -86,7 +86,6 @@ const sendEmailAdmSuccessfullyPaid = async (solicitationNumber) => {
 
 const sendEmailClientPaymentFailed = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
-
   emailUtils.utilSendEmail({
     to: result.data.user.email,
     from: process.env.SENDER,
@@ -97,7 +96,6 @@ const sendEmailClientPaymentFailed = async (solicitationNumber) => {
 
 const sendEmailAdmPaymentFailed = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
-
   emailUtils.utilSendEmail({
     to: process.env.EMAIL,
     from: process.env.SENDER,
@@ -202,64 +200,65 @@ const updatePaymentService = async (paymentid, body) => {
 }
 
 const createPaymentService = async (paymentid, body) => {
-  try {
-    const result = await payment.aggregate([
-      { $match: { _id: ObjectId(paymentid) } },
-      {
-        $lookup: {
-          from: solicitation.collection.name,
-          localField: '_id',
-          foreignField: 'payment',
-          as: 'solicitation'
-        }
-      },
-      { $unwind: '$solicitation' },
 
-      {
-        $lookup: {
-          from: product.collection.name,
-          localField: 'solicitation.cart.product',
-          foreignField: '_id',
-          as: 'products'
-        }
-      },
-      {
-        $lookup: {
-          from: deliveries.collection.name,
-          localField: 'solicitation.deliveries',
-          foreignField: '_id',
-          as: 'deliveries'
-        }
-      },
-      { $unwind: '$deliveries' },
+  const result = await payment.aggregate([
+    { $match: { _id: ObjectId(paymentid) } },
+    {
+      $lookup: {
+        from: solicitation.collection.name,
+        localField: '_id',
+        foreignField: 'payment',
+        as: 'solicitation'
+      }
+    },
+    { $unwind: '$solicitation' },
 
-      {
-        $lookup: {
-          from: client.collection.name,
-          localField: 'solicitation.client',
-          foreignField: '_id',
-          as: 'client'
-        }
-      },
-      { $unwind: '$client' },
+    {
+      $lookup: {
+        from: product.collection.name,
+        localField: 'solicitation.cart.product',
+        foreignField: '_id',
+        as: 'products'
+      }
+    },
+    {
+      $lookup: {
+        from: deliveries.collection.name,
+        localField: 'solicitation.deliveries',
+        foreignField: '_id',
+        as: 'deliveries'
+      }
+    },
+    { $unwind: '$deliveries' },
 
-      {
-        $lookup: {
-          from: user.collection.name,
-          localField: 'client.user',
-          foreignField: '_id',
-          as: 'user'
-        }
-      },
-      { $unset: ['user.hash', 'user.salt', 'user.permissions'] },
-      { $unwind: '$user' }
-    ])
+    {
+      $lookup: {
+        from: client.collection.name,
+        localField: 'solicitation.client',
+        foreignField: '_id',
+        as: 'client'
+      }
+    },
+    { $unwind: '$client' },
 
-    const payload = await createPayment(
-      body.senderHash,
-      paymentMapper.toDTOCart(...result)
-    )
+    {
+      $lookup: {
+        from: user.collection.name,
+        localField: 'client.user',
+        foreignField: '_id',
+        as: 'user'
+      }
+    },
+    { $unset: ['user.hash', 'user.salt', 'user.permissions'] },
+    { $unwind: '$user' }
+  ])
 
+  const payload = await createPayment(
+    body.senderHash,
+    paymentMapper.toDTOCart(...result)
+  )
+
+  if (payload?.code) {
     await payment.findOneAndUpdate(
       { _id: ObjectId(paymentid) },
       {
@@ -270,20 +269,23 @@ const createPaymentService = async (paymentid, body) => {
       },
       { new: true }
     )
+
     return {
       success: true,
       message: 'Sales communication made successfully to Pagseguro',
-      data: paymentMapper.toDTOPay(payload)
+      data: payload
     }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  }
+
+  return {
+    success: false,
+    message: 'Ocorreu um erro ao processar o seu pagamento!'
   }
 }
 
 const showNotificationPaymentService = async (body) => {
   try {
     const notification = await getNotification(body.notificationCode)
-
     const result = await payment.aggregate([
       { $match: { pagSeguroCode: notification.code } },
       {

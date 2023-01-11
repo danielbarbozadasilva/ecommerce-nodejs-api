@@ -11,6 +11,28 @@ const authController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const checkTokenController = async (req, res) => {
+  const { token } = req.body
+  const resultService = await userService.checkTokenService(token)
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
+const refreshTokenController = async (req, res) => {
+  const { token } = req.body
+  const resultService = await userService.refreshTokenService(token)
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 const registerController = async (req, res) => {
   const { body } = req
   const resultService = await userService.registerService(body)
@@ -80,10 +102,12 @@ const resetPasswordController = async (req, res) => {
 
 module.exports = {
   authController,
+  refreshTokenController,
   registerController,
   listByIdUserController,
   updateUserController,
   deleteUserController,
   sendTokenRecoveryPasswordController,
-  resetPasswordController
+  resetPasswordController,
+  checkTokenController
 }

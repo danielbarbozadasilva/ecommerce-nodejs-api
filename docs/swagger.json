@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "Api PrimeTech E-commerce",
-        "description": "API do projeto PrimeTech E-commerce desenvolvida utilizando o NodeJs, ExpressJs e o Banco de dados MongoDB.",
+        "description": "API do projeto PrimeTech E-commerce desenvolvida utilizando o NodeJs, ExpressJs e o Banco de dados MongoDB. Foi realizada a integração com o PagSeguro.",
         "contact": {
             "email": "daniel80barboza@gmail.com"
         },
@@ -44,20 +44,82 @@
                         "description": "Internal Server Error!"
                     },
                     "401": {
-                        "description": "Invalid access credentials!"
+                        "description": "E-mail e/ou senha inválidos!"
                     },
                     "200": {
-                        "description": "User authenticated successfully!",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "items": {
-                                        "$ref": "#/components/schemas/List_Auth"
+                        "description": "User authenticated successfully!"
+                    }
+                }
+            }
+        },
+        "/check-token": {
+            "post": {
+                "summary": "Verificar token",
+                "description": "Essa rota é responsável por verificar o token do usuário",
+                "tags": [
+                    "Autenticar Usuário"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CheckToken"
+                            },
+                            "examples": {
+                                "CheckToken": {
+                                    "value": {
+                                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWUwMjc4ZWM5ZjQ2YzFkYTRkOTMzYSIsIm5hbWUiOiJEYW5pZWwgQmFyYm96YSIsImVtYWlsIjoiZGFuaWVsYmFyYm96YTU2QGhvdG1haWwuY29tIiwicGVybWlzc2lvbnMiOlsiYWRtaW5pc3RyYXRvciJdLCJpYXQiOjE2Njk0ODIxMjgsImV4cCI6MTAwMTY2OTQ4MjEyN30.a6SFqoFf7xF-VgOSnTHyhbl4D69uGfp1DC7XU9Q5-QA"
                                     }
                                 }
                             }
                         }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "401": {
+                        "description": "Token invalid!"
+                    },
+                    "200": {
+                        "description": "Token valid!"
+                    }
+                }
+            }
+        },
+        "/refresh-token": {
+            "post": {
+                "summary": "Gerar refresh token",
+                "description": "Essa rota é responsável por gerar o refresh token",
+                "tags": [
+                    "Autenticar Usuário"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RefreshToken"
+                            },
+                            "examples": {
+                                "RefreshToken": {
+                                    "value": {
+                                        "token": "f30e496f-8d8b-4408-93e0-ba2c87df4577"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "401": {
+                        "description": "Refresh token invalid!"
+                    },
+                    "200": {
+                        "description": "Refresh token generated successfully!"
                     }
                 }
             }
@@ -78,27 +140,19 @@
                     }
                 }
             },
-            "List_Auth": {
+            "CheckToken": {
                 "type": "object",
                 "properties": {
-                    "id": {
-                        "type": "integer",
-                        "required": true
-                    },
-                    "name": {
+                    "token": {
                         "type": "string",
                         "required": true
-                    },
-                    "email": {
+                    }
+                }
+            },
+            "RefreshToken": {
+                "properties": {
+                    "token": {
                         "type": "string",
-                        "required": true
-                    },
-                    "cpf": {
-                        "type": "string",
-                        "required": true
-                    },
-                    "type": {
-                        "type": "integer",
                         "required": true
                     }
                 }

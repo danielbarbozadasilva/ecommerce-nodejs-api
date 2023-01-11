@@ -1,8 +1,7 @@
 const clientService = require('../services/services.client')
 
 const listAllClientsController = async (req, res) => {
-  const { offset, limit } = req.query
-  const resultService = await clientService.listAllClientsService(offset, limit)
+  const resultService = await clientService.listAllClientsService()
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
@@ -28,13 +27,8 @@ const searchClientSolicitationController = async (req, res) => {
 }
 
 const listClientSearchController = async (req, res) => {
-  const { offset, limit } = req.query
-  const { search } = req.params
-  const resultService = await clientService.listClientSearchService(
-    offset,
-    limit,
-    search
-  )
+  const { find } = req.query
+  const resultService = await clientService.listClientSearchService(find)
   const code = resultService.success ? 200 : 400
   const message = resultService.success
     ? { message: resultService.message }
@@ -104,6 +98,47 @@ const createClientController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
+const listClientLikeProductController = async (req, res) => {
+  const { clientid } = req.params
+  const resultService = await clientService.listClientLikeProductService(
+    clientid
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
+const createLikeProductController = async (req, res) => {
+  const { clientid, productid } = req.params
+  const resultService = await clientService.createLikeProductService(
+    clientid,
+    productid
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
+const removeLikeProductController = async (req, res) => {
+  const { clientid, productid } = req.params
+  const resultService = await clientService.removeLikeProductService(
+    clientid,
+    productid
+  )
+  const code = resultService.success ? 200 : 400
+  const message = resultService.success
+    ? { message: resultService.message }
+    : { details: resultService.details }
+  const data = resultService.data ? resultService.data : ''
+  return res.status(code).send({ message, data })
+}
+
 module.exports = {
   listAllClientsController,
   searchClientSolicitationController,
@@ -112,5 +147,8 @@ module.exports = {
   updaterClientController,
   deleteClientController,
   listSolicitationClientController,
-  createClientController
+  createClientController,
+  listClientLikeProductController,
+  createLikeProductController,
+  removeLikeProductController
 }

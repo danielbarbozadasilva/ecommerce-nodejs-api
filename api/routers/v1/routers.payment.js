@@ -7,10 +7,6 @@ const authorization = require('../../utils/middlewares/middlewares.authorization
 const paymentController = require('../../controllers/controllers.payment')
 
 module.exports = (router) => {
-  if (process.env.NODE_ENV !== 'production') {
-    router.get('/payment/tokens', (req, res) => res.render('index'))
-  }
-
   router
     .route('/payment/session')
     .get(paymentController.showSessionPaymentController)

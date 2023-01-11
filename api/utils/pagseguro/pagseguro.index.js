@@ -141,10 +141,7 @@ const createPayment = async (senderHash, data) => {
       errorMessage: 'Payment method not found.'
     }
   } catch (error) {
-    return {
-      errorMessage: 'Ocorreu um erro',
-      errors: error
-    }
+    throw new Error(error[0].message)
   }
 }
 
