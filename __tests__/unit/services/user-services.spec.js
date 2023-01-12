@@ -29,6 +29,14 @@ describe('User services', () => {
         expect(error.statusCode).toBe(401)
       }
     })
+
+    test('Make sure userIsValidService return user information', async () => {
+      const email = 'daniel95barboza@gmail.com'
+      const password = 'daniel'
+      const result = await services.userIsValidService(email, password)
+      expect(result._id).toHaveProperty('_id')
+    })
+
     test('Make sure authService return success if the access credentials are valid', async () => {
       const email = 'daniel95barboza@gmail.com'
       const password = 'daniel'
