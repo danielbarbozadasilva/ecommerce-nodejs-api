@@ -101,9 +101,17 @@ describe('User services', () => {
     })
 
     test('Make sure sendTokenRecoveryPasswordService return success', async () => {
-      const email = 'daniel95barboza@gmail.com'
-      const result = await services.sendTokenRecoveryPasswordService(email)
+      const result = await services.sendTokenRecoveryPasswordService({
+        email: 'daniel95barboza@gmail.com'
+      })
       expect(result.success).toBe(true)
+    })
+
+    test('Make sure sendTokenRecoveryPasswordService return error', async () => {
+      const result = await services.sendTokenRecoveryPasswordService({
+        email: 'example@gmail.com'
+      })
+      expect(result.success).toBe(false)
     })
   })
 })
