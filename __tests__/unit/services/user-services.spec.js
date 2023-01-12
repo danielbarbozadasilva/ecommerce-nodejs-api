@@ -83,7 +83,7 @@ describe('User services', () => {
       }
     })
 
-    test('Make sure checkTokenService return refresh token', async () => {
+    test('Make sure checkTokenService return success', async () => {
       const email = 'daniel95barboza@gmail.com'
       const password = 'daniel'
       const auth = await services.authService(email, password)
@@ -98,6 +98,12 @@ describe('User services', () => {
       } catch (error) {
         expect(error.statusCode).toBe(401)
       }
+    })
+
+    test('Make sure sendTokenRecoveryPasswordService return success', async () => {
+      const email = 'daniel95barboza@gmail.com'
+      const result = await services.sendTokenRecoveryPasswordService(email)
+      expect(result.success).toBe(true)
     })
   })
 })
