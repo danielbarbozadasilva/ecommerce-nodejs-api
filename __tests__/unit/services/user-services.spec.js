@@ -74,6 +74,13 @@ describe('User services', () => {
       expect(result.success).toBe(true)
     })
 
-
+    test('Make sure refreshTokenService return 401 if the access token are invalid', async () => {
+      try {
+        const token = 'f30e496f-8d8b-4408-93e0-ba2c87df4577'
+        await services.refreshTokenService(token)
+      } catch (error) {
+        expect(error.statusCode).toBe(401)
+      }
+    })
   })
 })
