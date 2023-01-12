@@ -113,5 +113,27 @@ describe('User services', () => {
       })
       expect(result.success).toBe(false)
     })
+
+    test('Make sure checkTokenRecoveryPasswordService return success', async () => {
+      const auth = await services.sendTokenRecoveryPasswordService({
+        email: 'daniel95barboza@gmail.com'
+      })
+      const result = await services.checkTokenRecoveryPasswordService({
+        email: 'daniel95barboza@gmail.com',
+        token: auth.data.recovery.token
+      })
+      expect(result).toBe(true)
+    })
+
+    test('Make sure checkTokenRecoveryPasswordService return 400 if recovery data is incorrect', async () => {
+      try {
+        await services.checkTokenRecoveryPasswordService({
+          email: 'example@gmail.com',
+          token: 'f30e496f-8d8b-4408-93e0-ba2c87df4577'
+        })
+      } catch (error) {
+        expect(error.statusCode).toBe(400)
+      }
+    })
   })
 })
