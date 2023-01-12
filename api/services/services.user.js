@@ -58,14 +58,17 @@ const createCredentialService = async (email) => {
     }
   ])
 
-  const userDTO = userMapper.toDTO(...userDB)
-  const userToken = await cryptography.generateToken(userDTO)
-  if (userDTO && userToken) {
-    return {
-      ...userToken,
-      userDTO
+  if (userDB.length) {
+    const userDTO = userMapper.toDTO(...userDB)
+    const userToken = await cryptography.generateToken(userDTO)
+    if (userDTO && userToken) {
+      return {
+        ...userToken,
+        userDTO
+      }
     }
   }
+
   return false
 }
 
