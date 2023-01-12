@@ -135,5 +135,17 @@ describe('User services', () => {
         expect(error.statusCode).toBe(400)
       }
     })
+
+    test('Make sure resetPasswordUserService return success', async () => {
+      const auth = await services.sendTokenRecoveryPasswordService({
+        email: 'daniel95barboza@gmail.com'
+      })
+      const result = await services.resetPasswordUserService({
+        email: 'daniel95barboza@gmail.com',
+        token: auth.data.recovery.token,
+        newPassword: 'daniel'
+      })
+      expect(result.success).toBe(true)
+    })
   })
 })
