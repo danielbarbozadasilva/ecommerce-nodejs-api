@@ -113,16 +113,13 @@ const refreshTokenService = async (token) => {
 const checkTokenService = async (token) => {
   try {
     const { id } = cryptography.decodeToken(token)
-    const result = await user.findOne({ _id: id })
-    if (!result) {
-      throw new ErrorNotAuthenticatedUser(`Token invalid!`)
-    }
+    await user.findOne({ _id: id })
     return {
       success: true,
       message: 'Token valid!'
     }
   } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+    throw new ErrorNotAuthenticatedUser(`Token invalid!`)
   }
 }
 
