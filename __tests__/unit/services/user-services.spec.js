@@ -82,5 +82,22 @@ describe('User services', () => {
         expect(error.statusCode).toBe(401)
       }
     })
+
+    test('Make sure checkTokenService return refresh token', async () => {
+      const email = 'daniel95barboza@gmail.com'
+      const password = 'daniel'
+      const auth = await services.authService(email, password)
+      const result = await services.checkTokenService(auth.data.token)
+      expect(result.success).toBe(true)
+    })
+
+    test('Make sure checkTokenService return 401 if the access token are invalid', async () => {
+      try {
+        const token = 'f30e496f-8d8b-4408-93e0-ba2c87df4577'
+        await services.checkTokenService(token)
+      } catch (error) {
+        expect(error.statusCode).toBe(401)
+      }
+    })
   })
 })
