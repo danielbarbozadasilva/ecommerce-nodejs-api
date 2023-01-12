@@ -15,5 +15,9 @@ describe('Category services', () => {
       const result = await services.listAllCategoryService()
       expect(result.success).toBe(true)
     })
+    test('Make sure listAllCategoryService has the id property', async () => {
+      const result = await services.listAllCategoryService()
+      expect(result.data[0].id).toHaveProperty('id')
+    })
   })
 })
