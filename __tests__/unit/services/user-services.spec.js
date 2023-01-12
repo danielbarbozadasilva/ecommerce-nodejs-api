@@ -20,6 +20,13 @@ describe('User services', () => {
   })
 
   describe('User Services', () => {
+    test('Make sure userIsValidService return user information', async () => {
+      const email = 'daniel95barboza@gmail.com'
+      const password = 'daniel'
+      const result = await services.userIsValidService(email, password)
+      expect(result._id).toHaveProperty('_id')
+    })
+
     test('Make sure userIsValidService return 401 if the user credentials are invalid', async () => {
       try {
         const email = 'exemplo@gmail.com'
@@ -30,11 +37,21 @@ describe('User services', () => {
       }
     })
 
-    test('Make sure userIsValidService return user information', async () => {
-      const email = 'daniel95barboza@gmail.com'
-      const password = 'daniel'
-      const result = await services.userIsValidService(email, password)
-      expect(result._id).toHaveProperty('_id')
+    test('Make sure checkPermissionService return the result if the user has permission', async () => {
+      const type = 'administrator'
+      const permission = 'CREATE_CATEGORY'
+      const result = services.checkPermissionService(type, permission)
+      expect(result).toBe(true)
+    })
+
+    test('Make sure checkPermissionService return 403 if the user does not have permission', async () => {
+      try {
+        const type = 'client'
+        const permission = 'CREATE_CATEGORY'
+        services.checkPermissionService(type, permission)
+      } catch (error) {
+        expect(error.statusCode).toBe(403)
+      }
     })
 
     test('Make sure authService return success if the access credentials are valid', async () => {
