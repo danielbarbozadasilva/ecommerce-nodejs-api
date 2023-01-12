@@ -56,9 +56,14 @@ describe('User services', () => {
 
     test('Make sure createCredentialService return the result if the user credentials are correct', async () => {
       const email = 'daniel95barboza@gmail.com'
-      const password = 'daniel'
-      const result = await services.createCredentialService(email, password)
+      const result = await services.createCredentialService(email)
       expect(result).not.toBe(false)
+    })
+
+    test('Make sure createCredentialService return false if the user email is invalid', async () => {
+      const email = 'exemplo@gmail.com'
+      const result = await services.createCredentialService(email)
+      expect(result).toBe(false)
     })
 
     test('Make sure authService return success if the access credentials are valid', async () => {
