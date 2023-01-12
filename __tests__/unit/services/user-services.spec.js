@@ -63,5 +63,17 @@ describe('User services', () => {
       const result = await services.authService(email, password)
       expect(result.success).toBe(true)
     })
+
+    test('Make sure refreshTokenService return refresh token', async () => {
+      const email = 'daniel95barboza@gmail.com'
+      const password = 'daniel'
+      const auth = await services.authService(email, password)
+      const result = await services.refreshTokenService(
+        auth.data.refreshToken._id
+      )
+      expect(result.success).toBe(true)
+    })
+
+
   })
 })
