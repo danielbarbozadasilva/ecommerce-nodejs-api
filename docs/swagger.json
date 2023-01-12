@@ -123,6 +123,80 @@
                     }
                 }
             }
+        },
+        "/user/recovery/password-recovery": {
+            "put": {
+                "summary": "Gerar token de recuperação de senha",
+                "description": "Essa rota é responsável por enviar para o e-mail do usuário um token",
+                "tags": [
+                    "Autenticar Usuário"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PasswordRecovery"
+                            },
+                            "examples": {
+                                "PasswordRecovery": {
+                                    "value": {
+                                        "email": "daniel95barboza@gmail.com"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "404": {
+                        "description": "E-mail inválido!"
+                    },
+                    "200": {
+                        "description": "Email successfully sent"
+                    }
+                }
+            }
+        },
+        "/user/recovery/reset-password": {
+            "put": {
+                "summary": "Redefinir a senha",
+                "description": "Essa rota é responsável por redefinir a senha do usuário",
+                "tags": [
+                    "Autenticar Usuário"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResetPassword"
+                            },
+                            "examples": {
+                                "ResetPassword": {
+                                    "value": {
+                                        "token": "f30e496f-8d8b-4408-93e0-ba2c87df4577",
+                                        "email": "daniel95barboza@gmail.com",
+                                        "newPassword": "daniel"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "404": {
+                        "description": "Token inválido!"
+                    },
+                    "200": {
+                        "description": "Password updated successfully"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -152,6 +226,30 @@
             "RefreshToken": {
                 "properties": {
                     "token": {
+                        "type": "string",
+                        "required": true
+                    }
+                }
+            },
+            "PasswordRecovery": {
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "required": true
+                    }
+                }
+            },
+            "ResetPassword":{
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "email": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "newPassword": {
                         "type": "string",
                         "required": true
                     }
