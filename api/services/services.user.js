@@ -126,26 +126,6 @@ const checkTokenService = async (token) => {
   }
 }
 
-const registerService = async (body) => {
-  try {
-    const salt = cryptography.createSalt()
-    const result = await user.create({
-      name: body.name,
-      email: body.email,
-      salt,
-      hash: cryptography.createHash(body.password, salt)
-    })
-
-    return {
-      success: true,
-      message: 'User registered successfully',
-      data: userMapper.toDTO(result)
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
 const sendTokenRecoveryPasswordService = async (body) => {
   try {
     const resultToken = cryptography.tokenRecoveryPassword()
@@ -236,7 +216,6 @@ module.exports = {
   userIsValidService,
   checkPermissionService,
   authService,
-  registerService,
   sendTokenRecoveryPasswordService,
   checkTokenRecoveryPasswordService,
   resetPasswordUserService,

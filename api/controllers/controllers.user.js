@@ -33,17 +33,6 @@ const refreshTokenController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
-const registerController = async (req, res) => {
-  const { body } = req
-  const resultService = await userService.registerService(body)
-  const code = resultService.success ? 200 : 400
-  const message = resultService.success
-    ? { message: resultService.message }
-    : { details: resultService.details }
-  const data = resultService.data ? resultService.data : ''
-  return res.status(code).send({ message, data })
-}
-
 const sendTokenRecoveryPasswordController = async (req, res) => {
   const { body } = req
   const resultService = await userService.sendTokenRecoveryPasswordService(body)
@@ -69,7 +58,6 @@ const resetPasswordController = async (req, res) => {
 module.exports = {
   authController,
   refreshTokenController,
-  registerController,
   sendTokenRecoveryPasswordController,
   resetPasswordController,
   checkTokenController

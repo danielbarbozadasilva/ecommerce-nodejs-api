@@ -1,22 +1,13 @@
-const mongoose = require('mongoose')
 const services = require('../../../api/services/services.user')
-const db = require('../../../db/config')
+const { createConnection, closeConnection } = require('../../helpers')
 
 describe('User services', () => {
-  beforeAll(async () => {
-    mongoose.set('strictQuery', true)
-    mongoose.connect(db.uri, { useNewUrlParser: true }, (err) => {
-      if (err)
-        console.log(
-          `MongoDB is ${
-            mongoose.STATES[mongoose.connection.readyState]
-          }\n${err}`
-        )
-    })
+  beforeAll(() => {
+    createConnection()
   })
 
-  afterAll(async () => {
-    mongoose.connection.close()
+  afterAll(() => {
+    closeConnection()
   })
 
   describe('User Services', () => {
