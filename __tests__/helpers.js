@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const db = require('../db/config')
 
-export const createConnection = () => {
+const createConnection = () => {
   mongoose.set('strictQuery', true)
   mongoose.connect(db.uri, { useNewUrlParser: true }, (err) => {
     if (err)
@@ -11,6 +11,11 @@ export const createConnection = () => {
   })
 }
 
-export const closeConnection = () => {
+const closeConnection = () => {
   mongoose.connection.close()
+}
+
+module.exports = {
+  closeConnection,
+  createConnection
 }
