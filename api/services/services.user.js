@@ -126,8 +126,7 @@ const checkTokenService = async (token) => {
 const sendTokenRecoveryPasswordService = async (body) => {
   try {
     const resultToken = cryptography.tokenRecoveryPassword()
-
-    await user.updateOne(
+    const result = await user.updateOne(
       { email: `${body.email}` },
       {
         $set: {
@@ -138,16 +137,23 @@ const sendTokenRecoveryPasswordService = async (body) => {
         }
       }
     )
-    emailUtils.utilSendEmail({
-      to: body.email,
-      from: process.env.SENDER,
-      subject: `Recuperar senha`,
-      html: Email(resultToken.token)
-    })
+    if (result.modifiedCount === 1) {
+      emailUtils.utilSendEmail({
+        to: body.email,
+        from: process.env.SENDER,
+        subject: `Recuperar senha`,
+        html: Email(resultToken.token)
+      })
+
+      return {
+        success: true,
+        message: 'Email successfully sent'
+      }
+    }
 
     return {
-      success: true,
-      message: 'Email successfully sent'
+      success: false,
+      message: 'Error performing the operation'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
