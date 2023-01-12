@@ -126,7 +126,7 @@ const checkTokenService = async (token) => {
 const sendTokenRecoveryPasswordService = async (body) => {
   try {
     const resultToken = cryptography.tokenRecoveryPassword()
-    const result = await user.updateOne(
+    const result = await user.findOneAndUpdate(
       { email: `${body.email}` },
       {
         $set: {
@@ -135,9 +135,11 @@ const sendTokenRecoveryPasswordService = async (body) => {
             date: resultToken.date
           }
         }
-      }
+      },
+      { new: true }
     )
-    if (result.modifiedCount === 1) {
+
+    if (result) {
       emailUtils.utilSendEmail({
         to: body.email,
         from: process.env.SENDER,
@@ -147,7 +149,8 @@ const sendTokenRecoveryPasswordService = async (body) => {
 
       return {
         success: true,
-        message: 'Email successfully sent'
+        message: 'Email successfully sent',
+        data: result
       }
     }
 
