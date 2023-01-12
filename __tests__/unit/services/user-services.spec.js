@@ -147,5 +147,17 @@ describe('User services', () => {
       })
       expect(result.success).toBe(true)
     })
+
+    test('Make sure resetPasswordUserService return 400 if recovery data is incorrect', async () => {
+      try {
+        await services.resetPasswordUserService({
+          email: 'daniel95barboza@gmail.com',
+          token: 'f30e496f-8d8b-4408-93e0-ba2c87df4577',
+          newPassword: 'daniel'
+        })
+      } catch (error) {
+        expect(error.statusCode).toBe(400)
+      }
+    })
   })
 })
