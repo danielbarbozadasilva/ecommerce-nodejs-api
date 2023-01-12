@@ -146,57 +146,6 @@ const registerService = async (body) => {
   }
 }
 
-const listByIdUserService = async (id) => {
-  const resultDB = await user.findById({ _id: id }).populate('store')
-
-  return {
-    success: true,
-    message: 'User listed successfully',
-    data: userMapper.toDTO(resultDB)
-  }
-}
-
-const updateUserService = async (id, body) => {
-  try {
-    const salt = cryptography.createSalt()
-
-    const resultDB = await user.findOneAndUpdate(
-      { _id: id },
-      {
-        $set: {
-          name: body.name,
-          email: body.email,
-          salt,
-          hash: cryptography.createHash(body.password, salt),
-          store: body.store
-        }
-      },
-      { new: true }
-    )
-
-    return {
-      success: true,
-      message: 'User updated successfully',
-      data: userMapper.toDTO(resultDB)
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
-const deleteUserService = async (id) => {
-  try {
-    await user.deleteOne({ _id: id })
-
-    return {
-      success: true,
-      message: 'User deleted successfully'
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
 const sendTokenRecoveryPasswordService = async (body) => {
   try {
     const resultToken = cryptography.tokenRecoveryPassword()
@@ -288,9 +237,6 @@ module.exports = {
   checkPermissionService,
   authService,
   registerService,
-  listByIdUserService,
-  updateUserService,
-  deleteUserService,
   sendTokenRecoveryPasswordService,
   checkTokenRecoveryPasswordService,
   resetPasswordUserService,
