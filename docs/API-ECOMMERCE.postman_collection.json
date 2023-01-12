@@ -46,7 +46,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"daniel95barboza@gmail.com\",\n    \"password\": \"daniel\"\n}",
+							"raw": "{\n    \"email\": \"danielbarboza56@hotmail.com\",\n    \"password\": \"daniel\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -111,7 +111,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"token\": \"640de47f-d822-4381-b8cf-aafdd4359457\"\n\n}",
+							"raw": "{\n    \"token\": \"f30e496f-8d8b-4408-93e0-ba2c87df4577\"\n\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -199,221 +199,7 @@
 					"response": []
 				},
 				{
-					"name": "auth.register",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "in",
-									"value": "header",
-									"type": "string"
-								},
-								{
-									"key": "value",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTUwMzI4OTMsImV4cCI6MTY2NDAzMjg5M30.TzObGL-SoEj_960JGGpDVjfaAUpasR7SI764QXY4dh8",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTUwMzI4OTMsImV4cCI6MTY2NDAzMjg5M30.TzObGL-SoEj_960JGGpDVjfaAUpasR7SI764QXY4dh8",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Daniel\",\r\n    \"email\": \"daniel80barbodddza@gmail.com\",\r\n    \"password\": \"daniel\",\r\n    \"store\": \"631e00f5190d800a90c6fa4d\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3011/v1/register",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"register"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "user",
-			"item": [
-				{
-					"name": "user.listById",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3011/v1/user/632b79881fc6a5c0fa12e54c",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"user",
-								"632b79881fc6a5c0fa12e54c"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "user.update",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"sssssssssssssss\",\r\n    \"email\": \"daniel8011barbozda@gmail.com\",\r\n    \"password\": \"ssssssssssssssss\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3011/v1/user/632b79881fc6a5c0fa12e54c",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"user",
-								"632b79881fc6a5c0fa12e54c"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "user.remove",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:3011/v1/user/632b79881fc6a5c0fa12e54c",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"user",
-								"632b79881fc6a5c0fa12e54c"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "user.sendTokenRecoveryPassword",
+					"name": "auth.sendTokenRecoveryPassword",
 					"event": [
 						{
 							"listen": "test",
@@ -470,7 +256,7 @@
 					"response": []
 				},
 				{
-					"name": "user.resetPassword",
+					"name": "auth.resetPassword",
 					"event": [
 						{
 							"listen": "test",
@@ -553,7 +339,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/client?offset=0&limit=30",
+							"raw": "http://localhost:3011/v1/client",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -562,16 +348,6 @@
 							"path": [
 								"v1",
 								"client"
-							],
-							"query": [
-								{
-									"key": "offset",
-									"value": "0"
-								},
-								{
-									"key": "limit",
-									"value": "30"
-								}
 							]
 						}
 					},
@@ -599,7 +375,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e?offset=0&limit=30",
+							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -609,16 +385,6 @@
 								"v1",
 								"client",
 								"6320f577156b47ff1082586e"
-							],
-							"query": [
-								{
-									"key": "offset",
-									"value": "0"
-								},
-								{
-									"key": "limit",
-									"value": "30"
-								}
 							]
 						}
 					},
@@ -646,7 +412,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/client/search/Silva?offset=0&limit=30",
+							"raw": "http://localhost:3011/v1/client/search?find=Silva",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -655,17 +421,12 @@
 							"path": [
 								"v1",
 								"client",
-								"search",
-								"Silva"
+								"search"
 							],
 							"query": [
 								{
-									"key": "offset",
-									"value": "0"
-								},
-								{
-									"key": "limit",
-									"value": "30"
+									"key": "find",
+									"value": "Silva"
 								}
 							]
 						}
@@ -1508,6 +1269,43 @@
 					"response": []
 				},
 				{
+					"name": "product.listDashboard",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/product/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"product",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "product.listAllAvailable",
 					"request": {
 						"auth": {
@@ -1626,7 +1424,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/product/63432f02a7f855351c99dc71",
+							"raw": "http://localhost:3011/v1/product/63432f02a7f855351c99dc72",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1635,7 +1433,7 @@
 							"path": [
 								"v1",
 								"product",
-								"63432f02a7f855351c99dc71"
+								"63432f02a7f855351c99dc72"
 							]
 						}
 					},
@@ -1711,13 +1509,77 @@
 							}
 						],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Smartphone Samsung Galaxy XCover Pro\",\r\n    \"description\": \"4G 64GB 6.3 Preto 2 Câmeras Traseiras\",\r\n    \"price\": 1999.00,\r\n    \"sku\": \"SMXCPR\",\r\n    \"quantity\": 20,\r\n    \"category\": \"638f00f265f1c700b416aa0c\",\r\n    \"promotion\": 1619.10,\r\n    \"dimensions\": {\r\n        \"height\": 8,\r\n        \"width\": 10,\r\n        \"depth\": 27\r\n    },\r\n    \"weight\": 1,\r\n    \"freeShipping\": false\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "1dddddTeclado Dell Gh5yf",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "1Com fio, Usb",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "19.9",
+									"type": "text"
+								},
+								{
+									"key": "sku",
+									"value": "a1b1c1",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "50",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "6320f577156b47ff1082586e",
+									"type": "text"
+								},
+								{
+									"key": "promotion",
+									"value": "22.5",
+									"type": "text"
+								},
+								{
+									"key": "height",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "width",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "depth",
+									"value": "27",
+									"type": "text"
+								},
+								{
+									"key": "weight",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "freeShipping",
+									"value": "false",
+									"type": "text"
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": [
+										"/C:/Users/pc01/Pictures/img0.jpg",
+										"/C:/Users/pc01/Pictures/maxresdefault.jpg"
+									]
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "http://localhost:3011/v1/product",
@@ -1775,7 +1637,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/product/6347178b594bbd99ff5126a2",
+							"raw": "http://localhost:3011/v1/product/63970c5915c445c9c84a9bee",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1784,7 +1646,7 @@
 							"path": [
 								"v1",
 								"product",
-								"6347178b594bbd99ff5126a2"
+								"63970c5915c445c9c84a9bee"
 							]
 						}
 					},
@@ -1827,12 +1689,12 @@
 								{
 									"key": "files",
 									"type": "file",
-									"src": "/C:/Users/pc01/Downloads/smartphone-samsung-galaxy-xcover-pro-64gb-4gb-tela-6-3-camera-25mp-8mp-preto-101662-1661878779-7.jpg"
+									"src": "/C:/Users/pc01/Pictures/img0.jpg"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/product/images/63970c5915c445c9c84a9bee",
+							"raw": "http://localhost:3011/v1/product/images/63432f02a7f855351c99dc71",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1842,7 +1704,7 @@
 								"v1",
 								"product",
 								"images",
-								"63970c5915c445c9c84a9bee"
+								"63432f02a7f855351c99dc71"
 							]
 						}
 					},
@@ -1921,7 +1783,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/rating?productid=63432f02a7f855351c99dc71",
+							"raw": "http://localhost:3011/v1/rating",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1930,12 +1792,34 @@
 							"path": [
 								"v1",
 								"rating"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rating.Product",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/rating/product/63432f02a7f855351c99dc71",
+							"protocol": "http",
+							"host": [
+								"localhost"
 							],
-							"query": [
-								{
-									"key": "productid",
-									"value": "63432f02a7f855351c99dc71"
-								}
+							"port": "3011",
+							"path": [
+								"v1",
+								"rating",
+								"product",
+								"63432f02a7f855351c99dc71"
 							]
 						}
 					},
@@ -2268,7 +2152,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "\r\n{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"price\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"price\": 429.99,\r\n            \"quantity\": 3\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\",\r\n    \"shipping\": 79.33,\r\n    \"payment\": {\r\n        \"price\": 2569.29,\r\n        \"type\": \"BANKSLIP\",\r\n        \"installments\": 3,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987-200\"\r\n        },\r\n        \"card\": {\r\n            \"fullName\": \"DANIEL BARBOZA DA SILVA\",\r\n            \"areaCode\": \"21\",\r\n            \"phone\": \"(21)2434-1207\",\r\n            \"birthDate\": \"2000-02-09\",\r\n            \"creditCardToken\": \"0ec7d144527b410da270e13e15666294\",\r\n            \"cpf\": \"82429888467\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 79.33,\r\n        \"type\": \"4014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987200\"\r\n        }\r\n    }\r\n}",
+							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"title\": \"Placa de Vídeo RTX 3060\",\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"price\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"title\": \"Intel Core i5-10400F\",\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"price\": 429.99,\r\n            \"quantity\": 3\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\",\r\n    \"shipping\": 79.33,\r\n    \"payment\": {\r\n        \"price\": 2569.29,\r\n        \"type\": \"BOLETO\",\r\n        \"installments\": 3,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987-200\"\r\n        },\r\n        \"card\": {\r\n            \"fullName\": \"DANIEL BARBOZA DA SILVA\",\r\n            \"areaCode\": \"21\",\r\n            \"phone\": \"(21)2434-1207\",\r\n            \"birthDate\": \"2000-02-09\",\r\n            \"creditCardToken\": \"0ec7d144527b410da270e13e15666294\",\r\n            \"cpf\": \"82429888467\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 79.33,\r\n        \"type\": \"4014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987200\"\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
