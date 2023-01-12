@@ -1,3 +1,4 @@
+const { client } = require('../../../api/models/models.index')
 const services = require('../../../api/services/services.user')
 const { createConnection, closeConnection } = require('../../helpers')
 
@@ -157,6 +158,31 @@ describe('User services', () => {
         })
       } catch (error) {
         expect(error.statusCode).toBe(400)
+      }
+    })
+
+    test('Make sure checkIdAuthorizationService return success', async () => {
+      try {
+        const result = await client.findOne({})
+        const permissions = 'client'
+        await services.checkIdAuthorizationService(
+          result.user,
+          result._id,
+          permissions
+        )
+      } catch (error) {
+        expect(error.statusCode).toBe(401)
+      }
+    })
+
+    test('Make sure checkIdAuthorizationService return 401 if data is incorrect', async () => {
+      try {
+        const idToken = ''
+        const userid = ''
+        const permissions = ''
+        await services.checkIdAuthorizationService(idToken, userid, permissions)
+      } catch (error) {
+        expect(error.statusCode).toBe(401)
       }
     })
   })
