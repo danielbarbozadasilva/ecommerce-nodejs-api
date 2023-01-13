@@ -197,6 +197,168 @@
                     }
                 }
             }
+        },
+        "/category": {
+            "get": {
+                "summary": "Listar categorias",
+                "description": "Essa rota é responsável por listar as categorias",
+                "tags": [
+                    "Categoria"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "200": {
+                        "description": "Categories successfully listed"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Criar categoria",
+                "description": "Essa rota é responsável por criar categoria",
+                "tags": [
+                    "Categoria"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "description": "token",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Register_Category"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "403": {
+                        "description": "Usuário não autorizado!"
+                    },
+                    "401": {
+                        "description": "Usuário não autenticado!"
+                    },
+                    "200": {
+                        "description": "Category created successfully"
+                    }
+                }
+            }
+        },
+        "/category/{categoryid}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "categoryid",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "Id da categoria",
+                        "required": true
+                    }
+                ],
+                "summary": "Listar categoria por id",
+                "description": "Essa rota é responsável por listar a categoria por id",
+                "tags": [
+                    "Categoria"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "422": {
+                        "description": "Não existe uma categoria com esse id!"
+                    },
+                    "200": {
+                        "description": "Category listed successfully"
+                    }
+                }
+            },
+            "put": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "description": "token",
+                        "required": true
+                    },
+                    {
+                        "name": "categoryid",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "Id da categoria",
+                        "required": true
+                    }
+                ],
+                "summary": "Atualizar categoria",
+                "description": "Essa rota é responsável por atualizar categoria",
+                "tags": [
+                    "Categoria"
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Register_Category"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "422": {
+                        "description": "Não existe uma categoria com esse id!"
+                    },
+                    "200": {
+                        "description": "Category listed successfully"
+                    }
+                }
+            },
+            "delete": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "description": "token",
+                        "required": true
+                    },
+                    {
+                        "name": "categoryid",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "Id da categoria",
+                        "required": true
+                    }
+                ],
+                "summary": "Deletar categoria",
+                "description": "Essa rota é responsável por deletar categoria",
+                "tags": [
+                    "Categoria"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "422": {
+                        "description": "Não existe uma categoria com esse id!"
+                    },
+                    "200": {
+                        "description": "Category listed successfully"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -239,7 +401,7 @@
                     }
                 }
             },
-            "ResetPassword":{
+            "ResetPassword": {
                 "properties": {
                     "token": {
                         "type": "string",
@@ -252,6 +414,26 @@
                     "newPassword": {
                         "type": "string",
                         "required": true
+                    }
+                }
+            },
+            "Register_Category": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "required": true,
+                        "example": "exemplo"
+                    },
+                    "code": {
+                        "type": "string",
+                        "required": true,
+                        "example": "74635224441223"
+                    },
+                    "files": {
+                        "type": "string",
+                        "required": false,
+                        "format": "binary"
                     }
                 }
             }
