@@ -53,6 +53,10 @@ describe('Product services', () => {
       expect(result.success).toBe(true)
     })
 
-   
+    test('Make sure listByIdProductService has the id property', async () => {
+      const productId = '63432f02a7f855351c99dc72'
+      const result = await services.listByIdProductService(productId)
+      expect(result.data.id).toHaveProperty('id')
+    })
   })
 })
