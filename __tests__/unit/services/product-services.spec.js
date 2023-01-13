@@ -46,5 +46,13 @@ describe('Product services', () => {
       const result = await services.listProductService(sortType)
       expect(result.data[0].id).toHaveProperty('id')
     })
+
+    test('Make sure listByIdProductService return success', async () => {
+      const productId = '63432f02a7f855351c99dc72'
+      const result = await services.listByIdProductService(productId)
+      expect(result.success).toBe(true)
+    })
+
+   
   })
 })
