@@ -32,5 +32,16 @@ describe('Category services', () => {
       const result = await services.listCategoryByIdService(id)
       expect(result.data[0].id).toHaveProperty('id')
     })
+
+    test('Make sure createCategoryService return success', async () => {
+      const data = {
+        name: 'Teclados',
+        code: '21421148302633566',
+        photo: ''
+      }
+      const files = [{ filename: '' }]
+      const result = await services.createCategoryService(data, files)
+      expect(result.success).toBe(true)
+    })
   })
 })
