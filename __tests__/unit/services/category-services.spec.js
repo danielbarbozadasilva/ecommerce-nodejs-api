@@ -6,8 +6,8 @@ describe('Category services', () => {
     createConnection()
   })
 
-  afterAll(() => {
-    closeConnection()
+  afterAll(async () => {
+    await closeConnection()
   })
 
   describe('Category Services', () => {
@@ -48,14 +48,28 @@ describe('Category services', () => {
       try {
         const data = {
           name: '',
-          code: '',
-          photo: ''
+          code: ''
         }
         const files = [{ filename: '' }]
         await services.createCategoryService(data, files)
       } catch (error) {
         expect(error.statusCode).toBe(500)
       }
+    })
+
+    test('Make sure updateCategoryService return success', async () => {
+      const categoryId = '6320f577156b47ff1082586e'
+      const data = {
+        name: 'Teclados',
+        code: '21421148302633566'
+      }
+      const files = [{ filename: '' }]
+      const result = await services.updateCategoryService(
+        categoryId,
+        data,
+        files
+      )
+      expect(result.success).toBe(true)
     })
   })
 })
