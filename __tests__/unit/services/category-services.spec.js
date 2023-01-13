@@ -43,5 +43,19 @@ describe('Category services', () => {
       const result = await services.createCategoryService(data, files)
       expect(result.success).toBe(true)
     })
+
+    test('Make sure createCategoryService return error', async () => {
+      try {
+        const data = {
+          name: '',
+          code: '',
+          photo: ''
+        }
+        const files = [{ filename: '' }]
+        await services.createCategoryService(data, files)
+      } catch (error) {
+        expect(error.statusCode).toBe(500)
+      }
+    })
   })
 })
