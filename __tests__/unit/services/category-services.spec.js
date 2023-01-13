@@ -71,5 +71,34 @@ describe('Category services', () => {
       )
       expect(result.success).toBe(true)
     })
+
+    test('Make sure updateCategoryService return error', async () => {
+      try {
+        const categoryId = '6320f577156b47ff1082586e'
+        const data = {
+          name: 'Teclados',
+          code: '21421148302633566'
+        }
+        const files = [{ filename: '' }]
+        await services.updateCategoryService(categoryId, data, files)
+      } catch (error) {
+        expect(error.statusCode).toBe(500)
+      }
+    })
+
+    test('Make sure deleteCategoryService return success', async () => {
+      const categoryId = '6320f577156b47ff1082586e'
+      const result = await services.deleteCategoryService(categoryId)
+      expect(result.success).toBe(true)
+    })
+
+    test('Make sure deleteCategoryService return error', async () => {
+      try {
+        const categoryId = ''
+        await services.deleteCategoryService(categoryId)
+      } catch (error) {
+        expect(error.statusCode).toBe(500)
+      }
+    })
   })
 })
