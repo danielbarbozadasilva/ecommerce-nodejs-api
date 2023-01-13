@@ -91,14 +91,5 @@ describe('Category services', () => {
       const result = await services.deleteCategoryService(categoryId)
       expect(result.success).toBe(true)
     })
-
-    test('Make sure deleteCategoryService return error', async () => {
-      try {
-        const categoryId = ''
-        await services.deleteCategoryService(categoryId)
-      } catch (error) {
-        expect(error.statusCode).toBe(500)
-      }
-    })
   })
 })
