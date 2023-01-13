@@ -22,6 +22,7 @@ describe('Product services', () => {
       )
       expect(result.success).toBe(true)
     })
+
     test('Make sure listAllProductService has the id property', async () => {
       const sortType = 'alfabetica_z-a'
       const offset = 5
@@ -32,6 +33,18 @@ describe('Product services', () => {
         limit
       )
       expect(result.data[0].data[0].id).toHaveProperty('id')
+    })
+
+    test('Make sure listProductService return success', async () => {
+      const sortType = 'alfabetica_z-a'
+      const result = await services.listProductService(sortType)
+      expect(result.success).toBe(true)
+    })
+
+    test('Make sure listProductService has the id property', async () => {
+      const sortType = 'alfabetica_z-a'
+      const result = await services.listProductService(sortType)
+      expect(result.data[0].id).toHaveProperty('id')
     })
   })
 })
