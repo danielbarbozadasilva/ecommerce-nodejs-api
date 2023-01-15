@@ -200,12 +200,9 @@ const updateProductService = async (body, files, productid) => {
   }
 }
 
-const deleteProductService = async (productid, storeid) => {
+const deleteProductService = async (productid) => {
   try {
-    await product.findOneAndDelete({
-      _id: productid,
-      store: storeid
-    })
+    await product.findOneAndDelete({ _id: productid })
 
     return {
       success: true,
