@@ -1,10 +1,11 @@
 const { ObjectId } = require('mongodb')
 
-export const mockProduct = {
+const mockProduct = {
   title: 'Placa de Vídeo RTX 4090',
   availability: true,
   description: 'GeForce RTX 4090 24GB GDDR6X, DLSS, Ray Tracing',
   photos: [],
+  files: [{ filename: '' }],
   price: 2399.99,
   promotion: 1199.99,
   sku: 'PVNV4090RTX',
@@ -18,4 +19,8 @@ export const mockProduct = {
   weight: 1,
   freeShipping: false,
   category: ObjectId('6320f577156b47ff1082586e')
+}
+
+module.exports = {
+  mockProduct
 }
