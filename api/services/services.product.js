@@ -170,9 +170,11 @@ const createProductService = async (body, files) => {
 const updateProductService = async (body, files, productid) => {
   try {
     const productDB = await product.findOne({ _id: productid })
-    const newImages = files.map((item) => item.filename)
+    const newImages = files?.map((item) => item.filename)
 
-    productDB.photos = productDB.photos.filter((item) => item).concat(newImages)
+    productDB.photos = newImages.length
+      ? productDB?.photos.filter((item) => item).concat(newImages)
+      : productDB.photos
     productDB.title = body.title
     productDB.availability = body.availability
     productDB.description = body.description
