@@ -1,6 +1,6 @@
-const { ObjectId } = require('mongodb')
 const services = require('../../../api/services/services.product')
 const { createConnection, closeConnection } = require('../../helpers')
+const { mockProduct } = require('../../mocks')
 
 describe('Product services', () => {
   beforeAll(() => {
@@ -61,28 +61,15 @@ describe('Product services', () => {
     })
 
     test('Make sure createProductService return success', async () => {
-      const data = {
-        title: 'Placa de Vídeo RTX 4090',
-        availability: true,
-        description: 'GeForce RTX 4090 24GB GDDR6X, DLSS, Ray Tracing',
-        photos: [],
-        price: 2399.99,
-        promotion: 1199.99,
-        sku: 'PVNV4090RTX',
-        quantity: 50,
-        blockedQuantity: 0,
-        dimensions: {
-          height: 8,
-          width: 10,
-          depth: 27
-        },
-        weight: 1,
-        freeShipping: false,
-        category: ObjectId('6320f577156b47ff1082586e')
-      }
-
-      const result = await services.createProductService(data)
+      const result = await services.createProductService(mockProduct)
       expect(result.success).toBe(true)
     })
+
+    test('Make sure createProductService return id property', async () => {
+      const result = await services.createProductService(mockProduct)
+      expect(result.data.id).toHaveProperty('id')
+    })
+
+   
   })
 })
