@@ -92,6 +92,10 @@ describe('Product services', () => {
       expect(result.success).toBe(true)
     })
 
-  
+    test('Make sure listAvailableProductService return id property', async () => {
+      const sortType = 'alfabetica_z-a'
+      const result = await services.listAvailableProductService(sortType)
+      expect(result.data[0].id).toHaveProperty('id')
+    })
   })
 })
