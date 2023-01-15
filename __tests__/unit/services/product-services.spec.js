@@ -70,6 +70,14 @@ describe('Product services', () => {
       expect(result.data.id).toHaveProperty('id')
     })
 
-   
+    test('Make sure updateProductService return success', async () => {
+      const productId = '63432f02a7f855351c99dc71'
+      const result = await services.updateProductService(
+        mockProduct,
+        mockProduct.files,
+        productId
+      )
+      expect(result.success).toBe(true)
+    })
   })
 })
