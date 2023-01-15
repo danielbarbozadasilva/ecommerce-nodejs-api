@@ -99,8 +99,8 @@ describe('Product services', () => {
     })
 
     test('Make sure searchProductService return success', async () => {
-      const offset = 6
-      const limit = 1
+      const offset = 0
+      const limit = 30
       const search = 'Smartphone'
       const sortType = 'alfabetica_z-a'
 
@@ -111,6 +111,21 @@ describe('Product services', () => {
         search
       )
       expect(result.success).toBe(true)
+    })
+
+    test('Make sure searchProductService return id property', async () => {
+      const offset = 0
+      const limit = 30
+      const search = 'Smartphone'
+      const sortType = 'alfabetica_z-a'
+
+      const result = await services.searchProductService(
+        sortType,
+        offset,
+        limit,
+        search
+      )
+      expect(result.data[0].data[0].id).toHaveProperty('id')
     })
   })
 })
