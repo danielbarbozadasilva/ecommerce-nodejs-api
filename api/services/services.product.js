@@ -228,7 +228,7 @@ const listAvailableProductService = async (sort, offset, limit) => {
     return {
       success: true,
       message: 'Products listed successfully',
-      data: resultDB.docs.map((item) => productMapper.toDTO(item))
+      data: resultDB.docs.map((item) => productMapper.toDTOProduct(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
