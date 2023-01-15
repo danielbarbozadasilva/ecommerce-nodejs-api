@@ -85,5 +85,13 @@ describe('Product services', () => {
       const result = await services.deleteProductService(productId)
       expect(result.success).toBe(true)
     })
+
+    test('Make sure listAvailableProductService return success', async () => {
+      const sortType = 'alfabetica_z-a'
+      const result = await services.listAvailableProductService(sortType)
+      expect(result.success).toBe(true)
+    })
+
+  
   })
 })
