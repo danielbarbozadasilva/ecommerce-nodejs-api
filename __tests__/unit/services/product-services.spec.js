@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb')
 const services = require('../../../api/services/services.product')
 const { createConnection, closeConnection } = require('../../helpers')
 
@@ -57,6 +58,31 @@ describe('Product services', () => {
       const productId = '63432f02a7f855351c99dc72'
       const result = await services.listByIdProductService(productId)
       expect(result.data.id).toHaveProperty('id')
+    })
+
+    test('Make sure createProductService return success', async () => {
+      const data = {
+        title: 'Placa de Vídeo RTX 4090',
+        availability: true,
+        description: 'GeForce RTX 4090 24GB GDDR6X, DLSS, Ray Tracing',
+        photos: [],
+        price: 2399.99,
+        promotion: 1199.99,
+        sku: 'PVNV4090RTX',
+        quantity: 50,
+        blockedQuantity: 0,
+        dimensions: {
+          height: 8,
+          width: 10,
+          depth: 27
+        },
+        weight: 1,
+        freeShipping: false,
+        category: ObjectId('6320f577156b47ff1082586e')
+      }
+
+      const result = await services.createProductService(data)
+      expect(result.success).toBe(true)
     })
   })
 })
