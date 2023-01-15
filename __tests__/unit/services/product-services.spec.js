@@ -149,6 +149,21 @@ describe('Product services', () => {
       expect(result.success).toBe(true)
     })
 
+    test('Make sure listCategoryProductsService return id property', async () => {
+      const offset = 0
+      const limit = 30
+      const categoryId = '6320f577156b47ff1082586e'
+      const sortType = 'alfabetica_z-a'
+
+      const result = await services.listCategoryProductsService(
+        sortType,
+        offset,
+        limit,
+        categoryId
+      )
+      expect(result.data[0].data[0].id).toHaveProperty('id')
+    })
+
     test('Make sure deleteProductService return success', async () => {
       const productId = '63432f02a7f855351c99dc71'
       const result = await services.deleteProductService(productId)
