@@ -359,6 +359,357 @@
                     }
                 }
             }
+        },
+        "/category/{categoryid}/product": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "categoryid",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "Id da categoria",
+                        "required": true
+                    }
+                ],
+                "summary": "Listar os produtos de uma categoria",
+                "description": "Essa rota é responsável por listar os produtos de uma categoria",
+                "tags": [
+                    "Categoria"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "422": {
+                        "description": "Não existe uma categoria com esse id!"
+                    },
+                    "200": {
+                        "description": "Products listed successfully"
+                    }
+                }
+            }
+        },
+        "/product": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "sortType",
+                        "in": "query",
+                        "description": "Ordenar por ordem alfabetica_a-z, alfabetica_z-a, price-crescente e price-decrescente",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "summary": "Listar produtos",
+                "description": "Essa rota é responsável por listar os produtos",
+                "tags": [
+                    "Produto"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "200": {
+                        "description": "Products listed successfully"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Criar produto",
+                "description": "Essa rota é responsável por criar produto",
+                "tags": [
+                    "Produto"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "description": "token",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Register_Product"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "403": {
+                        "description": "Usuário não autorizado!"
+                    },
+                    "401": {
+                        "description": "Usuário não autenticado!"
+                    },
+                    "200": {
+                        "description": "Product created successfully"
+                    }
+                }
+            }
+        },
+        "/product/{productid}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "productid",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "Id do produto",
+                        "required": true
+                    }
+                ],
+                "summary": "Listar produto por id",
+                "description": "Essa rota é responsável por listar o produto por id",
+                "tags": [
+                    "Produto"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "422": {
+                        "description": "Não existe uma produto com esse id!"
+                    },
+                    "200": {
+                        "description": "Product listed successfully"
+                    }
+                }
+            },
+            "put": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "description": "token",
+                        "required": true
+                    },
+                    {
+                        "name": "productid",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "Id do produto",
+                        "required": true
+                    }
+                ],
+                "summary": "Atualizar produto",
+                "description": "Essa rota é responsável por atualizar produto",
+                "tags": [
+                    "Produto"
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Register_Product"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "422": {
+                        "description": "Não existe uma produto com esse id!"
+                    },
+                    "200": {
+                        "description": "Product successfully updated"
+                    }
+                }
+            },
+            "delete": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "description": "token",
+                        "required": true
+                    },
+                    {
+                        "name": "productid",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "Id do produto",
+                        "required": true
+                    }
+                ],
+                "summary": "Deletar produto",
+                "description": "Essa rota é responsável por deletar produto",
+                "tags": [
+                    "Produto"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "422": {
+                        "description": "Não existe uma produto com esse id!"
+                    },
+                    "200": {
+                        "description": "Product successfully deleted"
+                    }
+                }
+            }
+        },
+        "/product/dashboard": {
+            "parameters": [
+                {
+                    "name": "sortType",
+                    "in": "query",
+                    "description": "Ordenar por ordem alfabetica_a-z, alfabetica_z-a, price-crescente e price-decrescente",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "summary": "Listar produtos no dashboard",
+                "description": "Essa rota é responsável por listar os produtos no dashboard",
+                "tags": [
+                    "Produto"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "200": {
+                        "description": "Products listed successfully"
+                    }
+                }
+            }
+        },
+        "/product/available": {
+            "parameters": [
+                {
+                    "name": "sortType",
+                    "in": "query",
+                    "description": "Ordenar por ordem alfabetica_a-z, alfabetica_z-a, price-crescente e price-decrescente",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "name": "offset",
+                    "in": "query",
+                    "required": true,
+                    "type": "number"
+                },
+                {
+                    "name": "limit",
+                    "in": "query",
+                    "required": true,
+                    "type": "number"
+                }
+            ],
+            "get": {
+                "summary": "Listar produtos disponíveis",
+                "description": "Essa rota é responsável por listar os produtos disponíveis",
+                "tags": [
+                    "Produto"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "200": {
+                        "description": "Products listed successfully"
+                    }
+                }
+            }
+        },
+        "/product/search/{search}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "path",
+                        "type": "string",
+                        "description": "Nome do produto",
+                        "required": true
+                    },
+                    {
+                        "name": "sortType",
+                        "in": "query",
+                        "description": "Ordenar por ordem alfabetica_a-z, alfabetica_z-a, price-crescente e price-decrescente",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "summary": "Buscar produtos pelo nome",
+                "description": "Essa rota é responsável por buscar produtos pelo nome",
+                "tags": [
+                    "Produto"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "422": {
+                        "description": "Não existe uma produto com esse id!"
+                    },
+                    "200": {
+                        "description": "Product listed successfully"
+                    }
+                }
+            }
+        },
+        "/product/{productid}/rating": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "productid",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "Id do produto",
+                        "required": true
+                    }
+                ],
+                "summary": "Lista as avaliações de um produto específico",
+                "description": "Essa rota é responsável por listar as avaliações de um produto específico",
+                "tags": [
+                    "Produto"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "422": {
+                        "description": "Não existe uma produto com esse id!"
+                    },
+                    "200": {
+                        "description": "Product reviews listed successfully"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -434,6 +785,76 @@
                         "type": "string",
                         "required": false,
                         "format": "binary"
+                    }
+                }
+            },
+            "Register_Product": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "required": true,
+                        "example": "exemplo"
+                    },
+                    "description": {
+                        "type": "string",
+                        "required": true,
+                        "example": "exemplo description"
+                    },
+                    "price": {
+                        "type": "number",
+                        "required": true,
+                        "example": 18.5
+                    },
+                    "promotion": {
+                        "type": "number",
+                        "required": true,
+                        "example": 16.5
+                    },
+                    "sku": {
+                        "type": "string",
+                        "required": true,
+                        "example": "a1b1c1"
+                    },
+                    "quantity": {
+                        "type": "integer",
+                        "required": true,
+                        "example": 20
+                    },
+                    "category": {
+                        "type": "string",
+                        "required": true,
+                        "example": "6320f577156b47ff1082586e"
+                    },
+                    "weight": {
+                        "type": "number",
+                        "required": true,
+                        "example": 20
+                    },
+                    "height": {
+                        "type": "number",
+                        "required": true,
+                        "example": 20
+                    },
+                    "width": {
+                        "type": "number",
+                        "required": true,
+                        "example": 20
+                    },
+                    "depth": {
+                        "type": "number",
+                        "required": true,
+                        "example": 20
+                    },
+                    "files": {
+                        "type": "string",
+                        "required": false,
+                        "format": "binary"
+                    },
+                    "freeShipping": {
+                        "type": "boolean",
+                        "required": true,
+                        "example": true
                     }
                 }
             }
