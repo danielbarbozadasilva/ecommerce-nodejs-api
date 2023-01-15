@@ -79,5 +79,11 @@ describe('Product services', () => {
       )
       expect(result.success).toBe(true)
     })
+
+    test('Make sure deleteProductService return success', async () => {
+      const productId = '63432f02a7f855351c99dc71'
+      const result = await services.deleteProductService(productId)
+      expect(result.success).toBe(true)
+    })
   })
 })
