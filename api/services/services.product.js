@@ -200,24 +200,6 @@ const updateProductService = async (body, files, productid) => {
   }
 }
 
-const updateImageProductService = async (productid, files) => {
-  try {
-    const result = await product.findOne({ _id: productid })
-
-    const newImage = files.map((item) => item.filename)
-    result.photos = result.photos.filter((item) => item).concat(newImage)
-
-    await result.save()
-
-    return {
-      success: true,
-      message: 'Operation performed successfully'
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
 const deleteProductService = async (productid, storeid) => {
   try {
     await product.findOneAndDelete({
@@ -360,7 +342,6 @@ module.exports = {
   listByIdProductService,
   createProductService,
   updateProductService,
-  updateImageProductService,
   deleteProductService,
   listAvailableProductService,
   searchProductService,

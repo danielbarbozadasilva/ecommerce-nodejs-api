@@ -94,28 +94,9 @@ module.exports = (router) => {
       productController.deleteProductController
     )
 
-  router.route('/product/images/:productid').put(
-    authenticationMiddleware(),
-    authorization.authorizationMiddleware('UPLOAD_IMAGE_PRODUCT'),
-    validateDTOMiddleware('params', {
-      productid: joi
-        .string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-          'any.required': '"id" is a required field',
-          'string.empty': '"id" can not be empty',
-          'string.pattern.base': '"id" out of the expected format'
-        })
-    }),
-    verifyIdDbMiddleware.verifyIdProduct,
-    fileUpload.array('files', 4),
-    productController.updateImageProductController
-  )
-
   router.route('/product/search/:search').get(
     validateDTOMiddleware('params', {
-      search: joi.string().allow(null, ''),
+      search: joi.string().allow(null, '')
     }),
     validateDTOMiddleware('query', {
       sortType: joi.string().allow(null, ''),
