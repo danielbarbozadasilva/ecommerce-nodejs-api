@@ -80,12 +80,6 @@ describe('Product services', () => {
       expect(result.success).toBe(true)
     })
 
-    test('Make sure deleteProductService return success', async () => {
-      const productId = '63432f02a7f855351c99dc71'
-      const result = await services.deleteProductService(productId)
-      expect(result.success).toBe(true)
-    })
-
     test('Make sure listAvailableProductService return success', async () => {
       const sortType = 'alfabetica_z-a'
       const result = await services.listAvailableProductService(sortType)
@@ -138,6 +132,27 @@ describe('Product services', () => {
       const productId = '63432f02a7f855351c99dc71'
       const result = await services.listRatingProductService(productId)
       expect(result.data[0].id).toHaveProperty('id')
+    })
+
+    test('Make sure listCategoryProductsService return success', async () => {
+      const offset = 0
+      const limit = 30
+      const productId = '63432f02a7f855351c99dc71'
+      const sortType = 'alfabetica_z-a'
+
+      const result = await services.listCategoryProductsService(
+        sortType,
+        offset,
+        limit,
+        productId
+      )
+      expect(result.success).toBe(true)
+    })
+
+    test('Make sure deleteProductService return success', async () => {
+      const productId = '63432f02a7f855351c99dc71'
+      const result = await services.deleteProductService(productId)
+      expect(result.success).toBe(true)
     })
   })
 })
