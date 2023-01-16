@@ -80,11 +80,11 @@ describe('Client services', () => {
       expect(result.data).toHaveProperty('token')
     })
 
-    // test('Make sure deleteClientService return success', async () => {
-    //   const clientId = '6320f577156b47ff1082586e'
-    //   const result = await services.deleteClientService(clientId)
-    //   expect(result.success).toBe(true)
-    // })
+    test('Make sure deleteClientService return success', async () => {
+      const clientId = '6320f577156b47ff1082586e'
+      const result = await services.deleteClientService(clientId)
+      expect(result.success).toBe(true)
+    })
 
     test('Make sure listByIdClientService return success', async () => {
       const clientId = '6320f577156b47ff1082586e'
