@@ -143,5 +143,16 @@ describe('Client services', () => {
       const result = await services.listClientLikeProductService(clientId)
       expect(result.data[0].id).toHaveProperty('id')
     })
+
+    test('Make sure createLikeProductService return success', async () => {
+      const clientid = '6320f577156b47ff1082586e'
+      const productid = '639702b94bf6b326dbc5ae87'
+      const result = await services.createLikeProductService(
+        clientid,
+        productid
+      )
+      expect(result.success).toBe(true)
+    })
+
   })
 })
