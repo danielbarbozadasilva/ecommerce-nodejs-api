@@ -23,7 +23,7 @@ const mockProduct = {
 
 const clientMock = {
   name: 'Daniel Silva',
-  email: 'daniel@gmail.com',
+  email: 'daniel95barboza@gmail.com',
   cpf: '112.223.434-90',
   phones: ['(21)3454-3456', '(21)99876-7883'],
   address: {
