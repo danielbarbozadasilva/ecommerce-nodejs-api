@@ -268,6 +268,91 @@ db.products.insert([
 }
 ])
 
+db.createCollection("payments")
+db.payments.insert([
+{
+    _id: ObjectId("63c59bb0107f4ce9de7fd638"),
+    price: 2569.29,
+    type: "BOLETO",
+    installments: 3,
+    status: "Aguardando pagamento",
+    address: {
+        street: "Av. Manuel Gomes",
+        number: "1223",
+        complement: "casa",
+        district: "Rio de janeiro",
+        city: "Rio de janeiro",
+        state: "RJ",
+        zipCode: "21987-200"
+    },
+    card: {
+        fullName: "DANIEL BARBOZA DA SILVA",
+        areaCode: "21",
+        phone: "(21)2434-1207",
+        birthDate: "2000-02-09",
+        creditCardToken: "0ec7d144527b410da270e13e15666294",
+        cpf: "82429888467"
+    },
+    addressDeliveryIgualCharging: false,
+    payload: []
+}
+])
+
+db.createCollection("deliveries")
+db.deliveries.insert([
+{
+    _id: ObjectId("63c59bb0107f4ce9de7fd63a"),
+    status: "not started",
+    type: "4014",
+    price: 79.33,
+    deliveryTime: 2,
+    address: {
+        street: "Av. Manuel Gomes",
+        number: "1223",
+        complement: "casa",
+        district: "Rio de janeiro",
+        city: "Rio de janeiro",
+        state: "RJ",
+        zipCode: "21987200"
+    }
+}
+])
+
+db.createCollection("solicitations")
+db.solicitations.insert([
+  {
+    _id: ObjectId("63c59bb0107f4ce9de7fd63d"),
+    cart: [{
+        product: ObjectId("63432f02a7f855351c99dc71"),
+        title: "Placa de Vídeo RTX 3060",
+        quantity: 1,
+        price: 1199.99
+    }, 
+    {
+        product: ObjectId("63432f02a7f855351c99dc72"),
+        title: "Intel Core i5-10400F",
+        quantity: 3,
+        price: 429.99
+    }],
+    shipping: 79.33,
+    solicitationNumber: "4777720845",
+    client: ObjectId("6320f577156b47ff1082586e"),
+    payment: ObjectId("63c59bb0107f4ce9de7fd638"),
+    deliveries: ObjectId("63c59bb0107f4ce9de7fd63a")
+  }
+])
+
+db.createCollection("orderregistrations")
+db.orderregistrations.insert([
+  {
+      "solicitation": ObjectId("63c59bb0107f4ce9de7fd63d"),
+      "type": "solicitation",
+      "situation": "created",
+      "date": "2023-01-16T18:47:12.928Z"
+  }
+])
+
+
 db.createCollection("ratings")
 db.ratings.insert([
   {
