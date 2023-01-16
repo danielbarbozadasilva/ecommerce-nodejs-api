@@ -44,5 +44,11 @@ describe('Client services', () => {
       )
       expect(result.data[0].client.id).toHaveProperty('id')
     })
+
+    test('Make sure listClientSearchService return success', async () => {
+      const search = 'Daniel'
+      const result = await services.listClientSearchService(search)
+      expect(result.success).toBe(true)
+    })
   })
 })
