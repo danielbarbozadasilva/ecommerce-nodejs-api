@@ -87,5 +87,29 @@ describe('Client services', () => {
       const result = await services.listByIdClientService(clientId)
       expect(result.data.id).toHaveProperty('id')
     })
+
+    test('Make sure listSolicitationClientService return success', async () => {
+      const offset = 0
+      const limit = 30
+      const clientId = '6320f577156b47ff1082586e'
+      const result = await services.listSolicitationClientService(
+        offset,
+        limit,
+        clientId
+      )
+      expect(result.success).toBe(true)
+    })
+
+    test('Make sure listSolicitationClientService has the id property', async () => {
+      const offset = 0
+      const limit = 30
+      const clientId = '6320f577156b47ff1082586e'
+      const result = await services.listSolicitationClientService(
+        offset,
+        limit,
+        clientId
+      )
+      expect(result.data[0].id).toHaveProperty('id')
+    })
   })
 })
