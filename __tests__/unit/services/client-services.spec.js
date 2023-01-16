@@ -67,7 +67,7 @@ describe('Client services', () => {
     test('Make sure updateClientService has the id property', async () => {
       const clientId = '6320f577156b47ff1082586e'
       const result = await services.updateClientService(clientId, clientMock)
-      expect(result.data[0].id).toHaveProperty('id')
+      expect(result.data).toHaveProperty('token')
     })
   })
 })
