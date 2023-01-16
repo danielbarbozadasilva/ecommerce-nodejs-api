@@ -21,6 +21,24 @@ const mockProduct = {
   category: ObjectId('6320f577156b47ff1082586e')
 }
 
+const clientMock = {
+  name: 'Daniel Silva',
+  email: 'daniel@gmail.com',
+  cpf: '112.223.434-90',
+  phones: ['(21)3454-3456', '(21)99876-7883'],
+  address: {
+    street: 'Rua abc',
+    number: '123',
+    complement: 'casa',
+    district: 'Rio de janeiro',
+    city: 'RIO DE JANEIRO',
+    zipCode: '21099-100',
+    state: 'RJ'
+  },
+  birthDate: '02/09/2000'
+}
+
 module.exports = {
-  mockProduct
+  mockProduct,
+  clientMock
 }
