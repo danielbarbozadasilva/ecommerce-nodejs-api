@@ -1,4 +1,5 @@
 const { ObjectId } = require('mongodb')
+const faker = require('faker-br')
 
 const mockProduct = {
   title: 'Placa de Vídeo RTX 4090',
@@ -22,8 +23,45 @@ const mockProduct = {
 }
 
 const clientMock = {
+  name: faker.name.firstName(),
+  email: faker.internet.email(),
+  password: 'daniel',
+  cpf: '112.223.434-90',
+  phones: ['(21)3454-3456', '(21)99876-7883'],
+  address: {
+    street: 'Rua abc',
+    number: '123',
+    complement: 'casa',
+    district: 'Rio de janeiro',
+    city: 'RIO DE JANEIRO',
+    zipCode: '21099-100',
+    state: 'RJ'
+  },
+  birthDate: '02/09/2000'
+}
+
+const clientMockInsert = {
+  name: faker.name.firstName(),
+  email: faker.internet.email(),
+  password: 'daniel',
+  cpf: '112.223.434-90',
+  phones: ['(21)3454-3456', '(21)99876-7883'],
+  address: {
+    street: 'Rua abc',
+    number: '123',
+    complement: 'casa',
+    district: 'Rio de janeiro',
+    city: 'RIO DE JANEIRO',
+    zipCode: '21099-100',
+    state: 'RJ'
+  },
+  birthDate: '02/09/2000'
+}
+
+const clientMockUpdate = {
   name: 'Daniel Silva',
   email: 'daniel95barboza@gmail.com',
+  password: 'daniel',
   cpf: '112.223.434-90',
   phones: ['(21)3454-3456', '(21)99876-7883'],
   address: {
@@ -40,5 +78,7 @@ const clientMock = {
 
 module.exports = {
   mockProduct,
-  clientMock
+  clientMock,
+  clientMockInsert,
+  clientMockUpdate
 }
