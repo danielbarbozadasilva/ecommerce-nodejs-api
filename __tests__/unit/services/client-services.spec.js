@@ -32,5 +32,17 @@ describe('Client services', () => {
       )
       expect(result.success).toBe(true)
     })
+
+    test('Make sure listClientSolicitationService has the id property', async () => {
+      const search = 'Daniel'
+      const offset = 0
+      const limit = 30
+      const result = await services.listClientSolicitationService(
+        offset,
+        limit,
+        search
+      )
+      expect(result.data[0].client.id).toHaveProperty('id')
+    })
   })
 })
