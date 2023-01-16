@@ -138,6 +138,9 @@ db.products.insert([
   weight: 1,
   freeShipping: false,
   category: ObjectId("6320f577156b47ff1082586e"),
+  likes: [
+    ObjectId("6320f577156b47ff1082586e")
+  ],
   rating: []
 },
 {
@@ -159,6 +162,9 @@ db.products.insert([
   weight: 1,
   freeShipping: false,
   category: ObjectId("63433ba03a63723e66f5f62d"),
+  likes: [
+    ObjectId("6320f577156b47ff1082586e")
+  ],
   rating: []
 },
 {
