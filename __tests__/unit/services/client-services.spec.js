@@ -154,5 +154,14 @@ describe('Client services', () => {
       expect(result.success).toBe(true)
     })
 
+    test('Make sure removeLikeProductService return success', async () => {
+      const clientid = '6320f577156b47ff1082586e'
+      const productid = '639702b94bf6b326dbc5ae87'
+      const result = await services.removeLikeProductService(
+        clientid,
+        productid
+      )
+      expect(result.success).toBe(true)
+    })
   })
 })
