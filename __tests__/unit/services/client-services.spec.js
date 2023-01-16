@@ -1,5 +1,6 @@
 const services = require('../../../api/services/services.client')
 const { createConnection, closeConnection } = require('../../helpers')
+const { clientMock } = require('../../mocks')
 
 describe('Client services', () => {
   beforeAll(() => {
@@ -56,5 +57,13 @@ describe('Client services', () => {
       const result = await services.listClientSearchService(search)
       expect(result.data[0].id).toHaveProperty('id')
     })
+
+    test('Make sure updateClientService return success', async () => {
+      const clientId = '6320f577156b47ff1082586e'
+      const result = await services.updateClientService(clientId, clientMock)
+      expect(result.success).toBe(true)
+    })
+
+
   })
 })
