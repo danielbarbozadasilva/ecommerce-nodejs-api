@@ -20,5 +20,17 @@ describe('Client services', () => {
       const result = await services.listAllClientsService()
       expect(result.data[0].id).toHaveProperty('id')
     })
+
+    test('Make sure listClientSolicitationService return success', async () => {
+      const search = 'Daniel'
+      const offset = 0
+      const limit = 30
+      const result = await services.listClientSolicitationService(
+        offset,
+        limit,
+        search
+      )
+      expect(result.success).toBe(true)
+    })
   })
 })
