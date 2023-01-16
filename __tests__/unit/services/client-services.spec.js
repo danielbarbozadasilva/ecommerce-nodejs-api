@@ -1,6 +1,10 @@
 const services = require('../../../api/services/services.client')
 const { createConnection, closeConnection } = require('../../helpers')
-const { clientMock } = require('../../mocks')
+const {
+  clientMock,
+  clientMockInsert,
+  clientMockUpdate
+} = require('../../mocks')
 
 describe('Client services', () => {
   beforeAll(() => {
@@ -60,13 +64,19 @@ describe('Client services', () => {
 
     test('Make sure updateClientService return success', async () => {
       const clientId = '6320f577156b47ff1082586e'
-      const result = await services.updateClientService(clientId, clientMock)
+      const result = await services.updateClientService(
+        clientId,
+        clientMockUpdate
+      )
       expect(result.success).toBe(true)
     })
 
-    test('Make sure updateClientService has the id property', async () => {
+    test('Make sure updateClientService has the token property', async () => {
       const clientId = '6320f577156b47ff1082586e'
-      const result = await services.updateClientService(clientId, clientMock)
+      const result = await services.updateClientService(
+        clientId,
+        clientMockUpdate
+      )
       expect(result.data).toHaveProperty('token')
     })
 
@@ -110,6 +120,16 @@ describe('Client services', () => {
         clientId
       )
       expect(result.data[0].id).toHaveProperty('id')
+    })
+
+    test('Make sure createClientService return success', async () => {
+      const result = await services.createClientService(clientMockInsert)
+      expect(result.success).toBe(true)
+    })
+
+    test('Make sure createClientService has the token property', async () => {
+      const result = await services.createClientService(clientMock)
+      expect(result.data).toHaveProperty('token')
     })
   })
 })
