@@ -76,9 +76,14 @@ const clientMockUpdate = {
   birthDate: '02/09/2000'
 }
 
+const mockPayment = {
+  status: 'paga'
+}
+
 module.exports = {
   mockProduct,
   clientMock,
   clientMockInsert,
-  clientMockUpdate
+  clientMockUpdate,
+  mockPayment
 }
