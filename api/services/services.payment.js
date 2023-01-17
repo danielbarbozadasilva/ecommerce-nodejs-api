@@ -103,6 +103,7 @@ const sendEmailAdmPaymentFailed = async (solicitationNumber) => {
     html: emailUpdatePayment.sendAdmEmailPaymentFailed(result.data)
   })
 }
+
 const updateQuantityConfirm = async (id) => {
   try {
     const resultSolicitation = await solicitation.findById(id)
@@ -200,7 +201,6 @@ const updatePaymentService = async (paymentid, body) => {
 }
 
 const createPaymentService = async (paymentid, body) => {
-
   const result = await payment.aggregate([
     { $match: { _id: ObjectId(paymentid) } },
     {
@@ -383,5 +383,11 @@ module.exports = {
   updatePaymentService,
   createPaymentService,
   showNotificationPaymentService,
-  showSessionService
+  showSessionService,
+  sendEmailClientSuccessPaid,
+  sendEmailAdmSuccessfullyPaid,
+  sendEmailClientPaymentFailed,
+  sendEmailAdmPaymentFailed,
+  updateQuantityConfirm,
+  updateQuantityCancelation
 }
