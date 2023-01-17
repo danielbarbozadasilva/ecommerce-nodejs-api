@@ -23,9 +23,18 @@ describe('Payment services', () => {
       expect(result.data.payment).toHaveProperty('id')
     })
 
+    test('Make sure sendEmailClientSuccessPaid return success', async () => {
+      try {
+        const solicitationNumber = '4777720845'
+        expect(
+          await services.sendEmailClientSuccessPaid(solicitationNumber)
+        ).not.toThrow()
+      } catch (error) {}
+    })
+
     test('Make sure sendEmailClientSuccessPaid return error', async () => {
       try {
-        const solicitationNumber = '21223e4e412312313'
+        const solicitationNumber = '2737119823'
         expect(
           await services.sendEmailClientSuccessPaid(solicitationNumber)
         ).toThrow()
