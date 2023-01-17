@@ -136,5 +136,10 @@ describe('Payment services', () => {
       expect(result.success).toBe(true)
     })
 
+    test('Make sure updatePaymentService has the id property', async () => {
+      const paymentId = '63c59bb0107f4ce9de7fd638'
+      const result = await services.updatePaymentService(paymentId, mockPayment)
+      expect(result.data.payment).toHaveProperty('id')
+    })
   })
 })
