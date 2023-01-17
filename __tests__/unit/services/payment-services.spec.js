@@ -1,5 +1,6 @@
 const services = require('../../../api/services/services.payment')
 const { createConnection, closeConnection } = require('../../helpers')
+const { mockPayment } = require('../../mocks')
 
 describe('Payment services', () => {
   beforeAll(() => {
@@ -128,5 +129,12 @@ describe('Payment services', () => {
         ).toThrow()
       } catch (error) {}
     })
+
+    test('Make sure updatePaymentService return success', async () => {
+      const paymentId = '63c59bb0107f4ce9de7fd638'
+      const result = await services.updatePaymentService(paymentId, mockPayment)
+      expect(result.success).toBe(true)
+    })
+
   })
 })
