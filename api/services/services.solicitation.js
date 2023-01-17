@@ -213,7 +213,7 @@ const showCartSolicitationService = async (solicitationNumber) => {
 const sendEmailClientCancelation = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
 
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: result.data.user.email,
     from: process.env.SENDER,
     subject: `E-commerce - Pedido Cancelado!`,
@@ -224,7 +224,7 @@ const sendEmailClientCancelation = async (solicitationNumber) => {
 const sendEmailAdminCancelation = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
 
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: process.env.EMAIL,
     from: process.env.SENDER,
     subject: `E-commerce - Pedido Cancelado!`,
@@ -326,7 +326,7 @@ const checkCard = async (cart, payment, shipping) => {
 const sendEmailAdminSolicitation = async (id) => {
   const result = await showCartSolicitationService(id)
 
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: process.env.EMAIL,
     from: process.env.SENDER,
     subject: `E-commerce - Pedido ${id} recebido!`,
@@ -337,7 +337,7 @@ const sendEmailAdminSolicitation = async (id) => {
 const sendEmailClientSolicitation = async (id) => {
   const result = await showCartSolicitationService(id)
 
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: result.data.user.email,
     from: process.env.SENDER,
     subject: `Pedido ${id} recebido!`,

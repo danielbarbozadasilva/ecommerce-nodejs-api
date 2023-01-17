@@ -66,7 +66,7 @@ const listByIdPaymentService = async (paymentid) => {
 
 const sendEmailClientSuccessPaid = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: result.data.user.email,
     from: process.env.SENDER,
     subject: `E-commerce - Pagamento Confirmado!`,
@@ -76,7 +76,7 @@ const sendEmailClientSuccessPaid = async (solicitationNumber) => {
 
 const sendEmailAdmSuccessfullyPaid = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: process.env.EMAIL,
     from: process.env.SENDER,
     subject: `E-commerce - Pagamento Confirmado!`,
@@ -86,7 +86,7 @@ const sendEmailAdmSuccessfullyPaid = async (solicitationNumber) => {
 
 const sendEmailClientPaymentFailed = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: result.data.user.email,
     from: process.env.SENDER,
     subject: `E-commerce - Pagamento Cancelado!`,
@@ -96,7 +96,7 @@ const sendEmailClientPaymentFailed = async (solicitationNumber) => {
 
 const sendEmailAdmPaymentFailed = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: process.env.EMAIL,
     from: process.env.SENDER,
     subject: `E-commerce - Pagamento Cancelado!`,

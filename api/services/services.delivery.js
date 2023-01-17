@@ -121,7 +121,7 @@ const searchCartSolicitation = async (id) => {
 const sendEmailUpdate = async (id) => {
   const result = await searchCartSolicitation(id)
 
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: result.data.user.email,
     from: process.env.SENDER,
     subject: `E-commerce - Seu pedido saiu para Entrega!`,
