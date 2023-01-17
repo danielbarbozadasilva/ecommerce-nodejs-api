@@ -110,5 +110,23 @@ describe('Payment services', () => {
         expect(await services.updateQuantityConfirm(solicitationId)).toThrow()
       } catch (error) {}
     })
+
+    test('Make sure updateQuantityCancelation return success', async () => {
+      try {
+        const solicitationId = '63c59bb0107f4ce9de7fd63d'
+        expect(
+          await services.updateQuantityCancelation(solicitationId)
+        ).not.toThrow()
+      } catch (error) {}
+    })
+
+    test('Make sure updateQuantityCancelation return error', async () => {
+      try {
+        const solicitationId = '61c59bb0107f4ce9de7fd32c'
+        expect(
+          await services.updateQuantityCancelation(solicitationId)
+        ).toThrow()
+      } catch (error) {}
+    })
   })
 })
