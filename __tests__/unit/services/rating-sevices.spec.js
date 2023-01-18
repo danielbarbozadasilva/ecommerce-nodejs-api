@@ -15,5 +15,9 @@ describe('Rating services', () => {
       const result = await services.listAllRatingService()
       expect(result.success).toBe(true)
     })
+    test('Make sure listAllRatingService has the id property', async () => {
+      const result = await services.listAllRatingService()
+      expect(result.data[0].id).toHaveProperty('id')
+    })
   })
 })
