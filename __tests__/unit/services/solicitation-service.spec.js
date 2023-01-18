@@ -152,5 +152,19 @@ describe('Solicitation services', () => {
         ).toThrow()
       } catch (error) {}
     })
+
+    test('Make sure verifyQuantity return success', async () => {
+      try {
+        expect(
+          await services.verifyQuantity(mockSolicitationSuccess)
+        ).not.toThrow()
+      } catch (error) {}
+    })
+
+    test('Make sure verifyQuantity return error', async () => {
+      try {
+        expect(await services.verifyQuantity(mockSolicitationError)).toThrow()
+      } catch (error) {}
+    })
   })
 })
