@@ -7,8 +7,8 @@ describe('User services', () => {
     createConnection()
   })
 
-  afterAll(() => {
-    closeConnection()
+  afterAll(async () => {
+    await closeConnection()
   })
 
   describe('User Services', () => {
