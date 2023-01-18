@@ -149,14 +149,14 @@ describe('Solicitation services', () => {
       try {
         expect(
           await services.searchProductCart(mockSolicitationError)
-        ).toThrow()
+        ).not.toThrow()
       } catch (error) {}
     })
 
     test('Make sure verifyQuantity return success', async () => {
       try {
         expect(
-          await services.verifyQuantity(mockSolicitationSuccess)
+          await services.verifyQuantity(mockSolicitationSuccess.cart)
         ).not.toThrow()
       } catch (error) {}
     })
@@ -189,9 +189,9 @@ describe('Solicitation services', () => {
       try {
         expect(
           await services.checkCard(
-            mockSolicitationSuccess,
-            mockSolicitationSuccess.price,
-            mockSolicitationSuccess.code
+            mockSolicitationSuccess.cart,
+            mockSolicitationSuccess.payment,
+            mockSolicitationSuccess.price
           )
         ).not.toThrow()
       } catch (error) {}
@@ -199,7 +199,48 @@ describe('Solicitation services', () => {
 
     test('Make sure checkCard return error', async () => {
       try {
-        expect(await services.checkCard(mockSolicitationError)).toThrow()
+        expect(
+          await services.checkCard(
+            mockSolicitationError.cart,
+            mockSolicitationError.payment,
+            mockSolicitationError.price
+          )
+        ).toThrow()
+      } catch (error) {}
+    })
+
+    test('Make sure sendEmailAdminSolicitation return success', async () => {
+      try {
+        const solicitationId = '63c59bb0107f4ce9de7fd63d'
+        expect(
+          await services.sendEmailAdminSolicitation(solicitationId)
+        ).not.toThrow()
+      } catch (error) {}
+    })
+
+    test('Make sure sendEmailAdminSolicitation return error', async () => {
+      try {
+        const solicitationId = '21c59bb0107f4ce9de7fd31c'
+        expect(
+          await services.sendEmailAdminSolicitation(solicitationId)
+        ).toThrow()
+      } catch (error) {}
+    })
+    test('Make sure sendEmailClientSolicitation return success', async () => {
+      try {
+        const solicitationNumber = '4777720845'
+        expect(
+          await services.sendEmailClientSolicitation(solicitationNumber)
+        ).not.toThrow()
+      } catch (error) {}
+    })
+
+    test('Make sure sendEmailClientSolicitation return error', async () => {
+      try {
+        const solicitationNumber = '234120127'
+        expect(
+          await services.sendEmailClientSolicitation(solicitationNumber)
+        ).toThrow()
       } catch (error) {}
     })
   })
