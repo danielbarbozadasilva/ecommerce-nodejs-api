@@ -39,6 +39,9 @@ describe('Rating services', () => {
       expect(result.success).toBe(true)
     })
 
-  
+    test('Make sure createRatingProductService has the id property', async () => {
+      const result = await services.createRatingProductService(mockRating)
+      expect(result.data.id).toHaveProperty('id')
+    })
   })
 })
