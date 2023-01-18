@@ -1168,6 +1168,190 @@
                     }
                 }
             }
+        },
+        "/payment/session": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "description": "token",
+                        "required": true
+                    }
+                ],
+                "summary": "Responsável por gerar o código da sessão no pagseguro",
+                "description": "Essa rota é responsável por gerar o código da sessão no pagseguro",
+                "tags": [
+                    "Pagamento"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "403": {
+                        "description": "Usuário não autorizado!"
+                    },
+                    "401": {
+                        "description": "Usuário não autenticado!"
+                    },
+                    "422": {
+                        "description": "Não existe um pagamento com esse id!"
+                    },
+                    "200": {
+                        "description": "Sesson id listed successfully"
+                    }
+                }
+            }
+        },
+        "/payment/{paymentid}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "description": "token",
+                        "required": true
+                    },
+                    {
+                        "name": "paymentid",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "Id do pagamento",
+                        "required": true
+                    }
+                ],
+                "summary": "Listar informações sobre o pagamento por id",
+                "description": "Essa rota é responsável por listar informações sobre o pagamento",
+                "tags": [
+                    "Pagamento"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "403": {
+                        "description": "Usuário não autorizado!"
+                    },
+                    "401": {
+                        "description": "Usuário não autenticado!"
+                    },
+                    "422": {
+                        "description": "Não existe um pagamento com esse id!"
+                    },
+                    "200": {
+                        "description": "Payment listed successfully"
+                    }
+                }
+            },
+            "put": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "description": "token",
+                        "required": true
+                    },
+                    {
+                        "name": "paymentid",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "Id do pagamento",
+                        "required": true
+                    }
+                ],
+                "summary": "Atualizar o status do pagamento",
+                "description": "Essa rota é responsável por atualizar o status do pagamento",
+                "tags": [
+                    "Pagamento"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PaymentUpdate"
+                            },
+                            "examples": {
+                                "PaymentUpdate": {
+                                    "value": {
+                                        "status": "paga"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "403": {
+                        "description": "Usuário não autorizado!"
+                    },
+                    "401": {
+                        "description": "Usuário não autenticado!"
+                    },
+                    "422": {
+                        "description": "Não existe um pagamento com esse id!"
+                    },
+                    "200": {
+                        "description": "Payment listed successfully"
+                    }
+                }
+            }
+        },
+        "/take/payment/{paymentid}": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "description": "token",
+                        "required": true
+                    },
+                    {
+                        "name": "paymentid",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "Id do pagamento",
+                        "required": true
+                    }
+                ],
+                "summary": "Realizar comunicação com o sistema do pagseguro",
+                "description": "Essa rota é responsável por realizar comunicação com o sistema do pagseguro a respeito da transação",
+                "tags": [
+                    "Pagamento"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PaymentSenderHash"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "403": {
+                        "description": "Usuário não autorizado!"
+                    },
+                    "401": {
+                        "description": "Usuário não autenticado!"
+                    },
+                    "422": {
+                        "description": "Não existe um pagamento com esse id!"
+                    },
+                    "200": {
+                        "description": "Sales communication made successfully to Pagseguro"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -1464,6 +1648,26 @@
                                 "example": "Rio de janeiro"
                             }
                         }
+                    }
+                }
+            },
+            "PaymentUpdate": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "required": true,
+                        "example": "paga"
+                    }
+                }
+            },
+            "PaymentSenderHash": {
+                "type": "object",
+                "properties": {
+                    "senderHash": {
+                        "type": "string",
+                        "required": true,
+                        "example": "d284d430f23f523754a640475cb9e4699a9cff402c71f00c34c9de5f3b57a982"
                     }
                 }
             }
