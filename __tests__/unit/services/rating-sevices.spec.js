@@ -43,5 +43,25 @@ describe('Rating services', () => {
       const result = await services.createRatingProductService(mockRating)
       expect(result.data.id).toHaveProperty('id')
     })
+
+    test('Make sure listByIdRatingProductService return success', async () => {
+      const ratingid = '638a22b10ef44976d168711e'
+      const productid = '63432f02a7f855351c99dc71'
+      const result = await services.listByIdRatingProductService(
+        ratingid,
+        productid
+      )
+      expect(result.success).toBe(true)
+    })
+
+    test('Make sure listByIdRatingProductService has the id property', async () => {
+      const ratingid = '638a22b10ef44976d168711e'
+      const productid = '63432f02a7f855351c99dc71'
+      const result = await services.listByIdRatingProductService(
+        ratingid,
+        productid
+      )
+      expect(result.data.id).toHaveProperty('id')
+    })
   })
 })
