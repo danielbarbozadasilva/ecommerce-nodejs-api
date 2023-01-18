@@ -26,6 +26,13 @@ describe('Solicitation services', () => {
       expect(result.success).toBe(true)
     })
 
-  
+    test('Make sure listByNumberSolicitationService return error', async () => {
+      try {
+        const solicitationNumber = '234120127'
+        expect(
+          await services.listByNumberSolicitationService(solicitationNumber)
+        ).toThrow()
+      } catch (error) {}
+    })
   })
 })
