@@ -62,5 +62,23 @@ describe('Solicitation services', () => {
         ).toThrow()
       } catch (error) {}
     })
+
+    test('Make sure showCartSolicitationService return success', async () => {
+      try {
+        const solicitationId = '63c59bb0107f4ce9de7fd63d'
+        expect(
+          await services.showCartSolicitationService(solicitationId)
+        ).not.toThrow()
+      } catch (error) {}
+    })
+
+    test('Make sure showCartSolicitationService return error', async () => {
+      const solicitationId = '21c59bb0107f4ce9de7fd31c'
+      try {
+        expect(
+          await services.showCartSolicitationService(solicitationId)
+        ).toThrow()
+      } catch (error) {}
+    })
   })
 })
