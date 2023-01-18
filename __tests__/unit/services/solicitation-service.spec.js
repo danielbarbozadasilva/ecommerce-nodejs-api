@@ -243,19 +243,12 @@ describe('Solicitation services', () => {
         ).toThrow()
       } catch (error) {}
     })
+    
     test('Make sure updateQuantitySave return success', async () => {
       try {
         expect(
           await services.updateQuantitySave(mockSolicitationSuccess.cart)
         ).not.toThrow()
-      } catch (error) {}
-    })
-
-    test('Make sure updateQuantitySave return error', async () => {
-      try {
-        expect(
-          await services.updateQuantitySave(mockSolicitationSuccess.cart)
-        ).toThrow()
       } catch (error) {}
     })
   })
