@@ -111,6 +111,42 @@ const mockDeliveryShipping = {
   zipCode: '21987-200'
 }
 
+const mockSolicitationSuccess = {
+  cart: [
+    {
+      product: '63432f02a7f855351c99dc71',
+      price: 1199.99,
+      quantity: '1',
+      title: 'produto01'
+    },
+    {
+      product: '63432f02a7f855351c99dc72',
+      price: 429.99,
+      quantity: '3',
+      title: 'produto02'
+    }
+  ],
+  zipCode: '21987-200'
+}
+
+const mockSolicitationError = {
+  cart: [
+    {
+      product: '13432f02a7f855351c99dc09',
+      price: 2299.99,
+      quantity: '1',
+      title: 'produto01'
+    },
+    {
+      product: '13432f02a7f855351c99dc90',
+      price: 129.99,
+      quantity: '3',
+      title: 'produto02'
+    }
+  ],
+  zipCode: '21987-200'
+}
+
 module.exports = {
   mockProduct,
   clientMock,
@@ -119,5 +155,7 @@ module.exports = {
   mockPayment,
   mockRating,
   mockDelivery,
-  mockDeliveryShipping
+  mockDeliveryShipping,
+  mockSolicitationSuccess,
+  mockSolicitationError
 }
