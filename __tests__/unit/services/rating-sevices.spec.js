@@ -63,5 +63,15 @@ describe('Rating services', () => {
       )
       expect(result.data.id).toHaveProperty('id')
     })
+
+    test('Make sure deleteRatingProductService return success', async () => {
+      const clientid = '6320f577156b47ff1082586e'
+      const productid = '63432f02a7f855351c99dc71'
+      const result = await services.deleteRatingProductService(
+        clientid,
+        productid
+      )
+      expect(result.success).toBe(true)
+    })
   })
 })
