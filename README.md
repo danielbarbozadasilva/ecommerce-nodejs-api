@@ -6,7 +6,7 @@ O Sistema tem o objetivo de listar os produtos e efetuar o gerenciamento destes.
 
 Os usuários do sistema são o Cliente e o Administrador. Todos possuem acesso ao sistema e a seu respectivo espaço. Além disso o Sistema conta com uma tela inicial que permite ao público navegar de modo simples através de filtros entre as categorias, produtos e avaliações.
 
-A API foi desenvolvida utilizando o NodeJs, ExpressJs e Banco de dados MongoDB. Foi realizada a integração com o PagSeguro.
+A API foi desenvolvida utilizando o NodeJs, ExpressJs e Banco de dados MongoDB. Foi realizada a integração com o PagSeguro. Documentação utilizando o Swagger. Testes unitários e de integração utilizando o Jest e Supertest.
 <br/>
 <br/>
 
@@ -205,6 +205,8 @@ RF015 – O sistema deve calcular o valor de entrega dos produtos.
 * Docker
 * Mongoose
 * PagSeguro
+* Jest
+* Supertest
 * SendGrid
 * Swagger
 * Git
