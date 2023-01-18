@@ -114,19 +114,57 @@ const mockDeliveryShipping = {
 const mockSolicitationSuccess = {
   cart: [
     {
+      title: 'Placa de Vídeo RTX 3060',
       product: '63432f02a7f855351c99dc71',
       price: 1199.99,
-      quantity: '1',
-      title: 'produto01'
+      quantity: 1
     },
     {
+      title: 'Intel Core i5-10400F',
       product: '63432f02a7f855351c99dc72',
       price: 429.99,
-      quantity: '3',
-      title: 'produto02'
+      quantity: 3
     }
   ],
-  zipCode: '21987-200'
+  zipCode: '21987-200',
+  shipping: 79.33,
+  payment: {
+    price: 2569.29,
+    type: 'BOLETO',
+    installments: 1,
+    addressDeliveryIgualCharging: false,
+    address: {
+      street: 'Av. Manuel Gomes',
+      number: '1223',
+      complement: 'casa',
+      district: 'Rio de janeiro',
+      city: 'Rio de janeiro',
+      state: 'RJ',
+      zipCode: '21987-200'
+    },
+    card: {
+      fullName: 'DANIEL BARBOZA DA SILVA',
+      areaCode: '21',
+      phone: '(21)2434-1207',
+      birthDate: '2000-02-09',
+      creditCardToken: '0ec7d144527b410da270e13e15666294',
+      cpf: '82429888467'
+    }
+  },
+  deliveries: {
+    price: 79.33,
+    type: '4014',
+    deliveryTime: 2,
+    address: {
+      street: 'Av. Manuel Gomes',
+      number: '1223',
+      complement: 'casa',
+      district: 'Rio de janeiro',
+      city: 'Rio de janeiro',
+      state: 'RJ',
+      zipCode: '21987200'
+    }
+  }
 }
 
 const mockSolicitationError = {
@@ -144,7 +182,21 @@ const mockSolicitationError = {
       title: 'produto02'
     }
   ],
-  zipCode: '21987-200'
+  card: {
+    fullName: 'DANIEL BARBOZA DA SILVA',
+    areaCode: '21',
+    phone: '(21)2434-1207',
+    birthDate: '2000-02-09',
+    creditCardToken: '0ec7d144527b410da270e13e15666294',
+    cpf: '82429888467'
+  },
+  zipCode: '21987-200',
+  price: 79.33,
+  code: '4014',
+  payment: {
+    price: 2569.29,
+    installments: 3
+  }
 }
 
 module.exports = {
