@@ -1,6 +1,7 @@
 const request = require('supertest')
 const app = require('../../api/app')
 const { createConnection, closeConnection } = require('../helpers')
+const services = require('../../api/services/services.user')
 
 describe('Auth Routes', () => {
   beforeAll(() => {
@@ -31,5 +32,19 @@ describe('Auth Routes', () => {
         })
         .expect(401)
     })
+
+    test('Make sure /v1/check-token return 200 if the token are valid', async () => {
+      const email = 'daniel95barboza@gmail.com'
+      const password = 'daniel'
+      const auth = await services.authService(email, password)
+      await request(app)
+        .post('/v1/check-token')
+        .send({
+          token: auth.data.token
+        })
+        .expect(200)
+    })
+
+  
   })
 })
