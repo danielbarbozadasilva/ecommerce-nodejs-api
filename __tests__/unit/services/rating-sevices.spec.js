@@ -1,5 +1,6 @@
 const services = require('../../../api/services/services.rating')
 const { createConnection, closeConnection } = require('../../helpers')
+const { mockRating } = require('../../mocks')
 
 describe('Rating services', () => {
   beforeAll(() => {
@@ -32,5 +33,12 @@ describe('Rating services', () => {
       const result = await services.listRatingProductService(productId)
       expect(result.data[0].id).toHaveProperty('id')
     })
+
+    test('Make sure createRatingProductService return success', async () => {
+      const result = await services.createRatingProductService(mockRating)
+      expect(result.success).toBe(true)
+    })
+
+  
   })
 })
