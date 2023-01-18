@@ -73,10 +73,28 @@ describe('Solicitation services', () => {
     })
 
     test('Make sure showCartSolicitationService return error', async () => {
-      const solicitationId = '21c59bb0107f4ce9de7fd31c'
       try {
+        const solicitationId = '21c59bb0107f4ce9de7fd31c'
         expect(
           await services.showCartSolicitationService(solicitationId)
+        ).toThrow()
+      } catch (error) {}
+    })
+
+    test('Make sure sendEmailClientCancelation return success', async () => {
+      try {
+        const solicitationNumber = '4777720845'
+        expect(
+          await services.sendEmailClientCancelation(solicitationNumber)
+        ).not.toThrow()
+      } catch (error) {}
+    })
+
+    test('Make sure sendEmailClientCancelation return error', async () => {
+      try {
+        const solicitationNumber = '8934110221'
+        expect(
+          await services.sendEmailClientCancelation(solicitationNumber)
         ).toThrow()
       } catch (error) {}
     })
