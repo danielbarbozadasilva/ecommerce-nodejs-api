@@ -45,6 +45,13 @@ describe('Auth Routes', () => {
         .expect(200)
     })
 
-  
+    test('Make sure /v1/check-token return 400 if the token are not valid', async () => {
+      await request(app)
+        .post('/v1/check-token')
+        .send({
+          token: ''
+        })
+        .expect(400)
+    })
   })
 })
