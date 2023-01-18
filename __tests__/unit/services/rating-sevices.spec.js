@@ -26,5 +26,11 @@ describe('Rating services', () => {
       const result = await services.listRatingProductService(productId)
       expect(result.success).toBe(true)
     })
+
+    test('Make sure listRatingProductService has the id property', async () => {
+      const productId = '63432f02a7f855351c99dc71'
+      const result = await services.listRatingProductService(productId)
+      expect(result.data[0].id).toHaveProperty('id')
+    })
   })
 })
