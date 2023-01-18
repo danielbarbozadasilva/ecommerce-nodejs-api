@@ -166,5 +166,41 @@ describe('Solicitation services', () => {
         expect(await services.verifyQuantity(mockSolicitationError)).toThrow()
       } catch (error) {}
     })
+
+    test('Make sure verifyShipping return success', async () => {
+      try {
+        expect(
+          await services.verifyShipping(
+            mockSolicitationSuccess,
+            mockSolicitationSuccess.price,
+            mockSolicitationSuccess.code
+          )
+        ).not.toThrow()
+      } catch (error) {}
+    })
+
+    test('Make sure verifyShipping return error', async () => {
+      try {
+        expect(await services.verifyShipping(mockSolicitationError)).toThrow()
+      } catch (error) {}
+    })
+
+    test('Make sure checkCard return success', async () => {
+      try {
+        expect(
+          await services.checkCard(
+            mockSolicitationSuccess,
+            mockSolicitationSuccess.price,
+            mockSolicitationSuccess.code
+          )
+        ).not.toThrow()
+      } catch (error) {}
+    })
+
+    test('Make sure checkCard return error', async () => {
+      try {
+        expect(await services.checkCard(mockSolicitationError)).toThrow()
+      } catch (error) {}
+    })
   })
 })
