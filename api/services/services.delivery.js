@@ -177,7 +177,7 @@ const calculateShippingService = async (body) => {
         $in: productId
       }
     })
-    
+
     const box = calcBox(productDB)
 
     const totalWeight = productDB.reduce(
@@ -218,6 +218,8 @@ const calculateShippingService = async (body) => {
 
 module.exports = {
   listByIdDeliveryService,
+  searchCartSolicitation,
   updateDeliveryService,
-  calculateShippingService
+  calculateShippingService,
+  sendEmailUpdate
 }
