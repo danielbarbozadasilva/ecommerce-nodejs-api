@@ -226,6 +226,7 @@ describe('Solicitation services', () => {
         ).toThrow()
       } catch (error) {}
     })
+
     test('Make sure sendEmailClientSolicitation return success', async () => {
       try {
         const solicitationNumber = '4777720845'
@@ -243,13 +244,22 @@ describe('Solicitation services', () => {
         ).toThrow()
       } catch (error) {}
     })
-    
+
     test('Make sure updateQuantitySave return success', async () => {
       try {
         expect(
           await services.updateQuantitySave(mockSolicitationSuccess.cart)
         ).not.toThrow()
       } catch (error) {}
+    })
+
+    test('Make sure createSolicitationService return success', async () => {
+      const clientId = '6320f577156b47ff1082586e'
+      const result = await services.createSolicitationService(
+        clientId,
+        mockSolicitationSuccess
+      )
+      expect(result.success).toBe(true)
     })
   })
 })
