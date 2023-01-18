@@ -80,10 +80,19 @@ const mockPayment = {
   status: 'paga'
 }
 
+const mockRating = {
+  name: 'Daniel Barboza',
+  text: 'Gostei muito do produto',
+  score: 5,
+  clientid: '6320f577156b47ff1082586e',
+  productid: '63432f02a7f855351c99dc71'
+}
+
 module.exports = {
   mockProduct,
   clientMock,
   clientMockInsert,
   clientMockUpdate,
-  mockPayment
+  mockPayment,
+  mockRating
 }
