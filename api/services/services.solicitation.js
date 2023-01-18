@@ -420,5 +420,15 @@ module.exports = {
   listByNumberSolicitationService,
   deleteSolicitationService,
   showCartSolicitationService,
-  createSolicitationService
+  createSolicitationService,
+  updateQuantityCancelation,
+  sendEmailClientCancelation,
+  sendEmailAdminCancelation,
+  searchProductCart,
+  verifyQuantity,
+  verifyShipping,
+  checkCard,
+  sendEmailAdminSolicitation,
+  sendEmailClientSolicitation,
+  updateQuantitySave
 }
