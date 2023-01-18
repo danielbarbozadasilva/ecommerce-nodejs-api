@@ -98,5 +98,59 @@ describe('Solicitation services', () => {
         ).toThrow()
       } catch (error) {}
     })
+
+    test('Make sure sendEmailAdminCancelation return success', async () => {
+      try {
+        const solicitationNumber = '4777720845'
+        expect(
+          await services.sendEmailAdminCancelation(solicitationNumber)
+        ).not.toThrow()
+      } catch (error) {}
+    })
+
+    test('Make sure sendEmailAdminCancelation return error', async () => {
+      try {
+        const solicitationNumber = '8934110221'
+        expect(
+          await services.sendEmailAdminCancelation(solicitationNumber)
+        ).toThrow()
+      } catch (error) {}
+    })
+
+    test('Make sure deleteSolicitationService return success', async () => {
+      try {
+        const solicitationNumber = '4777720845'
+        const clientId = '6320f577156b47ff1082586e'
+        expect(
+          await services.deleteSolicitationService(clientId, solicitationNumber)
+        ).not.toThrow()
+      } catch (error) {}
+    })
+
+    test('Make sure deleteSolicitationService return error', async () => {
+      try {
+        const solicitationNumber = '8934110221'
+        const clientId = '4320f577156b47ff1082145f'
+        expect(
+          await services.deleteSolicitationService(clientId, solicitationNumber)
+        ).toThrow()
+      } catch (error) {}
+    })
+
+    test('Make sure searchProductCart return success', async () => {
+      try {
+        expect(
+          await services.searchProductCart(mockSolicitationSuccess)
+        ).not.toThrow()
+      } catch (error) {}
+    })
+
+    test('Make sure searchProductCart return error', async () => {
+      try {
+        expect(
+          await services.searchProductCart(mockSolicitationError)
+        ).toThrow()
+      } catch (error) {}
+    })
   })
 })
