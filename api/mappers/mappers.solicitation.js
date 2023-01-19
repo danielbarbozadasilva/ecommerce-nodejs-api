@@ -79,7 +79,7 @@ const toDTO = (model) => ({
     title: item.title,
     availability: item.availability,
     description: item.description,
-    photos: formatAddressImage(item),
+    photos: item.photos.map((data) => formatAddressImage(data)),
     price: formatPriceBr(item.price),
     promotion: formatPriceBr(item.promotion),
     sku: item.sku,

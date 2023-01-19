@@ -66,9 +66,9 @@ const verifyIdSolicitation = async (req, res, next) => {
 const verifyIsAlreadyCanceledSolicitation = async (req, res, next) => {
   const solicitationDB = await solicitation.findOne({
     solicitationNumber: req.params.solicitationNumber,
-    canceled: false
+    canceled: true
   })
-  if (!solicitationDB) {
+  if (solicitationDB) {
     throw new ErrorUnprocessableEntity(`This order has already been cancelled!`)
   }
   next()
