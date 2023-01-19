@@ -34,7 +34,7 @@ const checkPermissionService = (permissions, rule) => {
   const check = result[0]?.rule?.includes(rule)
 
   if (!check) {
-    throw new ErrorNotAuthorizedUser('Usuário não autorizado!')
+    throw new ErrorNotAuthorizedUser('Unauthorized user')
   }
   return !!check
 }
@@ -208,7 +208,7 @@ const checkIdAuthorizationService = async (idToken, userid, permissions) => {
 
     if (!userDB && idToken != userid) {
       throw new ErrorNotAuthorizedUser(
-        "Usuário não autorizado! Você só pode realizar a operação usando o seu próprio 'Id'"
+        "Unauthorized user Você só pode realizar a operação usando o seu próprio 'Id'"
       )
     }
   }

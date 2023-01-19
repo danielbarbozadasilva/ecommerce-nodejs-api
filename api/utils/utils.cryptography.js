@@ -107,7 +107,7 @@ const tokenIsValid = (token) => {
   try {
     jwt?.verify(token, jwtHashSecret)
   } catch (err) {
-    throw new ErrorNotAuthenticatedUser('Usuário não autenticado!')
+    throw new ErrorNotAuthenticatedUser('Unauthenticated user!')
   }
 }
 

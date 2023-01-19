@@ -161,7 +161,7 @@ const updateDeliveryService = async (body, id) => {
 
     return {
       success: true,
-      message: 'Request updated successfully!',
+      message: 'Delivery updated successfully!',
       data: deliveryMapper.toDTOList(resultDB)
     }
   } catch (err) {
