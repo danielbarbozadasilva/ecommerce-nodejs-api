@@ -152,7 +152,7 @@
                         "description": "Internal Server Error!"
                     },
                     "404": {
-                        "description": "E-mail inválido!"
+                        "description": "Invalid email"
                     },
                     "200": {
                         "description": "Email successfully sent"
@@ -243,10 +243,10 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Usuário não autorizado!"
+                        "description": "Unauthorized user"
                     },
                     "401": {
-                        "description": "Usuário não autenticado!"
+                        "description": "Unauthenticated user!"
                     },
                     "200": {
                         "description": "Category created successfully"
@@ -275,7 +275,7 @@
                         "description": "Internal Server Error!"
                     },
                     "422": {
-                        "description": "Não existe uma categoria com esse id!"
+                        "description": "There is no category with that id!"
                     },
                     "200": {
                         "description": "Category listed successfully"
@@ -318,7 +318,7 @@
                         "description": "Internal Server Error!"
                     },
                     "422": {
-                        "description": "Não existe uma categoria com esse id!"
+                        "description": "There is no category with that id!"
                     },
                     "200": {
                         "description": "Category listed successfully"
@@ -352,7 +352,7 @@
                         "description": "Internal Server Error!"
                     },
                     "422": {
-                        "description": "Não existe uma categoria com esse id!"
+                        "description": "There is no category with that id!"
                     },
                     "200": {
                         "description": "Category listed successfully"
@@ -381,7 +381,7 @@
                         "description": "Internal Server Error!"
                     },
                     "422": {
-                        "description": "Não existe uma categoria com esse id!"
+                        "description": "There is no category with that id!"
                     },
                     "200": {
                         "description": "Products listed successfully"
@@ -455,10 +455,10 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Usuário não autorizado!"
+                        "description": "Unauthorized user"
                     },
                     "401": {
-                        "description": "Usuário não autenticado!"
+                        "description": "Unauthenticated user!"
                     },
                     "200": {
                         "description": "Product created successfully"
@@ -732,10 +732,10 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Usuário não autorizado!"
+                        "description": "Unauthorized user"
                     },
                     "401": {
-                        "description": "Usuário não autenticado!"
+                        "description": "Unauthenticated user!"
                     },
                     "200": {
                         "description": "Successfully Listed Clients"
@@ -798,13 +798,13 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Usuário não autorizado!"
+                        "description": "Unauthorized user"
                     },
                     "401": {
-                        "description": "Usuário não autenticado!"
+                        "description": "Unauthenticated user!"
                     },
                     "422": {
-                        "description": "Não existe um cliente com esse id!"
+                        "description": "There is no client with that id!"
                     },
                     "200": {
                         "description": "Client listed successfully"
@@ -838,13 +838,13 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Usuário não autorizado!"
+                        "description": "Unauthorized user"
                     },
                     "401": {
-                        "description": "Usuário não autenticado!"
+                        "description": "Unauthenticated user!"
                     },
                     "422": {
-                        "description": "Não existe um cliente com esse id!"
+                        "description": "There is no client with that id!"
                     },
                     "200": {
                         "description": "Client successfully deleted"
@@ -896,16 +896,16 @@
                         "description": "Internal Server Error!"
                     },
                     "422": {
-                        "description": "Não existe um cliente com esse id!"
+                        "description": "There is no client with that id!"
                     },
                     "404": {
                         "description": "Este e-mail já está em uso!\n\nEste cpf já está em uso!"
                     },
                     "403": {
-                        "description": "Usuário não autorizado!"
+                        "description": "Unauthorized user"
                     },
                     "401": {
-                        "description": "Usuário não autenticado!"
+                        "description": "Unauthenticated user!"
                     },
                     "200": {
                         "description": "Client successfully updated"
@@ -951,10 +951,10 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Usuário não autorizado!"
+                        "description": "Unauthorized user"
                     },
                     "401": {
-                        "description": "Usuário não autenticado!"
+                        "description": "Unauthenticated user!"
                     },
                     "200": {
                         "description": "Solicitations listed successfully"
@@ -990,10 +990,10 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Usuário não autorizado!"
+                        "description": "Unauthorized user"
                     },
                     "401": {
-                        "description": "Usuário não autenticado!"
+                        "description": "Unauthenticated user!"
                     },
                     "200": {
                         "description": "Successfully Listed Clients"
@@ -1029,10 +1029,10 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Usuário não autorizado!"
+                        "description": "Unauthorized user"
                     },
                     "401": {
-                        "description": "Usuário não autenticado!"
+                        "description": "Unauthenticated user!"
                     },
                     "200": {
                         "description": "Solicitations listed successfully"
@@ -1068,10 +1068,10 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Usuário não autorizado!"
+                        "description": "Unauthorized user"
                     },
                     "401": {
-                        "description": "Usuário não autenticado!"
+                        "description": "Unauthenticated user!"
                     },
                     "200": {
                         "description": "likes successfully listed"
@@ -1114,10 +1114,10 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Usuário não autorizado!"
+                        "description": "Unauthorized user"
                     },
                     "401": {
-                        "description": "Usuário não autenticado!"
+                        "description": "Unauthenticated user!"
                     },
                     "200": {
                         "description": "Like successfully"
@@ -1158,10 +1158,10 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Usuário não autorizado!"
+                        "description": "Unauthorized user"
                     },
                     "401": {
-                        "description": "Usuário não autenticado!"
+                        "description": "Unauthenticated user!"
                     },
                     "200": {
                         "description": "Like undone successfully"
@@ -1190,13 +1190,13 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Usuário não autorizado!"
+                        "description": "Unauthorized user"
                     },
                     "401": {
-                        "description": "Usuário não autenticado!"
+                        "description": "Unauthenticated user!"
                     },
                     "422": {
-                        "description": "Não existe um pagamento com esse id!"
+                        "description": "Payment not found!"
                     },
                     "200": {
                         "description": "Sesson id listed successfully"
@@ -1232,13 +1232,13 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Usuário não autorizado!"
+                        "description": "Unauthorized user"
                     },
                     "401": {
-                        "description": "Usuário não autenticado!"
+                        "description": "Unauthenticated user!"
                     },
                     "422": {
-                        "description": "Não existe um pagamento com esse id!"
+                        "description": "Payment not found!"
                     },
                     "200": {
                         "description": "Payment listed successfully"
@@ -1288,13 +1288,13 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Usuário não autorizado!"
+                        "description": "Unauthorized user"
                     },
                     "401": {
-                        "description": "Usuário não autenticado!"
+                        "description": "Unauthenticated user!"
                     },
                     "422": {
-                        "description": "Não existe um pagamento com esse id!"
+                        "description": "Payment not found!"
                     },
                     "200": {
                         "description": "Payment listed successfully"
@@ -1339,16 +1339,171 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Usuário não autorizado!"
+                        "description": "Unauthorized user"
                     },
                     "401": {
-                        "description": "Usuário não autenticado!"
+                        "description": "Unauthenticated user!"
                     },
                     "422": {
-                        "description": "Não existe um pagamento com esse id!"
+                        "description": "Payment not found!"
                     },
                     "200": {
                         "description": "Sales communication made successfully to Pagseguro"
+                    }
+                }
+            }
+        },
+        "/delivery/{deliveryid}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "description": "token",
+                        "required": true
+                    },
+                    {
+                        "name": "deliveryid",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "Id da entrega",
+                        "required": true
+                    }
+                ],
+                "summary": "Informações sobre a entrega",
+                "description": "Essa rota é responsável por listar informações sobre a entrega do(s) produto(s)",
+                "tags": [
+                    "Entrega"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "403": {
+                        "description": "Unauthorized user"
+                    },
+                    "401": {
+                        "description": "Unauthenticated user!"
+                    },
+                    "422": {
+                        "description": "Delivery not found!"
+                    },
+                    "200": {
+                        "description": "Delivery listed successfully"
+                    }
+                }
+            },
+            "put": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "description": "token",
+                        "required": true
+                    },
+                    {
+                        "name": "deliveryid",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "Id da entrega",
+                        "required": true
+                    }
+                ],
+                "summary": "Atualizar o status de entrega",
+                "description": "Essa rota é responsável por atualizar o status de entrega",
+                "tags": [
+                    "Entrega"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeliveryUpdate"
+                            },
+                            "examples": {
+                                "DeliveryUpdate": {
+                                    "value": {
+                                        "status": "not started",
+                                        "trackingCode": "234645523"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "403": {
+                        "description": "Unauthorized user"
+                    },
+                    "401": {
+                        "description": "Unauthenticated user!"
+                    },
+                    "422": {
+                        "description": "Delivery not found!"
+                    },
+                    "200": {
+                        "description": "Delivery updated successfully!"
+                    }
+                }
+            }
+        },
+        "/delivery/calculate": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "description": "token",
+                        "required": true
+                    }
+                ],
+                "summary": "Calcular o preço da entrega",
+                "description": "Essa rota é responsável por calcular o preço da entrega",
+                "tags": [
+                    "Entrega"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeliveryCart"
+                            },
+                            "examples": {
+                                "DeliveryCart": {
+                                    "value": {
+                                        "cart": [
+                                            {
+                                                "product": "63432f02a7f855351c99dc71",
+                                                "price": 1199.99,
+                                                "quantity": "1",
+                                                "title": "produto01"
+                                            },
+                                            {
+                                                "product": "63432f02a7f855351c99dc72",
+                                                "price": 429.99,
+                                                "quantity": "3",
+                                                "title": "produto02"
+                                            }
+                                        ],
+                                        "zipCode": "21987-200"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "200": {
+                        "description": "Shipping calculated successfully!"
                     }
                 }
             }
@@ -1668,6 +1823,35 @@
                         "type": "string",
                         "required": true,
                         "example": "d284d430f23f523754a640475cb9e4699a9cff402c71f00c34c9de5f3b57a982"
+                    }
+                }
+            },
+            "DeliveryUpdate": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "trackingCode": {
+                        "type": "string",
+                        "required": true
+                    }
+                }
+            },
+            "DeliveryCart": {
+                "type": "object",
+                "properties": {
+                    "cart": {
+                        "type": "array",
+                        "required": true,
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "zipCode": {
+                        "type": "string",
+                        "required": true
                     }
                 }
             }
