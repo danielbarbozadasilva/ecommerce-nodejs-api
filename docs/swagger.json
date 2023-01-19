@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "Api PrimeTech E-commerce",
-        "description": "API do projeto PrimeTech E-commerce desenvolvida utilizando o NodeJs, ExpressJs e o Banco de dados MongoDB. Foi realizada a integração com o PagSeguro.",
+        "description": "A API foi desenvolvida utilizando o NodeJs, ExpressJs e Banco de dados MongoDB. Foi realizada a integração com o PagSeguro. Documentação utilizando o Swagger. Testes unitários e de integração utilizando o Jest e Supertest.",
         "contact": {
             "email": "daniel80barboza@gmail.com"
         },
@@ -225,7 +225,6 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     }
                 ],
@@ -243,7 +242,7 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Unauthorized user"
+                        "description": "Unauthorized user!"
                     },
                     "401": {
                         "description": "Unauthenticated user!"
@@ -261,7 +260,6 @@
                         "name": "categoryid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id da categoria",
                         "required": true
                     }
                 ],
@@ -288,14 +286,12 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     },
                     {
                         "name": "categoryid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id da categoria",
                         "required": true
                     }
                 ],
@@ -331,14 +327,12 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     },
                     {
                         "name": "categoryid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id da categoria",
                         "required": true
                     }
                 ],
@@ -367,7 +361,6 @@
                         "name": "categoryid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id da categoria",
                         "required": true
                     }
                 ],
@@ -437,7 +430,6 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     }
                 ],
@@ -455,7 +447,7 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Unauthorized user"
+                        "description": "Unauthorized user!"
                     },
                     "401": {
                         "description": "Unauthenticated user!"
@@ -473,7 +465,6 @@
                         "name": "productid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id do produto",
                         "required": true
                     }
                 ],
@@ -500,14 +491,12 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     },
                     {
                         "name": "productid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id do produto",
                         "required": true
                     }
                 ],
@@ -543,14 +532,12 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     },
                     {
                         "name": "productid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id do produto",
                         "required": true
                     }
                 ],
@@ -689,7 +676,6 @@
                         "name": "productid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id do produto",
                         "required": true
                     }
                 ],
@@ -718,7 +704,6 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     }
                 ],
@@ -732,7 +717,7 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Unauthorized user"
+                        "description": "Unauthorized user!"
                     },
                     "401": {
                         "description": "Unauthenticated user!"
@@ -777,14 +762,12 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     },
                     {
                         "name": "clientid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id do cliente",
                         "required": true
                     }
                 ],
@@ -798,7 +781,7 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Unauthorized user"
+                        "description": "Unauthorized user!"
                     },
                     "401": {
                         "description": "Unauthenticated user!"
@@ -817,14 +800,12 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     },
                     {
                         "name": "clientid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id do cliente",
                         "required": true
                     }
                 ],
@@ -838,7 +819,7 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Unauthorized user"
+                        "description": "Unauthorized user!"
                     },
                     "401": {
                         "description": "Unauthenticated user!"
@@ -859,21 +840,18 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     },
                     {
                         "name": "clientid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id do cliente",
                         "required": true
                     },
                     {
                         "name": "userid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id do usuário",
                         "required": true
                     }
                 ],
@@ -902,7 +880,7 @@
                         "description": "Este e-mail já está em uso!\n\nEste cpf já está em uso!"
                     },
                     "403": {
-                        "description": "Unauthorized user"
+                        "description": "Unauthorized user!"
                     },
                     "401": {
                         "description": "Unauthenticated user!"
@@ -920,7 +898,6 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     },
                     {
@@ -951,7 +928,7 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Unauthorized user"
+                        "description": "Unauthorized user!"
                     },
                     "401": {
                         "description": "Unauthenticated user!"
@@ -969,7 +946,6 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     },
                     {
@@ -990,7 +966,7 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Unauthorized user"
+                        "description": "Unauthorized user!"
                     },
                     "401": {
                         "description": "Unauthenticated user!"
@@ -1008,14 +984,12 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     },
                     {
                         "name": "clientid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id do cliente",
                         "required": true
                     }
                 ],
@@ -1029,7 +1003,7 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Unauthorized user"
+                        "description": "Unauthorized user!"
                     },
                     "401": {
                         "description": "Unauthenticated user!"
@@ -1047,14 +1021,12 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     },
                     {
                         "name": "clientid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id do cliente",
                         "required": true
                     }
                 ],
@@ -1068,7 +1040,7 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Unauthorized user"
+                        "description": "Unauthorized user!"
                     },
                     "401": {
                         "description": "Unauthenticated user!"
@@ -1086,21 +1058,18 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     },
                     {
                         "name": "clientid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id do cliente",
                         "required": true
                     },
                     {
                         "name": "productid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id do produto",
                         "required": true
                     }
                 ],
@@ -1114,7 +1083,7 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Unauthorized user"
+                        "description": "Unauthorized user!"
                     },
                     "401": {
                         "description": "Unauthenticated user!"
@@ -1130,21 +1099,18 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     },
                     {
                         "name": "clientid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id do cliente",
                         "required": true
                     },
                     {
                         "name": "productid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id do produto",
                         "required": true
                     }
                 ],
@@ -1158,7 +1124,7 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Unauthorized user"
+                        "description": "Unauthorized user!"
                     },
                     "401": {
                         "description": "Unauthenticated user!"
@@ -1176,7 +1142,6 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     }
                 ],
@@ -1190,7 +1155,7 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Unauthorized user"
+                        "description": "Unauthorized user!"
                     },
                     "401": {
                         "description": "Unauthenticated user!"
@@ -1211,14 +1176,12 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     },
                     {
                         "name": "paymentid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id do pagamento",
                         "required": true
                     }
                 ],
@@ -1232,7 +1195,7 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Unauthorized user"
+                        "description": "Unauthorized user!"
                     },
                     "401": {
                         "description": "Unauthenticated user!"
@@ -1251,14 +1214,12 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     },
                     {
                         "name": "paymentid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id do pagamento",
                         "required": true
                     }
                 ],
@@ -1288,7 +1249,7 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Unauthorized user"
+                        "description": "Unauthorized user!"
                     },
                     "401": {
                         "description": "Unauthenticated user!"
@@ -1309,14 +1270,12 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     },
                     {
                         "name": "paymentid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id do pagamento",
                         "required": true
                     }
                 ],
@@ -1339,7 +1298,7 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Unauthorized user"
+                        "description": "Unauthorized user!"
                     },
                     "401": {
                         "description": "Unauthenticated user!"
@@ -1360,14 +1319,12 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     },
                     {
                         "name": "deliveryid",
                         "in": "path",
                         "type": "integer",
-                        "description": "Id da entrega",
                         "required": true
                     }
                 ],
@@ -1381,7 +1338,7 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Unauthorized user"
+                        "description": "Unauthorized user!"
                     },
                     "401": {
                         "description": "Unauthenticated user!"
@@ -1438,7 +1395,7 @@
                         "description": "Internal Server Error!"
                     },
                     "403": {
-                        "description": "Unauthorized user"
+                        "description": "Unauthorized user!"
                     },
                     "401": {
                         "description": "Unauthenticated user!"
@@ -1459,7 +1416,6 @@
                         "name": "token",
                         "in": "header",
                         "type": "string",
-                        "description": "token",
                         "required": true
                     }
                 ],
@@ -1504,6 +1460,526 @@
                     },
                     "200": {
                         "description": "Shipping calculated successfully!"
+                    }
+                }
+            }
+        },
+        "/solicitation": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "summary": "Listar todas as solicitações",
+                "description": "Essa rota é responsável por listar todas as solicitações",
+                "tags": [
+                    "Solicitação"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "403": {
+                        "description": "Unauthorized user!"
+                    },
+                    "401": {
+                        "description": "Unauthenticated user!"
+                    },
+                    "200": {
+                        "description": "Solicitations listed successfully"
+                    }
+                }
+            },
+            "post": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "clientid",
+                        "in": "query",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "summary": "Criar solicitação",
+                "description": "Essa rota é responsável por criar solicitação",
+                "tags": [
+                    "Solicitação"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateSolicitation"
+                            },
+                            "examples": {
+                                "CreateSolicitation": {
+                                    "value": {
+                                        "cart": [
+                                            {
+                                                "title": "Placa de Vídeo RTX 3060",
+                                                "product": "63432f02a7f855351c99dc71",
+                                                "price": 1199.99,
+                                                "quantity": 1
+                                            },
+                                            {
+                                                "title": "Intel Core i5-10400F",
+                                                "product": "63432f02a7f855351c99dc72",
+                                                "price": 429.99,
+                                                "quantity": 3
+                                            }
+                                        ],
+                                        "zipCode": "21987-200",
+                                        "shipping": 79.33,
+                                        "payment": {
+                                            "price": 2569.29,
+                                            "type": "BOLETO",
+                                            "installments": 1,
+                                            "addressDeliveryIgualCharging": false,
+                                            "address": {
+                                                "street": "Av. Manuel Gomes",
+                                                "number": "1223",
+                                                "complement": "casa",
+                                                "district": "Rio de janeiro",
+                                                "city": "Rio de janeiro",
+                                                "state": "RJ",
+                                                "zipCode": "21987-200"
+                                            },
+                                            "card": {
+                                                "fullName": "DANIEL BARBOZA DA SILVA",
+                                                "areaCode": "21",
+                                                "phone": "(21)2434-1207",
+                                                "birthDate": "2000-02-09",
+                                                "creditCardToken": "0ec7d144527b410da270e13e15666294",
+                                                "cpf": "82429888467"
+                                            }
+                                        },
+                                        "deliveries": {
+                                            "price": 79.33,
+                                            "type": "4014",
+                                            "deliveryTime": 2,
+                                            "address": {
+                                                "street": "Av. Manuel Gomes",
+                                                "number": "1223",
+                                                "complement": "casa",
+                                                "district": "Rio de janeiro",
+                                                "city": "Rio de janeiro",
+                                                "state": "RJ",
+                                                "zipCode": "21987200"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "422": {
+                        "description": "Este cpf já está em uso!"
+                    },
+                    "403": {
+                        "description": "Unauthorized user!"
+                    },
+                    "401": {
+                        "description": "Unauthenticated user!"
+                    },
+                    "200": {
+                        "description": "Solicitation created successfully"
+                    }
+                }
+            }
+        },
+        "/solicitation/{solicitationNumber}/cart": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "description": "token",
+                        "required": true
+                    },
+                    {
+                        "name": "solicitationNumber",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "Número da solicitação",
+                        "required": true
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "summary": "Listar os produtos da solicitação",
+                "description": "Essa rota é responsável por listar os produtos referntes a solicitação",
+                "tags": [
+                    "Solicitação"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "403": {
+                        "description": "Unauthorized user!"
+                    },
+                    "401": {
+                        "description": "Unauthenticated user!"
+                    },
+                    "200": {
+                        "description": "Solicitations listed successfully"
+                    }
+                }
+            },
+            "responses": {
+                "500": {
+                    "description": "Internal Server Error!"
+                },
+                "422": {
+                    "description": "Este cpf já está em uso!"
+                },
+                "403": {
+                    "description": "Unauthorized user!"
+                },
+                "401": {
+                    "description": "Unauthenticated user!"
+                },
+                "200": {
+                    "description": "Solicitation created successfully"
+                }
+            }
+        },
+        "/solicitation/{solicitationNumber}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "description": "token",
+                        "required": true
+                    },
+                    {
+                        "name": "solicitationNumber",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "Número da solicitação",
+                        "required": true
+                    }
+                ],
+                "summary": "Listar todas as solicitações",
+                "description": "Essa rota é responsável por listar todas as solicitações",
+                "tags": [
+                    "Solicitação"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "422": {
+                        "description": "Order not found!"
+                    },
+                    "403": {
+                        "description": "Unauthorized user!"
+                    },
+                    "401": {
+                        "description": "Unauthenticated user!"
+                    },
+                    "200": {
+                        "description": "Solicitations listed successfully"
+                    }
+                }
+            },
+            "delete": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "solicitationNumber",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "clientid",
+                        "in": "query",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "summary": "Listar todas as solicitações",
+                "description": "Essa rota é responsável por listar todas as solicitações",
+                "tags": [
+                    "Solicitação"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "422": {
+                        "description": "Order not found!\n\nThis order has already been cancelled!"
+                    },
+                    "403": {
+                        "description": "Unauthorized user!"
+                    },
+                    "401": {
+                        "description": "Unauthenticated user!"
+                    },
+                    "200": {
+                        "description": "Solicitations listed successfully"
+                    }
+                }
+            }
+        },
+        "/rating": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "description": "token",
+                        "required": true
+                    }
+                ],
+                "summary": "Listar todas as avaliações",
+                "description": "Essa rota é responsável por listar todas as avaliações",
+                "tags": [
+                    "Avaliação"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "422": {
+                        "description": "There is no product with that id!"
+                    },
+                    "403": {
+                        "description": "Unauthorized user!"
+                    },
+                    "401": {
+                        "description": "Unauthenticated user!"
+                    },
+                    "200": {
+                        "description": "Product ratings successfully listed"
+                    }
+                }
+            },
+            "post": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "summary": "Criar avaliação",
+                "description": "Essa rota é responsável por criar avaliação",
+                "tags": [
+                    "Avaliação"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateRating"
+                            },
+                            "examples": {
+                                "CreateRating": {
+                                    "value": {
+                                        "name": "Daniel",
+                                        "text": "Gostei bastante",
+                                        "score": 4,
+                                        "clientid": "6320f577156b47ff1082586e",
+                                        "productid": "63970c5915c445c9c84a9bee"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "422": {
+                        "description": "Este cpf já está em uso!"
+                    },
+                    "403": {
+                        "description": "Unauthorized user!"
+                    },
+                    "401": {
+                        "description": "Unauthenticated user!"
+                    },
+                    "200": {
+                        "description": "Solicitation created successfully"
+                    }
+                }
+            },
+            "delete": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "productid",
+                        "in": "query",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "clientid",
+                        "in": "query",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "summary": "Deletar avaliação",
+                "description": "Essa rota é responsável por deletar avaliação",
+                "tags": [
+                    "Avaliação"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "422": {
+                        "description": "There is no product with that id!\n\nThere is no client with that id!\n\nThis like does not exist!"
+                    },
+                    "403": {
+                        "description": "Unauthorized user!"
+                    },
+                    "401": {
+                        "description": "Unauthenticated user!"
+                    },
+                    "200": {
+                        "description": "Rating successfully deleted"
+                    }
+                }
+            }
+        },
+        "/rating/{ratingid}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "productid",
+                        "in": "query",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "ratingid",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    }
+                ],
+                "summary": "Listar avaliação pelo id",
+                "description": "Essa rota é responsável por listar avaliação pelo id",
+                "tags": [
+                    "Avaliação"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "422": {
+                        "description": "There is no product with that id!\n\nThere are no reviews with this id!"
+                    },
+                    "403": {
+                        "description": "Unauthorized user!"
+                    },
+                    "401": {
+                        "description": "Unauthenticated user!"
+                    },
+                    "200": {
+                        "description": "Product ratings successfully listed"
+                    }
+                }
+            }
+        },
+        "/rating/product/{productid}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "productid",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    }
+                ],
+                "summary": "Listar avaliações de um produto específico",
+                "description": "Essa rota é responsável por listar avaliações de um produto específico",
+                "tags": [
+                    "Avaliação"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error!"
+                    },
+                    "422": {
+                        "description": "There is no product with that id!"
+                    },
+                    "403": {
+                        "description": "Unauthorized user!"
+                    },
+                    "401": {
+                        "description": "Unauthenticated user!"
+                    },
+                    "200": {
+                        "description": "Product ratings successfully listed"
                     }
                 }
             }
@@ -1850,6 +2326,198 @@
                         }
                     },
                     "zipCode": {
+                        "type": "string",
+                        "required": true
+                    }
+                }
+            },
+            "CreateSolicitation": {
+                "type": "object",
+                "properties": {
+                    "cart": {
+                        "type": "array",
+                        "required": true,
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "zipCode": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "shipping": {
+                        "type": "number",
+                        "required": true
+                    },
+                    "payment": {
+                        "type": "object",
+                        "properties": {
+                            "price": {
+                                "type": "number",
+                                "required": true
+                            },
+                            "type": {
+                                "type": "string",
+                                "required": true
+                            },
+                            "installments": {
+                                "type": "string",
+                                "required": true
+                            },
+                            "addressDeliveryIgualCharging": {
+                                "type": "boolean",
+                                "required": true
+                            },
+                            "address": {
+                                "type": "object",
+                                "properties": {
+                                    "street": {
+                                        "type": "string",
+                                        "required": true,
+                                        "example": "Av. Manuel Gomes"
+                                    },
+                                    "number": {
+                                        "type": "string",
+                                        "required": true,
+                                        "example": "22"
+                                    },
+                                    "complement": {
+                                        "type": "string",
+                                        "required": true,
+                                        "example": "casa"
+                                    },
+                                    "district": {
+                                        "type": "string",
+                                        "required": true,
+                                        "example": "Rio de janeiro"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "required": true,
+                                        "example": "Rio de janeiro"
+                                    },
+                                    "zipCode": {
+                                        "type": "string",
+                                        "required": true,
+                                        "example": "23987-200"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "required": true,
+                                        "example": "Rio de janeiro"
+                                    }
+                                }
+                            },
+                            "card": {
+                                "type": "object",
+                                "properties": {
+                                    "fullName": {
+                                        "type": "string",
+                                        "required": true
+                                    },
+                                    "areaCode": {
+                                        "type": "string",
+                                        "required": true
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "required": true
+                                    },
+                                    "birthDate": {
+                                        "type": "string",
+                                        "required": true
+                                    },
+                                    "creditCardToken": {
+                                        "type": "string",
+                                        "required": true
+                                    },
+                                    "cpf": {
+                                        "type": "string",
+                                        "required": true
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "deliveries": {
+                        "type": "object",
+                        "properties": {
+                            "price": {
+                                "type": "number",
+                                "required": true
+                            },
+                            "type": {
+                                "type": "string",
+                                "required": true
+                            },
+                            "deliveryTime": {
+                                "type": "integer",
+                                "required": true
+                            },
+                            "address": {
+                                "type": "object",
+                                "properties": {
+                                    "street": {
+                                        "type": "string",
+                                        "required": true,
+                                        "example": "Av. Manuel Gomes"
+                                    },
+                                    "number": {
+                                        "type": "string",
+                                        "required": true,
+                                        "example": "22"
+                                    },
+                                    "complement": {
+                                        "type": "string",
+                                        "required": true,
+                                        "example": "casa"
+                                    },
+                                    "district": {
+                                        "type": "string",
+                                        "required": true,
+                                        "example": "Rio de janeiro"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "required": true,
+                                        "example": "Rio de janeiro"
+                                    },
+                                    "zipCode": {
+                                        "type": "string",
+                                        "required": true,
+                                        "example": "23987-200"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "required": true,
+                                        "example": "Rio de janeiro"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "CreateRating": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "text": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "score": {
+                        "type": "integer",
+                        "required": true
+                    },
+                    "clientid": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "productid": {
                         "type": "string",
                         "required": true
                     }
