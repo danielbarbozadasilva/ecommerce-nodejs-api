@@ -46,7 +46,7 @@ const toDTOList = (model) => ({
   type: model?.type,
   situation: model?.situation,
   payload: model?.payload,
-  date: formatDateTimeBr(model?.date)
+  date: model?.date
 })
 
 const toDTOShipping = (model, zipCode) => ({
