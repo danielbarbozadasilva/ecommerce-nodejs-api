@@ -3,7 +3,7 @@ const app = require('../../api/app')
 const { createCredentialService } = require('../../api/services/services.user')
 const { createConnection, closeConnection } = require('../helpers')
 
-describe('Auth Routes', () => {
+describe('Client Routes', () => {
   beforeAll(() => {
     createConnection()
   })
@@ -49,7 +49,7 @@ describe('Auth Routes', () => {
         .post('/v1/client')
         .send({
           name: 'Daniel',
-          email: 'danielbarboza@gmail.com',
+          email: 'danielbarbozasilva@gmail.com',
           password: 'daniel',
           cpf: '112.223.434-90',
           phones: ['(21)3454-3456', '(21)99876-7883'],
@@ -74,7 +74,7 @@ describe('Auth Routes', () => {
           name: 'Daniel',
           email: 'daniel@gmail.com',
           password: 'daniel',
-          cpf: '222.223.434-90',
+          cpf: '331.123.434-90',
           phones: ['(21)3454-3456', '(21)99876-7883'],
           address: {
             street: 'Rua abc',
@@ -236,33 +236,6 @@ describe('Auth Routes', () => {
     })
   })
 
-  describe('Route DELETE /v1/client/:clientid', () => {
-    test('Make sure /v1/client/:clientid return 200 on client remove', async () => {
-      const email = 'danielbarboza56@hotmail.com'
-      const clientid = '6320f577156b47ff1082586e'
-      const result = await createCredentialService(email)
-      await request(app)
-        .delete(`/v1/client/${clientid}`)
-        .set(result)
-        .expect(200)
-    })
-
-    test('Make sure /v1/client/:clientid return 401 on client remove', async () => {
-      const clientid = '6320f577156b47ff1082586e'
-      await request(app).delete(`/v1/client/${clientid}`).expect(401)
-    })
-
-    test('Make sure /v1/client/:clientid returns 422 on client remove', async () => {
-      const email = 'danielbarboza56@hotmail.com'
-      const clientid = '6320f577156b47ff1082586f'
-      const result = await createCredentialService(email)
-      await request(app)
-        .delete(`/v1/client/${clientid}`)
-        .set(result)
-        .expect(422)
-    })
-  })
-
   describe('Route UPDATE /v1/client/:clientid/user/:userid', () => {
     test('Make sure /v1/client/:clientid/user/:userid return 200 on client update', async () => {
       const email = 'daniel95barboza@gmail.com'
@@ -272,20 +245,20 @@ describe('Auth Routes', () => {
       await request(app)
         .put(`/v1/client/${clientid}/user/${userid}`)
         .send({
+          cpf: '742.621.434-90',
           name: 'Daniel',
           email: 'daniel95barboza@gmail.com',
-          cpf: '331.123.434-90',
           phones: ['(21)3454-3456', '(21)99876-7883'],
+          birthDate: '02/09/2000',
           address: {
             street: 'Rua abc',
             number: '123',
             complement: 'casa',
             district: 'Rio de janeiro',
             city: 'RIO DE JANEIRO',
-            zipCode: '21099-100',
-            state: 'RJ'
-          },
-          birthDate: '02/09/2000'
+            state: 'RJ',
+            zipCode: '21099-100'
+          }
         })
         .set(result)
         .expect(200)
@@ -338,6 +311,33 @@ describe('Auth Routes', () => {
           },
           birthDate: '02/09/2000'
         })
+        .set(result)
+        .expect(422)
+    })
+  })
+
+  describe('Route DELETE /v1/client/:clientid', () => {
+    test('Make sure /v1/client/:clientid return 200 on client remove', async () => {
+      const email = 'danielbarboza56@hotmail.com'
+      const clientid = '6320f577156b47ff1082586e'
+      const result = await createCredentialService(email)
+      await request(app)
+        .delete(`/v1/client/${clientid}`)
+        .set(result)
+        .expect(200)
+    })
+
+    test('Make sure /v1/client/:clientid return 401 on client remove', async () => {
+      const clientid = '6320f577156b47ff1082586e'
+      await request(app).delete(`/v1/client/${clientid}`).expect(401)
+    })
+
+    test('Make sure /v1/client/:clientid returns 422 on client remove', async () => {
+      const email = 'danielbarboza56@hotmail.com'
+      const clientid = '6320f577156b47ff1082586f'
+      const result = await createCredentialService(email)
+      await request(app)
+        .delete(`/v1/client/${clientid}`)
         .set(result)
         .expect(422)
     })
