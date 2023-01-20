@@ -81,11 +81,33 @@ describe('Auth Routes', () => {
         })
         .expect(200)
     })
-    test('Make sure /v1/user/recovery/password-recovery return 200 when generating the token', async () => {
+    test('Make sure /v1/user/recovery/password-recovery return 400 if the email does not exist', async () => {
       await request(app)
         .put('/v1/user/recovery/password-recovery')
         .send({
           email: 'example@gmail.com'
+        })
+        .expect(400)
+    })
+    test('Make sure /v1/user/recovery/reset-password return 200 if the token is correct', async () => {
+      const data = { email: 'daniel95barboza@gmail.com' }
+      const auth = await services.sendTokenRecoveryPasswordService(data)
+      await request(app)
+        .put('/v1/user/recovery/reset-password')
+        .send({
+          email: 'daniel95barboza@gmail.com',
+          token: auth.data.recovery.token,
+          newPassword: 'daniel'
+        })
+        .expect(200)
+    })
+    test('Make sure /v1/user/recovery/reset-password return 400 if the token is incorrect', async () => {
+      await request(app)
+        .put('/v1/user/recovery/reset-password')
+        .send({
+          email: 'daniel95barboza@gmail.com',
+          token: 'sdfsdfsdfsd',
+          newPassword: 'daniel'
         })
         .expect(400)
     })
