@@ -73,5 +73,21 @@ describe('Auth Routes', () => {
         })
         .expect(400)
     })
+    test('Make sure /v1/user/recovery/password-recovery return 200 when generating the token', async () => {
+      await request(app)
+        .put('/v1/user/recovery/password-recovery')
+        .send({
+          email: 'daniel95barboza@gmail.com'
+        })
+        .expect(200)
+    })
+    test('Make sure /v1/user/recovery/password-recovery return 200 when generating the token', async () => {
+      await request(app)
+        .put('/v1/user/recovery/password-recovery')
+        .send({
+          email: 'example@gmail.com'
+        })
+        .expect(400)
+    })
   })
 })
