@@ -12,15 +12,23 @@ describe('Auth Routes', () => {
     await closeConnection()
   })
 
-  describe('Route /v1/client', () => {
+  describe('Route GET /v1/client', () => {
+    test('Make sure /v1/client return 200 on register', async () => {
+      const email = 'danielbarboza56@hotmail.com'
+      const result = await createCredentialService(email)
+      await request(app).get(`/v1/client`).set(result).expect(200)
+    })
+  })
+
+  describe('Route POST /v1/client', () => {
     test('Make sure /v1/client return 200 on register', async () => {
       await request(app)
         .post('/v1/client')
         .send({
           name: 'Daniel',
-          email: 'danielbarboza@gmail.com',
+          email: 'danielbarbozasilva@gmail.com',
           password: 'daniel',
-          cpf: '222.223.434-90',
+          cpf: '331.123.434-90',
           phones: ['(21)3454-3456', '(21)99876-7883'],
           address: {
             street: 'Rua abc',
@@ -81,24 +89,44 @@ describe('Auth Routes', () => {
         })
         .expect(400)
     })
+  })
 
-    describe('Route GET /v1/client/:clientid', () => {
-      test('Make sure /v1/client/:clientid return 200 on client id search', async () => {
-        const email = 'danielbarboza56@hotmail.com'
-        const clientid = '6320f577156b47ff1082586e'
-        const result = await createCredentialService(email)
-        await request(app).get(`/v1/client/${clientid}`).set(result).expect(200)
-      })
-      test('Make sure /v1/client/:clientid return 401 if user is not authenticated', async () => {
-        const clientid = '6320f577156b47ff1082586e'
-        await request(app).get(`/v1/client/${clientid}`).expect(401)
-      })
-      test('Make sure /v1/client/:clientid returns 422 if the clientid is not valid', async () => {
-        const email = 'danielbarboza56@hotmail.com'
-        const clientid = '6320f577156b47ff1082586f'
-        const result = await createCredentialService(email)
-        await request(app).get(`/v1/client/${clientid}`).set(result).expect(422)
-      })
+  describe('Route GET /v1/client/search/:search/solicitations', () => {
+    test('Make sure /v1/client/search/:search/solicitations return 200 on list solicitations', async () => {
+      const email = 'danielbarboza56@hotmail.com'
+      const search = 'Daniel'
+      const result = await createCredentialService(email)
+      await request(app)
+        .get(`/v1/client/search/${search}/solicitations`)
+        .set(result)
+        .expect(200)
+    })
+    test('Make sure /v1/client/search/:search/solicitations return 401 on list solicitations', async () => {
+      const search = 'Daniel'
+      await request(app)
+        .get(`/v1/client/search/${search}/solicitations`)
+        .expect(401)
+    })
+  })
+
+  describe('Route GET /v1/client/:clientid', () => {
+    test('Make sure /v1/client/:clientid return 200 on client id search', async () => {
+      const email = 'danielbarboza56@hotmail.com'
+      const clientid = '6320f577156b47ff1082586e'
+      const result = await createCredentialService(email)
+      await request(app).get(`/v1/client/${clientid}`).set(result).expect(200)
+    })
+
+    test('Make sure /v1/client/:clientid return 401 if user is not authenticated', async () => {
+      const clientid = '6320f577156b47ff1082586e'
+      await request(app).get(`/v1/client/${clientid}`).expect(401)
+    })
+
+    test('Make sure /v1/client/:clientid returns 422 if the clientid is not valid', async () => {
+      const email = 'danielbarboza56@hotmail.com'
+      const clientid = '6320f577156b47ff1082586f'
+      const result = await createCredentialService(email)
+      await request(app).get(`/v1/client/${clientid}`).set(result).expect(422)
     })
   })
 })
