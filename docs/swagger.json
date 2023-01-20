@@ -354,7 +354,7 @@
                 }
             }
         },
-        "/category/{categoryid}/product": {
+        "/category/{categoryid}/products": {
             "get": {
                 "parameters": [
                     {
@@ -1628,18 +1628,6 @@
                         "in": "path",
                         "type": "integer",
                         "description": "Número da solicitação",
-                        "required": true
-                    },
-                    {
-                        "name": "offset",
-                        "in": "query",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "type": "string",
                         "required": true
                     }
                 ],
