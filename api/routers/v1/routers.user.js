@@ -28,8 +28,15 @@ module.exports = (router) => {
     userController.checkTokenController
   )
 
-  router.route('/refresh-token').post(userController.refreshTokenController)
-
+  router.route('/refresh-token').post(
+    validateDTOMiddleware('body', {
+      token: joi.string().required().messages({
+        'any.required': `"token" is a required field`,
+        'string.empty': `"token" can not be empty`
+      })
+    }),
+    userController.refreshTokenController
+  )
 
   router.route('/user/recovery/password-recovery').put(
     validateDTOMiddleware('body', {
