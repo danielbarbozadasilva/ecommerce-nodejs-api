@@ -53,5 +53,25 @@ describe('Auth Routes', () => {
         })
         .expect(400)
     })
+    test('Make sure /v1/refresh-token return 200 when generating the token', async () => {
+      const email = 'daniel95barboza@gmail.com'
+      const password = 'daniel'
+      const auth = await services.authService(email, password)
+      await request(app)
+        .post('/v1/refresh-token')
+        .send({
+          token: auth.data.token
+        })
+        .expect(200)
+    })
+
+    test('Make sure /v1/refresh-token return 400 if the token are not valid', async () => {
+      await request(app)
+        .post('/v1/refresh-token')
+        .send({
+          token: ''
+        })
+        .expect(400)
+    })
   })
 })
