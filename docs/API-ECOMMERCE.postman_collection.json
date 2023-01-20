@@ -111,7 +111,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"token\": \"f30e496f-8d8b-4408-93e0-ba2c87df4577\"\n\n}",
+							"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWUwMjc4ZWM5ZjQ2YzFkYTRkOTMzYSIsIm5hbWUiOiJEYW5pZWwgQmFyYm96YSIsImVtYWlsIjoiZGFuaWVsYmFyYm96YTU2QGhvdG1haWwuY29tIiwicGVybWlzc2lvbnMiOiJhZG1pbmlzdHJhdG9yIiwiaWF0IjoxNjc0MjMxNDQ3LCJleHAiOjEwMDE2NzQyMzE0NDZ9.lAb9plPogGNxwgj0e4EMd--cztnK5vXLDmTL1WE9xFo\"\n\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -176,7 +176,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWUwMjc4ZWM5ZjQ2YzFkYTRkOTMzYSIsIm5hbWUiOiJEYW5pZWwgQmFyYm96YSIsImVtYWlsIjoiZGFuaWVsYmFyYm96YTU2QGhvdG1haWwuY29tIiwicGVybWlzc2lvbnMiOlsiYWRtaW5pc3RyYXRvciJdLCJpYXQiOjE2Njk0ODIxMjgsImV4cCI6MTAwMTY2OTQ4MjEyN30.a6SFqoFf7xF-VgOSnTHyhbl4D69uGfp1DC7XU9Q5-QA\"\n}",
+							"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWUwMjc4ZWM5ZjQ2YzFkYTRkOTMzYSIsIm5hbWUiOiJEYW5pZWwgQmFyYm96YSIsImVtYWlsIjoiZGFuaWVsYmFyYm96YTU2QGhvdG1haWwuY29tIiwicGVybWlzc2lvbnMiOiJhZG1pbmlzdHJhdG9yIiwiaWF0IjoxNjc0MjMxNDQ3LCJleHAiOjEwMDE2NzQyMzE0NDZ9.lAb9plPogGNxwgj0e4EMd--cztnK5vXLDmTL1WE9xFo\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -288,7 +288,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"token\": \"4043fcdf988fc41c0f09299b509d80f7\",\r\n    \"email\": \"daniel80barboza@gmail.com\",\r\n    \"newPassword\": \"daniel\"\r\n}",
+							"raw": "{\r\n    \"token\": \"8c09df8cda4dc188a603cca2d169b2cf\",\r\n    \"email\": \"daniel95barboza@gmail.com\",\r\n    \"newPassword\": \"daniel\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -375,7 +375,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/category/638f004765f1c700b416aa02",
+							"raw": "http://localhost:3011/v1/category/6320f577156b47ff1082586e",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -384,7 +384,7 @@
 							"path": [
 								"v1",
 								"category",
-								"638f004765f1c700b416aa02"
+								"6320f577156b47ff1082586e"
 							]
 						}
 					},
@@ -426,7 +426,7 @@
 							"formdata": [
 								{
 									"key": "name",
-									"value": "Smartphones",
+									"value": "asdasdasdasd",
 									"type": "text"
 								},
 								{
@@ -437,7 +437,7 @@
 								{
 									"key": "files",
 									"type": "file",
-									"src": "/C:/Users/pc01/Pictures/maxresdefault.jpg"
+									"src": "/C:/Users/pc01/Downloads/Logo para consultor de moedas e investimentos digitais verde tecnológico (1).png"
 								}
 							]
 						},
@@ -508,7 +508,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/category/638f004765f1c700b416aa02",
+							"raw": "http://localhost:3011/v1/category/63cabf4eb2f75d39dc221a60",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -517,7 +517,7 @@
 							"path": [
 								"v1",
 								"category",
-								"638f004765f1c700b416aa02"
+								"63cabf4eb2f75d39dc221a60"
 							]
 						}
 					},
@@ -570,7 +570,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/category/638f004765f1c700b416aa02",
+							"raw": "http://localhost:3011/v1/category/63cabf4eb2f75d39dc221a60",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -579,7 +579,7 @@
 							"path": [
 								"v1",
 								"category",
-								"638f004765f1c700b416aa02"
+								"63cabf4eb2f75d39dc221a60"
 							]
 						}
 					},
@@ -832,7 +832,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"1222211Daniel\",\r\n    \"email\": \"132d3@gmail.com\",\r\n    \"cpf\": \"523.222.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"street\": \"Av. Manuel Gomes\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"name\": \"1222211Daniel\",\r\n    \"email\": \"132d3@gmail.com\",\r\n    \"cpf\": \"523.222.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000/09/09\",\r\n    \"address\": {\r\n        \"street\": \"Av. Manuel Gomes\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1163,7 +1163,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/product/all",
+							"raw": "http://localhost:3011/v1/product/dashboard?sortType=alfabetica_a-z",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1172,7 +1172,13 @@
 							"path": [
 								"v1",
 								"product",
-								"all"
+								"dashboard"
+							],
+							"query": [
+								{
+									"key": "sortType",
+									"value": "alfabetica_a-z"
+								}
 							]
 						}
 					},
@@ -1297,7 +1303,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/product/63432f02a7f855351c99dc72",
+							"raw": "http://localhost:3011/v1/product/63432f02a7f855351c99dc71",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1306,7 +1312,7 @@
 							"path": [
 								"v1",
 								"product",
-								"63432f02a7f855351c99dc72"
+								"63432f02a7f855351c99dc71"
 							]
 						}
 					},
@@ -1510,7 +1516,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/product/63970c5915c445c9c84a9bee",
+							"raw": "http://localhost:3011/v1/product/63cac109b2f75d39dc221abe",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1519,65 +1525,7 @@
 							"path": [
 								"v1",
 								"product",
-								"63970c5915c445c9c84a9bee"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "product.updateImage",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "files",
-									"type": "file",
-									"src": "/C:/Users/pc01/Pictures/img0.jpg"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://localhost:3011/v1/product/images/63432f02a7f855351c99dc71",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"product",
-								"images",
-								"63432f02a7f855351c99dc71"
+								"63cac109b2f75d39dc221abe"
 							]
 						}
 					},
@@ -1624,7 +1572,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/product/639704ca4bf6b326dbc5ae8f",
+							"raw": "http://localhost:3011/v1/product/63cac109b2f75d39dc221abe",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1633,7 +1581,7 @@
 							"path": [
 								"v1",
 								"product",
-								"639704ca4bf6b326dbc5ae8f"
+								"63cac109b2f75d39dc221abe"
 							]
 						}
 					},
@@ -1710,7 +1658,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/rating/63471a1ac51740994725d9ea?productid=63432f02a7f855351c99dc71",
+							"raw": "http://localhost:3011/v1/rating/638a22b10ef44976d168711e?productid=63432f02a7f855351c99dc71",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1719,7 +1667,7 @@
 							"path": [
 								"v1",
 								"rating",
-								"63471a1ac51740994725d9ea"
+								"638a22b10ef44976d168711e"
 							],
 							"query": [
 								{
@@ -1919,7 +1867,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/solicitation/swVLp0bHs?limit=30&offset=0",
+							"raw": "http://localhost:3011/v1/solicitation/4777720845?limit=30&offset=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1928,7 +1876,7 @@
 							"path": [
 								"v1",
 								"solicitation",
-								"swVLp0bHs"
+								"4777720845"
 							],
 							"query": [
 								{
@@ -1966,7 +1914,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/solicitation/swVLp0bHs/cart?limit=30&offset=0",
+							"raw": "http://localhost:3011/v1/solicitation/4777720845/cart?limit=30&offset=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1975,7 +1923,7 @@
 							"path": [
 								"v1",
 								"solicitation",
-								"swVLp0bHs",
+								"4777720845",
 								"cart"
 							],
 							"query": [
@@ -2025,7 +1973,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"title\": \"Placa de Vídeo RTX 3060\",\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"price\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"title\": \"Intel Core i5-10400F\",\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"price\": 429.99,\r\n            \"quantity\": 3\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\",\r\n    \"shipping\": 79.33,\r\n    \"payment\": {\r\n        \"price\": 2569.29,\r\n        \"type\": \"BOLETO\",\r\n        \"installments\": 3,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987-200\"\r\n        },\r\n        \"card\": {\r\n            \"fullName\": \"DANIEL BARBOZA DA SILVA\",\r\n            \"areaCode\": \"21\",\r\n            \"phone\": \"(21)2434-1207\",\r\n            \"birthDate\": \"2000-02-09\",\r\n            \"creditCardToken\": \"0ec7d144527b410da270e13e15666294\",\r\n            \"cpf\": \"82429888467\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 79.33,\r\n        \"type\": \"4014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987200\"\r\n        }\r\n    }\r\n}",
+							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"title\": \"Placa de Vídeo RTX 3060\",\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"price\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"title\": \"Intel Core i5-10400F\",\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"price\": 429.99,\r\n            \"quantity\": 3\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\",\r\n    \"shipping\": 79.33,\r\n    \"payment\": {\r\n        \"price\": 2569.29,\r\n        \"type\": \"BOLETO\",\r\n        \"installments\": 1,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987-200\"\r\n        },\r\n        \"card\": {\r\n            \"fullName\": \"DANIEL BARBOZA DA SILVA\",\r\n            \"areaCode\": \"21\",\r\n            \"phone\": \"(21)2434-1207\",\r\n            \"birthDate\": \"2000-02-09\",\r\n            \"creditCardToken\": \"0ec7d144527b410da270e13e15666294\",\r\n            \"cpf\": \"82429888467\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 79.33,\r\n        \"type\": \"4014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987200\"\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2094,7 +2042,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/solicitation/swVLp0bHs?clientid=6320f577156b47ff1082586e",
+							"raw": "http://localhost:3011/v1/solicitation/4777720845?clientid=6320f577156b47ff1082586e",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2103,7 +2051,7 @@
 							"path": [
 								"v1",
 								"solicitation",
-								"swVLp0bHs"
+								"4777720845"
 							],
 							"query": [
 								{
@@ -2132,7 +2080,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/delivery/636b6362bdde17645c78d908",
+							"raw": "http://localhost:3011/v1/delivery/63cac1fc9b494463a4e439a0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2141,7 +2089,7 @@
 							"path": [
 								"v1",
 								"delivery",
-								"636b6362bdde17645c78d908"
+								"63cac1fc9b494463a4e439a0"
 							]
 						}
 					},
@@ -2179,22 +2127,16 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "status",
-									"value": "started",
-									"type": "text"
-								},
-								{
-									"key": "trackingCode",
-									"value": "DF34434FDSFSGSD",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"started\",\r\n    \"trackingCode\": \"DF34434FDSFSGSD\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/delivery/6376981ddd290d030a1592c7",
+							"raw": "http://localhost:3011/v1/delivery/63cac1fc9b494463a4e439a0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2203,7 +2145,7 @@
 							"path": [
 								"v1",
 								"delivery",
-								"6376981ddd290d030a1592c7"
+								"63cac1fc9b494463a4e439a0"
 							]
 						}
 					},
@@ -2292,7 +2234,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/payment/636b6361bdde17645c78d904",
+							"raw": "http://localhost:3011/v1/payment/63c59bb0107f4ce9de7fd638",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2301,7 +2243,7 @@
 							"path": [
 								"v1",
 								"payment",
-								"636b6361bdde17645c78d904"
+								"63c59bb0107f4ce9de7fd638"
 							]
 						}
 					},
@@ -2339,17 +2281,16 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "senderHash",
-									"value": "d284d430f23f523754a640475cb9e4699a9cff402c71f00c34c9de5f3b57a982",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\r\n    \"senderHash\": \"d284d430f23f523754a640475cb9e4699a9cff402c71f00c34c9de5f3b57a982\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/take/payment/63a716c0b2b64750a0242430",
+							"raw": "http://localhost:3011/v1/take/payment/63c59bb0107f4ce9de7fd638",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2359,7 +2300,7 @@
 								"v1",
 								"take",
 								"payment",
-								"63a716c0b2b64750a0242430"
+								"63c59bb0107f4ce9de7fd638"
 							]
 						}
 					},
@@ -2434,17 +2375,16 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "status",
-									"value": "paga",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"paga\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/payment/636e5e01894a245b4072b3d2",
+							"raw": "http://localhost:3011/v1/payment/63c59bb0107f4ce9de7fd638",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2453,7 +2393,7 @@
 							"path": [
 								"v1",
 								"payment",
-								"636e5e01894a245b4072b3d2"
+								"63c59bb0107f4ce9de7fd638"
 							]
 						}
 					},
