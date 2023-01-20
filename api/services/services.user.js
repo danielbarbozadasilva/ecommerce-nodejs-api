@@ -95,7 +95,7 @@ const authService = async (email, password) => {
 }
 
 const refreshTokenService = async (token) => {
-  const result = await user.findOne({ 'refreshToken._id': token })
+  const result = await user.findOne({ 'refreshToken.data': token })
 
   if (!result) {
     throw new ErrorNotAuthenticatedUser(`Refresh token invalid!`)

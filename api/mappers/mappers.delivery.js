@@ -9,7 +9,7 @@ const toDTO = (model) => ({
   cart: model?.cart.map((item) => ({
     product: item.product,
     quantity: item.quantity,
-    unitPrice: formatPriceBr(item.unitPrice)
+    unitPrice: formatPriceBr(item.price)
   })),
   shipping: model?.shipping,
   solicitationNumber: model.solicitationNumber,

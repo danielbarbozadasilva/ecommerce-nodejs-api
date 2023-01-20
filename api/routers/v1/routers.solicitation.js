@@ -204,10 +204,6 @@ module.exports = (router) => {
         'string.empty': '"solicitationNumber" can not be empty'
       })
     }),
-    validateDTOMiddleware('query', {
-      offset: joi.number(),
-      limit: joi.number()
-    }),
     verifyIdDbMiddleware.verifyIdSolicitation,
     solicitationController.showCartSolicitationController
   )
