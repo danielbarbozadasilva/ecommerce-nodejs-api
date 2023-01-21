@@ -22,6 +22,12 @@ const mockProduct = {
   category: ObjectId('6320f577156b47ff1082586e')
 }
 
+const mockCategory = {
+  name: 'Cameras',
+  code: '51421148302633523',
+  photo: ''
+}
+
 const clientMock = {
   name: faker.name.firstName(),
   email: faker.internet.email(),
@@ -201,6 +207,7 @@ const mockSolicitationError = {
 
 module.exports = {
   mockProduct,
+  mockCategory,
   clientMock,
   clientMockInsert,
   clientMockUpdate,
