@@ -86,12 +86,24 @@ const mockPayment = {
   status: 'paga'
 }
 
+const mockPaymentSender = {
+  senderHash: 'd284d430f23f523754a640475cb9e4699a9cff402c71f00c34c9de5f3b57a982'
+}
+
 const mockRating = {
   name: 'Daniel Barboza',
   text: 'Gostei muito do produto',
   score: 5,
   clientid: '6320f577156b47ff1082586e',
   productid: '63432f02a7f855351c99dc71'
+}
+
+const mockRatingCreate = {
+  name: 'Daniel Barboza',
+  text: 'Gostei muito do produto',
+  score: 5,
+  clientid: '6320f577156b47ff1082586e',
+  productid: '6397089f4bf6b326dbc5aea6'
 }
 
 const mockDelivery = {
@@ -212,7 +224,9 @@ module.exports = {
   clientMockInsert,
   clientMockUpdate,
   mockPayment,
+  mockPaymentSender,
   mockRating,
+  mockRatingCreate,
   mockDelivery,
   mockDeliveryShipping,
   mockSolicitationSuccess,
