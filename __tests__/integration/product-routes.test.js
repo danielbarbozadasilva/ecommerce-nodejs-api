@@ -19,6 +19,61 @@ describe('Product Routes', () => {
     })
   })
 
+  describe('Route GET /v1/product/dashboard', () => {
+    test('Make sure /v1/product/dashboard return 200 on search', async () => {
+      await request(app).get(`/v1/product/dashboard`).expect(200)
+    })
+  })
+
+  describe('Route GET /v1/product/available', () => {
+    test('Make sure /v1/product/available return 200 on list available', async () => {
+      const sortType = 'alfabetica_z-a'
+      const offset = 0
+      const limit = 30
+      await request(app)
+        .get(
+          `/v1/product/available?sortType=${sortType}&offset=${offset}&limit=${limit}`
+        )
+        .expect(200)
+    })
+  })
+
+  describe('Route GET /v1/product/search/:search', () => {
+    test('Make sure /v1/product/search/:search return 200 on search', async () => {
+      const search = 'smartphone'
+      const sortType = 'alfabetica_z-a'
+      const itemsPerPage = 30
+      const page = 1
+      await request(app)
+        .get(
+          `/v1/product/search/${search}?sortType=${sortType}&itemsPerPage=${itemsPerPage}&page=${page}`
+        )
+        .expect(200)
+    })
+  })
+
+  describe('Route GET /v1/product/:productid/rating', () => {
+    test('Make sure /v1/product/:productid/rating return 200 on rating list', async () => {
+      const productid = '63432f02a7f855351c99dc72'
+      await request(app).get(`/v1/product/${productid}/rating`).expect(200)
+    })
+    test('Make sure /v1/product/:productid/rating return 422 if product id does not exist', async () => {
+      const productid = '63433ba03a63723e66f5f61c'
+      await request(app).get(`/v1/product/${productid}/rating`).expect(422)
+    })
+  })
+
+  describe('Route GET /v1/category/:categoryid/products', () => {
+    test('Make sure /v1/category/:categoryid/products return 200 on search', async () => {
+      const categoryid = '6320f577156b47ff1082586e'
+      await request(app).get(`/v1/category/${categoryid}/products`).expect(200)
+    })
+    test('Make sure /v1/category/:categoryid/products return 422 if category id does not exist', async () => {
+      const categoryid = '63433ba03a63723e66f5f61c'
+      await request(app).get(`/v1/category/${categoryid}/products`).expect(422)
+    })
+  })
+
   describe('Route POST /v1/product', () => {
     test('Make sure /v1/product return 200 on create product', async () => {
       const email = 'danielbarboza56@hotmail.com'
