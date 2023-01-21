@@ -9,13 +9,13 @@ const {
   deliveries
 } = require('../models/models.index')
 const paymentMapper = require('../mappers/mappers.payment')
-const ErrorGeneric = require('../utils/errors/erros.generic-error')
+const ErrorGeneric = require('../exceptions/erros.generic-error')
 const {
   getTransactionStatus,
   createPayment,
   getNotification,
   getSessionId
-} = require('../utils/pagseguro/pagseguro.index')
+} = require('../integrations/pagseguro/pagseguro.index')
 const emailUpdatePayment = require('../utils/email/email.notification_payment')
 const emailUtils = require('../utils/email/email.index')
 const { showCartSolicitationService } = require('./services.solicitation')

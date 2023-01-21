@@ -1,6 +1,6 @@
 const { rating, product } = require('../models/models.index')
 const ratingMapper = require('../mappers/mappers.rating')
-const ErrorGeneric = require('../utils/errors/erros.generic-error')
+const ErrorGeneric = require('../exceptions/erros.generic-error')
 
 const listAllRatingService = async () => {
   try {

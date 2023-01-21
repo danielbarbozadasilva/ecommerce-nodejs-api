@@ -1,5 +1,4 @@
 const ShortUniqueId = require('short-unique-id')
-
 const uid = new ShortUniqueId({ length: 10, dictionary: 'number' })
 const {
   solicitation,
@@ -10,15 +9,14 @@ const {
   user,
   deliveries
 } = require('../models/models.index')
-
 const solicitationMapper = require('../mappers/mappers.solicitation')
 const emailUtils = require('../utils/email/email.index')
 const emailSolicitation = require('../utils/email/email.send_solicitation')
 const emailCancelation = require('../utils/email/email.cancel_solicitation')
 const { calculateShippingService } = require('./services.delivery')
-const ErrorGeneric = require('../utils/errors/erros.generic-error')
-const ErrorBusinessRule = require('../utils/errors/errors.business-rule')
-const ErrorUnprocessableEntity = require('../utils/errors/errors.unprocessable-entity')
+const ErrorGeneric = require('../exceptions/erros.generic-error')
+const ErrorBusinessRule = require('../exceptions/errors.business-rule')
+const ErrorUnprocessableEntity = require('../exceptions/errors.unprocessable-entity')
 
 const listAllSolicitationService = async (offset, limit) => {
   try {

@@ -7,9 +7,9 @@ const {
   solicitation,
   deliveries,
   payment
-} = require('../../models/models.index')
-const ErrorUnprocessableEntity = require('../errors/errors.unprocessable-entity')
-const ErrorBusinessRule = require('../errors/errors.business-rule')
+} = require('../models/models.index')
+const ErrorUnprocessableEntity = require('../exceptions/errors.unprocessable-entity')
+const ErrorBusinessRule = require('../exceptions/errors.business-rule')
 
 const verifyIdUser = async (req, res, next) => {
   const userDB = await user.findOne({ _id: req.params.userid })

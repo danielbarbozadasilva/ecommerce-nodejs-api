@@ -1,6 +1,6 @@
 const { category, product } = require('../models/models.index')
 const categoryMapper = require('../mappers/mappers.category')
-const ErrorGeneric = require('../utils/errors/erros.generic-error')
+const ErrorGeneric = require('../exceptions/erros.generic-error')
 
 const listAllCategoryService = async () => {
   try {
