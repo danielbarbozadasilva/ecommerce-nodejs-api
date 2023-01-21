@@ -1,9 +1,9 @@
 const joi = require('joi')
 
-const validateDTOMiddleware = require('../../utils/middlewares/middlewares.validate-dto')
-const verifyIdDbMiddleware = require('../../utils/middlewares/middlewares.verify-exists')
-const authenticationMiddleware = require('../../utils/middlewares/middlewares.authentication')
-const authorization = require('../../utils/middlewares/middlewares.authorization')
+const validateDTOMiddleware = require('../../middlewares/middlewares.validate-dto')
+const verifyIdDbMiddleware = require('../../middlewares/middlewares.verify-exists')
+const authenticationMiddleware = require('../../middlewares/middlewares.authentication')
+const authorization = require('../../middlewares/middlewares.authorization')
 const deliveryController = require('../../controllers/controllers.delivery')
 
 module.exports = (router) => {

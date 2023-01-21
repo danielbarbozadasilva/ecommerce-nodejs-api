@@ -1,10 +1,10 @@
 const joi = require('joi')
 
-const validateDTOMiddleware = require('../../utils/middlewares/middlewares.validate-dto')
-const verifyIdDbMiddleware = require('../../utils/middlewares/middlewares.verify-exists')
-const authenticationMiddleware = require('../../utils/middlewares/middlewares.authentication')
+const validateDTOMiddleware = require('../../middlewares/middlewares.validate-dto')
+const verifyIdDbMiddleware = require('../../middlewares/middlewares.verify-exists')
+const authenticationMiddleware = require('../../middlewares/middlewares.authentication')
 const fileUpload = require('../../utils/utils.file')
-const authorization = require('../../utils/middlewares/middlewares.authorization')
+const authorization = require('../../middlewares/middlewares.authorization')
 const productController = require('../../controllers/controllers.product')
 
 module.exports = (router) => {

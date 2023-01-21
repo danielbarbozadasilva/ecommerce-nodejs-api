@@ -1,7 +1,7 @@
 const joi = require('joi')
 const userController = require('../../controllers/controllers.user')
-const validateDTOMiddleware = require('../../utils/middlewares/middlewares.validate-dto')
-const verifyIdDbMiddleware = require('../../utils/middlewares/middlewares.verify-exists')
+const validateDTOMiddleware = require('../../middlewares/middlewares.validate-dto')
+const verifyIdDbMiddleware = require('../../middlewares/middlewares.verify-exists')
 
 module.exports = (router) => {
   router.route('/auth').post(
