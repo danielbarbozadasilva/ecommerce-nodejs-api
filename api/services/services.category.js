@@ -64,7 +64,7 @@ const updateCategoryService = async (categoryid, body, files) => {
     result.name = body.name
     result.code = body.code
     result.availability = body.availability
-    result.photo = files.length ? files[0].filename : ''
+    result.photo = files?.length ? files[0].filename : ''
 
     result.save()
 
