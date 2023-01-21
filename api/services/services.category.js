@@ -44,7 +44,7 @@ const createCategoryService = async (body, files) => {
       name: body.name,
       code: body.code,
       availability: true,
-      photo: files.length ? files[0].filename : ''
+      photo: files?.length ? files[0].filename : ''
     })
 
     return {
