@@ -40,7 +40,7 @@ describe('Rating Routes', () => {
         .set(result)
         .expect(200)
     })
-    test('Make sure /v1/rating return 401 on create rating', async () => {
+    test('Make sure /v1/rating return 401 if the user is not authenticated', async () => {
       await request(app).post(`/v1/rating`).send(mockRatingCreate).expect(401)
     })
   })
