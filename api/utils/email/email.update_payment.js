@@ -158,13 +158,7 @@ const sendSolicitationUpdateEmail = (data) => `
                                                                                     <table cellpadding="0" cellspacing="0" width="100%">
                                                                                         <tbody>
                                                                                             <tr>
-                                                                                            <img class="adapt-img" src=${`http://localhost:3011/static/image/${
-                                                                                              Object.values(
-                                                                                                item
-                                                                                                  .product
-                                                                                                  .photos
-                                                                                              )[0]
-                                                                                            }`} style="display: block;" width="70">
+                                                                                            <img class="adapt-img" src=${`http://localhost:3011/static/image/${item.product[0]}`} style="display: block;" width="70">
 
                                                                                             </tr>
                                                                                         </tbody>

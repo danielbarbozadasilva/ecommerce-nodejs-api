@@ -1,6 +1,6 @@
 const {
-  formatDateTimeBr,
-  formatPriceBr
+  formatPriceBr,
+  formatAddressImage
 } = require('../utils/helpers/helpers.format')
 
 const toDTO = (model) => ({
@@ -71,15 +71,27 @@ const toDTOCart = (model) => {
     id: model._id,
     canceled: model.canceled,
     cart: model.cart.map((item, i) => {
-      subTotal +=
-        (model.products[i].promotion || model.products[i].price) * item.quantity
+      subTotal += model.products.map(
+        (data) => data.promotion || data.price * item.quantity
+      )
       return {
-        product: model.products[i],
+        product: model.products.map((data) => formatAddressImage(data.photos)),
         quantity: item.quantity,
         unitPrice: formatPriceBr(item.unitPrice)
       }
     }),
-    subTotal: formatPriceBr(subTotal),
+    product: model.products.map((item) => ({
+      id: item._id,
+      title: item.title,
+      availability: item.availability,
+      description: item.description,
+      photos: item.photos.map((data) => formatAddressImage(data)),
+      price: item.price,
+      promotion: item.promotion,
+      sku: item.sku,
+      quantity: item.quantity
+    })),
+    subTotal,
     shipping: model.shipping,
     solicitationNumber: model.solicitationNumber,
     payment: {
