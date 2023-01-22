@@ -30,7 +30,7 @@ describe('Solicitation services', () => {
       expect(result.success).toBe(true)
     })
 
-    test('Make sure listByNumberSolicitationService return error', async () => {
+    test('Make sure listByNumberSolicitationService return error if solicitation number is invalid', async () => {
       try {
         const solicitationNumber = '234120127'
         expect(
@@ -55,7 +55,7 @@ describe('Solicitation services', () => {
       } catch (error) {}
     })
 
-    test('Make sure updateQuantityCancelation return error', async () => {
+    test('Make sure updateQuantityCancelation returns error if data is invalid', async () => {
       try {
         expect(
           await services.updateQuantityCancelation(mockSolicitationError)
@@ -72,7 +72,7 @@ describe('Solicitation services', () => {
       } catch (error) {}
     })
 
-    test('Make sure showCartSolicitationService return error', async () => {
+    test('Make sure showCartSolicitationService returns error if solicitation id is invalid', async () => {
       try {
         const solicitationId = '21c59bb0107f4ce9de7fd31c'
         expect(
@@ -90,7 +90,7 @@ describe('Solicitation services', () => {
       } catch (error) {}
     })
 
-    test('Make sure sendEmailClientCancelation return error', async () => {
+    test('Make sure sendEmailClientCancelation if solicitation number is invalid', async () => {
       try {
         const solicitationNumber = '8934110221'
         expect(
@@ -108,7 +108,7 @@ describe('Solicitation services', () => {
       } catch (error) {}
     })
 
-    test('Make sure sendEmailAdminCancelation return error', async () => {
+    test('Make sure sendEmailAdminCancelation if solicitation number is invalid', async () => {
       try {
         const solicitationNumber = '8934110221'
         expect(
@@ -127,7 +127,7 @@ describe('Solicitation services', () => {
       } catch (error) {}
     })
 
-    test('Make sure deleteSolicitationService return error', async () => {
+    test('Make sure deleteSolicitationService if solicitation number is invalid', async () => {
       try {
         const solicitationNumber = '8934110221'
         const clientId = '4320f577156b47ff1082145f'
@@ -145,7 +145,7 @@ describe('Solicitation services', () => {
       } catch (error) {}
     })
 
-    test('Make sure searchProductCart return error', async () => {
+    test('Make sure searchProductCart returns error if data is invalid', async () => {
       try {
         expect(
           await services.searchProductCart(mockSolicitationError)
@@ -161,7 +161,7 @@ describe('Solicitation services', () => {
       } catch (error) {}
     })
 
-    test('Make sure verifyQuantity return error', async () => {
+    test('Make sure verifyQuantity returns error if data is invalid', async () => {
       try {
         expect(await services.verifyQuantity(mockSolicitationError)).toThrow()
       } catch (error) {}
@@ -179,7 +179,7 @@ describe('Solicitation services', () => {
       } catch (error) {}
     })
 
-    test('Make sure verifyShipping return error', async () => {
+    test('Make sure verifyShipping returns error if data is invalid', async () => {
       try {
         expect(await services.verifyShipping(mockSolicitationError)).toThrow()
       } catch (error) {}
@@ -197,7 +197,7 @@ describe('Solicitation services', () => {
       } catch (error) {}
     })
 
-    test('Make sure checkCard return error', async () => {
+    test('Make sure checkCard returns error if data is invalid', async () => {
       try {
         expect(
           await services.checkCard(
@@ -218,7 +218,7 @@ describe('Solicitation services', () => {
       } catch (error) {}
     })
 
-    test('Make sure sendEmailAdminSolicitation return error', async () => {
+    test('Make sure sendEmailAdminSolicitation if solicitation id is invalid', async () => {
       try {
         const solicitationId = '21c59bb0107f4ce9de7fd31c'
         expect(
@@ -236,7 +236,7 @@ describe('Solicitation services', () => {
       } catch (error) {}
     })
 
-    test('Make sure sendEmailClientSolicitation return error', async () => {
+    test('Make sure sendEmailClientSolicitation if solicitation number is invalid', async () => {
       try {
         const solicitationNumber = '234120127'
         expect(
