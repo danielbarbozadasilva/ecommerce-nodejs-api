@@ -43,7 +43,7 @@ describe('Delivery services', () => {
       } catch (error) {}
     })
 
-    test('Make sure sendEmailUpdate return error', async () => {
+    test('Make sure sendEmailUpdate returns error if data is invalid', async () => {
       try {
         const solicitationId = '21c49bb0107f4ce9de7fd61b'
         expect(await services.sendEmailUpdate(solicitationId)).toThrow()
@@ -59,7 +59,7 @@ describe('Delivery services', () => {
       expect(result.success).toBe(true)
     })
 
-    test('Make sure updateDeliveryService has the id property', async () => {
+    test('Make sure updateDeliveryService has the date property', async () => {
       const deliveryId = '63c59bb0107f4ce9de7fd63a'
       const result = await services.updateDeliveryService(
         mockDelivery,
