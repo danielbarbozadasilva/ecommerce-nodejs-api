@@ -33,7 +33,7 @@ describe('Payment services', () => {
       } catch (error) {}
     })
 
-    test('Make sure sendEmailClientSuccessPaid return error', async () => {
+    test('Make sure sendEmailClientSuccessPaid returns error if solicitation number is invalid', async () => {
       try {
         const solicitationNumber = '2737119823'
         expect(
@@ -51,7 +51,7 @@ describe('Payment services', () => {
       } catch (error) {}
     })
 
-    test('Make sure sendEmailAdmSuccessfullyPaid return error', async () => {
+    test('Make sure sendEmailAdmSuccessfullyPaid return error if solicitation number is invalid', async () => {
       try {
         const solicitationNumber = '2737119823'
         expect(
@@ -69,7 +69,7 @@ describe('Payment services', () => {
       } catch (error) {}
     })
 
-    test('Make sure sendEmailClientPaymentFailed return error', async () => {
+    test('Make sure sendEmailClientPaymentFailed return error if solicitation number is invalid', async () => {
       try {
         const solicitationNumber = '2737119823'
         expect(
@@ -87,7 +87,7 @@ describe('Payment services', () => {
       } catch (error) {}
     })
 
-    test('Make sure sendEmailAdmPaymentFailed return error', async () => {
+    test('Make sure sendEmailAdmPaymentFailed return error if solicitation number is invalid', async () => {
       try {
         const solicitationNumber = '2737119823'
         expect(
@@ -105,7 +105,7 @@ describe('Payment services', () => {
       } catch (error) {}
     })
 
-    test('Make sure updateQuantityConfirm return error', async () => {
+    test('Make sure updateQuantityConfirm return error if solicitation id is invalid', async () => {
       try {
         const solicitationId = '61c59bb0107f4ce9de7fd32c'
         expect(await services.updateQuantityConfirm(solicitationId)).toThrow()
@@ -121,7 +121,7 @@ describe('Payment services', () => {
       } catch (error) {}
     })
 
-    test('Make sure updateQuantityCancelation return error', async () => {
+    test('Make sure updateQuantityCancelation return error if solicitation id is invalid', async () => {
       try {
         const solicitationId = '61c59bb0107f4ce9de7fd32c'
         expect(
