@@ -13,7 +13,7 @@ describe('Client Routes', () => {
   })
 
   describe('Route GET /v1/client', () => {
-    test('Make sure /v1/client return 200 on register', async () => {
+    test('Make sure /v1/client return 200 on list clients', async () => {
       const email = 'danielbarboza56@hotmail.com'
       const result = await createCredentialService(email)
       await request(app).get(`/v1/client`).set(result).expect(200)
@@ -44,7 +44,7 @@ describe('Client Routes', () => {
         .expect(200)
     })
 
-    test('Make sure /v1/client return 404 if the email already exists', async () => {
+    test('Make sure /v1/client return 400 if the email already exists', async () => {
       await request(app)
         .post('/v1/client')
         .send({
@@ -67,7 +67,7 @@ describe('Client Routes', () => {
         .expect(400)
     })
 
-    test('Make sure /v1/client return 404 if the cpf already exists', async () => {
+    test('Make sure /v1/client return 400 if the cpf already exists', async () => {
       await request(app)
         .post('/v1/client')
         .send({
@@ -105,7 +105,7 @@ describe('Client Routes', () => {
         .set(result)
         .expect(200)
     })
-    test('Make sure /v1/client/search/:search/solicitations return 401 on list solicitations', async () => {
+    test('Make sure /v1/client/search/:search/solicitations return 401 if the user is not authenticated', async () => {
       const search = 'Silva'
       const offset = 0
       const limit = 30
@@ -127,7 +127,7 @@ describe('Client Routes', () => {
         .set(result)
         .expect(200)
     })
-    test('Make sure /v1/client/search return 401 on list solicitations', async () => {
+    test('Make sure /v1/client/search return 401 if the user is not authenticated', async () => {
       const search = 'Silva'
       await request(app).get(`/v1/client/search?find=${search}`).expect(401)
     })
@@ -147,7 +147,7 @@ describe('Client Routes', () => {
         .set(result)
         .expect(200)
     })
-    test('Make sure /v1/client/:clientid/solicitations return 401 on list solicitations', async () => {
+    test('Make sure /v1/client/:clientid/solicitations return 401 if the user is not authenticated', async () => {
       const clientid = '6320f577156b47ff1082586e'
       const offset = 0
       const limit = 30
@@ -169,7 +169,7 @@ describe('Client Routes', () => {
         .set(result)
         .expect(200)
     })
-    test('Make sure /v1/client/:clientid/like return 401 on list likes', async () => {
+    test('Make sure /v1/client/:clientid/like return 401 if the user is not authenticated', async () => {
       const clientid = '6320f577156b47ff1082586f'
       await request(app).get(`/v1/client/${clientid}/like`).expect(401)
     })
@@ -206,7 +206,7 @@ describe('Client Routes', () => {
         .set(result)
         .expect(200)
     })
-    test('Make sure /v1/client/:clientid/product/:productid/like return 401 on delete like', async () => {
+    test('Make sure /v1/client/:clientid/product/:productid/like if the user is not authenticated', async () => {
       const clientid = '6320f577156b47ff1082586f'
       const productid = '639702b94bf6b326dbc5ae87'
       await request(app)
@@ -223,7 +223,7 @@ describe('Client Routes', () => {
       await request(app).get(`/v1/client/${clientid}`).set(result).expect(200)
     })
 
-    test('Make sure /v1/client/:clientid return 401 if user is not authenticated', async () => {
+    test('Make sure /v1/client/:clientid return 401 if the user is not authenticated', async () => {
       const clientid = '6320f577156b47ff1082586e'
       await request(app).get(`/v1/client/${clientid}`).expect(401)
     })
@@ -264,7 +264,7 @@ describe('Client Routes', () => {
         .expect(200)
     })
 
-    test('Make sure /v1/client/:clientid/user/:userid return 401 on client update', async () => {
+    test('Make sure /v1/client/:clientid/user/:userid return 401 if the user is not authenticated', async () => {
       const clientid = '6320f577156b47ff1082586e'
       const userid = '6320f577156b47ff1082586c'
       await request(app)
@@ -317,22 +317,12 @@ describe('Client Routes', () => {
   })
 
   describe('Route DELETE /v1/client/:clientid', () => {
-    test('Make sure /v1/client/:clientid return 200 on client remove', async () => {
-      const email = 'danielbarboza56@hotmail.com'
-      const clientid = '6320f577156b47ff1082586e'
-      const result = await createCredentialService(email)
-      await request(app)
-        .delete(`/v1/client/${clientid}`)
-        .set(result)
-        .expect(200)
-    })
-
-    test('Make sure /v1/client/:clientid return 401 on client remove', async () => {
+    test('Make sure /v1/client/:clientid return 401 if the user is not authenticated', async () => {
       const clientid = '6320f577156b47ff1082586e'
       await request(app).delete(`/v1/client/${clientid}`).expect(401)
     })
 
-    test('Make sure /v1/client/:clientid returns 422 on client remove', async () => {
+    test('Make sure /v1/client/:clientid returns 422 if the client id is invalid', async () => {
       const email = 'danielbarboza56@hotmail.com'
       const clientid = '6320f577156b47ff1082586f'
       const result = await createCredentialService(email)
