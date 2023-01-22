@@ -14,7 +14,7 @@ describe('Delivery Routes', () => {
   })
 
   describe('Route GET /v1/delivery/:deliveryid', () => {
-    test('Make sure /v1/delivery/:deliveryid return 200 on delivery id search', async () => {
+    test('Make sure /v1/delivery/:deliveryid return 200 on search', async () => {
       const email = 'daniel95barboza@gmail.com'
       const result = await createCredentialService(email)
       const deliveryid = '63c59bb0107f4ce9de7fd63a'
@@ -36,7 +36,7 @@ describe('Delivery Routes', () => {
   })
 
   describe('Route PUT /v1/delivery/:deliveryid', () => {
-    test('Make sure /v1/delivery/:deliveryid return 200 on delivery id update', async () => {
+    test('Make sure /v1/delivery/:deliveryid return 200 on delivery update', async () => {
       const deliveryid = '63c59bb0107f4ce9de7fd63a'
       const email = 'danielbarboza56@hotmail.com'
       const result = await createCredentialService(email)
@@ -59,7 +59,7 @@ describe('Delivery Routes', () => {
   })
 
   describe('Route POST /v1/delivery/calculate', () => {
-    test('Make sure /v1/delivery/calculate return 200 on delivery id update', async () => {
+    test('Make sure /v1/delivery/calculate return 200 on shipping calculate', async () => {
       const email = 'daniel95barboza@gmail.com'
       const result = await createCredentialService(email)
       await request(app)
