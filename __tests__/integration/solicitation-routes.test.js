@@ -32,4 +32,15 @@ describe('Solicitation Routes', () => {
         .expect(200)
     })
   })
+  describe('Route GET /v1/solicitation/:solicitationNumber', () => {
+    test('Make sure /v1/solicitation/:solicitationNumber return 200 on search', async () => {
+      const email = 'danielbarboza56@hotmail.com'
+      const solicitationNumber = '4777720845'
+      const result = await createCredentialService(email)
+      await request(app)
+        .get(`/v1/solicitation/${solicitationNumber}`)
+        .set(result)
+        .expect(200)
+    })
+  })
 })
