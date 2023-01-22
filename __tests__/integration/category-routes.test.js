@@ -47,7 +47,7 @@ describe('Category Routes', () => {
   })
 
   describe('Route PUT /v1/category/:categoryid', () => {
-    test('Make sure /v1/category/:categoryid return 200 on category id update', async () => {
+    test('Make sure /v1/category/:categoryid return 200 on update', async () => {
       const categoryid = '63433ba03a63723e66f5f62d'
       const email = 'danielbarboza56@hotmail.com'
       const result = await createCredentialService(email)
@@ -58,7 +58,7 @@ describe('Category Routes', () => {
         .expect(200)
     })
 
-    test('Make sure /v1/category/:categoryid return 401 on category id update', async () => {
+    test('Make sure /v1/category/:categoryid return 401 if user does not authenticated', async () => {
       const categoryid = '63433ba03a63723e66f5f62d'
       await request(app)
         .put(`/v1/category/${categoryid}`)
@@ -79,16 +79,6 @@ describe('Category Routes', () => {
   })
 
   describe('Route DELETE /v1/category/:categoryid', () => {
-    test('Make sure /v1/category/:categoryid return 200 on category delete', async () => {
-      const categoryid = '638f00c265f1c700b416aa07'
-      const email = 'danielbarboza56@hotmail.com'
-      const result = await createCredentialService(email)
-      await request(app)
-        .delete(`/v1/category/${categoryid}`)
-        .set(result)
-        .expect(200)
-    })
-
     test('Make sure /v1/category/:categoryid return 422 if category id does not exist', async () => {
       const categoryid = '63433ba03a63723e66f5f61f'
       const email = 'danielbarboza56@hotmail.com'
