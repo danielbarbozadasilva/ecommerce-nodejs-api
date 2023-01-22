@@ -53,6 +53,7 @@ describe('Auth Routes', () => {
         })
         .expect(400)
     })
+
     test('Make sure /v1/refresh-token return 200 when generating the token', async () => {
       const email = 'daniel95barboza@gmail.com'
       const password = 'daniel'
@@ -73,6 +74,7 @@ describe('Auth Routes', () => {
         })
         .expect(400)
     })
+
     test('Make sure /v1/user/recovery/password-recovery return 200 when generating the token', async () => {
       await request(app)
         .put('/v1/user/recovery/password-recovery')
@@ -81,6 +83,7 @@ describe('Auth Routes', () => {
         })
         .expect(200)
     })
+
     test('Make sure /v1/user/recovery/password-recovery return 400 if the email does not exist', async () => {
       await request(app)
         .put('/v1/user/recovery/password-recovery')
@@ -89,6 +92,7 @@ describe('Auth Routes', () => {
         })
         .expect(400)
     })
+
     test('Make sure /v1/user/recovery/reset-password return 200 if the token is correct', async () => {
       const data = { email: 'daniel95barboza@gmail.com' }
       const auth = await services.sendTokenRecoveryPasswordService(data)
@@ -101,12 +105,13 @@ describe('Auth Routes', () => {
         })
         .expect(200)
     })
+
     test('Make sure /v1/user/recovery/reset-password return 400 if the token is incorrect', async () => {
       await request(app)
         .put('/v1/user/recovery/reset-password')
         .send({
           email: 'daniel95barboza@gmail.com',
-          token: 'sdfsdfsdfsd',
+          token: 'incorrect',
           newPassword: 'daniel'
         })
         .expect(400)
