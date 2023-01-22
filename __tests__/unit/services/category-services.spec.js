@@ -22,13 +22,13 @@ describe('Category services', () => {
     })
 
     test('Make sure listCategoryByIdService return success', async () => {
-      const id = '6320f577156b47ff1082586e'
+      const id = '638f00c265f1c700b416aa07'
       const result = await services.listCategoryByIdService(id)
       expect(result.success).toBe(true)
     })
 
     test('Make sure listCategoryByIdService has the id property', async () => {
-      const id = '6320f577156b47ff1082586e'
+      const id = '638f00c265f1c700b416aa07'
       const result = await services.listCategoryByIdService(id)
       expect(result.data[0].id).toHaveProperty('id')
     })
@@ -44,7 +44,7 @@ describe('Category services', () => {
       expect(result.success).toBe(true)
     })
 
-    test('Make sure createCategoryService return error', async () => {
+    test('Make sure createCategoryService returns error if data is invalid', async () => {
       try {
         const data = {
           name: '',
@@ -58,7 +58,7 @@ describe('Category services', () => {
     })
 
     test('Make sure updateCategoryService return success', async () => {
-      const categoryId = '6320f577156b47ff1082586e'
+      const categoryId = '63433ba03a63723e66f5f62d'
       const data = {
         name: 'Teclados',
         code: '21421148302633566'
@@ -72,7 +72,7 @@ describe('Category services', () => {
       expect(result.success).toBe(true)
     })
 
-    test('Make sure updateCategoryService return error', async () => {
+    test('Make sure updateCategoryService returns error if data is invalid', async () => {
       try {
         const categoryId = '6320f577156b47ff1082586e'
         const data = {
@@ -87,12 +87,12 @@ describe('Category services', () => {
     })
 
     test('Make sure deleteCategoryService return success', async () => {
-      const categoryId = '6320f577156b47ff1082586e'
+      const categoryId = '638f00f265f1c700b416aa0c'
       const result = await services.deleteCategoryService(categoryId)
       expect(result.success).toBe(true)
     })
 
-    test('Make sure deleteCategoryService return error', async () => {
+    test('Make sure deleteCategoryService returns error if data is invalid', async () => {
       try {
         const categoryId = '6320f577156b47ff1082575b'
         await services.deleteCategoryService(categoryId)
