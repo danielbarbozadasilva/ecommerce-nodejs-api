@@ -84,13 +84,13 @@ describe('Product Routes', () => {
         .set(result)
         .expect(200)
     })
-    test('Make sure /v1/product return 401 on create product', async () => {
+    test('Make sure /v1/product return 401 if the user is not authenticated', async () => {
       await request(app).post(`/v1/product`).send(mockProduct).expect(401)
     })
   })
 
   describe('Route GET /v1/product/:productid', () => {
-    test('Make sure /v1/product/:productid return 200 on product id search', async () => {
+    test('Make sure /v1/product/:productid return 200 on product search', async () => {
       const productid = '63432f02a7f855351c99dc72'
       await request(app).get(`/v1/product/${productid}`).expect(200)
     })
@@ -102,7 +102,7 @@ describe('Product Routes', () => {
   })
 
   describe('Route PUT /v1/product/:productid', () => {
-    test('Make sure /v1/product/:productid return 200 on product id update', async () => {
+    test('Make sure /v1/product/:productid return 200 on product update', async () => {
       const productid = '63432f02a7f855351c99dc72'
       const email = 'danielbarboza56@hotmail.com'
       const result = await createCredentialService(email)
@@ -113,7 +113,7 @@ describe('Product Routes', () => {
         .expect(200)
     })
 
-    test('Make sure /v1/product/:productid return 401 on product id update', async () => {
+    test('Make sure /v1/product/:productid return 401 if the user is not authenticated', async () => {
       const productid = '63432f02a7f855351c99dc72'
       await request(app)
         .put(`/v1/product/${productid}`)
@@ -135,7 +135,7 @@ describe('Product Routes', () => {
 
   describe('Route DELETE /v1/product/:productid', () => {
     test('Make sure /v1/product/:productid return 200 on product delete', async () => {
-      const productid = '639702b94bf6b326dbc5ae87'
+      const productid = '639704f94bf6b326dbc5ae96'
       const email = 'danielbarboza56@hotmail.com'
       const result = await createCredentialService(email)
       await request(app)
