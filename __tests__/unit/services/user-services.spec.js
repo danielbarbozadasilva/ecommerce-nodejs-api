@@ -161,7 +161,7 @@ describe('User services', () => {
       }
     })
 
-    test('Make sure checkIdAuthorizationService return success', async () => {
+    test('Make sure checkIdAuthorizationService return error', async () => {
       try {
         const result = await client.findOne({})
         const permissions = 'client'
