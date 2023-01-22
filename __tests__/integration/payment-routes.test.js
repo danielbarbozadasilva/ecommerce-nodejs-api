@@ -30,7 +30,7 @@ describe('Payment Routes', () => {
         .set(result)
         .expect(200)
     })
-    test('Make sure /v1/take/payment/:paymentid return 401 on create payment', async () => {
+    test('Make sure /v1/take/payment/:paymentid return 401 if the user is not authenticated', async () => {
       const paymentid = '63c59bb0107f4ce9de7fd638'
       await request(app)
         .post(`/v1/take/payment/${paymentid}`)
@@ -40,7 +40,7 @@ describe('Payment Routes', () => {
   })
 
   describe('Route GET /v1/payment/:paymentid', () => {
-    test('Make sure /v1/payment/:paymentid return 200 on payment id search', async () => {
+    test('Make sure /v1/payment/:paymentid return 200 on payment search', async () => {
       const email = 'daniel95barboza@gmail.com'
       const paymentid = '63c59bb0107f4ce9de7fd638'
       const result = await createCredentialService(email)
@@ -56,7 +56,7 @@ describe('Payment Routes', () => {
   })
 
   describe('Route PUT /v1/payment/:paymentid', () => {
-    test('Make sure /v1/payment/:paymentid return 200 on payment id update', async () => {
+    test('Make sure /v1/payment/:paymentid return 200 on payment update', async () => {
       const paymentid = '63c59bb0107f4ce9de7fd638'
       const email = 'danielbarboza56@hotmail.com'
       const result = await createCredentialService(email)
@@ -67,7 +67,7 @@ describe('Payment Routes', () => {
         .expect(200)
     })
 
-    test('Make sure /v1/payment/:paymentid return 401 on payment id update', async () => {
+    test('Make sure /v1/payment/:paymentid return 401 if the user is not authenticated', async () => {
       const paymentid = '63c59bb0107f4ce9de7fd638'
       await request(app)
         .put(`/v1/payment/${paymentid}`)
