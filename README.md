@@ -74,6 +74,18 @@ Execute o comando para rodar o projeto:
 npm run dev
 ```
 
+
+Execute o comando para rodar os testes de integração:
+```
+npm run test:integration
+```
+
+Execute o comando para rodar os testes unitários:
+```
+npm run test:unit
+```
+
+
 Com o projeto rodando, abra a documentação do Swagger:
 ```
 http://localhost:3011/api-docs/
