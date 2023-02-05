@@ -1,4 +1,4 @@
-const ErrorBusinessRule = require('../errors/errors.business-rule')
+const ErrorBusinessRule = require('../../exceptions/errors.business-rule')
 
 const MIN_WIDTH = 11
 const MAX_WIDTH = 105

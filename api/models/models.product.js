@@ -25,7 +25,10 @@ const productSchema = Schema(
     weight: { type: Number, required: true },
     freeShipping: { type: Boolean, default: false },
     category: { type: Schema.Types.ObjectId, ref: 'category' },
-    rating: { type: [{ type: Schema.Types.ObjectId, ref: 'rating' }] }
+    rating: { type: [{ type: Schema.Types.ObjectId, ref: 'rating' }] },
+    likes: {
+      type: [{ type: Schema.Types.ObjectId, ref: 'client', required: false }]
+    }
   },
   { timestamps: true }
 )

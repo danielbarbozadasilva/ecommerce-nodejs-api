@@ -3,76 +3,11 @@ const cryptography = require('../utils/utils.cryptography')
 const emailUtils = require('../utils/email/email.index')
 const { Email } = require('../utils/email/email.recovery')
 const userMapper = require('../mappers/mappers.user')
-const ErrorGeneric = require('../utils/errors/erros.generic-error')
-const ErrorNotAuthenticatedUser = require('../utils/errors/errors.user-not-authenticated')
-const ErrorNotAuthorizedUser = require('../utils/errors/errors.user-not-authorized')
-const ErrorBusinessRule = require('../utils/errors/errors.business-rule')
-
-const profile = [
-  {
-    permission: 'administrator',
-    rule: [
-      'USER_LIST_ID',
-      'USER_UPDATE',
-      'USER_DELETE',
-      'STORE_UPDATE',
-      'STORE_DELETE',
-      'LIST_CLIENT',
-      'SEARCH_SOLICITATION',
-      'SEARCH_CLIENT',
-      'LIST_CLIENT_SOLICITATION',
-      'CLIENT_ID',
-      'CLIENT_UPDATE',
-      'CLIENT_DELETE',
-      'LIST_CATEGORY',
-      'LIST_CATEGORY_AVAILABILITY',
-      'LIST_CATEGORY_ID',
-      'LIST_CATEGORY_PRODUCT',
-      'CREATE_CATEGORY',
-      'UPDATE_CATEGORY',
-      'DELETE_CATEGORY',
-      'UPDATE_CATEGORY_PRODUCT',
-      'CREATE_PRODUCT',
-      'UPDATE_PRODUCT',
-      'UPLOAD_IMAGE_PRODUCT',
-      'DELETE_PRODUCT',
-      'DELETE_RATING',
-      'LIST_ALL_SOLICITATION',
-      'SOLICITATION_DELETE',
-      'LIST_ID_SOLICITATION',
-      'LIST_CLIENT_SOLICITATION',
-      'LIST_CART_PRODUCT',
-      'UPDATE_DELIVERY',
-      'UPDATE_PAYMENT'
-    ]
-  },
-  {
-    permission: 'client',
-    rule: [
-      'USER_LIST_ID',
-      'USER_UPDATE',
-      'USER_DELETE',
-      'STORE_CREATE',
-      'LIST_CLIENT',
-      'CLIENT_ID',
-      'CLIENT_UPDATE',
-      'CLIENT_DELETE',
-      'LIST_CATEGORY',
-      'LIST_CATEGORY_AVAILABILITY',
-      'LIST_CATEGORY_ID',
-      'CREATE_RATING',
-      'DELETE_RATING',
-      'SOLICITATION_CREATE',
-      'SOLICITATION_DELETE',
-      'LIST_ID_SOLICITATION',
-      'LIST_CLIENT_SOLICITATION',
-      'LIST_CART_PRODUCT',
-      'LIST_DELIVERY',
-      'LIST_PAYMENT_ID',
-      'TAKE_PAYMENT'
-    ]
-  }
-]
+const ErrorGeneric = require('../exceptions/erros.generic-error')
+const ErrorNotAuthenticatedUser = require('../exceptions/errors.user-not-authenticated')
+const ErrorNotAuthorizedUser = require('../exceptions/errors.user-not-authorized')
+const ErrorBusinessRule = require('../exceptions/errors.business-rule')
+const profile = require('../utils/utils.rules')
 
 const userIsValidService = async (email, password) => {
   const resultDB = await user.findOne({ email })
@@ -88,31 +23,52 @@ const userIsValidService = async (email, password) => {
       return resultDB
     }
   }
-  throw new ErrorNotAuthenticatedUser('Invalid access credentials!')
+  throw new ErrorNotAuthenticatedUser('E-mail e/ou senha inválidos!')
 }
 
 const checkPermissionService = (permissions, rule) => {
   const result = profile.filter(
     (item) => item.permission === String(permissions)
   )
+
   const check = result[0]?.rule?.includes(rule)
 
   if (!check) {
-    throw new ErrorNotAuthorizedUser('Usuário não autorizado!')
+    throw new ErrorNotAuthorizedUser('Unauthorized user!')
   }
   return !!check
 }
 
 const createCredentialService = async (email) => {
-  const userDB = await user.findOne({ email })
-  const userDTO = userMapper.toDTO(userDB)
-  const userToken = cryptography.generateToken(userDTO)
-  if (userDTO && userToken) {
-    return {
-      token: userToken,
-      userDTO
+  const userDB = await user.aggregate([
+    { $match: { email } },
+    {
+      $lookup: {
+        from: client.collection.name,
+        localField: '_id',
+        foreignField: 'user',
+        as: 'client'
+      }
+    },
+    {
+      $unwind: {
+        path: '$client',
+        preserveNullAndEmptyArrays: true
+      }
+    }
+  ])
+
+  if (userDB.length) {
+    const userDTO = userMapper.toDTO(...userDB)
+    const userToken = await cryptography.generateToken(userDTO)
+    if (userDTO && userToken) {
+      return {
+        ...userToken,
+        userDTO
+      }
     }
   }
+
   return false
 }
 
@@ -138,83 +94,39 @@ const authService = async (email, password) => {
   }
 }
 
-const registerService = async (body) => {
-  try {
-    const salt = cryptography.createSalt()
-    const result = await user.create({
-      name: body.name,
-      email: body.email,
-      salt,
-      hash: cryptography.createHash(body.password, salt),
-      store: body.store
-    })
+const refreshTokenService = async (token) => {
+  const result = await user.findOne({ 'refreshToken.data': token })
 
-    return {
-      success: true,
-      message: 'User registered successfully',
-      data: userMapper.toDTO(result)
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+  if (!result) {
+    throw new ErrorNotAuthenticatedUser(`Refresh token invalid!`)
   }
-}
 
-const listByIdUserService = async (id) => {
-  const resultDB = await user.findById({ _id: id }).populate('store')
+  const resultToken = await cryptography.genereteRefreshToken(result)
 
   return {
     success: true,
-    message: 'User listed successfully',
-    data: userMapper.toDTO(resultDB)
+    message: 'Refresh token generated successfully!',
+    data: resultToken
   }
 }
 
-const updateUserService = async (id, body) => {
+const checkTokenService = async (token) => {
   try {
-    const salt = cryptography.createSalt()
-
-    const resultDB = await user.findOneAndUpdate(
-      { _id: id },
-      {
-        $set: {
-          name: body.name,
-          email: body.email,
-          salt,
-          hash: cryptography.createHash(body.password, salt),
-          store: body.store
-        }
-      },
-      { new: true }
-    )
-
+    const { id } = cryptography.decodeToken(token)
+    await user.findOne({ _id: id })
     return {
       success: true,
-      message: 'User updated successfully',
-      data: userMapper.toDTO(resultDB)
+      message: 'Token valid!'
     }
   } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
-const deleteUserService = async (id) => {
-  try {
-    await user.deleteOne({ _id: id })
-
-    return {
-      success: true,
-      message: 'User deleted successfully'
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+    throw new ErrorNotAuthenticatedUser(`Token invalid!`)
   }
 }
 
 const sendTokenRecoveryPasswordService = async (body) => {
   try {
     const resultToken = cryptography.tokenRecoveryPassword()
-
-    await user.updateOne(
+    const result = await user.findOneAndUpdate(
       { email: `${body.email}` },
       {
         $set: {
@@ -223,18 +135,28 @@ const sendTokenRecoveryPasswordService = async (body) => {
             date: resultToken.date
           }
         }
-      }
+      },
+      { new: true }
     )
-    emailUtils.utilSendEmail({
-      to: body.email,
-      from: process.env.SENDER,
-      subject: `Recuperar senha`,
-      html: Email(resultToken.token)
-    })
+
+    if (result) {
+      await emailUtils.utilSendEmail({
+        to: body.email,
+        from: process.env.SENDER,
+        subject: `Recuperar senha`,
+        html: Email(resultToken.token)
+      })
+
+      return {
+        success: true,
+        message: 'Email successfully sent',
+        data: result
+      }
+    }
 
     return {
-      success: true,
-      message: 'Email successfully sent'
+      success: false,
+      message: 'Error performing the operation'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -280,9 +202,8 @@ const resetPasswordUserService = async (body) => {
 }
 
 const checkIdAuthorizationService = async (idToken, userid, permissions) => {
-  const result = permissions.map((item) => item === 'administrator')
-
-  if (userid && !result[0]) {
+  const result = permissions === 'administrator'
+  if (userid && !result) {
     const userDB = await client.findOne({ _id: userid, user: idToken })
 
     if (!userDB && idToken != userid) {
@@ -295,13 +216,12 @@ const checkIdAuthorizationService = async (idToken, userid, permissions) => {
 }
 
 module.exports = {
+  createCredentialService,
+  refreshTokenService,
+  checkTokenService,
   userIsValidService,
   checkPermissionService,
   authService,
-  registerService,
-  listByIdUserService,
-  updateUserService,
-  deleteUserService,
   sendTokenRecoveryPasswordService,
   checkTokenRecoveryPasswordService,
   resetPasswordUserService,

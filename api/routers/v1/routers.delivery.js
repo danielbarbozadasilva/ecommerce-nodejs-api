@@ -1,9 +1,9 @@
 const joi = require('joi')
 
-const validateDTOMiddleware = require('../../utils/middlewares/middlewares.validate-dto')
-const verifyIdDbMiddleware = require('../../utils/middlewares/middlewares.verify-exists')
-const authenticationMiddleware = require('../../utils/middlewares/middlewares.authentication')
-const authorization = require('../../utils/middlewares/middlewares.authorization')
+const validateDTOMiddleware = require('../../middlewares/middlewares.validate-dto')
+const verifyIdDbMiddleware = require('../../middlewares/middlewares.verify-exists')
+const authenticationMiddleware = require('../../middlewares/middlewares.authentication')
+const authorization = require('../../middlewares/middlewares.authorization')
 const deliveryController = require('../../controllers/controllers.delivery')
 
 module.exports = (router) => {
@@ -11,7 +11,7 @@ module.exports = (router) => {
     .route('/delivery/:deliveryid')
     .get(
       authenticationMiddleware(),
-      // authorization.authorizationMiddleware('LIST_DELIVERY'),
+      authorization.authorizationMiddleware('LIST_DELIVERY'),
       validateDTOMiddleware('params', {
         deliveryid: joi
           .string()
@@ -28,7 +28,7 @@ module.exports = (router) => {
     )
     .put(
       authenticationMiddleware(),
-      // authorization.authorizationMiddleware('UPDATE_DELIVERY'),
+      authorization.authorizationMiddleware('UPDATE_DELIVERY'),
       validateDTOMiddleware('params', {
         deliveryid: joi
           .string()
@@ -53,12 +53,18 @@ module.exports = (router) => {
       verifyIdDbMiddleware.verifyIdDelivery,
       deliveryController.updateDeliveryController
     )
+
   router.route('/delivery/calculate').post(
     validateDTOMiddleware('body', {
       cart: joi
         .array()
         .items(
           joi.object({
+            photos: joi.array().items(joi.string()).optional(),
+            price: joi.number().required().messages({
+              'any.required': '"price" is a required field',
+              'number.empty': '"price" can not be empty'
+            }),
             product: joi
               .string()
               .regex(/^[0-9a-fA-F]{24}$/)
@@ -68,13 +74,13 @@ module.exports = (router) => {
                 'string.empty': '"product id" can not be empty',
                 'string.pattern.base': '"product id" out of the expected format'
               }),
-            unitPrice: joi.number().required().messages({
-              'any.required': '"unit price" is a required field',
-              'number.empty': '"unit price" can not be empty'
-            }),
             quantity: joi.number().required().messages({
               'any.required': '"quantity" is a required field',
               'number.empty': '"quantity" can not be empty'
+            }),
+            title: joi.string().required().messages({
+              'any.required': '"title" is a required field',
+              'string.empty': '"title" can not be empty'
             })
           })
         )

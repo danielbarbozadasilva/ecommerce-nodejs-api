@@ -1,4 +1,5 @@
 #!/bin/bash
+
 set -e
 
 mongo <<EOF
@@ -69,10 +70,10 @@ db.clients.insert([
         street: "Av. Professor Dutra",
         number: "2234",
         complement: "casa",
-        district: "Rio de janeiro",
-        city: "Rio de janeiro",
+        district: "RIO DE JANEIRO",
+        city: "CARMO",
         zipCode: "23098-782",
-        state: "Rio de janeiro"
+        state: "RJ"
     }
 }
 ])
@@ -81,15 +82,38 @@ db.createCollection("categories")
 db.categories.insert([
 {
     _id: ObjectId("6320f577156b47ff1082586e"),
-    name: "Placa de vídeo",
+    name: "Placas de vídeo",
     code: "43242342342343224",
-    availability: true
+    availability: true,
+    photo: "files-1668078769223.jpg"  
 },
 {
     _id: ObjectId("63433ba03a63723e66f5f62d"),
     name: "Processadores",
     code: "23135142342333154",
-    availability: false
+    availability: true,
+    photo: "files-1668078769111.jpg"
+},
+{
+    _id: ObjectId("638f004765f1c700b416aa02"),
+    name: "Monitores",
+    code: "73245148302633104",
+    availability: true,
+    photo: "files-1670316172965.jpg"
+},
+{
+    _id: ObjectId("638f00c265f1c700b416aa07"),
+    name: "Notebooks",
+    code: "64135112342336246",
+    availability: true,
+    photo: "files-1670316265765.jpg"
+},
+{
+    _id: ObjectId("638f00f265f1c700b416aa0c"),
+    name: "Smartphones",
+    code: "12531642142335131",
+    availability: true,
+    photo: "files-1670316293269.jpg"
 }
 ])
 
@@ -97,9 +121,9 @@ db.createCollection("products")
 db.products.insert([
 {
   _id: ObjectId("63432f02a7f855351c99dc71"),
-  title: "Placa de Vídeo Zotac GeForce RTX 3060",
+  title: "Placa de Vídeo RTX 3060",
   availability: true,
-  description: "(1-Click OC) LHR, 12GB GDDR6, 15 Gbps, Ray Tracing, DLSS - 36NOL7MD1VOC",
+  description: "GeForce RTX 3060 12GB GDDR6; Núcleos CUDA: 3584; Engine Clock: 1807 MHz (boost)",
   photos:["files-1668078769319.jpg","files-1668079012525.jpg"],  
   price: 2399.99,
   promotion: 1199.99,
@@ -114,13 +138,16 @@ db.products.insert([
   weight: 1,
   freeShipping: false,
   category: ObjectId("6320f577156b47ff1082586e"),
+  likes: [
+    ObjectId("6320f577156b47ff1082586e")
+  ],
   rating: []
 },
 {
   _id: ObjectId("63432f02a7f855351c99dc72"),
-  title: "Processador Intel Core i5-10400F, 2.9GHz",
+  title: "Intel Core i5-10400F",
   availability: true,
-  description: "(4.3GHz Max Turbo), Cache 12MB, 6 Núcleos, 12 Threads, LGA 1200 - BX8070110400F",
+  description: "Processador Intel Core i5-10400F (Comete Lake), Hexa-Core (12 Threads)",
   photos:["files-1668078750488.jpg"],
   price: 849.99,
   promotion: 429.99,
@@ -135,10 +162,221 @@ db.products.insert([
   weight: 1,
   freeShipping: false,
   category: ObjectId("63433ba03a63723e66f5f62d"),
+  likes: [
+    ObjectId("6320f577156b47ff1082586e")
+  ],
+  rating: []
+},
+{
+  _id: ObjectId("639702b94bf6b326dbc5ae87"),
+  title: "Monitor LG UltraWide 29",
+  availability: true,
+  description: "FHD FreeSync, HDR10, HDMI, 29WL500-B 75Hz 5ms",
+  photos: ["files-1670841394582.jpg"],
+  price: 2199,
+  promotion: 1149,
+  sku: "29WL500",
+  quantity: 40,
+  blockedQuantity: 0,
+  dimensions: {
+    height: 8,
+    width: 10,
+    depth: 27
+  },
+  weight: 1,
+  freeShipping: false,
+  category: ObjectId("638f004765f1c700b416aa02"),
+  rating: []
+},
+{
+  _id: ObjectId("639704f94bf6b326dbc5ae96"),
+  title: "Smart Monitor Samsung 24",
+  availability: true,
+  description: "FHD Série M5 Tizen, HDMI, HDR, LS24AM506NLMZD 60Hz 14ms",
+  photos: ["files-1670841622799.jpg"],
+  price: 1699,
+  promotion: 1340.54,
+  sku: "LS24AM506",
+  quantity: 40,
+  blockedQuantity: 0,
+  dimensions: {
+    height: 8,
+    width: 10,
+    depth: 27
+  },  
+  weight: 1,
+  freeShipping: false,
+  category: ObjectId("638f004765f1c700b416aa02"),
+  rating: []
+},
+{
+  _id: ObjectId("639707034bf6b326dbc5ae9e"),
+  title: "Notebook Samsung Book 15.6",
+  availability: true,
+  description: "Intel Celeron 6305 4GB RAM 500GB NP550XDA-KP2BR",
+  photos: ["files-1670842145993.jpg"],
+  price: 3149,
+  promotion: 2159.1,
+  sku: "NP550XDA",
+  quantity: 20,
+  blockedQuantity: 0,
+  dimensions: {
+    height: 8,
+    width: 10,
+    depth: 27
+  },
+  weight: 1,
+  freeShipping: false,
+  category: ObjectId("638f00c265f1c700b416aa07"),
+  rating: []
+},
+{
+  _id: ObjectId("6397089f4bf6b326dbc5aea6"),
+  title: "Smartphone Samsung Galaxy S22",
+  availability: true,
+  description: "5G 256 GB 6.6 Verde e Snapdragon",
+  photos: ["files-1670842566230.jpg"],
+  price: 7499.9,
+  promotion: 4999,
+  sku: "SMS906",
+  quantity: 30,
+  blockedQuantity: 0,
+   dimensions: {
+    height: 8,
+    width: 10,
+    depth: 27
+  },
+  weight: 1,
+  freeShipping: false,
+  category: ObjectId("638f00f265f1c700b416aa0c"),
+  rating: []
+},
+{
+  _id: ObjectId("63970c5915c445c9c84a9bee"),
+  title: "Smartphone Samsung Galaxy XCover Pro",
+  availability: true,
+  description: "4G 64GB 6.3 Preto 2 Câmeras Traseiras",
+  photos: ["files-1670843509386.jpg"],
+  price: 1999,
+  promotion: 1619.1,
+  sku: "SMXCPR",
+  quantity: 20,
+  blockedQuantity: 0,
+   dimensions: {
+    height: 8,
+    width: 10,
+    depth: 27
+  },
+  weight: 1,
+  freeShipping: false,
+  category: ObjectId("638f00f265f1c700b416aa0c"),
   rating: []
 }
 ])
 
+db.createCollection("payments")
+db.payments.insert([
+{
+    _id: ObjectId("63c59bb0107f4ce9de7fd638"),
+    price: 2569.29,
+    type: "BOLETO",
+    installments: 3,
+    status: "Aguardando pagamento",
+    address: {
+        street: "Av. Manuel Gomes",
+        number: "1223",
+        complement: "casa",
+        district: "Rio de janeiro",
+        city: "Rio de janeiro",
+        state: "RJ",
+        zipCode: "21987-200"
+    },
+    card: {
+        fullName: "DANIEL BARBOZA DA SILVA",
+        areaCode: "21",
+        phone: "(21)2434-1207",
+        birthDate: "2000-02-09",
+        creditCardToken: "0ec7d144527b410da270e13e15666294",
+        cpf: "82429888467"
+    },
+    addressDeliveryIgualCharging: false,
+    payload: []
+}
+])
 
+db.createCollection("deliveries")
+db.deliveries.insert([
+{
+    _id: ObjectId("63c59bb0107f4ce9de7fd63a"),
+    status: "not started",
+    type: "4014",
+    price: 79.33,
+    deliveryTime: 2,
+    address: {
+        street: "Av. Manuel Gomes",
+        number: "1223",
+        complement: "casa",
+        district: "Rio de janeiro",
+        city: "Rio de janeiro",
+        state: "RJ",
+        zipCode: "21987200"
+    }
+}
+])
+
+db.createCollection("solicitations")
+db.solicitations.insert([
+  {
+    _id: ObjectId("63c59bb0107f4ce9de7fd63d"),
+    cart: [{
+        product: ObjectId("63432f02a7f855351c99dc71"),
+        title: "Placa de Vídeo RTX 3060",
+        quantity: 1,
+        price: 1199.99
+    }, 
+    {
+        product: ObjectId("63432f02a7f855351c99dc72"),
+        title: "Intel Core i5-10400F",
+        quantity: 3,
+        price: 429.99
+    }],
+    shipping: 79.33,
+    solicitationNumber: "4777720845",
+    client: ObjectId("6320f577156b47ff1082586e"),
+    payment: ObjectId("63c59bb0107f4ce9de7fd638"),
+    deliveries: ObjectId("63c59bb0107f4ce9de7fd63a")
+  }
+])
+
+db.createCollection("orderregistrations")
+db.orderregistrations.insert([
+  {
+      "solicitation": ObjectId("63c59bb0107f4ce9de7fd63d"),
+      "type": "solicitation",
+      "situation": "created",
+      "date": "2023-01-16T18:47:12.928Z"
+  }
+])
+
+
+db.createCollection("ratings")
+db.ratings.insert([
+  {
+    _id: ObjectId("638a22b10ef44976d168711e"),
+    name: "João Costa",
+    text: "Gostei bastante do produto.",
+    score: 5,
+    product: ObjectId("63432f02a7f855351c99dc71"),
+    client: ObjectId("6320f577156b47ff1082586e")
+  },
+   {
+    _id: ObjectId("638a236a0ef44976d1687126"),
+    name: "Marcos Silva",
+    text: "Chegou em perfeito estado.",
+    score: 4,
+    product: ObjectId("63432f02a7f855351c99dc72"),
+    client: ObjectId("6320f577156b47ff1082586e")
+  }
+])
 
 EOF

@@ -1,9 +1,9 @@
 const toDTO = (model) => ({
-  id: model._id,
-  name: model.name,
-  email: model.email,
-  store: model.store,
-  permissions: model.permissions
+  id: model?._id,
+  clientid: model?.client?._id,
+  name: model?.name,
+  email: model?.email,
+  permissions: model?.permissions[0]
 })
 
 module.exports = {

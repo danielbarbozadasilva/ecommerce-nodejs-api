@@ -1,8 +1,11 @@
+const { v4: uuidv4 } = require('uuid')
 const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
+const { user } = require('../models/models.index')
 require('dotenv').config()
-const ErrorGeneric = require('./errors/erros.generic-error')
-const ErrorNotAuthenticatedUser = require('./errors/errors.user-not-authenticated')
+
+const ErrorGeneric = require('../exceptions/erros.generic-error')
+const ErrorNotAuthenticatedUser = require('../exceptions/errors.user-not-authenticated')
 
 const jwtHashSecret = process.env.JWT_SECRET
 const jwtTimeLimit = process.env.JWT_VALID_TIME
@@ -36,15 +39,50 @@ const createHash = (password, salt) => {
   }
 }
 
-const generateToken = (model) => {
+const generateToken = async (model) => {
   try {
-    return jwt.sign({ ...model }, jwtHashSecret, {
-      expiresIn: `${jwtTimeLimit}`
-    })
+    const token = jwt.sign(
+      {
+        ...model
+      },
+      jwtHashSecret,
+      {
+        expiresIn: jwtTimeLimit
+      }
+    )
+
+    const result = await user.findOneAndUpdate(
+      { _id: model.id },
+      {
+        $set: {
+          refreshToken: { _id: uuidv4(), data: token, expiresIn: jwtTimeLimit }
+        }
+      },
+      { new: true }
+    )
+
+    return {
+      token,
+      refreshToken: { ...result.refreshToken }
+    }
   } catch (error) {
     throw new ErrorGeneric(`Error generating token! ${error}`)
   }
 }
+
+const genereteRefreshToken = async (data) =>
+  jwt.sign(
+    {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      permissions: data.permissions
+    },
+    jwtHashSecret,
+    {
+      expiresIn: jwtTimeLimit
+    }
+  )
 
 const validatePassword = (password, salt, hash) => {
   try {
@@ -69,7 +107,7 @@ const tokenIsValid = (token) => {
   try {
     jwt?.verify(token, jwtHashSecret)
   } catch (err) {
-    throw new ErrorNotAuthenticatedUser('Usuário não autenticado!')
+    throw new ErrorNotAuthenticatedUser('Unauthenticated user!')
   }
 }
 
@@ -80,5 +118,6 @@ module.exports = {
   tokenIsValid,
   decodeToken,
   validatePassword,
-  tokenRecoveryPassword
+  tokenRecoveryPassword,
+  genereteRefreshToken
 }

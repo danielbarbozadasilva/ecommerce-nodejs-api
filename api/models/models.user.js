@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema(
     recovery: {
       token: String,
       date: Date
+    },
+    refreshToken: {
+      _id: { type: String },
+      data: { type: String },
+      expiresIn: { type: String }
     }
   },
   {

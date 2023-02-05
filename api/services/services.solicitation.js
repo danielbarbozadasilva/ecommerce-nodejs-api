@@ -1,5 +1,4 @@
 const ShortUniqueId = require('short-unique-id')
-
 const uid = new ShortUniqueId({ length: 10, dictionary: 'number' })
 const {
   solicitation,
@@ -10,15 +9,14 @@ const {
   user,
   deliveries
 } = require('../models/models.index')
-
 const solicitationMapper = require('../mappers/mappers.solicitation')
 const emailUtils = require('../utils/email/email.index')
 const emailSolicitation = require('../utils/email/email.send_solicitation')
 const emailCancelation = require('../utils/email/email.cancel_solicitation')
 const { calculateShippingService } = require('./services.delivery')
-const ErrorGeneric = require('../utils/errors/erros.generic-error')
-const ErrorBusinessRule = require('../utils/errors/errors.business-rule')
-const ErrorUnprocessableEntity = require('../utils/errors/errors.unprocessable-entity')
+const ErrorGeneric = require('../exceptions/erros.generic-error')
+const ErrorBusinessRule = require('../exceptions/errors.business-rule')
+const ErrorUnprocessableEntity = require('../exceptions/errors.unprocessable-entity')
 
 const listAllSolicitationService = async (offset, limit) => {
   try {
@@ -213,7 +211,7 @@ const showCartSolicitationService = async (solicitationNumber) => {
 const sendEmailClientCancelation = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
 
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: result.data.user.email,
     from: process.env.SENDER,
     subject: `E-commerce - Pedido Cancelado!`,
@@ -224,7 +222,7 @@ const sendEmailClientCancelation = async (solicitationNumber) => {
 const sendEmailAdminCancelation = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
 
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: process.env.EMAIL,
     from: process.env.SENDER,
     subject: `E-commerce - Pedido Cancelado!`,
@@ -289,25 +287,6 @@ const verifyQuantity = async (cart) => {
   }
 }
 
-const verifyPrice = async (cart) => {
-  let checkPrice = false
-
-  const resultdb = await searchProductCart(cart)
-
-  cart.map((item, i) => {
-    if (
-      (resultdb[i].promotion || resultdb[i].price) * item.quantity !==
-      item.unitPrice * item.quantity
-    ) {
-      checkPrice = true
-    }
-  })
-
-  if (checkPrice) {
-    throw new ErrorUnprocessableEntity('Dados de carrinho inválidos!')
-  }
-}
-
 const verifyShipping = async (body, price, code) => {
   const resultdb = await calculateShippingService(body)
 
@@ -345,7 +324,7 @@ const checkCard = async (cart, payment, shipping) => {
 const sendEmailAdminSolicitation = async (id) => {
   const result = await showCartSolicitationService(id)
 
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: process.env.EMAIL,
     from: process.env.SENDER,
     subject: `E-commerce - Pedido ${id} recebido!`,
@@ -356,7 +335,7 @@ const sendEmailAdminSolicitation = async (id) => {
 const sendEmailClientSolicitation = async (id) => {
   const result = await showCartSolicitationService(id)
 
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: result.data.user.email,
     from: process.env.SENDER,
     subject: `Pedido ${id} recebido!`,
@@ -377,9 +356,8 @@ const updateQuantitySave = async (data) => {
   }
 }
 
-const createSolicitationService = async (storeid, clientid, body) => {
+const createSolicitationService = async (clientid, body) => {
   await verifyQuantity(body.cart)
-  await verifyPrice(body.cart)
   await verifyShipping(body, body.deliveries.price, body.deliveries.type)
   await checkCard(body.cart, body.payment, body.shipping)
 
@@ -391,8 +369,7 @@ const createSolicitationService = async (storeid, clientid, body) => {
       addressDeliveryIgualCharging: body.payment.addressDeliveryIgualCharging,
       address: body.payment.address,
       card: body.payment.card,
-      status: 'Aguardando pagamento',
-      store: storeid
+      status: 'Aguardando pagamento'
     })
 
     const deliveriesdb = await deliveries.create({
@@ -400,13 +377,11 @@ const createSolicitationService = async (storeid, clientid, body) => {
       type: body.deliveries.type,
       deliveryTime: body.deliveries.deliveryTime,
       address: body.deliveries.address,
-      status: 'not started',
-      store: storeid
+      status: 'not started'
     })
 
     const solicitationdb = await solicitation.create({
       client: clientid,
-      store: storeid,
       cart: body.cart,
       shipping: body.shipping,
       solicitationNumber: uid(),
@@ -427,7 +402,11 @@ const createSolicitationService = async (storeid, clientid, body) => {
     return {
       success: true,
       message: 'Solicitation created successfully',
-      data: solicitationMapper.toDTOList(solicitationdb, deliveriesdb)
+      data: solicitationMapper.toDTOList(
+        solicitationdb,
+        deliveriesdb,
+        paymentdb
+      )
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -439,5 +418,15 @@ module.exports = {
   listByNumberSolicitationService,
   deleteSolicitationService,
   showCartSolicitationService,
-  createSolicitationService
+  createSolicitationService,
+  updateQuantityCancelation,
+  sendEmailClientCancelation,
+  sendEmailAdminCancelation,
+  searchProductCart,
+  verifyQuantity,
+  verifyShipping,
+  checkCard,
+  sendEmailAdminSolicitation,
+  sendEmailClientSolicitation,
+  updateQuantitySave
 }

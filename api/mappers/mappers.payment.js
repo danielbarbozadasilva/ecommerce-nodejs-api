@@ -74,7 +74,7 @@ const toDTOList = (payment) => ({
 const toDTOCart = (model) => ({
   id: model._id,
   price: model.price,
-  type: model.type,
+  type: model?.type || model.payment.type,
   installments: model.installments,
   status: model.status,
   address: {
@@ -100,14 +100,13 @@ const toDTOCart = (model) => ({
     cart: model.solicitation.cart.map((item, i) => ({
       product: model.products[i],
       quantity: item.quantity,
-      unitPrice: item.unitPrice
+      unitPrice: item.price
     })),
     shipping: model.solicitation.shipping,
     solicitationNumber: model.solicitationNumber,
     client: model.solicitation.client,
     payment: model.solicitation.payment,
     deliveries: model.solicitation.deliveries,
-    store: model.solicitation.store,
     canceled: model.solicitation.canceled
   },
   payload: model.payload,
@@ -198,29 +197,29 @@ const toDTOPay = (model) => ({
     amount: formatPriceBr(item.amount)
   })),
   sender: {
-    name: model.sender.name,
-    email: model.sender.email,
+    name: model.sender?.name,
+    email: model.sender?.email,
     phone: {
-      areaCode: model.sender.phone.areaCode,
-      number: model.sender.phone.number
+      areaCode: model.sender?.phone?.areaCode,
+      number: model.sender?.phone?.number
     },
     documents: {
       document: {
-        type: model.sender.documents.document.type,
-        value: model.sender.documents.document.value
+        type: model.sender?.documents.document.type,
+        value: model.sender?.documents.document.value
       }
     }
   },
   shipping: {
     address: {
-      street: model.shipping.address.street,
-      number: model.shipping.address.number,
-      complement: model.shipping.address.complement,
-      district: model.shipping.address.district,
-      city: model.shipping.address.city,
-      state: model.shipping.address.state,
-      country: model.shipping.address.country,
-      postalCode: model.shipping.address.postalCode
+      street: model.shipping?.address.street,
+      number: model.shipping?.address.number,
+      complement: model.shipping?.address.complement,
+      district: model.shipping?.address.district,
+      city: model.shipping?.address.city,
+      state: model.shipping?.address.state,
+      country: model.shipping?.address.country,
+      postalCode: model.shipping?.address.postalCode
     }
   },
   gatewaySystem: {
