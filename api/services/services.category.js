@@ -1,6 +1,6 @@
 const { category, product } = require('../models/models.index')
 const categoryMapper = require('../mappers/mappers.category')
-const ErrorGeneric = require('../utils/errors/erros.generic-error')
+const ErrorGeneric = require('../exceptions/erros.generic-error')
 
 const listAllCategoryService = async () => {
   try {
@@ -44,7 +44,7 @@ const createCategoryService = async (body, files) => {
       name: body.name,
       code: body.code,
       availability: true,
-      photo: files[0].filename
+      photo: files?.length ? files[0].filename : ''
     })
 
     return {
@@ -61,13 +61,10 @@ const updateCategoryService = async (categoryid, body, files) => {
   try {
     const result = await category.findOne({ _id: categoryid })
 
-    if (files.length) {
-      result.photo = files[0].filename
-    }
-
     result.name = body.name
     result.code = body.code
     result.availability = body.availability
+    result.photo = files?.length ? files[0].filename : ''
 
     result.save()
 

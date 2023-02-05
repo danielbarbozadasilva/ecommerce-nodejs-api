@@ -1,5 +1,4 @@
 const ShortUniqueId = require('short-unique-id')
-
 const uid = new ShortUniqueId({ length: 10, dictionary: 'number' })
 const {
   solicitation,
@@ -10,15 +9,14 @@ const {
   user,
   deliveries
 } = require('../models/models.index')
-
 const solicitationMapper = require('../mappers/mappers.solicitation')
 const emailUtils = require('../utils/email/email.index')
 const emailSolicitation = require('../utils/email/email.send_solicitation')
 const emailCancelation = require('../utils/email/email.cancel_solicitation')
 const { calculateShippingService } = require('./services.delivery')
-const ErrorGeneric = require('../utils/errors/erros.generic-error')
-const ErrorBusinessRule = require('../utils/errors/errors.business-rule')
-const ErrorUnprocessableEntity = require('../utils/errors/errors.unprocessable-entity')
+const ErrorGeneric = require('../exceptions/erros.generic-error')
+const ErrorBusinessRule = require('../exceptions/errors.business-rule')
+const ErrorUnprocessableEntity = require('../exceptions/errors.unprocessable-entity')
 
 const listAllSolicitationService = async (offset, limit) => {
   try {
@@ -213,7 +211,7 @@ const showCartSolicitationService = async (solicitationNumber) => {
 const sendEmailClientCancelation = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
 
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: result.data.user.email,
     from: process.env.SENDER,
     subject: `E-commerce - Pedido Cancelado!`,
@@ -224,7 +222,7 @@ const sendEmailClientCancelation = async (solicitationNumber) => {
 const sendEmailAdminCancelation = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
 
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: process.env.EMAIL,
     from: process.env.SENDER,
     subject: `E-commerce - Pedido Cancelado!`,
@@ -326,7 +324,7 @@ const checkCard = async (cart, payment, shipping) => {
 const sendEmailAdminSolicitation = async (id) => {
   const result = await showCartSolicitationService(id)
 
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: process.env.EMAIL,
     from: process.env.SENDER,
     subject: `E-commerce - Pedido ${id} recebido!`,
@@ -337,7 +335,7 @@ const sendEmailAdminSolicitation = async (id) => {
 const sendEmailClientSolicitation = async (id) => {
   const result = await showCartSolicitationService(id)
 
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: result.data.user.email,
     from: process.env.SENDER,
     subject: `Pedido ${id} recebido!`,
@@ -420,5 +418,15 @@ module.exports = {
   listByNumberSolicitationService,
   deleteSolicitationService,
   showCartSolicitationService,
-  createSolicitationService
+  createSolicitationService,
+  updateQuantityCancelation,
+  sendEmailClientCancelation,
+  sendEmailAdminCancelation,
+  searchProductCart,
+  verifyQuantity,
+  verifyShipping,
+  checkCard,
+  sendEmailAdminSolicitation,
+  sendEmailClientSolicitation,
+  updateQuantitySave
 }

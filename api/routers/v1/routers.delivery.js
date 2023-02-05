@@ -1,9 +1,9 @@
 const joi = require('joi')
 
-const validateDTOMiddleware = require('../../utils/middlewares/middlewares.validate-dto')
-const verifyIdDbMiddleware = require('../../utils/middlewares/middlewares.verify-exists')
-const authenticationMiddleware = require('../../utils/middlewares/middlewares.authentication')
-const authorization = require('../../utils/middlewares/middlewares.authorization')
+const validateDTOMiddleware = require('../../middlewares/middlewares.validate-dto')
+const verifyIdDbMiddleware = require('../../middlewares/middlewares.verify-exists')
+const authenticationMiddleware = require('../../middlewares/middlewares.authentication')
+const authorization = require('../../middlewares/middlewares.authorization')
 const deliveryController = require('../../controllers/controllers.delivery')
 
 module.exports = (router) => {
@@ -11,7 +11,7 @@ module.exports = (router) => {
     .route('/delivery/:deliveryid')
     .get(
       authenticationMiddleware(),
-      // authorization.authorizationMiddleware('LIST_DELIVERY'),
+      authorization.authorizationMiddleware('LIST_DELIVERY'),
       validateDTOMiddleware('params', {
         deliveryid: joi
           .string()
@@ -28,7 +28,7 @@ module.exports = (router) => {
     )
     .put(
       authenticationMiddleware(),
-      // authorization.authorizationMiddleware('UPDATE_DELIVERY'),
+      authorization.authorizationMiddleware('UPDATE_DELIVERY'),
       validateDTOMiddleware('params', {
         deliveryid: joi
           .string()
@@ -53,6 +53,7 @@ module.exports = (router) => {
       verifyIdDbMiddleware.verifyIdDelivery,
       deliveryController.updateDeliveryController
     )
+
   router.route('/delivery/calculate').post(
     validateDTOMiddleware('body', {
       cart: joi

@@ -3,10 +3,10 @@ const cryptography = require('../utils/utils.cryptography')
 const emailUtils = require('../utils/email/email.index')
 const { Email } = require('../utils/email/email.recovery')
 const userMapper = require('../mappers/mappers.user')
-const ErrorGeneric = require('../utils/errors/erros.generic-error')
-const ErrorNotAuthenticatedUser = require('../utils/errors/errors.user-not-authenticated')
-const ErrorNotAuthorizedUser = require('../utils/errors/errors.user-not-authorized')
-const ErrorBusinessRule = require('../utils/errors/errors.business-rule')
+const ErrorGeneric = require('../exceptions/erros.generic-error')
+const ErrorNotAuthenticatedUser = require('../exceptions/errors.user-not-authenticated')
+const ErrorNotAuthorizedUser = require('../exceptions/errors.user-not-authorized')
+const ErrorBusinessRule = require('../exceptions/errors.business-rule')
 const profile = require('../utils/utils.rules')
 
 const userIsValidService = async (email, password) => {
@@ -34,7 +34,7 @@ const checkPermissionService = (permissions, rule) => {
   const check = result[0]?.rule?.includes(rule)
 
   if (!check) {
-    throw new ErrorNotAuthorizedUser('Usuário não autorizado!')
+    throw new ErrorNotAuthorizedUser('Unauthorized user!')
   }
   return !!check
 }
@@ -58,14 +58,17 @@ const createCredentialService = async (email) => {
     }
   ])
 
-  const userDTO = userMapper.toDTO(...userDB)
-  const userToken = await cryptography.generateToken(userDTO)
-  if (userDTO && userToken) {
-    return {
-      ...userToken,
-      userDTO
+  if (userDB.length) {
+    const userDTO = userMapper.toDTO(...userDB)
+    const userToken = await cryptography.generateToken(userDTO)
+    if (userDTO && userToken) {
+      return {
+        ...userToken,
+        userDTO
+      }
     }
   }
+
   return false
 }
 
@@ -92,7 +95,7 @@ const authService = async (email, password) => {
 }
 
 const refreshTokenService = async (token) => {
-  const result = await user.findOne({ 'refreshToken._id': token })
+  const result = await user.findOne({ 'refreshToken.data': token })
 
   if (!result) {
     throw new ErrorNotAuthenticatedUser(`Refresh token invalid!`)
@@ -110,95 +113,20 @@ const refreshTokenService = async (token) => {
 const checkTokenService = async (token) => {
   try {
     const { id } = cryptography.decodeToken(token)
-    const result = await user.findOne({ _id: id })
-    if (!result) {
-      throw new ErrorNotAuthenticatedUser(`Token invalid!`)
-    }
+    await user.findOne({ _id: id })
     return {
       success: true,
       message: 'Token valid!'
     }
   } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
-const registerService = async (body) => {
-  try {
-    const salt = cryptography.createSalt()
-    const result = await user.create({
-      name: body.name,
-      email: body.email,
-      salt,
-      hash: cryptography.createHash(body.password, salt)
-    })
-
-    return {
-      success: true,
-      message: 'User registered successfully',
-      data: userMapper.toDTO(result)
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
-const listByIdUserService = async (id) => {
-  const resultDB = await user.findById({ _id: id }).populate('store')
-
-  return {
-    success: true,
-    message: 'User listed successfully',
-    data: userMapper.toDTO(resultDB)
-  }
-}
-
-const updateUserService = async (id, body) => {
-  try {
-    const salt = cryptography.createSalt()
-
-    const resultDB = await user.findOneAndUpdate(
-      { _id: id },
-      {
-        $set: {
-          name: body.name,
-          email: body.email,
-          salt,
-          hash: cryptography.createHash(body.password, salt),
-          store: body.store
-        }
-      },
-      { new: true }
-    )
-
-    return {
-      success: true,
-      message: 'User updated successfully',
-      data: userMapper.toDTO(resultDB)
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
-const deleteUserService = async (id) => {
-  try {
-    await user.deleteOne({ _id: id })
-
-    return {
-      success: true,
-      message: 'User deleted successfully'
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
+    throw new ErrorNotAuthenticatedUser(`Token invalid!`)
   }
 }
 
 const sendTokenRecoveryPasswordService = async (body) => {
   try {
     const resultToken = cryptography.tokenRecoveryPassword()
-
-    await user.updateOne(
+    const result = await user.findOneAndUpdate(
       { email: `${body.email}` },
       {
         $set: {
@@ -207,18 +135,28 @@ const sendTokenRecoveryPasswordService = async (body) => {
             date: resultToken.date
           }
         }
-      }
+      },
+      { new: true }
     )
-    emailUtils.utilSendEmail({
-      to: body.email,
-      from: process.env.SENDER,
-      subject: `Recuperar senha`,
-      html: Email(resultToken.token)
-    })
+
+    if (result) {
+      await emailUtils.utilSendEmail({
+        to: body.email,
+        from: process.env.SENDER,
+        subject: `Recuperar senha`,
+        html: Email(resultToken.token)
+      })
+
+      return {
+        success: true,
+        message: 'Email successfully sent',
+        data: result
+      }
+    }
 
     return {
-      success: true,
-      message: 'Email successfully sent'
+      success: false,
+      message: 'Error performing the operation'
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -284,10 +222,6 @@ module.exports = {
   userIsValidService,
   checkPermissionService,
   authService,
-  registerService,
-  listByIdUserService,
-  updateUserService,
-  deleteUserService,
   sendTokenRecoveryPasswordService,
   checkTokenRecoveryPasswordService,
   resetPasswordUserService,

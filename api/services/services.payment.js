@@ -9,13 +9,13 @@ const {
   deliveries
 } = require('../models/models.index')
 const paymentMapper = require('../mappers/mappers.payment')
-const ErrorGeneric = require('../utils/errors/erros.generic-error')
+const ErrorGeneric = require('../exceptions/erros.generic-error')
 const {
   getTransactionStatus,
   createPayment,
   getNotification,
   getSessionId
-} = require('../utils/pagseguro/pagseguro.index')
+} = require('../integrations/pagseguro/pagseguro.index')
 const emailUpdatePayment = require('../utils/email/email.notification_payment')
 const emailUtils = require('../utils/email/email.index')
 const { showCartSolicitationService } = require('./services.solicitation')
@@ -66,7 +66,7 @@ const listByIdPaymentService = async (paymentid) => {
 
 const sendEmailClientSuccessPaid = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: result.data.user.email,
     from: process.env.SENDER,
     subject: `E-commerce - Pagamento Confirmado!`,
@@ -76,7 +76,7 @@ const sendEmailClientSuccessPaid = async (solicitationNumber) => {
 
 const sendEmailAdmSuccessfullyPaid = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: process.env.EMAIL,
     from: process.env.SENDER,
     subject: `E-commerce - Pagamento Confirmado!`,
@@ -86,7 +86,7 @@ const sendEmailAdmSuccessfullyPaid = async (solicitationNumber) => {
 
 const sendEmailClientPaymentFailed = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: result.data.user.email,
     from: process.env.SENDER,
     subject: `E-commerce - Pagamento Cancelado!`,
@@ -96,13 +96,14 @@ const sendEmailClientPaymentFailed = async (solicitationNumber) => {
 
 const sendEmailAdmPaymentFailed = async (solicitationNumber) => {
   const result = await showCartSolicitationService(solicitationNumber)
-  emailUtils.utilSendEmail({
+  await emailUtils.utilSendEmail({
     to: process.env.EMAIL,
     from: process.env.SENDER,
     subject: `E-commerce - Pagamento Cancelado!`,
     html: emailUpdatePayment.sendAdmEmailPaymentFailed(result.data)
   })
 }
+
 const updateQuantityConfirm = async (id) => {
   try {
     const resultSolicitation = await solicitation.findById(id)
@@ -200,7 +201,6 @@ const updatePaymentService = async (paymentid, body) => {
 }
 
 const createPaymentService = async (paymentid, body) => {
-
   const result = await payment.aggregate([
     { $match: { _id: ObjectId(paymentid) } },
     {
@@ -383,5 +383,11 @@ module.exports = {
   updatePaymentService,
   createPaymentService,
   showNotificationPaymentService,
-  showSessionService
+  showSessionService,
+  sendEmailClientSuccessPaid,
+  sendEmailAdmSuccessfullyPaid,
+  sendEmailClientPaymentFailed,
+  sendEmailAdmPaymentFailed,
+  updateQuantityConfirm,
+  updateQuantityCancelation
 }

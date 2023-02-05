@@ -66,21 +66,6 @@ const updateProductController = async (req, res) => {
   return res.status(code).send({ message, data })
 }
 
-const updateImageProductController = async (req, res) => {
-  const { productid } = req.params
-  const { files } = req
-  const resultService = await productService.updateImageProductService(
-    productid,
-    files
-  )
-  const code = resultService.success ? 200 : 400
-  const message = resultService.success
-    ? { message: resultService.message }
-    : { details: resultService.details }
-  const data = resultService.data ? resultService.data : ''
-  return res.status(code).send({ message, data })
-}
-
 const deleteProductController = async (req, res) => {
   const { productid } = req.params
   const resultService = await productService.deleteProductService(productid)
@@ -162,7 +147,6 @@ module.exports = {
   listByIdProductController,
   createProductController,
   updateProductController,
-  updateImageProductController,
   deleteProductController,
   listAvailableProductController,
   searchProductController,

@@ -10,8 +10,8 @@ const {
   rating
 } = require('../models/models.index')
 
+const ErrorGeneric = require('../exceptions/erros.generic-error')
 const clientMapper = require('../mappers/mappers.client')
-const ErrorGeneric = require('../utils/errors/erros.generic-error')
 const cryptography = require('../utils/utils.cryptography')
 const { createCredentialService } = require('./services.user')
 const { formatDate } = require('../utils/helpers/helpers.format')

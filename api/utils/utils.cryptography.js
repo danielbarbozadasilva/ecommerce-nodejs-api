@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken')
 const { user } = require('../models/models.index')
 require('dotenv').config()
 
-const ErrorGeneric = require('./errors/erros.generic-error')
-const ErrorNotAuthenticatedUser = require('./errors/errors.user-not-authenticated')
+const ErrorGeneric = require('../exceptions/erros.generic-error')
+const ErrorNotAuthenticatedUser = require('../exceptions/errors.user-not-authenticated')
 
 const jwtHashSecret = process.env.JWT_SECRET
 const jwtTimeLimit = process.env.JWT_VALID_TIME
@@ -107,7 +107,7 @@ const tokenIsValid = (token) => {
   try {
     jwt?.verify(token, jwtHashSecret)
   } catch (err) {
-    throw new ErrorNotAuthenticatedUser('Usuário não autenticado!')
+    throw new ErrorNotAuthenticatedUser('Unauthenticated user!')
   }
 }
 

@@ -1,10 +1,10 @@
 const joi = require('joi').extend(require('@joi/date'))
 
-const validateDTOMiddleware = require('../../utils/middlewares/middlewares.validate-dto')
-const verifyIdDbMiddleware = require('../../utils/middlewares/middlewares.verify-exists')
+const validateDTOMiddleware = require('../../middlewares/middlewares.validate-dto')
+const verifyIdDbMiddleware = require('../../middlewares/middlewares.verify-exists')
 const solicitationController = require('../../controllers/controllers.solicitations')
-const authenticationMiddleware = require('../../utils/middlewares/middlewares.authentication')
-const authorization = require('../../utils/middlewares/middlewares.authorization')
+const authenticationMiddleware = require('../../middlewares/middlewares.authentication')
+const authorization = require('../../middlewares/middlewares.authorization')
 
 module.exports = (router) => {
   router
@@ -203,10 +203,6 @@ module.exports = (router) => {
         'any.required': '"solicitationNumber" is a required field',
         'string.empty': '"solicitationNumber" can not be empty'
       })
-    }),
-    validateDTOMiddleware('query', {
-      offset: joi.number(),
-      limit: joi.number()
     }),
     verifyIdDbMiddleware.verifyIdSolicitation,
     solicitationController.showCartSolicitationController

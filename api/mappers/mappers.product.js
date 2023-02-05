@@ -59,8 +59,8 @@ const toDTOList = (model) => ({
   availability: model.availability,
   description: model.description,
   photos: model.photos.map((item) => formatAddressImage(item)),
-  price: formatPriceBr(model.price),
-  promotion: formatPriceBr(model.promotion),
+  price: model.price,
+  promotion: model.promotion,
   sku: model.sku,
   quantity: model.quantity,
   store: model.storeid,
@@ -126,21 +126,20 @@ const toDTORating = (model) => ({
   name: model.name,
   text: model.text,
   score: model.score,
-  store: model.store,
   product: {
     id: model.product._id,
     title: model.product.title,
     availability: model.product.availability,
     description: model.product.description,
-    photos: model.photos.map((item) => formatAddressImage(item)),
+    photos: model.photos?.map((item) => formatAddressImage(item)),
     price: formatPriceBr(model.product.price),
     promotion: formatPriceBr(model.product.promotion),
     sku: model.product.sku,
     quantity: model.quantity,
     dimensions: {
-      height: model.dimensions.height,
-      width: model.dimensions.width,
-      depth: model.dimensions.depth
+      height: model.product.dimensions.height,
+      width: model.product.dimensions.width,
+      depth: model.product.dimensions.depth
     },
     weight: model.weight,
     freeShipping: model.freeShipping

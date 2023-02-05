@@ -111,7 +111,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"token\": \"640de47f-d822-4381-b8cf-aafdd4359457\"\n\n}",
+							"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWUwMjc4ZWM5ZjQ2YzFkYTRkOTMzYSIsIm5hbWUiOiJEYW5pZWwgQmFyYm96YSIsImVtYWlsIjoiZGFuaWVsYmFyYm96YTU2QGhvdG1haWwuY29tIiwicGVybWlzc2lvbnMiOiJhZG1pbmlzdHJhdG9yIiwiaWF0IjoxNjc0MjMxNDQ3LCJleHAiOjEwMDE2NzQyMzE0NDZ9.lAb9plPogGNxwgj0e4EMd--cztnK5vXLDmTL1WE9xFo\"\n\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -176,7 +176,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWUwMjc4ZWM5ZjQ2YzFkYTRkOTMzYSIsIm5hbWUiOiJEYW5pZWwgQmFyYm96YSIsImVtYWlsIjoiZGFuaWVsYmFyYm96YTU2QGhvdG1haWwuY29tIiwicGVybWlzc2lvbnMiOlsiYWRtaW5pc3RyYXRvciJdLCJpYXQiOjE2Njk0ODIxMjgsImV4cCI6MTAwMTY2OTQ4MjEyN30.a6SFqoFf7xF-VgOSnTHyhbl4D69uGfp1DC7XU9Q5-QA\"\n}",
+							"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWUwMjc4ZWM5ZjQ2YzFkYTRkOTMzYSIsIm5hbWUiOiJEYW5pZWwgQmFyYm96YSIsImVtYWlsIjoiZGFuaWVsYmFyYm96YTU2QGhvdG1haWwuY29tIiwicGVybWlzc2lvbnMiOiJhZG1pbmlzdHJhdG9yIiwiaWF0IjoxNjc0MjMxNDQ3LCJleHAiOjEwMDE2NzQyMzE0NDZ9.lAb9plPogGNxwgj0e4EMd--cztnK5vXLDmTL1WE9xFo\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -199,221 +199,7 @@
 					"response": []
 				},
 				{
-					"name": "auth.register",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "in",
-									"value": "header",
-									"type": "string"
-								},
-								{
-									"key": "value",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTUwMzI4OTMsImV4cCI6MTY2NDAzMjg5M30.TzObGL-SoEj_960JGGpDVjfaAUpasR7SI764QXY4dh8",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTUwMzI4OTMsImV4cCI6MTY2NDAzMjg5M30.TzObGL-SoEj_960JGGpDVjfaAUpasR7SI764QXY4dh8",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Daniel\",\r\n    \"email\": \"daniel80barbodddza@gmail.com\",\r\n    \"password\": \"daniel\",\r\n    \"store\": \"631e00f5190d800a90c6fa4d\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3011/v1/register",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"register"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "user",
-			"item": [
-				{
-					"name": "user.listById",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3011/v1/user/632b79881fc6a5c0fa12e54c",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"user",
-								"632b79881fc6a5c0fa12e54c"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "user.update",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"sssssssssssssss\",\r\n    \"email\": \"daniel8011barbozda@gmail.com\",\r\n    \"password\": \"ssssssssssssssss\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3011/v1/user/632b79881fc6a5c0fa12e54c",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"user",
-								"632b79881fc6a5c0fa12e54c"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "user.remove",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:3011/v1/user/632b79881fc6a5c0fa12e54c",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"user",
-								"632b79881fc6a5c0fa12e54c"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "user.sendTokenRecoveryPassword",
+					"name": "auth.sendTokenRecoveryPassword",
 					"event": [
 						{
 							"listen": "test",
@@ -470,7 +256,7 @@
 					"response": []
 				},
 				{
-					"name": "user.resetPassword",
+					"name": "auth.resetPassword",
 					"event": [
 						{
 							"listen": "test",
@@ -502,7 +288,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"token\": \"4043fcdf988fc41c0f09299b509d80f7\",\r\n    \"email\": \"daniel80barboza@gmail.com\",\r\n    \"newPassword\": \"daniel\"\r\n}",
+							"raw": "{\r\n    \"token\": \"8c09df8cda4dc188a603cca2d169b2cf\",\r\n    \"email\": \"daniel95barboza@gmail.com\",\r\n    \"newPassword\": \"daniel\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -521,6 +307,279 @@
 								"user",
 								"recovery",
 								"reset-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "category",
+			"item": [
+				{
+					"name": "category.listAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category.listById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/category/6320f577156b47ff1082586e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"category",
+								"6320f577156b47ff1082586e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category.create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "asdasdasdasd",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "12531642142335131",
+									"type": "text"
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/C:/Users/pc01/Downloads/Logo para consultor de moedas e investimentos digitais verde tecnológico (1).png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category.update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Smartphonesddddd",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "12531642142335131",
+									"type": "text"
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/C:/Users/pc01/Pictures/maxresdefault.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/category/63cabf4eb2f75d39dc221a60",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"category",
+								"63cabf4eb2f75d39dc221a60"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category.delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Teclado Dell",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "43242342342343224",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3011/v1/category/63cabf4eb2f75d39dc221a60",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"category",
+								"63cabf4eb2f75d39dc221a60"
 							]
 						}
 					},
@@ -553,7 +612,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/client?offset=0&limit=30",
+							"raw": "http://localhost:3011/v1/client",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -562,16 +621,6 @@
 							"path": [
 								"v1",
 								"client"
-							],
-							"query": [
-								{
-									"key": "offset",
-									"value": "0"
-								},
-								{
-									"key": "limit",
-									"value": "30"
-								}
 							]
 						}
 					},
@@ -599,7 +648,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e?offset=0&limit=30",
+							"raw": "http://localhost:3011/v1/client/6320f577156b47ff1082586e",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -609,16 +658,6 @@
 								"v1",
 								"client",
 								"6320f577156b47ff1082586e"
-							],
-							"query": [
-								{
-									"key": "offset",
-									"value": "0"
-								},
-								{
-									"key": "limit",
-									"value": "30"
-								}
 							]
 						}
 					},
@@ -646,7 +685,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/client/search/Silva?offset=0&limit=30",
+							"raw": "http://localhost:3011/v1/client/search?find=Silva",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -655,17 +694,12 @@
 							"path": [
 								"v1",
 								"client",
-								"search",
-								"Silva"
+								"search"
 							],
 							"query": [
 								{
-									"key": "offset",
-									"value": "0"
-								},
-								{
-									"key": "limit",
-									"value": "30"
+									"key": "find",
+									"value": "Silva"
 								}
 							]
 						}
@@ -705,6 +739,55 @@
 								"client",
 								"6320f577156b47ff1082586e",
 								"solicitations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "client.searchSolicitations",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/client/search/Silva/solicitations?offset=0&limit=30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"client",
+								"search",
+								"Silva",
+								"solicitations"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "30"
+								}
 							]
 						}
 					},
@@ -798,7 +881,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"1222211Daniel\",\r\n    \"email\": \"132d3@gmail.com\",\r\n    \"cpf\": \"523.222.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000-09-09\",\r\n    \"password\": \"daniel\",\r\n    \"address\": {\r\n        \"street\": \"Av. Manuel Gomes\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"name\": \"1222211Daniel\",\r\n    \"email\": \"132d3@gmail.com\",\r\n    \"cpf\": \"523.222.455-81\",\r\n    \"phones\": [\r\n        \"(11)2423-2198\",\r\n        \"(11)99099-8990\"\r\n    ],\r\n    \"birthDate\": \"2000/09/09\",\r\n    \"address\": {\r\n        \"street\": \"Av. Manuel Gomes\",\r\n        \"number\": \"2234\",\r\n        \"complement\": \"casa\",\r\n        \"district\": \"Rio de janeiro\",\r\n        \"city\": \"Rio de janeiro\",\r\n        \"zipCode\": \"23098-782\",\r\n        \"state\": \"Rio de janeiro\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1055,406 +1138,6 @@
 			]
 		},
 		{
-			"name": "category",
-			"item": [
-				{
-					"name": "category.listAll",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3011/v1/category",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"category"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "category.listById",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3011/v1/category/6320f577156b47ff1082586e",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"category",
-								"6320f577156b47ff1082586e"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "category.listByAvailability",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3011/v1/category/availability",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"category",
-								"availability"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "category.listByIdWithProducts",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3011/v1/category/6320f577156b47ff1082586e/products?itemsPerPage=6&page=0",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"category",
-								"6320f577156b47ff1082586e",
-								"products"
-							],
-							"query": [
-								{
-									"key": "itemsPerPage",
-									"value": "6"
-								},
-								{
-									"key": "page",
-									"value": "0"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "category.create",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "Smartphones",
-									"type": "text"
-								},
-								{
-									"key": "code",
-									"value": "12531642142335131",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://localhost:3011/v1/category",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"category"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "category.delete",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "Teclado Dell",
-									"type": "text"
-								},
-								{
-									"key": "code",
-									"value": "43242342342343224",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://localhost:3011/v1/category/632b7bec8f410ea452cd5ea8",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"category",
-								"632b7bec8f410ea452cd5ea8"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "category.update",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Placa de vídeoddddddddd\",\r\n    \"code\": \"23242342342343224\",\r\n    \"availability\": true\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3011/v1/category/632b7bec8f410ea452cd5ea8",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"category",
-								"632b7bec8f410ea452cd5ea8"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "category.updateImage",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "files",
-									"type": "file",
-									"src": "/C:/Users/pc01/Downloads/4820514761_1GG.webp"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://localhost:3011/v1/category/image/638f00f265f1c700b416aa0c",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"category",
-								"image",
-								"638f00f265f1c700b416aa0c"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "product",
 			"item": [
 				{
@@ -1501,6 +1184,49 @@
 								{
 									"key": "page",
 									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product.listDashboard",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBnbWFpbC5jb20iLCJuYW1lIjoiRGFuaWVsIEJhcmJvemEiLCJ0eXBlIjoxLCJpYXQiOjE2NTQ0ODI5MjIsImV4cCI6MTY2MzQ4MjkyMn0.wwm5ffUkQjtISWJqQhxKy2xQ_VQfbOxJoV6QbN561h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/product/dashboard?sortType=alfabetica_a-z",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3011",
+							"path": [
+								"v1",
+								"product",
+								"dashboard"
+							],
+							"query": [
+								{
+									"key": "sortType",
+									"value": "alfabetica_a-z"
 								}
 							]
 						}
@@ -1711,13 +1437,77 @@
 							}
 						],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Smartphone Samsung Galaxy XCover Pro\",\r\n    \"description\": \"4G 64GB 6.3 Preto 2 Câmeras Traseiras\",\r\n    \"price\": 1999.00,\r\n    \"sku\": \"SMXCPR\",\r\n    \"quantity\": 20,\r\n    \"category\": \"638f00f265f1c700b416aa0c\",\r\n    \"promotion\": 1619.10,\r\n    \"dimensions\": {\r\n        \"height\": 8,\r\n        \"width\": 10,\r\n        \"depth\": 27\r\n    },\r\n    \"weight\": 1,\r\n    \"freeShipping\": false\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "1dddddTeclado Dell Gh5yf",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "1Com fio, Usb",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "19.9",
+									"type": "text"
+								},
+								{
+									"key": "sku",
+									"value": "a1b1c1",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "50",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "6320f577156b47ff1082586e",
+									"type": "text"
+								},
+								{
+									"key": "promotion",
+									"value": "22.5",
+									"type": "text"
+								},
+								{
+									"key": "height",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "width",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "depth",
+									"value": "27",
+									"type": "text"
+								},
+								{
+									"key": "weight",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "freeShipping",
+									"value": "false",
+									"type": "text"
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": [
+										"/C:/Users/pc01/Pictures/img0.jpg",
+										"/C:/Users/pc01/Pictures/maxresdefault.jpg"
+									]
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "http://localhost:3011/v1/product",
@@ -1775,7 +1565,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/product/6347178b594bbd99ff5126a2",
+							"raw": "http://localhost:3011/v1/product/63cac109b2f75d39dc221abe",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1784,65 +1574,7 @@
 							"path": [
 								"v1",
 								"product",
-								"6347178b594bbd99ff5126a2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "product.updateImage",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "files",
-									"type": "file",
-									"src": "/C:/Users/pc01/Downloads/smartphone-samsung-galaxy-xcover-pro-64gb-4gb-tela-6-3-camera-25mp-8mp-preto-101662-1661878779-7.jpg"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://localhost:3011/v1/product/images/63970c5915c445c9c84a9bee",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3011",
-							"path": [
-								"v1",
-								"product",
-								"images",
-								"63970c5915c445c9c84a9bee"
+								"63cac109b2f75d39dc221abe"
 							]
 						}
 					},
@@ -1889,7 +1621,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/product/639704ca4bf6b326dbc5ae8f",
+							"raw": "http://localhost:3011/v1/product/63cac109b2f75d39dc221abe",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1898,7 +1630,7 @@
 							"path": [
 								"v1",
 								"product",
-								"639704ca4bf6b326dbc5ae8f"
+								"63cac109b2f75d39dc221abe"
 							]
 						}
 					},
@@ -1921,7 +1653,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/rating?productid=63432f02a7f855351c99dc71",
+							"raw": "http://localhost:3011/v1/rating",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1930,12 +1662,34 @@
 							"path": [
 								"v1",
 								"rating"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rating.Product",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3011/v1/rating/product/63432f02a7f855351c99dc71",
+							"protocol": "http",
+							"host": [
+								"localhost"
 							],
-							"query": [
-								{
-									"key": "productid",
-									"value": "63432f02a7f855351c99dc71"
-								}
+							"port": "3011",
+							"path": [
+								"v1",
+								"rating",
+								"product",
+								"63432f02a7f855351c99dc71"
 							]
 						}
 					},
@@ -1953,7 +1707,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/rating/63471a1ac51740994725d9ea?productid=63432f02a7f855351c99dc71",
+							"raw": "http://localhost:3011/v1/rating/638a22b10ef44976d168711e?productid=63432f02a7f855351c99dc71",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1962,7 +1716,7 @@
 							"path": [
 								"v1",
 								"rating",
-								"63471a1ac51740994725d9ea"
+								"638a22b10ef44976d168711e"
 							],
 							"query": [
 								{
@@ -2162,7 +1916,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/solicitation/swVLp0bHs?limit=30&offset=0",
+							"raw": "http://localhost:3011/v1/solicitation/4777720845?limit=30&offset=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2171,7 +1925,7 @@
 							"path": [
 								"v1",
 								"solicitation",
-								"swVLp0bHs"
+								"4777720845"
 							],
 							"query": [
 								{
@@ -2209,7 +1963,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/solicitation/swVLp0bHs/cart?limit=30&offset=0",
+							"raw": "http://localhost:3011/v1/solicitation/4777720845/cart?limit=30&offset=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2218,7 +1972,7 @@
 							"path": [
 								"v1",
 								"solicitation",
-								"swVLp0bHs",
+								"4777720845",
 								"cart"
 							],
 							"query": [
@@ -2268,7 +2022,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "\r\n{\r\n    \"cart\": [\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"price\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"price\": 429.99,\r\n            \"quantity\": 3\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\",\r\n    \"shipping\": 79.33,\r\n    \"payment\": {\r\n        \"price\": 2569.29,\r\n        \"type\": \"BANKSLIP\",\r\n        \"installments\": 3,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987-200\"\r\n        },\r\n        \"card\": {\r\n            \"fullName\": \"DANIEL BARBOZA DA SILVA\",\r\n            \"areaCode\": \"21\",\r\n            \"phone\": \"(21)2434-1207\",\r\n            \"birthDate\": \"2000-02-09\",\r\n            \"creditCardToken\": \"0ec7d144527b410da270e13e15666294\",\r\n            \"cpf\": \"82429888467\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 79.33,\r\n        \"type\": \"4014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987200\"\r\n        }\r\n    }\r\n}",
+							"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"title\": \"Placa de Vídeo RTX 3060\",\r\n            \"product\": \"63432f02a7f855351c99dc71\",\r\n            \"price\": 1199.99,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"title\": \"Intel Core i5-10400F\",\r\n            \"product\": \"63432f02a7f855351c99dc72\",\r\n            \"price\": 429.99,\r\n            \"quantity\": 3\r\n        }\r\n    ],\r\n    \"zipCode\": \"21987-200\",\r\n    \"shipping\": 79.33,\r\n    \"payment\": {\r\n        \"price\": 2569.29,\r\n        \"type\": \"BOLETO\",\r\n        \"installments\": 1,\r\n        \"addressDeliveryIgualCharging\": false,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987-200\"\r\n        },\r\n        \"card\": {\r\n            \"fullName\": \"DANIEL BARBOZA DA SILVA\",\r\n            \"areaCode\": \"21\",\r\n            \"phone\": \"(21)2434-1207\",\r\n            \"birthDate\": \"2000-02-09\",\r\n            \"creditCardToken\": \"0ec7d144527b410da270e13e15666294\",\r\n            \"cpf\": \"82429888467\"\r\n        }\r\n    },\r\n    \"deliveries\": {\r\n        \"price\": 79.33,\r\n        \"type\": \"4014\",\r\n        \"deliveryTime\": 2,\r\n        \"address\": {\r\n            \"street\": \"Av. Manuel Gomes\",\r\n            \"number\": \"1223\",\r\n            \"complement\": \"casa\",\r\n            \"district\": \"Rio de janeiro\",\r\n            \"city\": \"Rio de janeiro\",\r\n            \"state\": \"RJ\",\r\n            \"zipCode\": \"21987200\"\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2337,7 +2091,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/solicitation/swVLp0bHs?clientid=6320f577156b47ff1082586e",
+							"raw": "http://localhost:3011/v1/solicitation/4777720845?clientid=6320f577156b47ff1082586e",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2346,7 +2100,7 @@
 							"path": [
 								"v1",
 								"solicitation",
-								"swVLp0bHs"
+								"4777720845"
 							],
 							"query": [
 								{
@@ -2375,7 +2129,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/delivery/636b6362bdde17645c78d908",
+							"raw": "http://localhost:3011/v1/delivery/63cac1fc9b494463a4e439a0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2384,7 +2138,7 @@
 							"path": [
 								"v1",
 								"delivery",
-								"636b6362bdde17645c78d908"
+								"63cac1fc9b494463a4e439a0"
 							]
 						}
 					},
@@ -2422,22 +2176,16 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "status",
-									"value": "started",
-									"type": "text"
-								},
-								{
-									"key": "trackingCode",
-									"value": "DF34434FDSFSGSD",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"started\",\r\n    \"trackingCode\": \"DF34434FDSFSGSD\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/delivery/6376981ddd290d030a1592c7",
+							"raw": "http://localhost:3011/v1/delivery/63cac1fc9b494463a4e439a0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2446,7 +2194,7 @@
 							"path": [
 								"v1",
 								"delivery",
-								"6376981ddd290d030a1592c7"
+								"63cac1fc9b494463a4e439a0"
 							]
 						}
 					},
@@ -2535,7 +2283,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3011/v1/payment/636b6361bdde17645c78d904",
+							"raw": "http://localhost:3011/v1/payment/63c59bb0107f4ce9de7fd638",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2544,7 +2292,7 @@
 							"path": [
 								"v1",
 								"payment",
-								"636b6361bdde17645c78d904"
+								"63c59bb0107f4ce9de7fd638"
 							]
 						}
 					},
@@ -2582,17 +2330,16 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "senderHash",
-									"value": "d284d430f23f523754a640475cb9e4699a9cff402c71f00c34c9de5f3b57a982",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\r\n    \"senderHash\": \"d284d430f23f523754a640475cb9e4699a9cff402c71f00c34c9de5f3b57a982\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/take/payment/63a716c0b2b64750a0242430",
+							"raw": "http://localhost:3011/v1/take/payment/63c59bb0107f4ce9de7fd638",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2602,7 +2349,7 @@
 								"v1",
 								"take",
 								"payment",
-								"63a716c0b2b64750a0242430"
+								"63c59bb0107f4ce9de7fd638"
 							]
 						}
 					},
@@ -2677,17 +2424,16 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "status",
-									"value": "paga",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"paga\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
-							"raw": "http://localhost:3011/v1/payment/636e5e01894a245b4072b3d2",
+							"raw": "http://localhost:3011/v1/payment/63c59bb0107f4ce9de7fd638",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2696,7 +2442,7 @@
 							"path": [
 								"v1",
 								"payment",
-								"636e5e01894a245b4072b3d2"
+								"63c59bb0107f4ce9de7fd638"
 							]
 						}
 					},

@@ -1,10 +1,10 @@
 const joi = require('joi')
 
-const validateDTOMiddleware = require('../../utils/middlewares/middlewares.validate-dto')
-const verifyIdDbMiddleware = require('../../utils/middlewares/middlewares.verify-exists')
-const authenticationMiddleware = require('../../utils/middlewares/middlewares.authentication')
+const validateDTOMiddleware = require('../../middlewares/middlewares.validate-dto')
+const verifyIdDbMiddleware = require('../../middlewares/middlewares.verify-exists')
+const authenticationMiddleware = require('../../middlewares/middlewares.authentication')
 const fileUpload = require('../../utils/utils.file')
-const authorization = require('../../utils/middlewares/middlewares.authorization')
+const authorization = require('../../middlewares/middlewares.authorization')
 const productController = require('../../controllers/controllers.product')
 
 module.exports = (router) => {
@@ -94,28 +94,9 @@ module.exports = (router) => {
       productController.deleteProductController
     )
 
-  router.route('/product/images/:productid').put(
-    authenticationMiddleware(),
-    authorization.authorizationMiddleware('UPLOAD_IMAGE_PRODUCT'),
-    validateDTOMiddleware('params', {
-      productid: joi
-        .string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-          'any.required': '"id" is a required field',
-          'string.empty': '"id" can not be empty',
-          'string.pattern.base': '"id" out of the expected format'
-        })
-    }),
-    verifyIdDbMiddleware.verifyIdProduct,
-    fileUpload.array('files', 4),
-    productController.updateImageProductController
-  )
-
   router.route('/product/search/:search').get(
     validateDTOMiddleware('params', {
-      search: joi.string().allow(null, ''),
+      search: joi.string().allow(null, '')
     }),
     validateDTOMiddleware('query', {
       sortType: joi.string().allow(null, ''),

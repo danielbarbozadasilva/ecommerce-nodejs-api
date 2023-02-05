@@ -1,7 +1,7 @@
 const { ObjectId } = require('mongodb')
 const { product, rating, client, category } = require('../models/models.index')
 const productMapper = require('../mappers/mappers.product')
-const ErrorGeneric = require('../utils/errors/erros.generic-error')
+const ErrorGeneric = require('../exceptions/erros.generic-error')
 
 const getSort = (sortType) => {
   switch (sortType) {
@@ -170,9 +170,11 @@ const createProductService = async (body, files) => {
 const updateProductService = async (body, files, productid) => {
   try {
     const productDB = await product.findOne({ _id: productid })
-    const newImages = files.map((item) => item.filename)
+    const newImages = files?.map((item) => item.filename)
 
-    productDB.photos = productDB.photos.filter((item) => item).concat(newImages)
+    productDB.photos = newImages?.length
+      ? productDB?.photos.filter((item) => item).concat(newImages)
+      : productDB.photos
     productDB.title = body.title
     productDB.availability = body.availability
     productDB.description = body.description
@@ -198,30 +200,9 @@ const updateProductService = async (body, files, productid) => {
   }
 }
 
-const updateImageProductService = async (productid, files) => {
+const deleteProductService = async (productid) => {
   try {
-    const result = await product.findOne({ _id: productid })
-
-    const newImage = files.map((item) => item.filename)
-    result.photos = result.photos.filter((item) => item).concat(newImage)
-
-    await result.save()
-
-    return {
-      success: true,
-      message: 'Operation performed successfully'
-    }
-  } catch (err) {
-    throw new ErrorGeneric(`Internal Server Error! ${err}`)
-  }
-}
-
-const deleteProductService = async (productid, storeid) => {
-  try {
-    await product.findOneAndDelete({
-      _id: productid,
-      store: storeid
-    })
+    await product.findOneAndDelete({ _id: productid })
 
     return {
       success: true,
@@ -247,7 +228,7 @@ const listAvailableProductService = async (sort, offset, limit) => {
     return {
       success: true,
       message: 'Products listed successfully',
-      data: resultDB.docs.map((item) => productMapper.toDTO(item))
+      data: resultDB.docs.map((item) => productMapper.toDTOProduct(item))
     }
   } catch (err) {
     throw new ErrorGeneric(`Internal Server Error! ${err}`)
@@ -358,7 +339,6 @@ module.exports = {
   listByIdProductService,
   createProductService,
   updateProductService,
-  updateImageProductService,
   deleteProductService,
   listAvailableProductService,
   searchProductService,

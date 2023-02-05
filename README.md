@@ -4,10 +4,22 @@ O Projeto PrimeTech E-commerce é um Sistema web de comércio eletrônico que te
 
 O Sistema tem o objetivo de listar os produtos e efetuar o gerenciamento destes. Possibilitando ao administrador o controle do estoque. O cliente poderá consultar, comprar e avaliar produtos. O Sistema garante o total controle dos registros de solicitações, transações, formas de pagamento, avaliações e entregas. 
 
-Os usuários do sistema são o Cliente e o Administrador. Todos possuem acesso ao sistema e a seu respectivo espaço. Além disso o Sistema conta com uma tela inicial que permite ao público navegar de modo simples através de filtros entre as categorias, produtos e avaliações.
+Os usuários do sistema são o Cliente e o Administrador. Todos possuem acesso ao sistema e a seu respectivo espaço. Além disso, o Sistema conta com uma tela inicial que permite ao público navegar de modo simples através de filtros entre categorias, produtos e avaliações.
 
-A API foi desenvolvida utilizando o NodeJs, ExpressJs e Banco de dados MongoDB. Foi realizada a integração com o PagSeguro.
+A API foi desenvolvida utilizando o NodeJs, ExpressJs e Banco de dados MongoDB. Foi realizada a integração com o PagSeguro. Documentação utilizando o Swagger. Testes unitários e de integração utilizando o Jest e Supertest.
 <br/>
+<br/>
+
+O Front-End foi desenvolvido utilizando o ReactJs. E está disponível para consulta no link abaixo:
+```
+https://github.com/danielbarbozadasilva/ecommerce-frontend-react
+```
+<br/>
+
+O Aplicativo foi desenvolvido utilizando o React native. E está disponível para consulta no link abaixo:
+```
+https://github.com/danielbarbozadasilva/ecommerce-react-native
+```
 <br/>
 
 ## **Instalação com Docker**
@@ -62,6 +74,18 @@ Execute o comando para rodar o projeto:
 npm run dev
 ```
 
+
+Execute o comando para rodar os testes de integração:
+```
+npm run test:integration
+```
+
+Execute o comando para rodar os testes unitários:
+```
+npm run test:unit
+```
+
+
 Com o projeto rodando, abra a documentação do Swagger:
 ```
 http://localhost:3011/api-docs/
@@ -98,15 +122,13 @@ RF009 – O sistema deve manter categorias.
 
 RF010 – O sistema deve favoritar produtos.
 
-RF011 – O sistema deve alterar os dados da loja.
+RF011 – O sistema deve controlar a venda de produtos.
 
-RF012 – O sistema deve controlar a venda de produtos.
+RF012 – O sistema deve filtrar os produtos por categoria, nome e descrição.
 
-RF013 – O sistema deve filtrar os produtos por categoria, nome e descrição.
+RF013 – O sistema deve listar os produtos por ordem alfabética ou ordem de preço.
 
-RF014 – O sistema deve listar os produtos por ordem alfabética ou ordem de preço.
-
-RF015 – O sistema deve calcular o valor de entrega dos produtos.
+RF014 – O sistema deve calcular o valor de entrega dos produtos.
 
 <br/>
 <br/>
@@ -205,6 +227,8 @@ RF015 – O sistema deve calcular o valor de entrega dos produtos.
 * Docker
 * Mongoose
 * PagSeguro
+* Jest
+* Supertest
 * SendGrid
 * Swagger
 * Git
@@ -236,7 +260,7 @@ Ao realizar uma compra o Sistema envia um e-mail notificando o Cliente sobre o p
 <br/>
 
 ## **Processar pagamento - Administrador**
-Quando o Cliente realiza uma compra o Sistema envia um e-mail notificando o administrador sobre o pedido. 
+Quando o Cliente realiza uma compra, o Sistema envia um e-mail notificando ao administrador sobre o pedido. 
 
 <br/>
 <img src="./docs/prints/2.jpg" alt=""/>
@@ -246,7 +270,7 @@ Quando o Cliente realiza uma compra o Sistema envia um e-mail notificando o admi
 <br/>
 
 ## **Pagamento aprovado - Cliente**
-Quando o cliente realiza o pagamento e este é aprovado pelo PagSeguro. O Sistema envia um e-mail ao Cliente notificando que o pedido foi pago.
+Quando o cliente realiza o pagamento, e este é aprovado pelo PagSeguro. O Sistema envia um e-mail ao Cliente notificando que o pedido foi pago.
 
 <br/>
 <img src="./docs/prints/6.jpg" alt=""/>
@@ -280,6 +304,298 @@ Quando o Administrador envia o pedido para a transportadora. O Sistema notifica 
 
 <br/>
 <img src="./docs/prints/5.jpg" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+> ## **Telas**
+<br/>
+
+## **Portal - Tela Inicial**
+<br/>
+<img src="./docs/prints/7.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Portal - Tela de login**
+<br/>
+<img src="./docs/prints/8.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Cliente - Recuperar senha**
+<br/>
+<img src="./docs/prints/20.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Portal - Redefinir senha**
+<br/>
+<img src="./docs/prints/21.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Portal - Tela de cadastro**
+<br/>
+<img src="./docs/prints/9.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Portal - Tela detalhes do produto**
+<br/>
+<img src="./docs/prints/10.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Portal - Tela de carrinho**
+<br/>
+<img src="./docs/prints/16.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Portal - Finalizar pedido**
+<br/>
+<img src="./docs/prints/17.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+
+## **Portal - Pedido concluído**
+<br/>
+<img src="./docs/prints/18.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Portal - Imprimir boleto**
+<br/>
+<img src="./docs/prints/19.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Cliente - Atualizar cadastro**
+<br/>
+<img src="./docs/prints/11.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Cliente - listar pedidos**
+<br/>
+<img src="./docs/prints/12.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Cliente - listar os produtos por pedido**
+<br/>
+<img src="./docs/prints/13.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Cliente - listar os dados de entrega por pedido**
+<br/>
+<img src="./docs/prints/14.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Cliente - Buscar por pedidos**
+<br/>
+<img src="./docs/prints/15.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Listar pedidos dos clientes**
+<br/>
+<img src="./docs/prints/22.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Listar produtos referentes aos pedidos**
+<br/>
+<img src="./docs/prints/23.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Listar dados do cliente que efetuou o pedido**
+<br/>
+<img src="./docs/prints/24.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Listar dados de entrega do pedido**
+<br/>
+<img src="./docs/prints/25.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Buscar por um pedido específico**
+<br/>
+<img src="./docs/prints/26.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Listar categorias cadastradas**
+<br/>
+<img src="./docs/prints/27.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Listar produtos referentes a categoria**
+<br/>
+<img src="./docs/prints/28.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Cadastrar nova categoria**
+<br/>
+<img src="./docs/prints/30.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Editar categoria**
+<br/>
+<img src="./docs/prints/29.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Remover a categoria e os seus respectivos produtos**
+<br/>
+<img src="./docs/prints/31.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Listar produtos cadastrados**
+<br/>
+<img src="./docs/prints/32.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Cadastrar novo produto**
+<br/>
+<img src="./docs/prints/33.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Editar produto**
+<br/>
+<img src="./docs/prints/34.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Excluir produto**
+<br/>
+<img src="./docs/prints/35.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Buscar por produto**
+<br/>
+<img src="./docs/prints/36.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Listar clientes cadastrados**
+<br/>
+<img src="./docs/prints/37.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Listar endereço do cliente**
+<br/>
+<img src="./docs/prints/38.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Excluir cliente**
+<br/>
+<img src="./docs/prints/39.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Buscar por cliente**
+<br/>
+<img src="./docs/prints/40.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Listar avaliações**
+<br/>
+<img src="./docs/prints/41.png" alt=""/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## **Dashboard Admin - Excluir avaliação**
+<br/>
+<img src="./docs/prints/42.png" alt=""/>
 <br/>
 <br/>
 <br/>
