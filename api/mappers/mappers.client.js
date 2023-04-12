@@ -127,8 +127,8 @@ const toDTOLikeList = (model) => {
     title: model.title,
     description: model.description,
     photos: model.photos.map((item) => formatAddressImage(item)),
-    price: model.price,
-    promotion: model.promotion,
+    price: formatPriceBr(model.price),
+    promotion: formatPriceBr(model.promotion),
     quantity: model.quantity,
     freeShipping: model.freeShipping,
     rating: model.rating.map((item) => {
