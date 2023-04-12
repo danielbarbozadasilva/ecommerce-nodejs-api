@@ -1,12 +1,12 @@
 # **API RESTful PrimeTech E-commerce**
 ## **Escopo do produto**
-O Projeto PrimeTech E-commerce é um Sistema web de comércio eletrônico que tem o intuito de facilitar a compra e venda de produtos. Todas as suas funcionalidades foram pensadas e elaboradas para proporcionar facilidade e comodidade aos usuários da plataforma.
+O Projeto PrimeTech E-commerce consiste em um sistema web de comércio eletrônico que tem o intuito de comercializar produtos de informática. Todas as suas funcionalidades foram pensadas e elaboradas para proporcionar facilidade e comodidade aos usuários da plataforma.
 
 O Sistema tem o objetivo de listar os produtos e efetuar o gerenciamento destes. Possibilitando ao administrador o controle do estoque. O cliente poderá consultar, comprar e avaliar produtos. O Sistema garante o total controle dos registros de solicitações, transações, formas de pagamento, avaliações e entregas. 
 
 Os usuários do sistema são o Cliente e o Administrador. Todos possuem acesso ao sistema e a seu respectivo espaço. Além disso, o Sistema conta com uma tela inicial que permite ao público navegar de modo simples através de filtros entre categorias, produtos e avaliações.
 
-A API foi desenvolvida utilizando o NodeJs, ExpressJs e Banco de dados MongoDB. Foi realizada a integração com o PagSeguro. Documentação utilizando o Swagger. Testes unitários e de integração utilizando o Jest e Supertest.
+A API foi desenvolvida utilizando o NodeJs, ExpressJs e Banco de dados MongoDB. Foi realizada a integração com o PagSeguro e Correios. Documentação utilizando o Swagger. Testes unitários e de integração utilizando o Jest e Supertest.
 <br/>
 <br/>
 
@@ -185,19 +185,21 @@ RF014 – O sistema deve calcular o valor de entrega dos produtos.
 
 3 - Realizar Login
 
-4 - Manter produtos
+4 - Cadastrar cliente
 
-5 - Manter clientes
+5 - Manter produtos
 
-6 - Manter categorias
+6 - Manter clientes
 
-7 - Manter solicitações
+7 - Manter categorias
 
-8 - Pesquisar produtos    
+8 - Manter solicitações
 
-9 - Visualizar estoque
+9 - Pesquisar produtos    
 
-10 - Gerenciar reposição de produto
+10 - Visualizar estoque
+
+11 - Gerenciar reposição de produto
 <br/>
 <br/>
 
