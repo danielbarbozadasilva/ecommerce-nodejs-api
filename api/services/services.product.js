@@ -241,7 +241,7 @@ const searchProductService = async (sortType, offset, limit, search) => {
       {
         $match: {
           title: {
-            $regex: `.*${search}.*`,
+            $regex: `.*${search.trim()}.*`,
             $options: 'i'
           }
         }
